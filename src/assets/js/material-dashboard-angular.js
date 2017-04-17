@@ -50,13 +50,12 @@ function animationSidebar($this, animate){
     // console.log('incep animatia si butonul pe care sunt acum este:', $this[0].href );
     console.log($this);
     
-    $('#dashboardButton').css({color: '#3C4858'});
-    $('#profileButton').css({color: '#3C4858'});
-
-
-    $('#planButton').css({color: '#3C4858'});
-     $('#reportButton').css({color: '#3C4858'});
-     $('#doctorJobMenu').css({color: '#3C4858'});
+        $('#dashboardButton').css({color: '#3C4858'});
+        $('#profileButton').css({color: '#3C4858'});
+        $('#planButton').css({color: '#3C4858'});
+        $('#reportButton').css({color: '#3C4858'});
+        $('#doctorJobMenu').css({color: '#3C4858'});
+        $('#WebSiteSetup').css({color: '#3C4858'});
     if ($this.parent('li').position()) {
         $current_li_distance = $this.parent('li').position().top - 10;
 
