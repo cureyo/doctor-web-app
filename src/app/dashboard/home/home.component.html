@@ -1,0 +1,238 @@
+<div class="main-content" id="mainContent">
+
+    <div class="container-fluid">
+
+        <!--<div *ngIf="caredOnes">-->
+        <div class="row" id="coSection">
+                 <div *ngIf="noCaredOnes" class="card card-stats" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+                     <a class="ripple-group" (click)="gotoAdd()" style="cursor: pointer;">
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">group_add </i>
+</div> </a>
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Get started by adding a 'Cared One'
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">A 'Cared One' is a loved one or family member, whose health you care for. You can add a Cared One from your Facebook Relationships or by directly adding them.</small></h3>
+    
+</div>
+
+</div>
+           
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let caredone of caredOnes" >
+                <a [routerLink]="['/caredoneprofiles/'+caredone.uid]">
+                <div>
+                    <div class="card card-stats" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+<!--<i class="material-icons">content_copy</i>-->
+<img src="{{caredone.avatar}}" style="border-radius: 4px; width: 88px; height: 88px;">
+</div>
+<div class="card-content">
+    <p class="category">{{caredone.nickName}}</p>
+    <h3 *ngIf="caredone.total" class="title">{{caredone.input}}%
+        <br><small>health score</small></h3>
+    <h3 *ngIf="!caredone.total" class="title">NA
+        <br><small>health score</small></h3>
+</div>
+<div class="card-footer">
+    <div class="stats" *ngFor="let warning of caredone.insights">
+        <i class="material-icons text-danger" style="top: 0px;">{{warning.Type}}</i> <a>{{warning.Text}}</a>
+    </div>
+   
+</div>
+</div>
+</div>
+</a>
+</div>
+
+</div>
+<!--</div>-->
+<section id="AddSection">
+<h4>Add Cared Ones </h4>
+<div class="row">
+    <div class="col-md-4" *ngFor="let member of caredOnesFamily" style="z-index:0;"> 
+
+        <div class="card card-stats">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
+<!--<i class="material-icons">content_copy</i>-->
+
+<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="border-radius: 4px; width: 60px; height: 60px;">
+<img *ngIf="!member.imageURL" src="https://graph.facebook.com/{{member.id}}/picture?type=large" style="border-radius: 4px; width: 60px; height: 60px;">
+</div>
+
+<div class="card-content">
+     <h3 *ngIf="member.relationship" class="title">{{member.relationship}}
+            <br>
+            <small>{{member.name}}</small></h3>
+        <h3 *ngIf="!member.relationship" class="title">Add
+            <br>
+
+            <small style="text-overflow:ellipsis; white-space: nowrap; overflow: hidden;">{{member.name}}</small>
+</h3>
+<div class="card-footer">
+    <a href="javascript:void(0)" class="stats" (click)="showCaredoneForm($event, member)">Add</a> </div>
+<div class="card-content2 hide">
+    <app-caredone-form [user]="member" [observerId]="currentUser.authUID"></app-caredone-form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+<h4>Add from Facebook Relations</h4>
+
+<div class="searchbox" style="width: 300px;">
+    <div class="input-group">
+        <input (keyup)="filterFriends($event)" (blur)="filterFriends($event)" type="text" class="form-control" placeholder="Search Facebook Relations"
+            aria-describedby="basic-addon2">
+        <span class="input-group-addon" id="basic-addon2">
+            <i class="material-icons">search</i>
+        </span>
+    </div>
+                
+</div>
+<!--searchbox-->
+<div class="row">
+
+    <div class="col-md-4" *ngFor="let member of caredonesToAdd">
+
+        <div class="card card-stats" *ngIf="member.relationship">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
+<!--<i class="material-icons">content_copy</i>-->
+
+<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
+<img *ngIf="!member.imageURL" src="https://graph.facebook.com/{{member.id}}/picture?type=large" style="border-radius: 4px; width: 60px; height: 60px;">
+</div>
+<div class="card-content">
+    <h3 class="title">{{member.relationship}}
+        <br>
+        <small style="text-overflow:ellipsis; white-space: nowrap; overflow: hidden;">{{member.name}}</small>
+</h3>
+<div class="card-footer">
+    <a href="javascript:void(0)" class="stats" (click)="showCaredoneForm($event, member)">Add</a> </div>
+<div class="card-content2 hide">
+    <app-caredone-form [user]="member" [observerId]="currentUser.authUID"></app-caredone-form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+<h4>Friends who use Cureyo</h4>
+<div class="row">
+
+    <div class="col-md-4" *ngFor="let member of caredonesToAdd">
+
+        <div class="card card-stats" *ngIf="!member.relationship">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
+<!--<i class="material-icons">content_copy</i>-->
+
+<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
+<img *ngIf="!member.imageURL" src="https://graph.facebook.com/{{member.id}}/picture?type=large" style="border-radius: 4px; width: 60px; height: 60px;">
+</div>
+<div class="card-content">
+    <h3>
+        <small style="text-overflow:ellipsis; white-space: nowrap; overflow: hidden;">{{member.name}}</small>
+</h3>
+<div class="card-footer">
+    <a href="javascript:void(0)" class="stats" (click)="showCaredoneForm($event, member)">Add</a> </div>
+<div class="card-content2 hide">
+    <app-caredone-form [user]="member" [observerId]="currentUser.authUID"></app-caredone-form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</section>
+
+</div>
+</div>
+
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="myModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Congratulations!</b></h4>
+      </div>
+      <div class="modal-body" >
+        <p style="text-align: left;">
+          <br>
+          You have added the Cared One. We will be conducting a consultation with our Specialists within the next 24 hours, and request for additional reports if needed. 
+         <br> 
+         </p>
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">What next?</h3>
+          <br>
+<hr>
+        <p style="text-align: left;">You can now add further details and update reports for the Cared One by going to their Profile Page. You can add details such as</p>
+       
+    
+           <div class="card card-stats">
+                     
+                        <div class="card-header" style="width: 60px; height: 60px; padding: 0;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff; line-height: 60px">account_box</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">Update Profile
+      <br><small style="float: left; font-size: 12px; line-height: 16px;">Add other profile details, such as address of the Cared One</small>
+            
+    </h3>
+    
+</div>
+
+</div>
+    <div class="card card-stats">
+                     
+                        <div class="card-header" style="width: 60px; height: 60px; padding: 0;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff; line-height: 60px">visibility</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">Add Observers
+            <br><small style="float: left; font-size: 12px; line-height: 16px;">Include family members who may be concerned about the Cared Ones health</small>
+    </h3>
+    
+</div>
+
+</div>
+    <div class="card card-stats">
+                     
+                        <div class="card-header" style="width: 60px; height: 60px; padding: 0;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff; line-height: 60px">folder_open</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">Add Health Reports
+        <br><small style="float: left; font-size: 12px; line-height: 16px;">Add existing health reports for the Cared One </small>
+    </h3>
+    
+</div>
+
+</div>
+        
+      </div>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <button type="button" style="float: left; z-index: 10000; margin-left: 20px;" class="btn btn-primary" data-dismiss="modal" (click)="addDetails(caredOneId)">Add Details</button>
+        <button type="button" style="float: left; z-index: 10000;" class="btn btn-default" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  
+</div>

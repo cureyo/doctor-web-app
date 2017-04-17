@@ -1,0 +1,41 @@
+<!--Blood Sugar Teacker  portion-->
+  <div class="col-md-12">
+      <!-- Exercise Tracker  card --> 
+                <div class="card">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Online Consultation</h4>
+                        <p class="category">Online Consultation for {{patient.nickName}} </p>
+                         <p class="category">{{currentDate}}</p>
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent
+                                        </div>-->
+                                       
+                        <table class="table">
+                            <thead class="text-danger" *ngIf="onlineconsult">
+                                <tr>
+                                    <th>Online consultation with</th>
+                                    <th>Consultation mode</th>
+                                    <th>How would you like to be involved?</th>
+                                    <th>Frequency</th>
+                                    <th>Date</th>
+                                    <th>Timing</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                <tr *ngIf="onlineconsult">
+                                    <td>{{onlineconsult.Doctor}}</td>
+                                     <td>Video</td>
+                                      <td>Include me</td>
+                                       <td>{{onlineconsult.OnlineConsultFreq}}</td>
+                                       <td>{{dateInterval[5]}}</td>
+                                       <td>{{timeInterval[6]}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--  end of medication reminder-->

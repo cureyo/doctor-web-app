@@ -1,0 +1,71 @@
+<!--Blood Sugar Teacker  portion-->
+  <div class="col-md-12">
+      <!-- Blood sugar card --> 
+                <div class="card" *ngIf="bloodsugarTracker">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Blood Sugar Tracker </h4>
+                        <p class="category">Blood Sugar Tracker for {{patient.nickName}} </p>
+                         <p class="category">{{sugarcurrentDate}}</p>
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent 
+                                        </div>-->
+                                       
+                        <table class="table">
+                            <thead class="text-danger">
+                                <tr>
+                                    <th>Health Metric to track</th>
+                                    <th>Tracking Frequency</th>
+                                    <th>Timing</th>
+                                    <th>Report Frequency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                    <td>{{bloodsugarTracker.Reading_Type}}</td>
+                                     <td>{{bloodsugarTracker.Job_Frequency}}</td>
+                                      <td>{{ bloodsugarTracker.Job_Time}}</td>
+                                       <td>{{bloodsugarTracker.Job_ReportFrequency}}</td>    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--blood pressure card-->
+                 <div class="card" *ngIf="bloodpressureTracker">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Blood Pressure Tracker </h4>
+                        <p class="category">Blood Pressure Tracker for {{patient.nickName}} </p>
+                         <p class="category">{{pressurecurrentDate}}</p>
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent 
+                                        </div>-->
+                                       
+                        <table class="table">
+                            <thead class="text-danger">
+                                <tr>
+                                    <th>Health Metric to track</th>
+                                    <th>Tracking Frequency</th>
+                                    <th>Timing</th>
+                                    <th>Report Frequency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                    <td>Blood Pressure</td>
+                                     <td>Weekly</td>
+                                      <td>{{ timeInterval[10]}}</td>
+                                       <td>{{bloodpressureTracker.bpFreq}}</td>    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end of blood pressure card-->
+
+            </div><!--  end of medication reminder-->

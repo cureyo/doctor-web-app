@@ -1,0 +1,38 @@
+<!--Blood Sugar Teacker  portion-->
+  <div class="col-md-12">
+      <!-- Exercise Tracker  card --> 
+                <div class="card">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Physical Consultation</h4>
+                        <p class="category">Physical Consultation for {{patient.nickName}} </p>
+                        <p class="category">{{currentDate}}</p>
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent
+                                        </div>-->
+                                        
+                        <table class="table">
+                            <thead class="text-danger" *ngIf="physicalconsult">
+                                <tr>
+                                    <th>Physical consultation with</th>
+                                    <th>Location</th>
+                                    <th>Frequency</th>
+                                    <th>Date</th>
+                                    <th>Timing</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="physicalconsult">
+                                    <td>{{physicalconsult.PhysicalConsultDrName}}</td>
+                                    <td> {{physicalconsult.PhysicalConsultLocation}}</td>
+                                     <td>{{physicalconsult.PhysicalConsultFreq}}</td>
+                                      <td>{{dateInterval[0]}}</td>
+                                       <td>{{timeInterval[1]}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--  end of medication reminder-->

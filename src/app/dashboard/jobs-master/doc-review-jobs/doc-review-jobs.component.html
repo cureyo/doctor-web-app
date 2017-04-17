@@ -1,0 +1,165 @@
+  <div class="col-md-12">
+                <div class="card">
+                    <form [formGroup]="docReviewForm" class="formGroup" novalidate (ngSubmit)="saveDocReview(docReviewForm)"> 
+                    <div class="card-header" data-background-color="cureyo" style="display: inline-block; width: 90%;">
+                        <div class="card-stats card-header" style="width: 80px; height: 80px; float: left; padding: 1px;" data-background-color="white">
+                        
+
+                            <img src="assets/img/man.png" style="width: 78px; height: 78px; border-radius: 3px;">
+                        </div>
+                        <div style="float: left;">
+                       
+                        <h4 class="title"  style="color: #ffffff;">Care Plan Summary</h4>
+
+                        <!--<p  class="category" style="color: #ffffff;">cared plan for {{patient.nickName}}, by Doctor Name</p>-->
+
+                        </div>
+                    </div>        
+   <!-- *********************************************************************** -->                                      
+          <!-- summary input area-->
+          <div class="card-content table-responsive">
+              <h6 style="font-weight: 400; color: #137a9c;">Summary</h6>
+            <div class="form-group">  
+          <input type="text" class="form-control" id="sm_text" formControlName="sm_text" placeholder="Please provide a summary here" />
+            </div>
+          </div>
+            <!-- end of summary input area-->
+    <!-- *********************************************************************** -->                    
+      <!-- Required Report Section -->
+        <div class="card-content table-responsive">
+           <h6 style="font-weight: 400; color: #137a9c;">Reports Required</h6>
+                 <!-- interface implementation to repeat the div's -->
+                    <div class="medicines" formArrayName="reports">
+                        <div class="clearfix medicine" *ngFor="let report of docReviewForm.controls.reports.controls; let i=index">
+                             <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+                
+                      <div class="col-md-4">
+                            <div class="form-group">  
+                              <label for="report_name">Report Name</label>
+
+                                <!--<input type="text" class="form-control" id="rr_Name" formControlName="rr_Name" />-->
+                                <input auto-complete
+                                   display-property-name="value"
+                                  value-property-name="name"
+                                  [list-formatter]="autocompleListFormatter"
+                                  class="form-control"
+                                  formControlName="rr_Name"
+                                  [source]="MedNames"
+                                   min-chars="3"
+                                  id="rr_Name"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                              <div class="form-group">  
+                                <label for="report_comment">Comments for report</label>
+                              <input type="text" class="form-control" id="rr_comment" formControlName="rr_Comment"/>
+                              </div>
+                        </div>
+
+                   <!-- closing tags of interface implementation-->
+                      </div>
+                    </div> 
+                  </div>
+                    <!-- closing tags of interface implementation-->
+                    <!-- add more code    -->
+                <div class="pull-left" >
+                <button type="button" [ngClass]="{'hide': rflag}" id="addcp" (click)="addReports()" class="btn btn-round btn-primary">+ add more</button>
+                </div>
+              <!-- end of add more button-->
+                 </div><!--report requires section -->
+ <!-- *********************************************************************** -->           
+                 <!-- potential Risk Section -->
+        <div class="card-content table-responsive">
+           <h6 style="font-weight: 400; color: #137a9c;">Potential Risks</h6>
+                 <!-- interface implementation to repeat the div's -->
+                    <div class="medicines" formArrayName="risks">
+                        <div class="clearfix medicine" *ngFor="let risk of docReviewForm.controls.risks.controls; let i=index">
+                             <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+                
+                      <div class="col-md-4">
+                            <div class="form-group">  
+                              <label for="report_name">Risk Name</label>
+
+                                <input type="text" class="form-control" id="risk" formControlName="Risk" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                              <div class="form-group">  
+                                <label for="report_comment">Comment for Risk</label>
+                              <input type="text" class="form-control" id="P_comment" formControlName="P_Comment"/>
+                              </div>
+                        </div>
+
+                   <!-- closing tags of interface implementation-->
+                      </div>
+                    </div> 
+                  </div>
+                    <!-- closing tags of interface implementation-->
+                    <!-- Add more button code    -->
+                <div class="pull-left" >
+                <button type="button" [ngClass]="{'hide': pflag}" (click)="addRisk()" class="btn btn-round btn-primary">+ add more</button>
+                </div>
+               <!-- end of add more button-->
+                 </div><!--potential risk section -->
+
+      <!-- *********************************************************************** -->           
+                   <!-- unhealthy parameters-->
+                      
+        <div class="card-content table-responsive">
+           <h6 style="font-weight: 400; color: #137a9c;">Un-healthy Parameters</h6>
+                 <!-- interface implementation to repeat the div's -->
+                    <div class="medicines" formArrayName="unhealthyparameters">
+                        <div class="clearfix medicine" *ngFor="let Uparam of docReviewForm.controls. unhealthyparameters.controls; let i=index">
+                             <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+                
+                      <div class="col-md-4">
+                            <div class="form-group">  
+                              <label for="report_name">Parameter Name</label>
+
+                                <input type="text" class="form-control" formControlName="pName" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                              <div class="form-group">  
+                                <label for="report_comment">Current Value</label>
+                              <input type="text" class="form-control"  formControlName="cValue"/>
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                              <div class="form-group">  
+                                <label for="report_comment">Target Value</label>
+                              <input type="text" class="form-control" formControlName="tValue"/>
+                              </div>
+                        </div>
+
+                   <!-- closing tags of interface implementation-->
+                      </div>
+                    </div> 
+                  </div>
+                    <!-- closing tags of interface implementation-->
+                    <!-- Add more button code    -->
+                <div class="pull-left" >
+                <button type="button" [ngClass]="{'hide': pflag}" (click)="addUnhealthyParameters()" class="btn btn-round  btn-primary">+ add more</button>
+                </div>
+               <!-- end of add more button-->
+                 </div>
+                   <!-- end of unhealthy parameters-->
+      <!-- *********************************************************************** -->                         
+                  <!-- final submit button-->
+                  <div class="pull-right" style="padding-right: 10px;">
+                <button type="submit" id="submitdoc"   class="btn btn-warning">Submit</button>
+                </div>
+                <div [ngClass]="{'hide': !itemAdded}" class="bareP">
+                    <p>Thanks! This Care Item has been scheduled!</p>
+                </div>
+                  <!--end of final submit button-->
+                  </form>
+            </div>  <!-- end of cards-->
+   
+  </div> <!--end of Doc Review Page-->

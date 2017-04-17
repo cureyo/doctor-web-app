@@ -1,0 +1,47 @@
+<!--Blood Sugar Tracker  portion-->
+  <div class="col-md-12">
+      <!-- Exercise Tracker  card --> 
+                <div class="card">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+
+
+                        <h4 class="title">Tests Prescribed</h4>
+                        <p class="category">Suggested Tests for {{patient.nickName}} </p>
+                        <p class="category">{{currentDate}}</p>
+                        <a (click)="fetchPrev(currentItem)" style="cursor: pointer;"> < Previous</a>
+                        <div class="pull-right">
+                        <a (click)="fetchNext(currentItem)" style="cursor: pointer;">Next ></a>
+                        </div>
+
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent
+                                        </div>-->
+                                       
+                        <table class="table">
+                            <thead class="text-danger">
+                                <tr>
+                                    <th>Test Name</th>
+                                    <th>Frequency</th>
+                                    <th>Date</th>
+                                    <th>Timing</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                               <tr *ngFor="let i of suggestedTests; let i=index">
+                                    <td>{{suggestedTests[i].TestName}}</td>
+                                     <td>{{suggestedTests[i].TestFreq}} </td>
+                                      <td>{{dateInterval[i+2]}}</td>
+                                       <td>{{timeInterval[i+2]}}</td>    
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    
+                
+                <button type="button" class="btn btn-primary" style="float: right;"(click)="table.showModal(suggestedTests)">Book Test</button>
+               </div>
+               </div>
+            </div><!--  end of medication reminder-->

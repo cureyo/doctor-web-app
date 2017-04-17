@@ -1,0 +1,21 @@
+#checkup{
+  .signup {
+    background-color: $light;
+    border: $lightBorder;
+    margin: 20px auto 50px;
+    padding: 10px 50px;
+    width: 350px;
+
+    h3{
+      text-align: center;
+    }
+
+  }//signup
+
+  #card{
+    .profile-pic {
+      margin: 20px 0;
+      text-align: center;
+    }
+  }//#card
+}

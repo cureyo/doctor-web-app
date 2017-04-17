@@ -1,0 +1,274 @@
+ <div class="main-content" id="reportContent">
+
+        <div class="container-fluid">
+            <div *ngIf="caredone" class="row">
+             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div>
+                    <div class="card card-stats">
+                        <div class="card-header" style="border-radius: 50%; width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+<!--<i class="material-icons">content_copy</i>-->
+<img src="{{caredone.avatar}}" style="border-radius: 50%; width: 88px; height: 88px;">
+</div>
+<div class="card-content">  
+    <h5 class="title">{{caredone.firstName}}<br/><small> Health Stats</small></h5>
+</div>
+</div>
+</div>
+             </div>
+</div>
+             <div  class="row">
+                <div  *ngIf="consultDate" class="col-md-4">
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="blue">
+                            <div class="ct-chart" >
+                                <div *ngFor="let risk of potentialRisks" style="padding: 10px;">
+                                    <h5 class="title" style="font-weight: 400; font-size: 14px;">{{risk.Risk}}  </h5>
+                                    <p>{{risk.Comment}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">Consultation  </h4>
+                            <p *ngIf="riskCount" class="category"><span class="text-success"><i class="material-icons">local_hospital</i> {{riskCount}}  </span> insights</p>
+                            <p *ngIf="!riskCount" class="category"><span class="text-success"><i class="material-icons">local_hospital</i> No recent consultations</span></p>
+                        </div>
+                        <div class="card-footer">
+                            <div *ngIf="consultDate" class="stats">
+                                <i *ngIf="consultDate" class="material-icons">access_time</i> updated on {{consultDate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ <!-- lab test -->
+                <div *ngIf="labTestDate" class="col-md-4">
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="cureyo">
+                            <div class="ct-chart" id="emailsSubscriptionChart2"></div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">Lab Tests  </h4>
+                             <p *ngIf="labTestCount" class="category"><span class="text-success"><i class="material-icons">invert_colors_off</i> {{labTestCount}} </span> unhealthy parameters</p>
+                             <p *ngIf="!labTestCount" class="category"><span class="text-success"><i class="material-icons">invert_colors_off</i> No recent lab test information </span></p>
+                        </div>
+                        <div class="card-footer">
+                            <div *ngIf="labTestDate" class="stats">
+                                <i *ngIf="labTestDate" class="material-icons">access_time</i> updated on {{labTestDate}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div *ngIf="averageBpSys" class="col-md-4">
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="cureyo">
+                            <div class="ct-chart" id="completedTasksChart2"></div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">Blood Pressure  </h4>
+                            <p *ngIf="averageBpSys" class="category"><span class="text-success"><i class="material-icons">nfc</i> Average: {{averageBpSys}} / {{averageBpDias}}  </span> (range)</p>
+                            <p *ngIf="!averageBpSys" class="category"><span class="text-success"><i class="material-icons">nfc</i> Blood Pressure not tracked  </span> </p>
+                            
+                        </div>
+                        <div class="card-footer">
+                            <div *ngIf="averageBpSys" class="stats">
+                                <i  class="material-icons">access_time</i> {{bpStartDate}} to {{bpEndDate}}                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div *ngIf="averageEx" class="col-md-4">
+                    <div class="card" >
+                        <div  class="card-header card-chart" data-background-color="cureyo">
+                            <div class="ct-chart" id="dailySalesChart"></div>
+                        </div>
+                        
+                        
+                        <div class="card-content">
+                            <h4 class="title">Walking  </h4>
+                            <p *ngIf="averageEx" class="category"><span class="text-success"><i class="material-icons">directions_run</i> Average: {{averageEx}}  </span> kms per day</p>
+                            <p *ngIf="!averageEx" class="category"><span class="text-success"><i class="material-icons">directions_run</i> Walking not tracked  </span></p>
+                    
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i> {{exerStartDate}} to {{exerEndDate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="averageMed" class="col-md-4">
+                    <div class="card" >
+                        <div  class="card-header card-chart" data-background-color="cureyo">
+                            <div class="ct-chart" id="emailsSubscriptionChart"></div>
+                               </div>
+                        
+                        <div class="card-content">
+                            <h4 class="title">Medication Adherance (in %)</h4>
+                            <p *ngIf="averageMed" class="category"><span class="text-success"><i class="material-icons">toll</i> Average: {{averageMed}}  </span> % adherance</p>
+                            <p *ngIf="!averageMed" class="category"><span class="text-success"><i class="material-icons">toll</i> Medication not tracked</span></p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i> Last 7 intakes
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+ <!-- Blood Sugar Chart -->
+  <app-BloodSugarChart
+          [averageBS]="averageBS" 
+          [bsStartDate]="bsStartDate"  
+          [bsEndDate]="bsEndDate">
+  </app-BloodSugarChart>
+            </div>
+            <h4 *ngIf="!consultDate || !labTestDate || !averageMed || !averageBS || !averageEx || !averageBpSys" style="font-weight: 600;">Other reports you could subscribe to</h4>
+
+            <div class="row">
+                <!--here is the list of cards-->
+                 <div *ngIf="!consultDate" class="col-md-4" >
+                   <a (click)="showJobs(physicalConsult)" style="cursor: pointer;"> 
+                 <div class="card card-stats">         
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">local_hospital</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Consultations
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">Insights from consultations</small></h3>
+    
+</div>
+
+</div> </a>
+                     
+            </div>
+              <div *ngIf="!labTestDate" class="col-md-4">
+                   <a (click)="showJobs(labTest)"  style="cursor: pointer;"> 
+                 <div class="card card-stats">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">invert_colors</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Lab Tests
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">Risky health parameters from lab tests</small></h3>
+    
+</div>
+
+</div>  </a>
+            </div>
+             <div *ngIf="!averageMed" class="col-md-4">
+                  <a (click)="showJobs(medReminder)"  style="cursor: pointer;"> 
+                 <div class="card card-stats">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">toll</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Medication
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">Medication adherence reports</small></h3>
+    
+</div>
+
+</div> </a>
+            </div>
+
+            <div *ngIf="!averageEx" class="col-md-4">
+                 <a (click)="showJobs(exerciseTracker)" style="cursor: pointer;"> 
+                 <div class="card card-stats">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">directions_run</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Exercise Reports
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">Daily walking & exercise tracking</small></h3>
+    
+</div>
+
+</div>  </a>
+            </div>
+             
+              <div *ngIf="!averageBS" class="col-md-4">
+                   <a (click)="showJobs(bloodSugar)"  style="cursor: pointer;"> 
+                 <div class="card card-stats">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">av_timer</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Blood Sugar
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">Updates on Blood Sugar levels</small></h3>
+    
+</div>
+
+</div> </a>
+            </div>
+            <div *ngIf="!averageBpSys" class="col-md-4">
+                 <a (click)="showJobs(bloodPressure)" style="cursor: pointer;"> 
+                 <div class="card card-stats">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">nfc</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Blood Pressure 
+        <br><small style="float: left; font-size: 14px; line-height: 16px;">Updates on Blood Pressure readings</small></h3>
+    
+</div>
+
+</div>  </a>
+            </div>
+            </div>
+               <!-- modal container is here-->
+
+            <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            
+                 <div *ngIf="schedJobType" class="modal-dialog" role="document">
+                     <app-common-model
+                     [caredOneId]="caredOneID"
+                     [jobType]="schedJobType"></app-common-model>
+                </div>
+         </div>-->
+
+            <!-- end of modal container is here-->
+           
+        </div>
+ </div>
+
+
+<!-- modal container is here-->
+
+<div class="modal fade" id="reportModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+  <div *ngIf="schedJobType" class="modal-dialog" role="document">
+                     <app-common-model
+                     [caredOneId]="caredOneID"
+                     [jobType]="schedJobType"></app-common-model>
+                </div>    
+
+  </div>
+
+</div>
+ <!-- end of modal container is here-->
+

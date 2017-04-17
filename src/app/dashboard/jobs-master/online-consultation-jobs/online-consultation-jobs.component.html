@@ -1,0 +1,96 @@
+
+  <!--online-consultation-jobs !-->
+  <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="octForm" class="formGroup" novalidate (ngSubmit)=" saveOCT(octForm)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title"> Online Consultation </h4>
+
+                        <p class="category">Setup Online Consultation for {{patient.nickName}} with {{caredonesDoctor.firstName}} </p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row" *ngIf="patient && userID && caredonesDoctor">
+    <!--  Doctor Name formcontrol-->
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                  <label for="oct_drname">Online consultation with</label>
+
+                                  <input type="text" class="form-control" id="oct_drname" formControlName="drname" value="{{caredonesDoctor.firstName}} {{caredonesDoctor.lastName}}" />
+                            </div>
+                    </div>
+     <!-- End of Doctor Name formcontrol-->
+     
+  <!--Consultation mode formcontrol-->         
+                  <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="oct_consultmode">Consultation mode</label>
+
+                              <select formControlName="consultmode" id="oct_consultmode" class="form-control">
+                                <option value="video">Video Consultation</option>
+                                <option value="phone">Phone Consultation</option>
+                              </select>
+                          </div>
+                  </div>
+<!-- End of Consultation mode  formcontrol-->  
+<!-- Frequency formcontrol-->
+                  <div class="col-md-2">
+                        <div class="form-group">
+                           <label for="oct_frequency">Frequency</label>
+                            <select formControlName="frequency" id="oct_frequency" class="form-control">
+                              <option value="monthly">Monthly</option>
+                              <option value="2months">Every 2 Months</option>
+                              <option value="3months">Every 3 Months</option>
+                              <option value="4months">Every 4 Months</option>
+                              <option value="5months">Every 5 Months</option>
+                              <option value="6months">Every 6 Months</option>
+                              <option value="annually">Annually</option>
+                            </select>
+                        </div>
+                  </div>
+<!-- End of  frequency formcontrol--> 
+<!-- Date Formcontrol-->
+                  <div class="col-md-2">
+                       <div class="form-group">
+                              <label for="oct_date">Date</label>
+
+                              <select formControlName="date" id="oct_date" class="form-control">
+                                <option value="{{i}}" *ngFor="let i of dateInterval">{{i}}</option>
+                              </select>
+                       </div>
+                    
+                  </div>
+<!--End of Date Formcontrol-->
+<!-- Time Formcontrol-->
+                  <div class="col-md-2">
+                       <div class="form-group">
+                               <label for="oct_timing">Timing</label>
+
+                                <select formControlName="timing" id="oct_timing" class="form-control">
+                                  <option value="{{t}}" *ngFor="let t of timeInterval">{{t}}</option>
+                                </select>
+                       </div>
+                    
+                  </div>
+<!--End of Time Formcontrol-->
+
+
+                            </div> <!-- end of row-->
+<!-- submit button code    -->
+                <div class="actions clearfix">
+                      <div class="pull-right" >
+                          <button [ngClass]="{'hide': itemAdded6}" type="submit" [disabled]="!octForm.valid" class="btn btn-warning">Add</button>
+                      </div>
+
+                        <div [ngClass]="{'hide': !itemAdded6}" class="bareP">
+                            <p>Thanks! This Care Item has been scheduled!</p>
+                        </div>
+                </div>
+<!-- end of submit button-->
+                    </div>
+                  </form>
+                </div>
+            </div><!--  end of medication reminder-->

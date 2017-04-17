@@ -1,0 +1,55 @@
+<div class="row" style="margin-left: 5px !important;margin-right: 5px !important;margin-top:60px;">
+   <div class="row" style="margin-left: 5px !important;margin-right: 5px !important;margin-top:5px;">
+    <div class="col-md-3">
+      </div>
+    <div class="col-md-5" style="z-index:0;"> 
+
+        <div class="card card-stats">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
+              <img *ngIf="caredone"style="border-radius: 4px; width: 60px; height: 60px;" src="{{caredone.avatar}}" >
+              <!--<img *ngIf="!member.imageURL" src="https://graph.facebook.com/{{member.id}}/picture?type=large" style="border-radius: 4px; width: 60px; height: 60px;">-->
+              <img *ngIf="!caredone" style="border-radius: 4px; width: 60px; height: 60px;" src="/assets/img/man.png">
+
+                     <!-- there should be the image part-->
+             </div>
+             <!---->
+<div class="card-content">
+<!-- form part-->
+<form  [formGroup]="coMobileViewForm" (ngSubmit)="onSubmit(coMobileViewForm.value, $event)" (keydown.enter)="$event.preventDefault()" class="form" novalidate>
+   <p *ngIf="nickName"> Notify {{nickName}}
+     <br>
+     <small style="color: #777">Please notify {{nickName}} that you have initiated the process with Cureyo. </small>
+   </p>
+     <p *ngIf="!nickName"> Notifi New User
+     <br>
+     <small style="color: #777">Please notify New User that you have initiated the process with Cureyo. </small>
+   </p>
+ <div class="form-group" style="width: 100%; height: 125px; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" >
+    <label class="control-label" for="message">Message to be sent</label>
+    <textarea type="text" class="form-control"
+           style="height: 100px;"
+           formControlName="sendmsg"
+    ></textarea>
+  </div>
+    
+    <div class="form-group">
+    
+    <a *ngIf="detectmob() && !coMobileViewForm.valid" class="btn btn-primary"  (click)="showError2()">Call</a>
+    <button *ngIf="detectmob() && coMobileViewForm.valid" class="btn btn-primary" [disabled]="!coMobileViewForm.valid" >Call</button>
+    
+    <a *ngIf="detectmob() && !coMobileViewForm.valid" class="btn btn-primary"  (click)="showError2()">WhatsApp {{nickName}}</a>
+    <button *ngIf="detectmob() && coMobileViewForm.valid" class="btn btn-primary"  [disabled]="!coMobileViewForm.valid">WhatsApp {{nickName}}</button>
+
+    <a *ngIf="!detectmob() && !coMobileViewForm.valid" class="btn btn-primary" (click)="showError2()">Message this to me</a>
+    <button *ngIf="!detectmob() && coMobileViewForm.valid" type="submit" class="btn btn-primary" [disabled]="!coMobileViewForm.valid">Message this to me</button>
+    
+    <p *ngIf="detectmob()"><small>We will send you the above message over Facebook Messenger or SMS for you to easily send to {{nickName}}</small></p>
+    </div>
+</form>
+
+<!-- end of form-->
+</div> <!--card content-->
+        </div>
+        </div>
+   </div>
+        </div>

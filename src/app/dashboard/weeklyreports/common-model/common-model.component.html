@@ -1,0 +1,83 @@
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>-->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+ exampleModalLabel
+-->
+<div class="card card-stats">
+        <div class="card-header" style="float: left; width: 60px; height: 60px; padding: 0;" data-background-color="orange">
+            <!--  here i have to do some changes-->
+         
+<div *ngIf="jobType=='Exercise Tracker'">
+<i class="material-icons" style="color: #ffffff; font-size: 40; margin-top: 10px; line-height: 40px; margin-bottom: 10px;" >directions_run</i> 
+</div>
+<div *ngIf="jobType=='Medication Reminder'">
+<i class="material-icons" style="color: #ffffff; font-size: 40; margin-top: 10px; line-height: 40px; margin-bottom: 10px;">toll</i>
+</div>
+<div *ngIf="jobType=='Lab Test'">
+<i class="material-icons" style="color: #ffffff; font-size: 40; margin-top: 10px; line-height: 40px; margin-bottom: 10px;" >invert_colors</i>
+</div>
+<div *ngIf="jobType=='Physical_Consultation'">
+<i class="material-icons" style="color: #ffffff; font-size: 40; margin-top: 10px; line-height: 40px; margin-bottom: 10px;" >local_hospital</i>
+</div>
+<div *ngIf="bloodPressure && bloodSugar && jobType!='Exercise Tracker' && jobType!='Medication Reminder' && jobType!='Lab Test'&& jobType!='Physical_Consultation'">
+<i class="material-icons" style="color: #ffffff; font-size: 40; margin-top: 10px; line-height: 40px; margin-bottom: 10px;">av_timer</i>
+</div>
+<!--<div  *ngIf="bloodSugar && jobType!='Exercise Tracker' && jobType!='Medication Reminder' && jobType!='Lab Test'&& jobType!='Physical_Consultation'">
+<i class="material-icons" style="color: #ffffff; height: 5%!important; width: 5%!important;">nfc</i>
+</div>-->
+                                 
+       </div>
+      
+      <div class="modal-body" >
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;" *ngIf="jobType!='Physicical Consultation'"> {{jobType}}  </h3>
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;" *ngIf="jobType=='Physicical_Consultation'">Physical Consultation </h3>
+         
+         <!--<h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;" *ngIf="bloodSugar">Blood Sugar</h3>-->
+         <br/>
+         <hr/>
+         <div *ngIf="itemsPresent">
+        <h4 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">
+             Below are the scheduled items</h4>   
+             <br/>
+              
+             
+                    <div class="card card-stats" style="margin: 0px;" *ngFor=" let i of messageList;let i=index">
+                    
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">
+        <small style="float: left; font-size: 12px; line-height: 16px;">{{messageList[i]}}</small>
+    </h3>
+    
+</div>
+
+</div>
+                
+            
+             
+         </div>
+          <div *ngIf="!itemsPresent">
+        <h4 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">
+             There are no items scheduled</h4>   
+             <br/>
+             <hr/>
+              
+             <div>
+                
+                    <p style=" text-align: center;font: 10px;"> At present, no such reports have been recommended. You can check back once the 'Care Plan' is created, to identify the recommended items</p>
+                     
+             </div>
+             
+         </div>
+    <!--For sending message when any item is present-->
+    
+    <!--End of message sending part-->
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <!--<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addDetails(caredOneId)">Add Details</button>-->
+        <button type="button" class="btn btn-default" data-dismiss="modal" style=" margin-bottom: 10px;" (click)="closeModal()">Close</button>
+      </div>
+
+</div>
+</div>
+    
+  

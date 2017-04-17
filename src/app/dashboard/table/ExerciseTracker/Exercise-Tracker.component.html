@@ -1,0 +1,36 @@
+<!--EXercise Teacker  portion-->
+  <div class="col-md-12">
+      <!-- Exercise Tracker  card --> 
+                <div class="card">
+                    <!-- card header portion-->
+                   <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Exercise Tracker</h4>
+                        <p class="category">Exercise Tracker for {{patient.nickName}} </p>
+                        <p class="category">{{currentDate}}</p>
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent 
+                                        </div>-->
+                                       
+                        <table class="table">
+                            <thead class="text-danger" *ngIf="exerciseTracker">
+                                <tr>
+                                    <th>Daily Suggested walk </th>
+                                    <th>Track using</th>
+                                    <th>Report Frequency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr *ngIf="exerciseTracker">
+                                    <td>{{exerciseTracker.suggestedWalk}} KM</td>
+                                     <td>Google Fit</td>
+                                      <td>weekly</td>
+                                          
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--  end of medication reminder-->

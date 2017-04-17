@@ -1,0 +1,140 @@
+  <div class="col-md-12">
+                <div class="card">
+                     
+                    <div class="card-header" data-background-color="cureyo" style="display: inline-block; width: 100%;">
+                        <div class="card-stats card-header" style="width: 80px; height: 80px; float: left; padding: 1px;" data-background-color="white">
+                        
+
+
+                            <!--<img src="assets/DoctorPics/{{onboardingReview.Doctor}}.png" style="width: 78px; height: 78px; border-radius: 3px;">-->
+                        <!--</div>-->
+                        <!--<div style="float: left;">
+                        <h4 class="title"  style="color: #ffffff; " *ngIf="reports && potentialrisk && unhealthyreport">Provisional Care Plan </h4>
+                        <h4 class="title"  style="color: #ffffff; " *ngIf="!reports && !potentialrisk && !unhealthyreport">Care Plan Summary</h4>-->
+
+                           <img src="summary.drImage" style="width: 78px; height: 78px; border-radius: 3px;">
+                        </div>
+                        <div style="float: left;">
+                        <h4 class="title"  style="color: #ffffff; " *ngIf="unhealthyreport">Provisional Care Plan </h4>
+                        <h4 class="title"  style="color: #ffffff; " *ngIf="!unhealthyreport">Care Plan Summary</h4>
+
+                        <p *ngIf="doctor && patient" class="category" style="color: #ffffff;">For {{patient.nickName}}, by {{summary.drName}}</p>
+                        </div>
+                    </div>
+                    <!--summary part-->
+                   <div class="card">
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Summary </h4>
+                         
+                    </div> <!-- card header portion end-->
+                    <div class="card-content table-responsive">
+                            <!--<div class="card card-stats" style="margin: 0px;height:15px;">-->
+                                <p> some data should come here from the fb</p>
+                            <!--</div>-->
+                     </div>
+                   </div>
+                       <!-- end of summary part -->
+                     <!-- Required Report Section -->
+                    <div class="card" *ngIf="report">
+                            <div class="card-header" data-background-color="blue" >
+                                    <h4 class="title">Required Reports </h4>
+                                      <p class="category">{{rcurrentDate}}</p>
+                                      <div class="clearfix">
+                            <div class="pull-left">
+                                <a  (click)="fetchPrevReports(rcurrentItem)" style="cursor: pointer;">< Previous</a>
+                                
+                            </div>
+                            <div class="pull-right">
+                                <a  (click)="fetchNextReports(rcurrentItem)" style="cursor: pointer;">Next ></a>
+                            </div>
+                        </div>
+                                     </div> <!-- card header portion end-->
+                    <div class="card-content table-responsive" >
+                         <div class="card card-stats" style="margin: 0px;" *ngIf="report">
+                          <table class="table">
+                            <thead class="text-danger">
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let i of report;let i=index"> 
+                                    <td>
+                                    <tr style="font-weight: 300;"><b>{{report[i].name}} </b></tr>
+                                    <tr>{{report[i].comment}} </tr></td>
+                               </tr>
+                            </tbody>
+                        </table>
+
+                         </div>
+                        <button type="button" class="btn btn-primary" style="float: right;"(click)="table.showModal(report)">Book Test</button>
+
+                    </div>
+                    </div>
+                    
+                    <!-- end of report required-->
+                    <!-- unhealthy report-->
+                    <div class="card" *ngIf="unhealthyRepReady">
+                        <div class="card-header" data-background-color="blue" >
+                                    <h4 class="title">Un-healthy Report </h4>
+                                      <p class="category">{{ucurrentDate}}</p>
+                                      <div class="clearfix">
+                            <div class="pull-left">
+                                <a  (click)="fetchPrevUnhealthy(ucurrentItem)" style="cursor: pointer;">< Previous</a>
+                                
+                            </div>
+                            <div class="pull-right">
+                                <a  (click)="fetchNextUnhealthy(ucurrentItem)" style="cursor: pointer;">Next > </a>
+                            </div>
+                        </div>
+                                     </div> 
+                <div class="card-content table-responsive">  
+                <div  class="row" >
+                <div class="col-md-4" *ngFor="let lab of unhealthyreport;" >
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="cureyo">
+                            <div class="ct-chart" id="{{chartName[lab]}}"></div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">{{lab.pName}}</h4>
+                                </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+                </div>
+        </div>
+
+                <!-- end of unhealthy report-->
+       <!-- potential risk -->
+       <div class="card" *ngIf="potentialrisk">
+       <div class="card-header" data-background-color="blue" >
+                        <h4 class="title">potential risk </h4>
+                         <p class="category">{{pcurrentDate}}</p>
+                        <div class="clearfix">
+                         <div class="pull-left">
+                                <a  (click)="fetchPrevPotentialRisk(pcurrentItem)" style="cursor: pointer;"> < Previous</a>
+                                
+                            </div>
+                            <div class="pull-right">
+                                <a  (click)="fetchNextPotentialRisk(pcurrentItem)" style="cursor: pointer;">Next ></a>
+                            </div>
+                        </div>
+                    </div> <!-- card header portion end-->
+            <div class="card-content table-responsive"  *ngFor="let i of potentialrisk;let i=index" >
+                            <div class="card card-stats" style="margin: 0px; font-weight:300; font-size: 14px; color: #999">
+                                    <p style="font-weight:600;">{{potentialrisk[i].Risk}}</p>
+                                    <p>{{potentialrisk[i].P_Comment}} </p>
+                            </div>
+                     </div>
+       </div>
+                     <!-- end of potential risk -->
+                    
+                   
+               
+                
+            </div>
+  </div>
+
+

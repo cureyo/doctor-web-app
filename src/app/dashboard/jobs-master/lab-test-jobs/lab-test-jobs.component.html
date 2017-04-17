@@ -1,0 +1,111 @@
+<!-- Lab Test Jobs--> 
+  <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="stForm" class="formGroup" novalidate (ngSubmit)="save_stForm(stForm)">
+                    
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Suggested Lab Tests </h4>
+
+                        <p class="category">Lab Tests for {{patient.nickName}} </p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                   <!-- interface implementation to repeat the div's -->
+                    <div class="medicines" formArrayName="labtests">
+                        <div class="clearfix medicine" *ngFor="let LabTest of stForm.controls.labtests.controls; let i=index">
+                             <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+              <div class="row" *ngIf="patient && user">
+    <!-- Test Name formcontrol-->
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                 <label for="st_testname">Test Name</label>
+                                  <input auto-complete
+                                   display-property-name="value"
+                                  value-property-name="name"
+                                  [list-formatter]="autocompleListFormatter"
+                                  class="form-control"
+                                  formControlName="name"
+                                  [source]="MedNames"
+                                   min-chars="3"
+                                  id="st_testname" />
+                             </div>
+                     </div>
+                    
+     <!-- End Of Test Name formcontrol-->
+     
+  <!--  Test Frequency formcontrol-->         
+                  <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="st_frequency">Frequency</label>
+                               
+                                <select formControlName="frequency" id="st_frequency" class="form-control" >
+                                <option value="monthly">Every Month</option>
+                                <option value="2months">Every 2 Months</option>
+                                <option value="3months">Every 3 Months</option>
+                                <option value="4months">Every 4 Months</option>
+                                <option value="5months">Every 5 Months</option>
+                                <option value="6months">Every 6 Months</option>
+                                <option value="7months">Every 7 Months</option>
+                                <option value="Annually">Annually</option>
+                              </select>
+                          </div>
+                  </div>
+<!-- End Test Frequency formcontrol-->  
+<!-- date formcontrol-->
+                  <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="st_date">Date</label>
+
+                            <select formControlName="date" id="st_date" class="form-control">
+                              <option value="{{i}}" *ngFor="let i of dateInterval">{{i}}</option>
+                            </select>      
+                        </div>
+                  </div>
+<!-- End of Date formcontrol--> 
+<!-- Time formcontrol-->
+                    <div class="col-md-3">
+                          <div class="form-group">
+                                 <label for="st_timing">Timing</label>
+
+                                  <select formControlName="timing" id="st_timing" class="form-control">
+                                    <option value="{{t}}" *ngFor="let t of timeInterval">{{t}}</option>
+                                  </select>
+                          </div>
+                    </div>
+<!-- Emd of Time Formcontrol -->
+                              
+                            </div> <!-- end of row-->
+                            <!-- closing tags of interface implementation-->
+                       
+                      </div>
+                    </div> 
+                  </div>
+                    <!-- closing tags of interface implementation-->
+  <!-- submit button code    -->
+        <div class="actions clearfix">
+              <!-- add more lab tests-->
+              <div class="pull-left">
+                    <button  [ngClass]="{'hide': itemAdded3}" type="button" (click)="addLabTest()" id="addcp" class="btn btn-round btn-primary">+ add more</button>
+              </div>
+              <!-- end of add more test-->
+              
+              <div class="pull-right" >
+                  <button [ngClass]="{'hide': itemAdded3}" type="submit" [disabled]="!stForm.valid" class="btn btn-warning">Add Test</button>
+              </div>
+              
+                <div [ngClass]="{'hide': !itemAdded3}" class="bareP">
+                    <p>Thanks! This Care Item has been scheduled!</p>
+                </div>
+        </div>
+<!-- end of submit button-->
+      </div> <!-- end of card-content-->
+
+                     
+                    
+                    
+                  </form>
+                </div> <!-- cards-->
+            </div><!--  end of LabTest JObs-->

@@ -1,0 +1,150 @@
+
+<form *ngIf="!caredOneAdded" [formGroup]="caredone" (ngSubmit)="onSubmit(caredone.value, $event)" (keydown.enter)="$event.preventDefault()" class="form" novalidate>
+
+  <div class="form-group" style="width: 48%; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['firstName'].valid && (caredone.controls['firstName'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_firstName">First Name</label>
+    <input type="text" class="form-control" name="co_firstName" id="co_firstName"
+           [formControl]="caredone.controls['firstName']"
+    />
+  </div>
+
+  <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['lastName'].valid && (caredone.controls['lastName'].touched || showErrorFlag)}">
+    <label class="control-label" for="co_lastName">Last Name</label>
+    <input type="text" class="form-control" name="co_lastName" id="co_lastName"
+           [formControl]="caredone.controls['lastName']"
+    />
+  </div>
+
+  <div class="form-group" style="width: 48%; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['nickName'].valid && (caredone.controls['nickName'].touched || showErrorFlag)}">
+    <label class="control-label" for="co_nickName">Nickname</label>
+    <input type="text" class="form-control" name="co_nickName" id="co_nickName"
+           [formControl]="caredone.controls['nickName']"
+    />
+  </div>
+
+
+  <div class="form-group" style="width: 48%; float: left; z-index: 100;  margin-left: 4%; margin-top: 0px; margin-bottom: 0px;">
+    <label class="control-label" for="co_relationship">Relationship</label>
+    <select formControlName="relationship" id="co_relationship" class="form-control">
+      <option [attr.selected]="" value="{{i}}" *ngFor="let i of relationships">{{i}}</option>
+    </select>
+  </div>
+
+   <div class="form-group" style="width: 48%; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;">
+    <label class="control-label" for="co_relationship">Gender</label>
+    <select formControlName="gender" id="co_gender" class="form-control">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+  </div>
+
+
+
+  <div class="form-group"  style="float: left; width: 48%; z-index: 100; margin-left: 4%; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['age'].valid && (caredone.controls['age'].touched || showErrorFlag)}">
+    <label class="control-label" for="co_age">Age</label>
+    <input type="text" class="form-control" id="co_age"
+           [formControl]="caredone.controls['age']"
+    />
+  </div>
+
+  <div class="form-group" style="margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['email'].valid && (caredone.controls['email'].touched || showErrorFlag)}">
+    <label class="control-label" for="co_email">Email</label>
+    <input
+      type="text"
+      class="form-control"
+      name="co_email"
+      id="co_email"
+      [formControl]="caredone.controls['email']"
+      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$"
+    />
+  </div>
+
+
+  <div class="form-group" style="float: left; width: 48%; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['phone'].valid && (caredone.controls['phone'].touched || showErrorFlag)}">
+    <label class="control-label" for="co_phone">10-digit Mobile Number</label>
+    <input type="text" class="form-control" id="co_phone"
+           [formControl]="caredone.controls['phone']"
+          
+    />
+    
+  </div>
+
+  <div class="form-group" style="float: left; margin-left: 4%; width: 48%; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!caredone.controls['hometown'].valid && (caredone.controls['hometown'].touched || showErrorFlag)}">
+    <label class="control-label" for="co_hometown">Location</label>
+    <input type="text" class="form-control" id="co_hometown"
+           [formControl]="caredone.controls['hometown']"
+
+    />
+  </div>
+
+
+  <div class="form-group">
+    <a *ngIf="!caredone.valid" class="btn btn-primary" (click)="showError()" >Submit</a>
+    <button *ngIf="caredone.valid" type="submit" class="btn btn-primary" [disabled]="!caredone.valid">Submit</button>
+    <button class="btn btn-warning" (click)="cancelACO($event)">Cancel</button>
+    </div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['phone'].valid && (caredone.controls['phone'].touched || showErrorFlag)">You must provide a 10 digit phone number</div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['email'].valid && (caredone.controls['email'].touched || showErrorFlag)">You must provide a valid email. Use your email id if 'Cared One' doesn't have one</div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['nickName'].valid && (caredone.controls['nickName'].touched || showErrorFlag)">Please indicate what you call the 'Cared One'</div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['gender'].valid && (caredone.controls['gender'].touched || showErrorFlag)">Please indicate the gender</div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['relationship'].valid && (caredone.controls['relationship'].touched || showErrorFlag)">Please indicate your relationship with the 'Cared One'</div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['firstName'].valid && (caredone.controls['firstName'].touched || showErrorFlag)">Please indicate the Cared One's first name</div>
+    <div class="alert alert-danger" *ngIf="!caredone.controls['lastName'].valid && (caredone.controls['lastName'].touched || showErrorFlag)">Please indicate the Cared One's last name</div>
+
+</form>
+<form *ngIf="caredOneAdded" [formGroup]="coMsgForm" (ngSubmit)="onSubmitMsg(coMsgForm.value, $event)" (keydown.enter)="$event.preventDefault()" class="form" novalidate>
+ <!--<p> Review debrief
+     <br>
+     </p>
+     <div class="checkbox">
+										<label>
+                      <input type="checkbox" name="optionsCheckboxes" (click)="checkBoxClick()" unchecked>
+											Debrief me after initial consultation with {{nickName}}. Call will be setup between you and Cureyo's specialist
+										</label>
+									</div>
+    <p> 
+      <small style="color: #777">Select a time for the debrief from Cureyo's Panel Specialist, after the consultation with {{nickName}}. Timings indicated here are in Indian Time</small></p>
+  
+  
+ <div class="form-group" style="float: left; width: 48%; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!coMsgForm.controls['callBackDay'].valid && (coMsgForm.controls['callBackDay'].touched || showErrorFlag2)}">
+    <label class="control-label" for="callBackTime">Select date</label>
+      <select formControlName="callBackDay"  class="form-control">
+      <option [attr.selected]="" value="{{ i | date }}" *ngFor="let i of cbDay">{{ i | date }}</option>
+    </select>
+  </div>
+  <div class="form-group" style="float: left; width: 48%; z-index: 100; margin-top: 0px; margin-bottom: 0px; margin-left:4%;" [ngClass]="{'has-error':!coMsgForm.controls['callBackTime'].valid && (coMsgForm.controls['callBackTime'].touched || showErrorFlag2)}">
+  <label class="control-label" for="callBackTime">Select time</label>
+    <select formControlName="callBackTime"  class="form-control">
+      <option [attr.selected]="" value="{{i}}" *ngFor="let i of cbTime">{{i}}</option>
+    </select>
+  </div>-->
+   <p> Notify {{nickName}}
+     <br>
+     <small style="color: #777">Please notify {{nickName}} that you have initiated the process with Cureyo. </small>
+   </p>
+ <div class="form-group" style="width: 100%; height: 125px; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" >
+    <label class="control-label" for="message">Message to be sent</label>
+    <textarea type="text" class="form-control"
+           [formControl]="coMsgForm.controls['message']" style="height: 100px;"
+    ></textarea>
+  </div>
+    
+    <div class="form-group">
+    
+    <a *ngIf="detectmob() && !coMsgForm.valid" class="btn btn-primary"  (click)="showError2()">Call</a>
+    <button *ngIf="detectmob() && coMsgForm.valid" class="btn btn-primary" [disabled]="!coMsgForm.valid" (click)="call(coMsgForm.value, $event)">Call</button>
+    
+    <a *ngIf="detectmob() && !coMsgForm.valid" class="btn btn-primary"  (click)="showError2()">WhatsApp {{nickName}}</a>
+    <button *ngIf="detectmob() && coMsgForm.valid" class="btn btn-primary"  [disabled]="!coMsgForm.valid" (click)="whatsapp(coMsgForm.value, $event)">WhatsApp {{nickName}}</button>
+
+    <a *ngIf="!detectmob() && !coMsgForm.valid" class="btn btn-primary" (click)="showError2()">Message this to me</a>
+    <button *ngIf="!detectmob() && coMsgForm.valid" type="submit" class="btn btn-primary" [disabled]="!coMsgForm.valid">Message this to me</button>
+    
+    <p *ngIf="detectmob()"><small>We will send you the above message over Facebook Messenger or SMS for you to easily send to {{nickName}}</small></p>
+    </div>
+    <!--<div class="alert alert-danger" *ngIf="!coMsgForm.controls['callBackDay'].valid && (coMsgForm.controls['callBackDay'].touched || showErrorFlag2)">Please select a date for the debrief</div>
+    <div class="alert alert-danger" *ngIf="!coMsgForm.controls['callBackTime'].valid && (coMsgForm.controls['callBackTime'].touched || showErrorFlag2)">Please select a time for the debrief</div>-->
+    
+
+</form>

@@ -1,0 +1,266 @@
+<div class="main-content" id = "careplanContent">
+    <div class="container-fluid">
+                <div *ngIf="caredone" class="row">
+             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div>
+                    <div class="card card-stats">
+                        <div class="card-header" style="border-radius: 50%; width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+<!--<i class="material-icons">content_copy</i>-->
+<img src="{{caredone.avatar}}" style="border-radius: 50%; width: 88px; height: 88px;">
+</div>
+<div class="card-content">  
+    <h5 class="title">{{caredone.firstName}}<br/><small> Care Plan</small></h5>
+</div>
+</div>
+</div>
+             </div>
+</div>
+       <div *ngIf="!dataReady" class="card card-stats">
+                     
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+<!--<i class="material-icons">content_copy</i>-->
+
+<i class="material-icons" style="color: #ffffff;">access_time</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Care Plan is in progress
+            <br><small style="float: left; font-size: 14px; line-height: 16px;">Typically, the Care Plan is created within 48 hours of receiving medical reports of the Cared One</small>
+    </h3>
+    
+</div>
+
+</div>
+        <div *ngIf="dataReady" class="row">
+            <!-- Doc Review Component-->
+            <app-DocReview *ngIf="caredonesDoctor && caredone"
+            [patient]="caredone"
+            [doctor]="caredonesDoctor" ></app-DocReview>
+            <!-- Doc Review Component-->
+  <!-- medication Reminder component-->
+   <app-MedicationReminder *ngIf="currentUser && caredone"
+          [user]="currentUser" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval">
+   </app-MedicationReminder>
+     <!-- Suggested Med Reminder -->
+  <app-SuggestedMedReminder *ngIf="currentUser && caredone"
+          [user]="currentUser" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval">
+</app-SuggestedMedReminder>
+  <!--exercise Tracker component -->
+  <app-ExerciseTracker *ngIf="currentUser && caredone "
+          [user]="currentUser" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval">
+  </app-ExerciseTracker>  
+  <!-- Blood Sugar Tracker -->
+  <app-BloodSugarTracker *ngIf="currentUser && caredone"
+          [user]="currentUser"   
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval">
+  </app-BloodSugarTracker>
+
+  <!--  Online Consultation -->
+  <app-OnlineConsultation *ngIf="currentUser && caredone"
+          [user]="currentUser" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval">
+  </app-OnlineConsultation>
+  <!-- physical consultation -->
+  <app-PhysicalConsultation *ngIf="currentUser && caredone"
+          [user]="currentUser" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval">
+  </app-PhysicalConsultation>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="dataReady" class="modal fade" id="careModal" role="dialog" aria-labelledby="careModalLabel" data-backdrop="static"
+  data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document" style="position: relative; margin-top: 20px; margin-left: 5%; margin-right: 5%; width: 90%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="careModalLabel" style="float: left;"><b>Book Test</b></h4>
+        <br>
+        <h4> <small>We can place recurring orders for the suggested tests here. Please select a vendor and we will place the order on your behalf. You can change the vendor for the recurring tests at any point of time.</small></h4>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!vendorSelected">
+          <div class="row">
+
+            <div class="col-md-4" *ngFor="let lab of labArray2">
+
+              <div class="card card-stats">
+                <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
+                  <!--<i class="material-icons">content_copy</i>-->
+
+                  <img src="{{lab.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
+                </div>
+                <div class="card-content">
+                  <h3 class="title" style="font-size: 20px; font-weight: 600;">
+                    {{lab.labName }}
+                    <br> {{lab.$key}}
+                  </h3>
+                  <br>
+                  <table style="width:100%; text-align: left;">
+                    <thead class="text-danger">
+                      <tr>
+                        <th>Test Name</th>
+                        <th style="text-align: justify; text-justify: auto; width: 30%;">Price (Rs.)</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let i of testArray; let i=index">
+                        <td>
+                          <div *ngIf="!testArray[i][lab.id]" style="font-size: 10px; text-overflow: ellipsis;">{{testArray[i].$key}}</div>
+                          <div *ngIf="testArray[i][lab.id]" style="font-size: 10px; text-overflow: ellipsis;">{{testArray[i][lab.id].name}}</div>
+                        </td>
+                        <td *ngIf="testArray[i][lab.id]" style="font-size: 10px; text-align: right;">{{testArray[i][lab.id].price}} </td>
+                        <td *ngIf="!testArray[i][lab.id]" style="font-size: 10px; text-align: right;">NA</td>
+                      </tr>
+                      <hr>
+
+                      <tr style="font-weight: 700">
+                        <td>Total</td>
+                        <td style="text-align: right;">Rs. {{labTotal[lab.id]}}</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="card-footer" style="margin-left:0; margin-right:0;">
+                    <p style="color: #137a9c; font-size: 12px; text-align: left; margin-left:0;"><i class="material-icons" style="font-size:small;">home</i>Home Collection
+
+                      <i class="material-icons" style="font-size:small;">payment</i> Cash & Online
+                    </p>
+                    <button type="button" class="btn btn-primary" style="float: right; width: 100%; height: 3em;" (click)="selectVendor(lab.id, labTotal[lab.id])">Select</button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="modal-footer" style="padding-bottom: 20px;">
+            <button type="button" style="float: left; z-index: 10000;" class="btn btn-warning" (click)="closeModal()">Close</button>
+
+          </div>
+
+</div>
+
+
+       
+       <div class="row"  style="margin-left: 0; margin-right: 0;">
+           <form *ngIf="vendorSelected" [formGroup]="bookOrder" (ngSubmit)="onSubmit(bookOrder.value, $event)" (keydown.enter)="$event.preventDefault()" class="form" novalidate>
+
+
+<div class="form-group" style="width: 30%; margin-right: 5%; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['firstName'].valid && (bookOrder.controls['firstName'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_firstName">Name</label>
+    <input type="text" class="form-control" name="co_firstName" id="co_firstName"
+           [formControl]="bookOrder.controls['firstName']"
+    />
+  </div>
+    <div class="form-group" style="width: 30%; margin-right: 5%; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['email'].valid && (bookOrder.controls['email'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_email">Email</label>
+    <input type="text" class="form-control" name="co_email" id="co_email"
+           [formControl]="bookOrder.controls['email']"
+    />
+  </div>
+    <div class="form-group" style="width: 30%; margin-right: 5%;  float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['phone'].valid && (bookOrder.controls['phone'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_phone">Phone Number</label>
+    <input type="text" class="form-control" name="co_phone" id="co_phone"
+           [formControl]="bookOrder.controls['phone']"
+    />
+  </div>
+    <div class="form-group" style="width: 30%; margin-right: 5%;  float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['gender'].valid && (bookOrder.controls['gender'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_gender">Gender</label>
+    <input type="text" class="form-control" name="co_gender" id="co_gender"
+           [formControl]="bookOrder.controls['gender']"
+    />
+  </div>
+    <div class="form-group" style="width: 30%; margin-right: 5%;  float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['address'].valid && (bookOrder.controls['address'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_address">Address</label>
+    <input type="text" class="form-control" name="co_address" id="co_address"
+           [formControl]="bookOrder.controls['address']"
+    />
+  </div>
+
+    <div class="form-group" style="width: 30%; margin-right: 5%;  float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['serviceProvider'].valid && (bookOrder.controls['serviceProvider'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_serviceProvider">Service Provider</label>
+    <input type="text" class="form-control" name="co_serviceProvider" id="co_serviceProvider"
+           [formControl]="bookOrder.controls['serviceProvider']"
+    />
+  </div>
+
+   <div class="form-group" style="width: 30%; margin-right: 5%;  float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!bookOrder.controls['totalCost'].valid && (bookOrder.controls['totalCost'].touched || showErrorFlag)}">
+
+    <label class="control-label" for="co_totalCost">Total Cost</label>
+    <input type="text" class="form-control" name="co_totalCost" id="co_totalCost"
+           [formControl]="bookOrder.controls['totalCost']"
+    />
+  </div>
+
+   <div class="form-group" style="width: 30%; margin-right: 5%;  float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;">
+    <label class="control-label" for="co_payment">Payment Method</label>
+    <select formControlName="payment" id="co_payment" class="form-control">
+      <option value="online">Online</option>
+      <option value="cash">Cash</option>
+    </select>
+  </div>
+
+   <div class="form-group" style="width: 10%; margin-right: 5%;  margin-top: 0px; margin-bottom: 0px;">
+    <label class="control-label" for="co_recOrder">Set this as a recurring order</label>
+    <select formControlName="recOrder" id="co_recOrder" class="form-control">
+      <option value="Yes">YES</option>
+      <option value="No">NO</option>
+    </select>
+  </div>
+<br>    
+<div class="modal-footer" style="padding-bottom: 20px;">
+  <div class="form-group">
+      
+    <button *ngIf="!bookOrder.valid" type="submit" class="btn btn-primary" style="float: left; z-index: 10000; vertical-align: bottom;" (click)="showError()">Complete</button>     
+    <button *ngIf="bookOrder.valid" type="submit" class="btn btn-primary" style="float: left; z-index: 10000; vertical-align: bottom;" [disabled]="!bookOrder.valid">Complete</button>
+    <button type="button" style="float: left; z-index: 10000;" class="btn btn-warning" (click)="closeModal()">Close</button>
+     
+    </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['phone'].valid && (bookOrder.controls['phone'].touched || showErrorFlag)">You must provide a 10 digit phone number</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['email'].valid && (bookOrder.controls['email'].touched || showErrorFlag)">You must provide a valid email. Use your email id if 'Cared One' doesn't have one</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['gender'].valid && (bookOrder.controls['gender'].touched || showErrorFlag)">Please indicate the gender</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['firstName'].valid && (bookOrder.controls['firstName'].touched || showErrorFlag)">Please indicate the Cared One's name</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['address'].valid && (bookOrder.controls['address'].touched || showErrorFlag)">Please indicate the Cared One's address</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['serviceProvider'].valid && (bookOrder.controls['serviceProvider'].touched || showErrorFlag)">Please indicate the center</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['totalCost'].valid && (bookOrder.controls['totalCost'].touched || showErrorFlag)">cost not there</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['payment'].valid && (bookOrder.controls['payment'].touched || showErrorFlag)">Please select payment mode</div>
+    <div class="alert alert-danger" *ngIf="!bookOrder.controls['recOrder'].valid && (bookOrder.controls['recOrder'].touched || showErrorFlag)">Do you want to repeat the order?</div>
+       
+
+
+      </form>
+       </div>
+           <!--<p> this is where the form will come</p>-->
+       <!--</div>-->
+      
+    </div>
+  </div>
+  
+</div>

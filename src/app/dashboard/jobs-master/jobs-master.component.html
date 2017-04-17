@@ -1,0 +1,85 @@
+<div class="main-content">
+    <div class="container-fluid">
+                <div *ngIf="caredone" class="row">
+             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div>
+                    <div class="card card-stats">
+                        <div class="card-header" style="border-radius: 50%; width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+<!--<i class="material-icons">content_copy</i>-->
+<img src="{{caredone.avatar}}" style="border-radius: 50%; width: 88px; height: 88px;">
+</div>
+<div class="card-content">  
+    <h5 class="title">{{caredone.firstName}} <br/><small> Care Plan</small></h5>
+</div>
+</div>
+</div>
+             </div>
+</div>
+       <!--<div *ngIf="!dataReady" class="card card-stats">
+                        <div class="card-header" style="width: 90px; height: 90px;" data-background-color="orange">
+
+<i class="material-icons" style="color: #ffffff;">access_time</i>
+</div> 
+<div class="card-content" style="float: left; text-align: left;">
+    
+    <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Care Plan is in progress
+            <br><small style="float: left; font-size: 14px; line-height: 16px;">Typically, the Care Plan is created within 48 hours of receiving medical reports of the Cared One</small>
+    </h3>
+    
+</div>
+
+</div>-->
+     
+        <!--<div *ngIf="dataReady" class="row">-->
+            <!-- Doc Review Component-->
+             <app-doc-review-jobs *ngIf="currentUserID && caredone"
+              [user]="currentUser" 
+              [patient]="caredone"
+              [caredonesDoctor]="currentUser"
+              [MedNames]="TestNames"></app-doc-review-jobs>
+            <!-- Doc Review Component-->
+  <!-- medicartion Reminder component-->
+   <app-medication-reminder-jobs *ngIf="currentUserID && caredone && timeInterval && dateInterval && MedNames"
+          [user]="currentUserID" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [MedNames]="MedNames">
+   </app-medication-reminder-jobs>
+  <!--exercise Tracker component -->
+  <app-exercise-tracker-jobs *ngIf="currentUserID && caredone"
+          [user]="currentUserID" 
+          [patient]="caredone" >
+  </app-exercise-tracker-jobs>  
+  <!-- Blood Sugar Tracker -->
+  <app-bloodsugar-jobs *ngIf="currentUserID && caredone"
+    [user]="currentUserID"
+    [patient]="caredone"  >
+  </app-bloodsugar-jobs>
+  <!-- Suggested Med Reminder -->
+  <app-lab-test-jobs *ngIf="currentUserID && caredone && timeInterval && dateInterval && TestNames"
+          [user]="currentUserID" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [MedNames]="TestNames">
+</app-lab-test-jobs>
+  <!--  Online Consultation -->
+  <app-online-consultation-jobs *ngIf="currentUserID && caredone && timeInterval && dateInterval && currentUser"
+          [userID]="currentUserID" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [caredonesDoctor]="currentUser">
+  </app-online-consultation-jobs>
+  <!-- physical consultation -->
+  <app-physicalconsultation-jobs *ngIf="currentUserID && caredone && timeInterval && dateInterval && currentUser"
+          [userID]="currentUserID" 
+          [patient]="caredone" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [caredonesDoctor]="currentUser">
+  </app-physicalconsultation-jobs>
+        <!--</div>-->
+    </div>
+</div>

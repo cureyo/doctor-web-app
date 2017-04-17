@@ -1,0 +1,76 @@
+<!-- medication plan portion-->
+  <div class="col-md-12">
+      <!-- Medication plan card (its should be a component )--> 
+                <div class="card">
+                    <!-- card header portion-->
+                   <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Medication Plan</h4>
+                        <p class="category">Reminders for {{patient.nickName}}'s medications</p>
+                        <p class="category">{{currentDate}}</p>
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <a  (click)="fetchPrev(currentItem)" style="cursor: pointer;"> < Previous</a>
+                                
+                            </div>
+                            <div class="pull-right">
+                                <a  (click)="fetchNext(currentItem)" style="cursor: pointer;">Next ></a>
+                            </div>
+                        </div>
+                    </div> <!-- card header portion end-->
+                    
+                    <div class="card-content table-responsive">
+                         <!--<div style="font-weight: 700;">Message to be sent
+                                        </div>-->
+                                        
+                        <table class="table"> 
+                             <thead class="text-primary">
+                                 <tr>
+                                     <th style="font-weight: 700;">Check Message</th>
+                                     
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                  <tr>
+                                     <td> {{patient.nickName}}, have you had your #MEDICINE?</td>
+                                      
+                                  </tr>
+                                 
+                             </tbody>
+                        </table>
+                             <table class="table" *ngIf="suggestedMeds"> 
+                             <thead class="text-primary">
+                                 <tr>
+                                    
+                                     <th>Report Frequency</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                  <tr>
+                                     
+                                      <td>Weekly</td>
+                                  </tr>
+                                 
+                             </tbody>
+
+                            <thead class="text-danger">
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Frequency</th>
+                                    <th>Date</th>
+                                    <th>Timing</th>
+                                    <th>Day</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                               <tr *ngFor="let i of suggestedMeds; let i=index">
+                                    <td>{{suggestedMeds[i].MedName}}</td>
+                                     <td>{{suggestedMeds[i].MedFreq}} </td>
+                                      <td>{{suggestedMeds[i].MedDate}}</td>
+                                       <td>{{suggestedMeds[i].MedTiming}}</td>   
+                                       <td>{{suggestedMeds[i].MedDay}}</td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--  end of medication reminder-->

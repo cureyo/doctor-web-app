@@ -1,0 +1,305 @@
+#healthStatus{
+  .left{
+    padding: 0;
+  }
+    .card {
+      border: $thickBlueBorder;
+      @include border-radius(4px);
+      font-family: $fontOpenSans;
+      margin-bottom: 15px;
+      min-height: 200px;
+      padding: 10px 20px;
+
+      a {
+        color: $blue;
+        text-decoration: none;
+
+        &:hover, &:active{
+          @include opacity(0.5);
+          outline: none;
+        }
+      }
+      ._toggle {
+
+        ._top span {
+          font-size: 14px;
+          margin-left: 5px;
+          vertical-align: baseline;
+        }
+        //top span
+
+        ._mid, ._bottom {
+          text-align: center;
+        }
+        //_mid _bottom
+
+        ._mid {
+          h2 {
+            font-size: 40px;
+            font-weight: 600;
+          }
+        }
+        //mid
+
+      }//_toggle
+
+      .collapse{
+        color: $blue;
+
+        img{
+          width: 100%;
+        }
+
+        .about{
+          line-height: 20px;
+        }//about
+
+        .action{
+          margin: 20px 0;
+
+          p{
+            margin: 0;
+          }
+          ul{
+            padding: 0;
+          }
+        }//action
+
+        .medicineStatus{
+
+          .responseRate{
+            @include border-radius(75px);
+            padding: 10px;
+            text-align: center;
+            border: 10px solid lighten($blue, 60);
+            width: 110px;
+            margin: 10px auto;
+
+            p{
+              margin: 0;
+
+              span{
+                display: block;
+                margin-bottom: 5px;
+                margin-top: 10px;
+              }
+            }
+            strong {
+              font-size: 24px;
+            }
+
+          }//responseRate
+
+          .averageTime{
+            margin-left: -20px;
+            width: 230px;
+
+            .time{
+              strong{
+                font-size: 45px;
+                padding: 0 10px;
+              }
+            }
+            .text, .time {
+              display: inline-block;
+            }
+          }//averageTime
+
+        }//medicineStatus
+
+        .tshLevels{
+
+          .level{
+            height: 100px;
+            margin-left: -20px;
+            width: 210px;
+          }
+          .indicator{
+            height: 30px;
+            p{
+              display: inline-block;
+              height: 50px;
+              line-height: 14px;
+              margin: 0;
+              padding: 5px;
+              vertical-align: top;
+
+              &:first-child{
+                font-size: 24px;
+                height: 30px !important;
+                margin-top: 7px !important;
+                vertical-align: middle;
+              }
+            }
+            .filled{
+              background-color: $blue;
+              color: $light;
+              width: 45px;
+              &.active{
+                width: 65px;
+              }
+            }
+            .empty{
+              background-color: lighten($blue, 60);
+              width: 40px;
+              margin-left: -3px;
+              &.active{
+                width: 65px;
+              }
+            }
+          }
+
+        }//tshLevels
+
+      }//collapse
+
+      .doctor{
+        .details img{
+          width: 100%;
+          margin: 10px 0;
+          max-width: 50px;
+        }
+      }
+    }//card
+
+  .right{
+    .card{
+      min-height: 360px;
+
+      ._top > h2{
+        font-size: 34px;
+      }
+    }//card
+
+
+          .bsugar-ovals{
+              width: 30px;
+              height: 30px;
+              background-image: linear-gradient(to bottom, #cee8fa, #7abcea, #cee8fa);
+              border-radius: 15px;
+              margin-left: 18px;
+          }
+          .bsugar-line1{
+              width: 3.1px;
+              height: 22px;
+              background-image: linear-gradient(to bottom, #2ab2cc, #137a9c);
+              margin-left: 31px;
+          }
+
+          .bsugar-line2{
+            width: 3.1px;
+              height: 30px;
+              background-image: linear-gradient(to bottom, #2ab2cc, #137a9c);
+              margin-left: 32px;
+          }
+          #circle1 {
+              width: 65px;
+              height: 64px;
+              -webkit-border-radius: 25px;
+              -moz-border-radius: 25px;
+              border-radius: 38px;
+              background: white;
+              border: solid 5px #2ab2cc;
+
+              }
+              #circle2 {
+              width: 74px;
+              height: 72px;
+              -webkit-border-radius: 25px;
+              -moz-border-radius: 25px;
+              border-radius: 37px;
+              background: white;
+              border: solid 5px #2ab2cc;
+
+              }
+              .sugardetails1 {
+                margin-left:35%;
+              }
+              .cr-text1 {
+              text-align: center;
+              margin-top: 12px;
+              }
+              .cr-text2 {
+              text-align: center;
+              margin-top: 19px
+              }
+
+  }//right
+
+
+}//healthStatus
+
+#healthRecords {
+
+  .xrayimage {
+    position: relative;
+    p img {
+      width: 100%;
+    }
+    h2 {
+      position: absolute;
+      top: 70px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 span {
+      color: white;
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 1.25;
+    }
+  }
+
+  .profrecard {
+    min-height: 150px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+  }
+  .profrecard.profactive {
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+    border: solid 1px #137a9c;
+    color: #137a9c;
+  }
+  .filecount{
+    width: 55px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: #137a9c;
+    border: solid 2px #ffffff;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .XdataRow{
+    border-spacing: 5px;
+  }
+  .XdataColumn
+  {
+    display: table-cell;
+    background-color: #ffffff;
+    color: gray;
+    text-align: center;
+    border: solid 1px #9d9d9d;
+    border-radius: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .XrviewRow{
+    padding-top:20px;
+
+  }
+  .Xrviewcolumn {
+    display: table-cell;
+    border: solid 1px #eee;
+    width: 127px;
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 5px;
+    height: 10px;
+
+  }
+
+}//healthRecords
+

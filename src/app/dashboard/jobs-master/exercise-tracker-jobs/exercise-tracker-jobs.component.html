@@ -1,0 +1,73 @@
+<!-- Exercise Tracker Job --> 
+  <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="teForm" class="formGroup" novalidate (ngSubmit)="save_TeData(teForm)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Exercise Tracker </h4>
+
+                        <p class="category">Exercise Tracker for {{patient.nickName}} </p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row" *ngIf="patient && user">
+    <!-- Daily Suggested walk formcontrol-->
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="cp_suggested_walk">Daily Suggested walk </label>
+              
+                                  <select formControlName="suggested_walk" id="cp_suggested_walk" class="form-control">
+                                    <option value="1">1 km</option>
+                                    <option value="2">2 km</option>
+                                    <option value="3">3 km</option>
+                                    <option value="4">4 km</option>
+                                    <option value="5">5 km</option>
+                                    <option value="6">6 km</option>
+                                    <option value="7">7 km</option>
+                                  </select>
+                            </div>
+                    </div>
+     <!-- Daily Suggested walk formcontrol-->
+     
+  <!-- google fit tracker formcontrol-->         
+                  <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="cp_track_using">Track using</label>
+
+                                <select formControlName="Track_using" id="cp_track_using" class="form-control"  >
+                                <option value="Google/Android">Google/Android</option>
+                                </select>
+                          </div>
+                  </div>
+<!-- End of google fit tracker  formcontrol-->  
+<!-- Report Frequency formcontrol-->
+                  <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="te_reportFrequency">Report Frequency</label>
+
+                              <select formControlName="reportFrequency" id="cp_reportFrequency" class="form-control"  >
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                              </select>
+                        </div>
+                  </div>
+            <!-- End of Report Frequency formcontrol--> 
+
+                            </div> <!-- end of row-->
+<!-- submit button code    -->
+                <div class="actions clearfix">
+                      <div class="pull-right" >
+                          <button [ngClass]="{'hide': itemAdded5}" type="submit" [disabled]="!teForm.valid" class="btn btn-warning">Add</button>
+                      </div>
+
+                        <div [ngClass]="{'hide': !itemAdded5}" class="bareP">
+                            <p>Thanks! This Care Item has been scheduled!</p>
+                        </div>
+                </div>
+<!-- end of submit button-->
+                    </div>
+                  </form>
+                </div>
+            </div><!--  end of medication reminder-->
