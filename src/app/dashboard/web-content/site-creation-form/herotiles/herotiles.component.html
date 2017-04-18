@@ -1,0 +1,104 @@
+ <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="heroTile" class="formGroup" novalidate (ngSubmit)="save_heroTile(heroTile)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Hero Tiles </h4>
+
+                        <p class="category">Hero Tiles text</p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row">
+                       <!-- title-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Title </label>
+                                 <input type="text" class="form-control" formControlName="title"/>
+                            </div>
+                    </div><!--end of title -->
+                     <!-- exeperience-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Exeperience</label>
+                                 <input type="text" class="form-control" formControlName="expo"/>
+                            </div>
+                    </div><!--end of Experience -->
+                    <!-- Qualification-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Qualification</label>
+                                 <input type="text" class="form-control" formControlName="qual"/>
+                            </div>
+                    </div><!--end of Qualification -->
+                    
+  
+                            </div> <!-- end of 1st row-->
+                            <!--second row-->
+                <div class="row">
+                    <!-- About-->
+                    <div class="col-md-4">  
+                            <div class="form-group">
+                                 <label for="title">About</label>
+                                 <input type="text" class="form-control" formControlName="about"/>
+                            </div>
+                    </div>
+                    <!--end of About  -->
+                     <!-- text for web site-->
+                    <div class="col-md-4">  
+                            <div class="form-group">
+                                 <label for="title">Text for site</label>
+                                 <input type="text" class="form-control" formControlName="site_text"/>
+                            </div>
+                    </div>
+                    <!--end of text for web site -->
+                    <!-- card title -->
+                    <div class="col-sm-3">  
+                            <div class="form-group">
+                                 <label for="title"> Card Title</label>
+                                 <input type="text" class="form-control" formControlName="card_title"/>
+                            </div>
+                    </div><!--end of card title -->
+                </div>
+                <!-- end of second row-->
+                <!-- third row-->
+                <div class="row">
+                      <div class="col-md-4">  
+                        <div class="checkbox">
+                        <label style="padding-top:15px;">
+                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="fb_Profile">
+                          Use My Fb Profile Pic
+                        </label>
+                      </div>          
+                    </div>
+
+                    <div class="col-md-4">  
+                        <div class="checkbox">
+                        <label style="padding-top:15px;">
+                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="bg_Pic">
+                          click for background pic
+                        </label>
+                      </div>          
+                    </div>
+                    <!-- submit button code    -->
+                <div class="col-md-4"> 
+        
+                      <div class="pull-right" >
+                          <button  type="submit" [ngClass]="{'hide': heroTileAdded}" [disabled]="!heroTile.valid" class="btn btn-warning">Add</button>
+                      </div>
+
+                       <div [ngClass]="{'hide': !heroTileAdded}" class="bareP">
+                            <p>Thanks! Tile is Added </p>
+                        </div>
+                </div>
+<!-- end of submit button-->
+                </div>  <!-- end of third row-->
+                 
+                
+
+                    </div>
+                  </form>
+                </div>
+            </div> 

@@ -36,6 +36,10 @@ import {MedicationReminderJobsComponent} from "./dashboard/jobs-master/medicatio
 import {OnlineConsultationJobsComponent}  from "./dashboard/jobs-master/online-consultation-jobs/online-consultation-jobs.component";
 import {PhysicalconsultationJobsComponent}  from "./dashboard/jobs-master/physicalconsultation-jobs/physicalconsultation-jobs.component";
 import {DocReviewJobsComponent} from "./dashboard/jobs-master/doc-review-jobs/doc-review-jobs.component";
+import {WebContentComponent} from "./dashboard/web-content/web-content.component";
+import {SiteCreationFormComponent} from "./dashboard/web-content/site-creation-form/site-creation-form.component";
+import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/herotiles/herotiles.component";
+import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
 export const MODULE_ROUTES: Route[] =[
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
     { path: 'dashboard', component: HomeComponent },
@@ -46,7 +50,9 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'doctor-login',component:DoctorLoginComponent},
     { path: 'doctor-checkup',component:DoctorCheckupComponent },
     { path: 'doctorJob/:id',component:JobsMasterComponent },
-    { path: 'clinicpage/:page', component: ClinicPageComponent }
+    { path: 'clinicpage/:page', component: ClinicPageComponent },
+    {path : 'web', component :WebContentComponent},
+    {path :'webform' ,component :SiteCreationFormComponent}
 ]
 
 export const MODULE_COMPONENTS = [
@@ -81,6 +87,10 @@ export const MODULE_COMPONENTS = [
     MedicationReminderJobsComponent,
     OnlineConsultationJobsComponent,
     PhysicalconsultationJobsComponent,
-    DocReviewJobsComponent
+    DocReviewJobsComponent,
+    WebContentComponent,
+    SiteCreationFormComponent,
+    HerotilesComponent,
+    BookingtileComponent
 
 ]

@@ -128,6 +128,10 @@ export class AuthService {
   public _getMedicineNames() {
     return this.medicineList;
   }
+  public _getSitePrefilledData(){
+    console.log("herotile path",this.db.herotiles)
+    return this.af.database.object(this.db.herotiles);
+  }
 
   public _saveUserCoverPhoto(uid, cover) {
     return this.af.database.object(this.db.users + uid)
@@ -139,7 +143,7 @@ export class AuthService {
     return this.af.database.object(this.db.users + uid);
 
 
-  }//_saveUserCoverPhoto
+  }//_getUserCoverPhoto
   public _getUserId(uid) {
     console.log(this.db.userIds + uid);
 

@@ -50,7 +50,7 @@ export const AppConfig = {
     orderDetails:       environment.envName +  '/Orders/',
     docUsers:           environment.envName + '/DoctorUsers/',
     doctorPages:        environment.envName + '/DoctorPages/',
-    pathologicalTestDetails :  environment.envName + '/PathologicalTests'
-  
+    pathologicalTestDetails :  environment.envName + '/PathologicalTests',
+    herotiles: environment.envName + '/DoctorPages/localhost/content/'
   }
 }

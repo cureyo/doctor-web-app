@@ -11,9 +11,13 @@ import { MedicationReminderJobsComponent } from './jobs-master/medication-remind
 import { OnlineConsultationJobsComponent } from './jobs-master/online-consultation-jobs/online-consultation-jobs.component';
 import { PhysicalconsultationJobsComponent } from './jobs-master/physicalconsultation-jobs/physicalconsultation-jobs.component';
 import { DocReviewJobsComponent } from './jobs-master/doc-review-jobs/doc-review-jobs.component';
+import { WebContentComponent } from './web-content/web-content.component';
+import { SiteCreationFormComponent } from './web-content/site-creation-form/site-creation-form.component';
+import { HerotilesComponent } from './web-content/site-creation-form/herotiles/herotiles.component';
+import { BookingtileComponent } from './web-content/site-creation-form/bookingtile/bookingtile.component';
 @NgModule({
     imports: [ RouterModule, CommonModule ],
-    declarations: [ DashboardComponent, CaredOnesFormMobileViewComponent, JobsMasterComponent, BloodsugarJobsComponent, ExerciseTrackerJobsComponent, LabTestJobsComponent, MedicationReminderJobsComponent, OnlineConsultationJobsComponent, PhysicalconsultationJobsComponent, DocReviewJobsComponent ],
+    declarations: [ DashboardComponent, CaredOnesFormMobileViewComponent, JobsMasterComponent, BloodsugarJobsComponent, ExerciseTrackerJobsComponent, LabTestJobsComponent, MedicationReminderJobsComponent, OnlineConsultationJobsComponent, PhysicalconsultationJobsComponent, DocReviewJobsComponent, WebContentComponent, SiteCreationFormComponent, HerotilesComponent, BookingtileComponent ],
     exports: [ DashboardComponent ]
 
 })
