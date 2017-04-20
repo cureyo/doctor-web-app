@@ -114,6 +114,7 @@ export class AuthService {
       .push(data);
   }//_saveReminders
 
+
   public _saveOnboardingReview(data, caredoneId, route) {
     const onboardingdata = this.af.database.object(this.db.onboardingReview+ '/' + caredoneId + '/' + route)
     return onboardingdata.set(data);
@@ -121,6 +122,12 @@ export class AuthService {
 
   }//save onboardingReviewreview data
 
+    public _saveWebContent(data, route) {
+    const webcontentdata = this.af.database.object(this.db.website+ '/' + route)
+    return webcontentdata.set(data);
+
+
+  }//save onboardingReviewreview data
   public _getPathologicalTests() {
     return this.pathologicalList;
   }
@@ -129,8 +136,8 @@ export class AuthService {
     return this.medicineList;
   }
   public _getSitePrefilledData(){
-    console.log("herotile path",this.db.herotiles)
-    return this.af.database.object(this.db.herotiles);
+    console.log("herotile path",this.db.website)
+    return this.af.database.object(this.db.website);
   }
 
   public _saveUserCoverPhoto(uid, cover) {

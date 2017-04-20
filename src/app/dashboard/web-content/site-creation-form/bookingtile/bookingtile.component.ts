@@ -64,7 +64,13 @@ export class BookingtileComponent implements OnInit {
       reminder['fileUpload']=job['fileUpload'],
       reminder['bg_Pic']=job['bg_Pic']
       this.bookingTileAdded=true;
-      //  console.log("reminder value bookingtiles :",reminder);
+        console.log("reminder value bookingtiles :",reminder);
+        this._authService._saveWebContent(reminder,'bookingTile').then(
+      res =>{
+          let d=res;
+          console.log("response of booking tile data",d);
+      })
+
 
   }
 

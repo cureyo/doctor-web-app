@@ -65,7 +65,12 @@ export class HerotilesComponent implements OnInit {
       reminder['fb_profile']=job['fb_Profile'],
       reminder['bg_Pic']=job['bg_Pic']
       this.heroTileAdded=true;
-      //  console.log("reminder value herotile  :",reminder);
+       console.log("reminder value herotile  :",reminder);
+        this._authService._saveWebContent(reminder,'heroTile').then(
+      res =>{
+          let d=res;
+          console.log("response of hero tile data",d);
+      })
   }
   
 

@@ -51,6 +51,6 @@ export const AppConfig = {
     docUsers:           environment.envName + '/DoctorUsers/',
     doctorPages:        environment.envName + '/DoctorPages/',
     pathologicalTestDetails :  environment.envName + '/PathologicalTests',
-    herotiles: environment.envName + '/DoctorPages/localhost/content/'
+    website: environment.envName + '/DoctorPages/localhost/content/'
   }
 }
