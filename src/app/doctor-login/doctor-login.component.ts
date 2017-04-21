@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/firebaseauth.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import {FormGroup, FormBuilder,Validators} from "@angular/forms";
 
 @Component({
   templateUrl: 'doctor-login.component.html',
@@ -8,12 +9,12 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
   moduleId: module.id
 })
 export class DoctorLoginComponent implements OnInit {
-
+   private loginForm:FormGroup;
   private user: {};
   private isAuth: boolean;
   private showVid: boolean = false;
 
-  constructor(private _authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private _fb: FormBuilder,private _authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // this._authService.logout();
@@ -52,6 +53,11 @@ export class DoctorLoginComponent implements OnInit {
       },
       error => console.log(error)
       );
+      this.loginForm=this._fb.group({
+        //  fname:[],
+         email:[,Validators.required],
+         psw:[]
+       })
   }
 
   doclogin(provider) {
@@ -65,11 +71,11 @@ export class DoctorLoginComponent implements OnInit {
     this.showVid = !this.showVid;
   }
 
-  Mlogin=(model)=>{
+   Mlogin=(model)=>{
     let reminder={}
     let login={},
     job=model['value'];
-    reminder['displayName']=job['fname'];
+    // reminder['displayName']=job['fname'];
     reminder['email']=job['email'];
     reminder['password']=job['psw'];
     
@@ -95,6 +101,6 @@ export class DoctorLoginComponent implements OnInit {
     // });
        
 
-  } 
+  }
 
 }

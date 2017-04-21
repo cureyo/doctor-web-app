@@ -131,7 +131,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
                 //console.log("redirecting to dashboard");
                 console.log(res);
-                if (window.location.pathname != '/doctor-checkUp')
+                if (window.location.pathname != '/doctor-checkup')
                 this.showSideBar = true; 
                 else this.showSideBar = false; 
                 //this.router.navigate(['dashboard']);
@@ -139,8 +139,9 @@ export class AppComponent implements OnInit, AfterViewInit {
               } else {
                 console.log("redirecting to checkup");
 
-                this.showSideBar = false;
-                this.router.navigate(['checkup'])
+                this.showSideBar = true;
+                this.router.navigate(['/doctor-checkup'])
+                // here is the error
 
               }
             });

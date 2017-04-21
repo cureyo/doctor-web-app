@@ -9,11 +9,11 @@
 </div>
 
 						<div class="card-signup">
-							<form class="form" method="" action="">
+							<form  [formGroup]="loginForm" class="formGroup" method="" action="">
 								<div class="header header-primary text-center" style="padding: 10%;">
-									<h4>Login to start Caring using doctor</h4>
+									<h4>Login to start Caring</h4>
 									<div class="social-line" style="font-size: 20px;">
-										<a (click)="doclogin('facebook')" class="btn btn-primary">
+										<a (click)="login('facebook')" class="btn btn-primary">
 											<i class="fa fa-facebook-square"></i> Signup using Facebook
 										</a>
 										
@@ -23,7 +23,7 @@
 								<p class="text-divider" style="text-align: center;">Or Be Classical</p>
 								<div class="content">
 
-									<div class="input-group">
+									<!--<div class="input-group">
 										 
 										<span class="input-group-addon">
 											<i class="material-icons">face</i>
@@ -31,7 +31,7 @@
 										<div class="form-group">
 										<input type="text" class="form-control" formControlName="fname" placeholder="First Name...">
 										 </div>
-									</div>
+									</div>-->
 
 									<div class="input-group">
 										 
@@ -52,6 +52,15 @@
 										<input type="password" class="form-control" formControlName="psw" placeholder="Password..." />
 										  </div>
 									</div>
+
+									<!-- If you want to add a checkbox to this form, uncomment this code-->
+
+									<!--<div class="checkbox" style="padding-left: 15px;">
+										<label>
+											<input type="checkbox" name="optionsCheckboxes" checked>
+											Subscribe to newsletter
+										</label>
+									</div> -->
 								</div>
 								<div class="footer text-center">
 									<a (click)="Mlogin(loginForm)" class="btn btn-simple btn-primary btn-lg">Get Started</a>

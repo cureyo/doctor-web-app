@@ -98,7 +98,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'address': ['', Validators.required],
           'mci_number': ['', Validators.required],
           'speciality': ['', Validators.required],
-          'fbPageId': ['', Validators.required],
+          'fbPageId': [''],
           'clinic': ['', Validators.required]
         });
         console.log("this.signupForm");

@@ -123,23 +123,24 @@ export class AuthService {
   }//save onboardingReviewreview data
 
     public _saveWebContent(data, route) {
-    const webcontentdata = this.af.database.object(this.db.website+ '/' + route)
+    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + route)
     return webcontentdata.set(data);
 
 
   }//save webcontent data
-  //email login 
+ //email login 
   createMailUser(details) {
     
     console.log("create user details",details)
     this.af.auth.createUser(details)
-      .then(
-        function(user) {
-          console.log("user data in firebase",user);
-        console.log( user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"}));
-    user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"});
-        }
-      )
+      .then( res=>{ console.log("response value ",res);}
+               
+  //       function(user) {
+  //         console.log("user data in firebase",user);
+  //       console.log( user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"}));
+  // //  user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"});
+  //       }
+     )
   }
   loginMailUser(details) {
     console.log("login details ",details)
@@ -361,6 +362,7 @@ export class AuthService {
 
   private _changeState(user: any = null) {
     if (user) {
+       console.log("the user value in change state ",user);
       return {
         isAuth: true,
         user: this._getUserInfo(user)
@@ -388,21 +390,34 @@ export class AuthService {
   }//_getcaredbyList
 
 
-  private _getUserInfo(user: any): any {
+ private _getUserInfo(user: any): any {
 
     if (!user) {
+      console.log("user call if null",user);
       return {};
     }
-
+      console.log("_getUserInfo",user);
     let data = user.auth.providerData[0];
-    return {
-      firstName: data.displayName.split(' ')[0],
-      lastName: data.displayName.split(' ')[1],
+    console.log("data val test",data);
+    if (data.displayName) {
+          return {
+     firstName: data.displayName.split(' ')[0],
+     lastName: data.displayName.split(' ')[1],
       avatar: "https://graph.facebook.com/" + data.uid + "/picture?type=large",
       email: data.email,
       provider: data.providerId,
       uid: data.uid
     };
+  }
+  else {
+      return {
+      email: data.email,
+      provider: data.providerId,
+      uid: user.uid
+    };
+
+  }
+
   }//_getUserInfo
 
   public _getMedicationReminders(uid) {

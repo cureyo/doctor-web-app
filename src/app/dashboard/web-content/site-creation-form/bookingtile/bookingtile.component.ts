@@ -13,6 +13,7 @@ export class BookingtileComponent implements OnInit {
    @Input () bookingtiles:any; 
     private bookingTile:FormGroup;
     private bookingTileAdded:boolean=false;
+    private temp:any;
   constructor(
               private _fb: FormBuilder,
               private _fs: FbService,
@@ -65,7 +66,9 @@ export class BookingtileComponent implements OnInit {
       reminder['bg_Pic']=job['bg_Pic']
       this.bookingTileAdded=true;
         console.log("reminder value bookingtiles :",reminder);
-        this._authService._saveWebContent(reminder,'bookingTile').then(
+         this.temp = Math.floor((Math.random() * 100000) + 1);
+          console.log("temp number :",this.temp);
+        this._authService._saveWebContent(reminder,this.temp).then(
       res =>{
           let d=res;
           console.log("response of booking tile data",d);

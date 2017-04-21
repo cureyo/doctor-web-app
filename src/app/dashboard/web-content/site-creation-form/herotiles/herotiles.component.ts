@@ -13,6 +13,7 @@ export class HerotilesComponent implements OnInit {
     @Input () herotiles:any; 
     private heroTile:FormGroup;
     private heroTileAdded:boolean=false;
+    private temp:any;
     
   constructor(
               private _fb: FormBuilder,
@@ -66,7 +67,9 @@ export class HerotilesComponent implements OnInit {
       reminder['bg_Pic']=job['bg_Pic']
       this.heroTileAdded=true;
        console.log("reminder value herotile  :",reminder);
-        this._authService._saveWebContent(reminder,'heroTile').then(
+        this.temp = Math.floor((Math.random() * 10000) + 1);
+          console.log("temp number :",this.temp);
+        this._authService._saveWebContent(reminder,this.temp).then(
       res =>{
           let d=res;
           console.log("response of hero tile data",d);
