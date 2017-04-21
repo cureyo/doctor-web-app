@@ -65,4 +65,36 @@ export class DoctorLoginComponent implements OnInit {
     this.showVid = !this.showVid;
   }
 
+  Mlogin=(model)=>{
+    let reminder={}
+    let login={},
+    job=model['value'];
+    reminder['displayName']=job['fname'];
+    reminder['email']=job['email'];
+    reminder['password']=job['psw'];
+    
+    login['email']=job['email'];
+    login['password']=job['psw'];
+    console.log("the reminder value check for manual login",reminder);
+    let data:any;
+    this._authService. createMailUser(reminder)
+    // .then(
+    //   res=>{
+          
+    //          console.log(res);
+    //            console.log("the reponse value of create user2",res);
+    //           this._authService.loginMailUser(login).then(
+    //             data => {
+
+    //               console.log("login response test",data);
+    //                       this.router.navigate(['checkup']);
+    //             }
+    //           );
+           
+    //     console.log("create user response",res);
+    // });
+       
+
+  } 
+
 }

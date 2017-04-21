@@ -127,7 +127,28 @@ export class AuthService {
     return webcontentdata.set(data);
 
 
-  }//save onboardingReviewreview data
+  }//save webcontent data
+  //email login 
+  createMailUser(details) {
+    
+    console.log("create user details",details)
+    this.af.auth.createUser(details)
+      .then(
+        function(user) {
+          console.log("user data in firebase",user);
+        console.log( user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"}));
+    user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"});
+        }
+      )
+  }
+  loginMailUser(details) {
+    console.log("login details ",details)
+    return this.af.auth.login(details,
+          {
+            provider: AuthProviders.Password,
+            method: AuthMethods.Password,
+          });
+  }//email login 
   public _getPathologicalTests() {
     return this.pathologicalList;
   }
