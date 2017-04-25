@@ -161,10 +161,10 @@ export class SlotBookingComponent implements OnInit {
                        }
                       //console.log("test the value of hr  and min and span",hrs,min,span);
                        if (min==0){
-                         time= String(hrs+":"+"0"+min+":"+span);
+                         time= String(hrs+":"+"0"+min+" "+span);
                        }
                        else{
-                          time= String(hrs+":"+min+":"+span);
+                          time= String(hrs+":"+min+" "+span);
                        }
                       
                        console.log("the time is ",time);
