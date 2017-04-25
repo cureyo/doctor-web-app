@@ -99,18 +99,19 @@ export class SlotBookingComponent implements OnInit {
       flag;
          
     let reminders = {
-      "Job_slotBooking": [],
+      "Job_slotBucket": [],
       "Job_Duartion":job['duration'],
       "Job_Type": "Slot Availability",
-      "Test_SLot":[],
+      "SLots":[],
 
     };
      let d=job['duration'];
      let t=0;
      let slot,diff,total_time_min;
+     let time:any;
 
     for (let i = 0; i < slots.length; i++) {
-      reminders.Job_slotBooking.push({
+      reminders.Job_slotBucket.push({
         
         "Job_From": slots[i].fromTime,
         "Job_To": slots[i].toTime
@@ -140,8 +141,35 @@ export class SlotBookingComponent implements OnInit {
                  t=Number (slots[i].fromTime); 
               }
               slots[i].fromTime=t;
-             console.log("t value ",t,ctr);
-                reminders['Test_SLot'][ctr]=t;
+            // console.log("t value ",t,ctr);
+                 /* Convert t value into time format  */
+                  let hr,hrs,min,span,t1,t2;
+                      hr=Number (t/100);
+                      
+                        hrs=Math.round(hr-0.1);
+                         // console.log("round hr value",hr);
+                          min=hr-hrs;
+                         // console.log("min value:",min);
+                          min= Math.round(min*60);
+                        
+                       if(Number(t)<1200)
+                       {
+                         span="AM";
+                       }
+                       else{
+                          span="PM";
+                       }
+                      //console.log("test the value of hr  and min and span",hrs,min,span);
+                       if (min==0){
+                         time= String(hrs+":"+"0"+min+":"+span);
+                       }
+                       else{
+                          time= String(hrs+":"+min+":"+span);
+                       }
+                      
+                       console.log("the time is ",time);
+                   //end of time conversion
+                reminders['SLots'][ctr]=time;
                 ctr++;
            } //second for loop
             
@@ -160,7 +188,8 @@ export class SlotBookingComponent implements OnInit {
           this.slotAdded=true;
             console.log("slot booking data saved:");
         }
-      );
+      ); 
+      //end of db part code
      
   }//save
 

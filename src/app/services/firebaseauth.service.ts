@@ -131,8 +131,8 @@ export class AuthService {
 
    public _saveSlotBookingDetails(data) {
      console.log("the save booking slot path is :",this.af.database.list(this.db.doctorPages + '/localhost'+ '/availability' ))
-    return this.af.database.list(this.db.doctorPages + '/localhost'+ '/availability' )
-    .push (data);
+    return this.af.database.object(this.db.doctorPages + '/localhost'+ '/availability' )
+    .set (data);
     
 
   }//save slot booking details data
