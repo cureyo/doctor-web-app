@@ -12,11 +12,13 @@ import {slotBookingClass} from "../../../../models/slotBooking.interface";
   styleUrls: ['./slot-booking.component.css']
 })
 export class SlotBookingComponent implements OnInit {
+      @Input() routeparam:any;
       public timeInterval: any;
       public timeValue: any;
       public dateInterval: any;
       private slotBookingTile:FormGroup;
       private slotAdded:boolean=false;
+      private sitename:any;
    constructor(
               private _fb: FormBuilder,
               private _fs: FbService,
@@ -99,10 +101,11 @@ export class SlotBookingComponent implements OnInit {
       flag;
          
     let reminders = {
-      "Job_slotBucket": [],
-      "Job_Duartion":job['duration'],
-      "Job_Type": "Slot Availability",
-      "SLots":[],
+        "Job_slotBucket": [],
+        "Job_Duartion":job['duration'],
+        "Job_Type": "Slot Availability",
+        "Job_SiteName":this.routeparam,
+        "SLots":[],
 
     };
      let d=job['duration'];
@@ -180,9 +183,16 @@ export class SlotBookingComponent implements OnInit {
     } // first loop end here
       console.log("the reminders value ",reminders);
          this.slotAdded=true;
-
-         //save data into the db
-         this._authService._saveSlotBookingDetails(reminders)
+            
+             //remove .com from url
+             var n=this.routeparam.indexOf(".")
+               if (n==-1){
+                 n=this.routeparam.length;
+               }
+               this.sitename = this.routeparam.substring(0,n);
+             //end of url trimming part
+              //save data into the db
+         this._authService._saveSlotBookingDetails(reminders,this.sitename)
       .then(
         data => {
           this.slotAdded=true;
@@ -190,6 +200,10 @@ export class SlotBookingComponent implements OnInit {
         }
       ); 
       //end of db part code
+     
+         
+
+        
      
   }//save
 

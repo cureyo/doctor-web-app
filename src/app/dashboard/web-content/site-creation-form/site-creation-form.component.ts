@@ -14,9 +14,11 @@ import {BookingtileComponent} from "./bookingtile/bookingtile.component";
   styleUrls: ['./site-creation-form.component.css']
 })
 export class SiteCreationFormComponent implements OnInit {
+ private routeparam:any;
   private site_PrefilledData:any;
   private herotiles:any;
   private bookingtiles:any;
+
   constructor(
               private _fb: FormBuilder,
               private _fs: FbService,
@@ -26,6 +28,16 @@ export class SiteCreationFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //get the param
+         this.route.params.subscribe(
+            params => {
+            this.routeparam= params['id'];
+            
+            console.log("param value test in site creation form :",this.routeparam);
+            });
+            //end of param
+
+      
    this._authService._getSitePrefilledData().
       subscribe(res=>{
         this.site_PrefilledData=res;

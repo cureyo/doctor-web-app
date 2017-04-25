@@ -11,9 +11,11 @@ import {FbService} from "../../../../services/facebook.service";
 })
 export class HerotilesComponent implements OnInit {
     @Input () herotiles:any; 
+    @Input () routeparam:any;
     private heroTile:FormGroup;
     private heroTileAdded:boolean=false;
     private temp:any;
+    private sitename:any;
     
   constructor(
               private _fb: FormBuilder,
@@ -69,7 +71,16 @@ export class HerotilesComponent implements OnInit {
        console.log("reminder value herotile  :",reminder);
         this.temp = Math.floor((Math.random() * 10000) + 1);
           console.log("temp number :",this.temp);
-        this._authService._saveWebContent(reminder,this.temp).then(
+
+          //remove .com from url
+             var n=this.routeparam.indexOf(".")
+               if (n==-1){
+                 n=this.routeparam.length;
+               }
+               this.sitename = this.routeparam.substring(0,n);
+             //end of url trimming part
+             console.log("the routeparam value in hero tiles:",this.sitename);
+        this._authService._saveWebContentHerotile(reminder,this.sitename).then(
       res =>{
           let d=res;
           console.log("response of hero tile data",d);

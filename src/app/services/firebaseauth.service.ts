@@ -122,16 +122,24 @@ export class AuthService {
 
   }//save onboardingReviewreview data
 
-    public _saveWebContent(data, route) {
-    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + route)
+    public _saveWebContentBookingtile(data,sitename) {
+       console.log("the sitenmae for hero booking tiles",sitename);
+    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/bookingTile' )
     return webcontentdata.set(data);
 
 
-  }//save webcontent data
+  }//save webcontentBookingTile data
+   public _saveWebContentHerotile(data,sitename) {
+       console.log("the sitenmae for hero booking tiles",sitename);
+    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/heroTile')
+    return webcontentdata.set(data);
 
-   public _saveSlotBookingDetails(data) {
-     console.log("the save booking slot path is :",this.af.database.list(this.db.doctorPages + '/localhost'+ '/availability' ))
-    return this.af.database.object(this.db.doctorPages + '/localhost'+ '/availability' )
+
+  }//save webcontentHeroTile data
+
+   public _saveSlotBookingDetails(data,sitename) {
+       console.log("the route is :",sitename);
+    return this.af.database.object(this.db.doctorPages + '/' +sitename +'/availability' )
     .set (data);
     
 

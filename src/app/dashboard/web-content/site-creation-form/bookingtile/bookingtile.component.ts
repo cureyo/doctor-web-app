@@ -10,9 +10,11 @@ import {FbService} from "../../../../services/facebook.service";
   styleUrls: ['./bookingtile.component.css']
 })
 export class BookingtileComponent implements OnInit {
+    @Input () routeparam:any;
    @Input () bookingtiles:any; 
     private bookingTile:FormGroup;
     private bookingTileAdded:boolean=false;
+    private sitename:any;
     private temp:any;
   constructor(
               private _fb: FormBuilder,
@@ -68,7 +70,14 @@ export class BookingtileComponent implements OnInit {
         console.log("reminder value bookingtiles :",reminder);
          this.temp = Math.floor((Math.random() * 100000) + 1);
           console.log("temp number :",this.temp);
-        this._authService._saveWebContent(reminder,this.temp).then(
+          //remove .com from url
+             var n=this.routeparam.indexOf(".")
+               if (n==-1){
+                 n=this.routeparam.length;
+               }
+               this.sitename = this.routeparam.substring(0,n);
+             //end of url trimming part
+        this._authService._saveWebContentBookingtile(reminder,this.sitename).then(
       res =>{
           let d=res;
           console.log("response of booking tile data",d);

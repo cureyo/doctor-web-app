@@ -1,15 +1,16 @@
 <div class="main-content">
     <div class="container-fluid">
           <!--hero tiles-->
-        <app-herotiles *ngIf="herotiles"
-         [herotiles]="herotiles"></app-herotiles>
+        <app-herotiles *ngIf="herotiles && routeparam"
+         [herotiles]="herotiles"  [routeparam]="routeparam"></app-herotiles>
          <!--end of hero tiles-->
          <!-- booking tiles-->
-         <app-bookingtile *ngIf="bookingtiles"
-         [bookingtiles]="bookingtiles"></app-bookingtile>
+         <app-bookingtile *ngIf="bookingtiles && routeparam"
+         [bookingtiles]="bookingtiles" [routeparam]="routeparam"></app-bookingtile>
          <!-- end of booking tiles-->
          <!--slot booking -->
-         <app-slot-booking></app-slot-booking>
+         <app-slot-booking *ngIf="routeparam"
+         [routeparam]="routeparam"></app-slot-booking>
          <!-- end of slot booking-->
 
        

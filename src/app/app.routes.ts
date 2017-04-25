@@ -52,8 +52,8 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'doctor-checkup',component:DoctorCheckupComponent },
     { path: 'doctorJob/:id',component:JobsMasterComponent },
     { path: 'clinicpage/:page', component: ClinicPageComponent },
-    {path : 'web', component :WebContentComponent},
-    {path :'webform' ,component :SiteCreationFormComponent}
+    {path : 'web/:id', component :WebContentComponent},
+    {path :'webform/:id' ,component :SiteCreationFormComponent}
 ]
 
 export const MODULE_COMPONENTS = [
