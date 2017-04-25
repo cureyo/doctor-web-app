@@ -128,6 +128,14 @@ export class AuthService {
 
 
   }//save webcontent data
+
+   public _saveSlotBookingDetails(data) {
+     console.log("the save booking slot path is :",this.af.database.list(this.db.doctorPages + '/localhost'+ '/availability' ))
+    return this.af.database.list(this.db.doctorPages + '/localhost'+ '/availability' )
+    .push (data);
+    
+
+  }//save slot booking details data
  //email login 
   createMailUser(details) {
     

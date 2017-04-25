@@ -40,6 +40,7 @@ import {WebContentComponent} from "./dashboard/web-content/web-content.component
 import {SiteCreationFormComponent} from "./dashboard/web-content/site-creation-form/site-creation-form.component";
 import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/herotiles/herotiles.component";
 import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
+import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
 export const MODULE_ROUTES: Route[] =[
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
     { path: 'dashboard', component: HomeComponent },
@@ -91,6 +92,7 @@ export const MODULE_COMPONENTS = [
     WebContentComponent,
     SiteCreationFormComponent,
     HerotilesComponent,
-    BookingtileComponent
+    BookingtileComponent,
+    SlotBookingComponent
 
 ]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+//import {SlotBookingClass} from "../../models/slotBooking.interface";
 @Component({
   selector: 'app-web-content',
   templateUrl: './web-content.component.html',
