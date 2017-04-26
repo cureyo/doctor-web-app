@@ -16,10 +16,10 @@ import { SiteCreationFormComponent } from './web-content/site-creation-form/site
 import { HerotilesComponent } from './web-content/site-creation-form/herotiles/herotiles.component';
 import { BookingtileComponent } from './web-content/site-creation-form/bookingtile/bookingtile.component';
 import { SlotBookingComponent } from './web-content/site-creation-form/slot-booking/slot-booking.component';
-//import {SlotBookingClass} from "../models/slotBooking.interface";
+import { SelectDomainComponent } from './select-domain/select-domain.component'
 @NgModule({
     imports: [ RouterModule, CommonModule ],
-    declarations: [ DashboardComponent, CaredOnesFormMobileViewComponent, JobsMasterComponent, BloodsugarJobsComponent, ExerciseTrackerJobsComponent, LabTestJobsComponent, MedicationReminderJobsComponent, OnlineConsultationJobsComponent, PhysicalconsultationJobsComponent, DocReviewJobsComponent, WebContentComponent, SiteCreationFormComponent, HerotilesComponent, BookingtileComponent, SlotBookingComponent ],
+    declarations: [ DashboardComponent, CaredOnesFormMobileViewComponent, JobsMasterComponent, BloodsugarJobsComponent, ExerciseTrackerJobsComponent, LabTestJobsComponent, MedicationReminderJobsComponent, OnlineConsultationJobsComponent, PhysicalconsultationJobsComponent, DocReviewJobsComponent, WebContentComponent, SiteCreationFormComponent, HerotilesComponent, BookingtileComponent, SlotBookingComponent, SelectDomainComponent ],
     exports: [ DashboardComponent ]
 
 })

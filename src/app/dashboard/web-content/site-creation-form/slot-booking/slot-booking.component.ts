@@ -102,7 +102,7 @@ export class SlotBookingComponent implements OnInit {
          
     let reminders = {
         "Job_slotBucket": [],
-        "Job_Duartion":job['duration'],
+        "Job_Duration":job['duration'],
         "Job_Type": "Slot Availability",
         "Job_SiteName":this.routeparam,
         "SLots":[],

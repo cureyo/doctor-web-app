@@ -5,6 +5,7 @@ import { MenuType } from './sidebar.metadata';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookService, FacebookLoginResponse, FacebookInitParams } from 'ng2-facebook-sdk';
 import { AppConfig } from '../config/app.config';
+import { SelectDomainComponent } from '../dashboard/select-domain/select-domain.component';
 
 declare var $: any
 
@@ -77,7 +78,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         private router: Router,
         private route: ActivatedRoute,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private viewContainerRef: ViewContainerRef
+        private viewContainerRef: ViewContainerRef,
+        private domain: SelectDomainComponent
     ) {
  }//  constructor
 

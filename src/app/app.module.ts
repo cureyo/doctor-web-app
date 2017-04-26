@@ -28,7 +28,7 @@ import { PathLocationStrategy, LocationStrategy, APP_BASE_HREF } from '@angular/
 import {CaredOnesFormMobileViewComponent} from "dashboard/cared-ones-form-mobile-view/cared-ones-form-mobile-view.component";
 import {Ng2AutoCompleteModule} from "ng2-auto-complete/dist/index";
 import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
-
+import { SelectDomainComponent } from './dashboard/select-domain/select-domain.component'
 
 // Must export the config
 export const firebaseConfig = {
@@ -63,7 +63,7 @@ export const firebaseAuthConfig = {
 
   declarations: [ MODULE_COMPONENTS],
 
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent],
 
   bootstrap: [AppComponent]
 })

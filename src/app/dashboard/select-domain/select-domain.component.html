@@ -1,0 +1,81 @@
+
+<div class="col-sm-12">
+  
+<form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
+  novalidate>
+  <div class="row"> <div class="row"> 
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+  
+  <div class="card" *ngIf="selectDrDomain" style="padding-top: 0px;margin-top: 55px;">
+    <div class="row">
+    <div class="card-stats">
+      <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
+
+        <i class="material-icons" style="color: #ffffff;  font-size: -webkit-xxx-large;">language</i>
+      </div>
+      <div class="card-content" style="float: left; text-align: left;">
+
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 16px; font-weight: 400;">Domain Search
+          <br><small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Enter your domain name</small></h3>
+        <input type="text" class="form-control" [formControl]="drDomain.controls['message']" style="height: 40px; font-size: 20px;"/> 
+
+      </div> <!--end of card content-->
+      
+    </div> <!--end of card stats-->
+       </div> <!-- end of row-->
+       <!--search button code -->
+          <div class="clearfix" style="margin-right: 10px;">
+          <div class="pull-right">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-round" 
+                        (click)="searchDomain(drDomain)">Search</button>
+                    </div>
+          </div>
+       </div> 
+       <!--end of search button-->    
+
+  </div> <!--end of card-->
+ 
+       
+  </div> <!-- end of col-md-8-->
+  
+  <div class="col-sm-2"></div>
+  </div>
+  </div>
+
+  <h3 *ngIf="displayDrDomain"> Available Url's</h3>
+   
+   <!-- list of available web name-->
+      <div class="row" *ngIf="displayDrDomain">
+            <div class="row" *ngFor="let i of array; let i=index">
+                <div class="col-sm-2"></div>
+
+                <div class="col-sm-8" >
+                    <div class="card">
+
+                        <div class="col-sm-10">
+                        <h3 class="title" style=" font-size: 25px; padding-left: 2em; padding-top: 10px;">{{array[i].domain}}</h3>
+                        <hr/>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="clearfix">
+                              <div class="pull-right">
+                                          <button [routerLink]="['/web/'+ routeparam]"  type="submit" class="btn btn-primary" (click)="searchDomain(drDomain)" style="border-radius: 10px;" > Select</button>
+                                        </div>
+                              </div> 
+                        </div>
+
+                    </div>     
+                </div>
+
+                <div class="col-sm-2"></div>
+            </div>
+      </div>
+ <!-- end of list of url's-->
+  
+
+</form>
+
+</div>
