@@ -121,6 +121,12 @@ export class AuthService {
 
 
   }//save onboardingReviewreview data
+   public _saveWebContentFootertile(data,sitename) {
+       console.log("the sitenmae for Footer tiles",sitename);
+    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/footerTile' )
+    return webcontentdata.set(data);
+  }
+   
 
     public _saveWebContentBookingtile(data,sitename) {
        console.log("the sitenmae for hero booking tiles",sitename);

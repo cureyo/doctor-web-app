@@ -1,0 +1,55 @@
+ <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="footerTile" class="formGroup" novalidate (ngSubmit)="save_footerTile(footerTile)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Social Profiles</h4>
+
+                        <!--<p class="category">Footer Tiles text</p>-->
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row">
+                       <!-- title-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">LinkedIn URL </label>
+                                 <input type="text" class="form-control" formControlName="linkURL"/>
+                            </div>
+                    </div><!--end of title -->
+                     <!-- exeperience-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Twitter URL</label>
+                                 <input type="text" class="form-control" formControlName="twitterURL"/>
+                            </div>
+                    </div><!--end of Experience -->
+                    <!-- Qualification-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Facebook URL</label>
+                                 <input type="text" class="form-control" formControlName="facebookURL"/>
+                            </div>
+                    </div><!--end of Qualification -->
+                    
+                            </div> <!-- end of 1st row-->
+           <!-- second row-->
+             <div class="row">
+                              <!-- submit button code    -->
+                      <div class="pull-right" style="margin-right: 10px;" >
+                          <button  type="submit" [ngClass]="{'hide': footerTileAdded}" [disabled]="!footerTile.valid" class="btn btn-warning">Add</button>
+                      </div>
+
+                       <div [ngClass]="{'hide': !footerTileAdded}" class="bareP">
+                            <p>Thanks! Tile is Added </p>
+                        </div>
+                <!--</div>-->
+<!-- end of submit button-->
+                           </div>
+  <!-- end of second row-->                         
+                    </div>
+                  </form>
+                </div>
+            </div> 
