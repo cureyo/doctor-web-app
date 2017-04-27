@@ -28,6 +28,7 @@ import { PathLocationStrategy, LocationStrategy, APP_BASE_HREF } from '@angular/
 import {CaredOnesFormMobileViewComponent} from "dashboard/cared-ones-form-mobile-view/cared-ones-form-mobile-view.component";
 import {Ng2AutoCompleteModule} from "ng2-auto-complete/dist/index";
 import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
+import {PatientPreviewComponent} from './dashboard/PatientPreview/PatientPreview.component'
 
 
 // Must export the config

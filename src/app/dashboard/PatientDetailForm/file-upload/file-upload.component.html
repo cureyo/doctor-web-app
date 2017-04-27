@@ -1,0 +1,88 @@
+         <style>
+    .my-drop-zone { border: solid 1px lightgray; }
+    .nv-file-over { border: solid 1px #137a9c; } /* Default class applied to drop zones on over */
+    .another-file-over-class { border: dotted 3px green; }
+ 
+    html, body { height: 100%; }
+</style>
+            <div id="reportSection" class="card">
+                <div class="card-header" data-background-color="cureyo">
+                    <h4 class="title">Upload Reports</h4>
+                    <p class="category">You can upload health reports here</p>
+                </div>
+        
+
+        <!-- drag and Drop part-->
+           <div class="col-md-12">
+       <div class="card text-center" id="DragCard" 
+            ng2FileDrop
+                 [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                 (fileOver)="fileOverBase($event)"
+                 [uploader]="uploader"
+                 class="well my-drop-zone">            
+        <div class="card-block">
+            <h3 class="card-title">Drag and Drop File Here</h3>
+            <p class="card-text">Drop files here for easier upload</p>
+           
+        </div>
+       </div>
+      
+        <!-- end of drag and Drop part-->  
+        <!-- second part-->
+                <div class="col-md-12" style="margin-bottom: 40px">
+                     <div class="clearfix" style="text-align: center;">
+              <h4 style="color: lightgray;"> Or </h4>
+            <input type="file" ng2FileSelect value="Browse" [uploader]="uploader" single/>
+                </div>
+      
+            <p *ngIf="uploader?.queue?.length > 0">Item length: {{ uploader?.queue?.length }}</p>
+ 
+            <table class="table">
+                <thead>
+                <tr *ngIf="uploader?.queue?.length > 0">
+                    <th width="20%">Report Name</th>
+                    <th width="50%">Report Description</th>
+                    <th>Operations</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue;">
+                    <td ><strong>{{ item?.file?.name }}</strong></td>
+                    <td> <input style="display: inline-block; width: 100%;outline: none;" id="textval" [(ngModel)]="textval[item?.file?.name]" type="text"   /></td>
+                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td *ngIf="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                  
+                    <td nowrap>
+                        <button type="button" class="btn btn-success btn-xs" 
+                                (click)="onUpload(item); item.upload(); item.remove();" [disabled]="descExists(item?.file?.name)">
+                            <span><i class="material-icons">file_upload</i></span> Upload
+                        </button>
+                
+                        <button type="button" class="btn btn-danger btn-xs" 
+                                (click)="item.remove()">
+                            <span><i class="material-icons">delete</i></span> Remove
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+ 
+            <div>
+                
+               
+            </div>
+ 
+        </div>
+        <!-- end of second part-->
+        
+       
+       
+           
+            </div> 
+            
+                 
+           

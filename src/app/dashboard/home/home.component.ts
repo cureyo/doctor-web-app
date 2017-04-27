@@ -34,14 +34,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private caredonesToAdd: any;
   private scheduledJobs: any;
   private defaultData: any;
-  private caredOnesFamily: any;
+  private caredOnesFamily: any =[];
   private caredOneId: any;
+  private noFacebook: boolean = true;
 
 
   ngAfterViewInit(): void {
     // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
     $('#myModal').modal('hide');
-    $('#mainContent').css({ position: "" });
+     $('#mainContent').css({ position: "" });
+
   }
 
   constructor(
@@ -52,8 +54,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private _cacheService: CacheService,
-    private activatedRoute: ActivatedRoute
+    private _cacheService: CacheService
   ) {
 
 
@@ -133,19 +134,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
 
         } else {
-          this.router.navigate(['checkup']);
-          console.log("checkup needed");
+          this.router.navigate(['doctor-checkup']);
+          console.log("doctor-checkup needed");
         }
       });
   }//  getcurrentUser()
 
   ngOnInit() {
     $('#myModal').modal('hide');
+    
     this._authService._getUser()
       .subscribe(
       data => {
         if (!data.isAuth) {
-          window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
+         //window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
         }
         else {
           this.isAuth = data.isAuth;
@@ -153,26 +155,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.getcurrentUser(data.user.uid);
 
           this.defaultData = { id: "phoneNumber", relationship: "", name: "", imageURL: "/assets/img/man.png", directAdd: true };
-          this.activatedRoute.queryParams
-            .subscribe(params => {
-              console.log("query parameters");
-              console.log(params);
-              if (params['status']== 'success') {
-                $.notify({
-                  icon: "notifications",
-                  message: "Your payment was successful. You will receive an email/ SMS shortly"
 
-                }, {
-                    type: 'cureyo',
-                    timer: 4000,
-                    placement: {
-                      from: 'top',
-                      align: 'right'
-                    }
-                  });
-              }
-
-            });
         }
 
       },
@@ -419,16 +402,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   initFB() {
+    this.caredOnesFamily[0] = { id: "phoneNumber", relationship: "", name: "Using Email/ Phone", imageURL: "/assets/img/man.png", directAdd: "mail" };
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
       version: 'v2.6'
     };
     this.fs.init(fbParams);
-    this.fs.getLoginStatus().then(
+    this.fs.getLoginStatus().catch(
+        error => {
+          console.log('error: no facebook login')
+        }
+      ).then(
       (response: FacebookLoginResponse) => {
         if (response.status === 'connected') {
+          console.log("Facebook connected");
           this.fbAccessToken = response.authResponse.accessToken;
+          this.noFacebook = false;
           this.fetchFamilyfromFB();
         } else {
           this.fbAccessToken = null;
@@ -447,13 +437,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
     } else {
       let family, friends;
       let data, paging;
-      this.fs.api('/' + this.currentUser.authUID + '/family?&limit=5').then(
+      this.fs.api('/' + this.currentUser.authUID + '/family?&limit=5').catch(
+        error => {
+          console.log(error);
+          console.log('error: no facebook login')
+          this.caredOnesFamily[0] = { id: "phoneNumber", relationship: "", name: "Using Email/ Phone", imageURL: "/assets/img/man.png", directAdd: "mail" };
+          //this.noFacebook = true;
+        }
+      ).then(
         response => {
+          if (response) {
           console.log(response.paging)
           console.log("more added");
           console.log(response)
           data = response.data;
           paging = response.paging
+
+          }
 
 
 
@@ -476,13 +476,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     console.log(friends)
     console.log(lastResponse);
     console.log("called again")
-    if (lastResponse.next) {
-      this.fs.api(lastResponse.next).then(
+    if (lastResponse && lastResponse.next) {
+      this.fs.api(lastResponse.next).catch(
+        error => {
+          console.log('error: no facebook login')
+        }
+      ).then(
         response => {
+
           console.log(response);
           console.log("more2 added");
           //console.log(this.fbFriends)
-          console.log(response.paging);
+          //console.log(response.paging);
           //friends = this.fbFriends;
           friends = friends.concat(response.data);
           console.log(friends);
@@ -499,18 +504,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
   friendsInitiate() {
+    var self = this;
     console.log(this.friends4Cache)
-    this.fs.api('/' + this.currentUser.authUID + '/friends')
+    this.fs.api('/' + this.currentUser.authUID + '/friends').catch(
+        error => {
+          console.log('error: no facebook login')
+          //this.caredOnesFamily[0] = { id: "phoneNumber", relationship: "", name: "Using Email/ Phone", imageURL: "/assets/img/man.png", directAdd: "mail" };
+        }
+      )
       .then(
       response => {
         //var defaultData = [{ id: "phoneNumber", relationship: "Add with email/phone", name: "", imageURL: "/assets/images/man.png" }];
         //  defaultData = defaultData.concat(family)
-
+        if (response && response.data) {
         this.friends4Cache = this.friends4Cache.concat(response.data);
 
         //this.fbFriends = response.data.concat(family);
         console.log(this.friends4Cache)
         this.fetchFbFriends(response.paging);
+        }
+
         ////console.log("this does not execute 3")
 
       });
@@ -521,7 +534,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (prevResponse.cursors) {
       console.log(prevResponse.next);
       console.log(prevResponse.cursors.after);
-      this.fs.api('/' + this.currentUser.authUID + '/friends?after=' + prevResponse.cursors.after).then(
+      this.fs.api('/' + this.currentUser.authUID + '/friends?after=' + prevResponse.cursors.after).catch(
+        error => {
+          console.log('error: no facebook login');
+       
+        }
+      ).then(
         response => {
           this.friends4Cache = this.friends4Cache.concat(response.data);
           this.fetchFbFriends(response);
@@ -546,6 +564,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   //Add relationship as 'friend' if it doesn't exist
   //create close family, self and email add
   private createFamily() {
+    this.noFacebook = false;
+
     console.log(this.fbFriends);
     let friends = this.fbFriends,
       family = [],

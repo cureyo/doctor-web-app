@@ -41,6 +41,10 @@ import {SiteCreationFormComponent} from "./dashboard/web-content/site-creation-f
 import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/herotiles/herotiles.component";
 import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
 import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
+import { PatientDetailFormComponent } from './dashboard/PatientDetailForm/PatientDetailForm.component';
+import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/file-upload.component';
+import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPreview.component';
+
 export const MODULE_ROUTES: Route[] =[
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
     { path: 'dashboard', component: HomeComponent },
@@ -53,15 +57,17 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'doctorJob/:id',component:JobsMasterComponent },
     { path: 'clinicpage/:page', component: ClinicPageComponent },
     {path : 'web/:id', component :WebContentComponent},
-    {path :'webform/:id' ,component :SiteCreationFormComponent}
+    {path :'webform/:id' ,component :SiteCreationFormComponent},
+    { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
+    { path: 'patient-preview/:id', component: PatientPreviewComponent },
 ]
 
 export const MODULE_COMPONENTS = [
     AppComponent,
     HomeComponent,
-
+    PatientPreviewComponent,
     TableComponent,
-
+    FileUploadComponent,
     SidebarComponent,
     CaredoneFormComponent,
     NavbarComponent,
@@ -76,7 +82,7 @@ export const MODULE_COMPONENTS = [
     DocReviewComponent,
     BloodSugarChartComponent,
     WeeklyReportComponent ,
-
+    PatientDetailFormComponent,
     CommonModelComponent,
     CaredOnesFormMobileViewComponent,
     DoctorLoginComponent,

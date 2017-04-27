@@ -148,7 +148,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
                       console.log("redirecting to checkup");
 
 
-                      this.router.navigate(['checkup'])
+                      this.router.navigate(['doctor-checkup'])
 
                     }
                   });
