@@ -20,6 +20,41 @@
             <li routerLinkActive="active">
                 <a  id="profileButton" style="z-index: 100000;"  (click)="coProfileMenu()">
                     <i class="material-icons">person</i>
+                    <p>Patients</p>
+                </a>
+                  <div *ngIf="coProfile">
+                       
+                 <ul class="nav" *ngIf="noCaredOnes" style="transition: all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1);">
+            <li routerLinkActive="active">
+                 <a  style="padding: 0px; margin-bottom: 0px; margin-top: 0px;">
+                <div class="card card-stats" style="height: 50px; padding: 0px; margin: 0px;">
+                    <div class="card-content">
+                    <p style="font-weight: 400;">No Cared Ones to view</p>
+                    </div>
+                </div>
+                </a>
+            </li>
+                 </ul>
+                 <ul class="nav" *ngFor="let caredone of caredOnes" style="transition: all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1);">
+            <li routerLinkActive="active">
+                 <a  [routerLink]="['patient-preview/' + caredone.uid]" style="padding: 0px; margin-bottom: 0px; margin-top: 0px;">
+                <div class="card card-stats" style="height: 50px; padding: 0px; margin: 0px;">
+                  
+                    <img src="{{caredone.avatar}}" style="width: 50px; height: 50px; float: left; border-right: 3px;">
+              
+                    <div class="card-content">
+                    <!-- end of Jobs--><p>{{caredone.firstName}}</p>
+                    </div>
+                </div>
+                </a>
+
+            </li>
+                 </ul>
+                </div>
+            </li>
+            <!--<li routerLinkActive="active">
+                <a  id="profileButton" style="z-index: 100000;"  (click)="coProfileMenu()">
+                    <i class="material-icons">person</i>
                     <p>Cared One Profiles</p>
                 </a>
                   <div *ngIf="coProfile">
@@ -43,7 +78,7 @@
                     <img src="{{caredone.avatar}}" style="width: 50px; height: 50px; float: left; border-right: 3px;">
               
                     <div class="card-content">
-                    <p>{{caredone.nickName}}</p>
+                    <p>{{caredone.firstName}}</p>
                     </div>
                 </div>
                 </a>
@@ -79,7 +114,7 @@
                     <img src="{{caredone.avatar}}" style="width: 50px; height: 50px; float: left; border-right: 3px;">
               
                     <div class="card-content">
-                    <p>{{caredone.nickName}}</p>
+                    <p>{{caredone.firstName}}</p>
                     </div>
                 </div>
                 </a>
@@ -114,7 +149,7 @@
                     <img src="{{caredone.avatar}}" style="width: 50px; height: 50px; float: left; border-right: 3px;">
               
                     <div class="card-content">
-                    <p>{{caredone.nickName}}</p>
+                    <p>{{caredone.firstName}}</p>
                     </div>
                 </div>
                 </a>
@@ -122,9 +157,9 @@
             </li>
                  </ul>
                 </div>
-            </li>
+            </li>-->
              <!-- Jobs for Doctor-->
-               <li *ngIf="isDoctor" routerLinkActive="active">     
+               <!--<li routerLinkActive="active">     
 
                 <a  id="doctorJobMenu" style="z-index: 100000;"  (click)="coDoctorJobsMenu()">
 
@@ -151,14 +186,14 @@
                     <img src="{{caredone.avatar}}" style="width: 50px; height: 50px; float: left; border-right: 3px;">
               
                     <div class="card-content">
-                    <p>{{caredone.nickName}}</p>
+                    <p>{{caredone.firstName}}</p>
                     </div>
                 </div>
                 </a>
             </li>
                  </ul>
                 </div>
-            </li>
+            </li>-->
             <!-- web site button -->
 
                <li routerLinkActive="active">
@@ -169,13 +204,25 @@
 
             </li>
 
-              <!--<li routerLinkActive="active">
-                <a [routerLink]="['web/'+'sunnyrai.com']" id="WebSiteSetup"  style="z-index: 100000;">
-                    <i class="material-icons">web</i>
-                    <p>Web site</p>
+             <!-- end of Jobs-->
+                        <!-- web site button -->
+              <li routerLinkActive="active">
+                <a  id="social"  style="z-index: 100000;">
+                    <i class="material-icons">pages</i>
+                    <p>Social</p>
                 </a>
 
-            </li>-->
+            </li>
+             <!-- end of Jobs-->
+                          <!-- end of Jobs-->
+                        <!-- web site button -->
+              <li routerLinkActive="active">
+                <a  id="social"  style="z-index: 100000;">
+                    <i class="material-icons">people_outline</i>
+                    <p>Out-patients</p>
+                </a>
+
+            </li>
              <!-- end of Jobs-->
             
         </ul>

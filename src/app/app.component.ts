@@ -204,7 +204,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public isLogin() {
     // console.log(window.location.hash);
-    if (window.location.hash == '/login' || window.location.hash == '/checkup') {
+    if (window.location.hash == '/login' || window.location.hash == '/doctor-checkup') {
       return false;
     }
     else {

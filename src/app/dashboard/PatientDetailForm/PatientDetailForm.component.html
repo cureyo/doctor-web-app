@@ -1,0 +1,374 @@
+<div class="main-content" id="profileContent">
+<div class="container-fluid">
+
+    <div class="row" *ngIf="caredOneReady" >
+        
+          <!--<div class="col-md-5">
+                <div class="card card-stats">
+                        <div class="card-header" style="border-radius: 50%; width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+                            <img src="{{caredone.avatar}}" style="border-radius: 50%; width: 88px; height: 88px;">
+                        </div>
+                        <div class="card-content">  
+                             <h5 class="title">{{caredone.firstName}}<br/><small> Profile</small></h5>
+                        </div>  
+                </div>
+          </div>-->
+          <div class="col-md-7" style="padding: 0px 25px 5px 0px;">
+              <div class="col-sm-4">
+                        <div class="card card-stats" style=" width: 175px; height: 72px;">
+                            <a  (click)="highlightSection('proSection', 'profileSection')" style="cursor: pointer;">
+                            <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0;" data-background-color="orange">
+                                  
+                                    <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                         account_box</i>
+
+                            </div> </a>
+                            <div class="card-content">
+                                <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Profile
+                                    </h3>
+                                    <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px;">Profile {{profileScore}}% completed</small>
+                                    
+                            </div>
+                        </div>
+                        
+									
+              </div>
+              <div class="col-sm-4">
+                        <div class="card card-stats" style=" width: 175px; height: 72px;">
+                             <a style="cursor: pointer;" (click)="highlightSection('obsSection','observerSection')">
+                            <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0;" data-background-color="orange">
+                                   <i class="material-icons" style="color: #ffffff; line-height: 50px">visibility</i>
+                                    
+                            </div> 
+                            </a>
+                            <div class="card-content">
+                                <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Observers
+                                    </h3>
+                                    <br><small style="float: left; text-align:center; font-size: 12px; line-height: 16px; margin-top: 5px;">{{observerCount}} observers added</small>
+                                    
+                            </div>
+                        </div>
+              </div>
+              <div class="col-sm-4">
+                        <div class="card card-stats" style=" width: 175px; height: 72px;">
+                            <a style="cursor: pointer;" (click)="highlightSection('repSection','reportSection')">
+                            <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0;" data-background-color="orange">
+                             
+                                    <i class="material-icons" style="color: #ffffff; line-height: 50px">folder_open</i>
+                            
+                            </div>  </a>
+                            <div class="card-content">
+                                <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Reports
+                                    </h3>
+                                    <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px; margin-top: 5px;">{{reportCount}} reports uploaded</small>
+                                    
+                            </div>
+                        </div>
+              </div>
+              </div>
+          
+     </div>
+    <div class="row">
+
+        <div class="col-md-8">
+            <div id="proSection">
+            <div  *ngIf="formReady" id="profileSection" class="card">
+                <div class="card-header" data-background-color="cureyo">
+                    <h4 class="title">{{caredone.nickName}}'s Profile</h4>
+                    <p class="category">Review and Add details</p>
+                </div>
+                <div class="card-content">
+                  <!--<div class="formGroup">-->
+                     <form [formGroup]="CaredonesForm" class="form">
+                        <!--  first row (content first & last &nick name)-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <input type="text" placeholder="Provide First Name" [formControl]="CaredonesForm.controls['firstName']" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <input type="text" placeholder="Provide Last Name " [formControl]="CaredonesForm.controls['lastName']" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">what do you call him/her?</label>
+                                    <input type="text" placeholder="eg: 'Dad'" [formControl]="CaredonesForm.controls['nickName']" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end of first row -->
+                         <!--2nd row content (Relationship,gender and age) -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Relationship</label>
+                                    <select class="form-control"  [formControl]="CaredonesForm.controls['relationship']">
+                                        <option selected disabled hidden></option>
+                                     <option value="mother">mother</option>
+                                     <option value="father">father</option>
+                                     <option value="wife">wife</option>
+                                     <option value="husband">husband</option>
+                                     <option value="brother">brother</option>
+                                     <option value="sister">sister</option>
+                                     <option value="grandfather">grandfather</option>
+                                     <option value="grandmother">grandmother</option>
+                                     <option value="son">son</option>
+                                     <option value="daughter">daughter</option>
+                                     <option value="uncle">uncle</option>
+                                     <option value="aunt">aunt</option>
+                                     <option value="nephew">nephew</option>
+                                     <option value="niece">niece</option>
+                                     <option value="friend">friend</option>
+                                     <option value="self">self</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Gender</label>
+                                    <select class="form-control"  [formControl]="CaredonesForm.controls['gender']">
+                                        <option selected disabled hidden></option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <!--<option value="other">Other</option>-->
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">age</label>
+                                    <input type="text" [formControl]="CaredonesForm.controls['age']" placeholder="Provide age "  class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <!-- end of 2nd column-->
+                        
+                       <!-- third column content(Email,mobile and city) -->
+                       <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <input type="text" placeholder="Provide Mail Id" [formControl]="CaredonesForm.controls['email']" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Mobile No</label>
+                                    <input type="text" placeholder="Provide Contact Number " [formControl]="CaredonesForm.controls['phone']" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">City</label>
+                                    <input type="text" [formControl]="CaredonesForm.controls['hometown']" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <!-- end of third column-->
+                       <!-- 4th row content (address)-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Address</label>
+                                    <input type="text" placeholder="Provide Current Address" [formControl]="CaredonesForm.controls['address']" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 4th row content (address)-->
+                   
+
+                        <button type="submit" (click)="save_CaredoneData(CaredonesForm)" class="btn btn-primary pull-right">Save Profile</button>
+                        <div class="clearfix"></div>
+                    </form>
+                  <!--</div>  formGroup div close-->
+                </div>
+            </div>
+        </div>
+               <div *ngIf="repReady" id="repSection">
+            <app-file-upload [currentUserID]="currentUserID" [caredoneId]="caredoneId"></app-file-upload>
+         <div class="card">
+                <div class="card-header" data-background-color="cureyo">
+                    <h4 class="title">{{caredone.nickName}}'s Reports</h4>
+                    <p class="category">Health reports already provided</p>
+                </div>
+                <div class="card-content" *ngIf="!healthReports">
+                <p > No reports uploaded yet</p>
+                </div>
+                <div class="card-content" *ngIf="healthReports">
+                      <table class="table"> 
+                             <thead class="text-primary">
+                                 <tr>
+                                     <th style="font-weight: 700; width: 30%;">Report Preview</th>
+                                     <th style="font-weight: 700;">Report Details</th>
+                                     
+                                 </tr>
+                             </thead>
+                             <tbody *ngFor="let report of healthReports">
+                                  <tr>
+                                     <td> <a href="{{report.fileUrl}}" target="_blank" >
+                                         <i *ngIf="!report.isImage" class="material-icons" style="width: 60px; height: 60px;">library_books</i>
+                                         <img *ngIf="report.isImage" src="{{report.fileUrl}}" style="width: 60px; height: 60px;"> </a></td>
+                                     <td  >  <b>Name: </b> {{report.fileName}}
+                                         <br> 
+                                         <b>Description: </b> {{report.Description}}
+                                         <br>
+                                         <b>Uploaded by: </b> {{report.addedFName}}
+                                         <br>
+                                         <b>Uploaded on: </b> {{report.updatedDate}}
+                                         
+                                     </td>
+                                      
+                                  </tr>
+                                 
+                             </tbody>
+                        </table>
+                </div>
+         </div>
+            </div>
+        </div>
+               <div *ngIf="obsReady" class="col-md-4" id="obsSection">
+<div id="observerSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
+    <div class="card-header" data-background-color="cureyo">
+                <h4 class="title">{{caredone.nickName}}'s Observers</h4>
+                <p class="category">View & Add Observers</p>
+                </div>
+                                <!--for add new observers -->
+  
+  
+    <h5 class="card-title">Add New Observer</h5>
+    <div style="padding: 10%;">
+    <form [formGroup]="ObserversForm" class="form">
+    <div class="row">
+              <div class="col-sm">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Name']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div>
+    <div class="row">
+              <div class="col-sm">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">E-mail</label>
+                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Email']" class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div>
+    <div class="row">
+              <div class="col-sm">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">mobile Number</label>
+                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Phone']" class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div> 
+    <div class="actions clearfix">
+              <div class="pull-right">
+               <button type="submit"  (click)="save_NewObserverData(ObserversForm)"class="btn btn-primary pull-right">Add Observer</button>
+              </div>
+    </div>
+    </form>
+    </div>
+    
+        
+   
+  
+                        
+                  <!--end of add new observers-->
+    
+    <div class="card" style="box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25)" *ngFor="let i of observersList;let i=index">
+        <div class="card-block" *ngIf="observersList">
+            <h4 class="card-title">{{observersList[i].name}} </h4>
+
+            <div class="card-content table-responsive">               
+                <table class="table">
+                    <thead >
+                    <!--<tr> <td class="text-primary"> Name</td>   <td> {{observersList[i].name}}</td> 
+                    </tr>-->
+                    <tr> <td class="text-primary"> Email</td>  <td> {{observersList[i].email}}</td>
+                    </tr>
+                    <tr> <td class="text-primary"> Phone</td>  <td> {{observersList[i].phone}}</td> 
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div> <!-- end of careds-->
+
+      
+            </div>
+         
+        
+
+        
+
+        </div>
+    </div>
+        
+</div> <!-- container-fluid
+</div><!-- main-content-->
+<div class="modal fade" id="profileModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="myModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Thanks for adding details!</b></h4>
+      </div>
+      <div *ngIf="detailType && caredone" class="modal-body" >
+        <p  style="text-align: left;">
+          <br>
+          You have just added {{detailType}} for {{caredone.nickName}}. We will process these updates and take action accordingly.
+         <br> 
+         </p>
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">What next?</h3>
+          <br>
+<hr>
+        <p style="text-align: left;">You can continue adding details for {{caredone.nickName}} or add another 'Cared One' from the dashboard.</p>
+       
+    
+      
+
+
+        
+      </div>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="gotDashboard()">Go to Dashboard</button>
+        <button type="button" class="btn btn-default" (click)="closeModal()">Continue adding Details</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
