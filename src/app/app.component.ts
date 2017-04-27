@@ -115,7 +115,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (window.location.pathname != '/doctor-login' && window.location.pathname != '/logout' ) {
             this.showSideBar = false;
             console.log(window.location.pathname);
-            window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
+            window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
           }
           else {
             
@@ -204,7 +204,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public isLogin() {
     // console.log(window.location.hash);
-    if (window.location.hash == '/login' || window.location.hash == '/doctor-checkup') {
+    if (window.location.hash == '/doctor-login' || window.location.hash == '/doctor-checkup') {
       return false;
     }
     else {

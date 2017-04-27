@@ -60,7 +60,7 @@ export class PatientDetailFormComponent implements OnInit {
       data => {
         console.log("checking if user logged in");
         if (!data.isAuth) {
-           window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
+           window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
         }
         else {
           this._authService._fetchUser(data.user.uid)
