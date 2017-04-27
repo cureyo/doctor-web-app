@@ -60,7 +60,7 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'doctorJob/:id',component:JobsMasterComponent },
     { path: 'clinicpage/:page', component: ClinicPageComponent },
     {path : 'web/:id', component :WebContentComponent},
-    {path :'webform/:id' ,component :SiteCreationFormComponent},
+    {path : 'webform/:id' ,component :SiteCreationFormComponent},
     { path: 'website', component: SelectDomainComponent},
     { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
