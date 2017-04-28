@@ -81,6 +81,7 @@ export class PatientPreviewComponent implements OnInit {
     $('#profileButton2').removeClass('btn-primary');
     $('#planButton2').removeClass('btn-primary');
     $('#reportButton2').removeClass('btn-primary');
+    $('#profileContent').css({ position: "" }); 
   }
 
     planButton() {

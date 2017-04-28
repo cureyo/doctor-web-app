@@ -8,6 +8,7 @@ import { AppConfig } from "../../config/app.config";
 import { Caredone } from "../../models/caredone.interface";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
+import { PatientPreviewComponent} from "../PatientPreview/PatientPreview.component"
 
  declare var $:any;
 @Component({
@@ -44,6 +45,7 @@ export class PatientDetailFormComponent implements OnInit {
     private _authService: AuthService,
     private router: Router,
     private http: Http,
+    private preview: PatientPreviewComponent
 
   ) {
     // this.currentUser = this._authService._getCurrentUser();
@@ -105,11 +107,28 @@ export class PatientDetailFormComponent implements OnInit {
 
   }
 
+    closeReportModal() {
+
+    $('#reportsModal').modal('hide');
+    $('#profileContent').css({ position: "" });
+
+
+  }
+
   showModal(itemType) {
     this.detailType = itemType;
 
 
     $('#profileModal').modal('show');
+
+    window.scroll(0, -100);
+    $('#profileContent').css({ position: 'fixed' });
+  }
+showReportModal() {
+    
+
+
+    $('#reportsModal').modal('show');
 
     window.scroll(0, -100);
     $('#profileContent').css({ position: 'fixed' });

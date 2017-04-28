@@ -75,8 +75,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     $('#myModal').modal('hide');
     $('#mainContent').css({ position: "" });
-    console.log("redirecting to ", "caredoneprofiles/" + id)
-    this.router.navigate(['caredoneprofiles/', id])
+    console.log("redirecting to ", "patient-preview/" + id)
+    this.router.navigate(['patient-preview/', id])
   }
 
   gotoAdd() {
