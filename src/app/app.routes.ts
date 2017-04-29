@@ -44,6 +44,7 @@ import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/
 import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
 
 import { SelectDomainComponent}  from "./dashboard/select-domain/select-domain.component";
+import { CarePathsComponent}  from "./dashboard/care-pathways/care-pathways.component";
 
 import { PatientDetailFormComponent } from './dashboard/PatientDetailForm/PatientDetailForm.component';
 import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/file-upload.component';
@@ -65,6 +66,7 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'website', component: SelectDomainComponent},
     { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
+    { path: 'care-paths', component: CarePathsComponent }
 
 ]
 
@@ -107,6 +109,7 @@ export const MODULE_COMPONENTS = [
     BookingtileComponent,
     FooterComponent,
     SlotBookingComponent,
-    SelectDomainComponent
+    SelectDomainComponent,
+    CarePathsComponent
 
 ]
