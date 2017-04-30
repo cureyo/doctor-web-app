@@ -86,8 +86,12 @@ export class CarePathsComponent implements OnInit {
     this.router.navigate(['website'])
 
   }
-checkTypeSelect(i) {
+checkTypeSelect(type, i) {
+  console.log("check type is",type, " for ", i);
+  //console.log()
+  if (type == 'mcq')
   this.checkTypes[i] = true;
+  else this.checkTypes[i] = false;
 }
   searchDomain = (model) => {
     let job = model['value'];
