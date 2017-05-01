@@ -209,6 +209,10 @@ export class AuthService {
     return caredones.set(data);
   }//_saveCaredOne
 
+ public _saveCarePathway(data, pathName) {
+    const carePaths = this.af.database.object(this.db.carePaths + pathName );
+    return carePaths.set(data);
+  }//_saveCaredOne
   public _saveDoctor(formData) {
     console.log("formdata");
     console.log(formData);

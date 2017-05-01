@@ -51,7 +51,7 @@
   
 
 </form>
-<form *ngIf="newPath" [formGroup]="carePathwayForm" (keydown.enter)="$event.preventDefault()" class="form">
+<form *ngIf="newPath" [formGroup]="carePathwayForm" (keydown.enter)="$event.preventDefault()" (ngSubmit)="onSubmit(carePathwayForm.value)" class="form">
    <div class="row">
   
   <div class="col-sm-6 col-md-offset-3">
@@ -61,6 +61,10 @@
             </div>
             <div class="pull-left" >
                 <button type="button" id="addcheck" (click)="addCheckPoints()" class="btn btn-round btn-primary">+ add checkpoint</button>
+                </div>
+
+                 <div class="pull-left" >
+                <button [disabled]="!carePathwayForm.valid" type="submit" class="btn btn-round">Save</button>
                 </div>
    </div>
    <div formArrayName="checkPoints">
@@ -80,7 +84,7 @@
                                 <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
                                  <label class="control-label" for="time">Time</label>
           <select formControlName="time" class="form-control" >
-      <option [attr.selected]="" value="{{k}}" *ngFor="let k of days">{{k}}</option>
+      <option [attr.selected]="" value="{{k}}" *ngFor="let k of times">{{k}}</option>
     </select>
                                </div>
                                <div class="form-group" style="width: 40%; float: left; z-index: 10000;">  
@@ -95,16 +99,20 @@
                                 <div class="form-group" style="margin: 10px; width: 100%;">  
           <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
             </div>
-            <div formArrayName="options">
-  <div class="card card-stats" *ngFor="let opt of check.controls.options.controls; let k=index">
+            <div *ngIf="checkTypes[i]" formArrayName="options">
+  <div *ngFor="let opt of check.controls.options.controls; let k=index">
                              <div [formGroupName]="k">
-                               {{k}}
+                              <div class="form-group" style="margin: 10px; width: 80%; margin-left:5%;"> 
+                                <br> 
+          <input type="text" class="form-control" id="value" formControlName="value" placeholder="Option" />
+            </div>
                              </div>
   </div>
             </div>
+            <br>
    <div *ngIf="checkTypes[i]" class="form-group">
                       <button type="submit" class="btn btn-primary btn-round" 
-                        (click)="addOptions()">Add Option</button>
+                        (click)="addOptions(check, i)">Add Option</button>
                     </div>
             </div>
                              </div>

@@ -27,16 +27,33 @@ export class CarePathsComponent implements OnInit {
   private array: any;
   private routeparam: any;
   private checkTypes: any = [];
+  private days: any = [];
+  private times: any = [];
 
 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
 
-
+   
   }
-
+updateDays() {
+   let i =0;
+    console.log("day pushed")
+    for (let i = 0; i < 200; i ++ ) {
+      this.days[i] = i;
+      //console.log("days pushed", i)
+    }
+}
+updateTimes() {
+   let i =0;
+    console.log("time pushed", i)
+    for (let i = 0; i < 24; i ++ ) {
+      this.times[i] = i + '00 hrs';
+      //console.log("times pushed", i)
+    }
+}
   ngOnInit() {
-
-
+  this.updateDays();
+  this.updateTimes();
     this.drDomain = this._fb.group({
       message: [''],
     });
@@ -62,7 +79,7 @@ export class CarePathsComponent implements OnInit {
   }
   initOptions() {
     return this._fb.group({
-      value: ['', Validators.required]
+      value: ['Option', Validators.required]
     });
   }
   addCheckPoints() {
@@ -70,9 +87,24 @@ export class CarePathsComponent implements OnInit {
     control.push(this.initCheckPoints());
 
   }//addReports
-  addOptions() {
-    const control = <FormArray>this.carePathwayForm.controls['checkPoints']['options'];
+  addOptions(check, i) {
+    console.log("options being added", i)
+    console.log(check.controls);
+    const control = <FormArray>check.controls['options']
+  //   console.log(this.carePathwayForm.controls['checkPoints'][i])
+  //   const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
+  //  // <FormArray>this.carePathwayForm.controls['checkPoints'].controls[i].['options']
+  //   console.log(control);
+  //   console.log(control.controls);
+  //   console.log(control.controls[i]);
+  //   console.log(control.controls[i].value);
+  //   console.log(control.controls[i].value.options);
+  //   var control3 = <FormArray>this.carePathwayForm.controls['checkPoints']['controls'][i].options;
+  //   console.log(control3);
+  //   const control2 = <FormArray>control3['options'];
+  //   console.log(control2);
     control.push(this.initOptions());
+    console.log(control);
 
   }//addReports
 
@@ -119,6 +151,11 @@ checkTypeSelect(type, i) {
     return this.http.get(domainURL)
       .map((res: Response) => res.json());
 
+  }
+
+  onSubmit (model) {
+    this._authService._saveCarePathway(model, model['name']);
+    this.carePathwayForm.reset();
   }
 
 }
