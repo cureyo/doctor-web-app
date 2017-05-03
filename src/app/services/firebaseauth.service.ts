@@ -127,6 +127,26 @@ export class AuthService {
     return webcontentdata.set(data);
   }
    
+   public _getCheckInDetails(clinicID, date, q) {
+        console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+        return this.af.database.object(this.db.checkIns + clinicID + '/' + date + '/' + q);
+       
+  }//fetch the checkin data
+  public _getClinicQueue(clinicID, date) {
+     console.log(this.db.queue + clinicID + '/' + date)
+        return this.af.database.object(this.db.queue + clinicID + '/' + date + '/q');
+       
+  }//fetch the checkin data
+   public _setClinicQueue(clinicID, date, q) {
+     console.log(this.db.queue + clinicID + '/' + date)
+     const queu = this.af.database.object(this.db.queue + clinicID + '/' + date );
+     queu.set({q});
+       
+  }//fetch the checkin data
+public _findPatient(currentUserId, caredoneId) {
+    console.log("the cared patient is ", this.db.patientdetails + currentUserId + '/' + caredoneId)
+    return this.af.database.list(this.db.patientdetails + currentUserId + '/' + caredoneId);
+  }//_findPatientDetails
 
     public _saveWebContentBookingtile(data,sitename) {
        console.log("the sitenmae for hero booking tiles",sitename);
@@ -142,13 +162,21 @@ export class AuthService {
 
 
   }//save webcontentHeroTile data
+     public _saveWebMetaData(data,sitename) {
+       console.log("the sitenmae for hero booking tiles",sitename);
+    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/metaData')
+    return webcontentdata.set(data);
 
+  }//save webcontentHeroTile data
+   public _saveWebContentProfiletile(data,sitename) {
+       console.log("the sitenmae for hero booking tiles",sitename);
+    const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/profileTile')
+    return webcontentdata.set(data);
+  }//save webcontentProfileTile data
    public _saveSlotBookingDetails(data,sitename) {
        console.log("the route is :",sitename);
     return this.af.database.object(this.db.doctorPages + '/' +sitename +'/availability' )
     .set (data);
-    
-
   }//save slot booking details data
  //email login 
   createMailUser(details) {

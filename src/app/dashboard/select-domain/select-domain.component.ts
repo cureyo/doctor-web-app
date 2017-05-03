@@ -84,15 +84,21 @@ export class SelectDomainComponent implements OnInit {
         this._authService._saveWebsite(domainName, data.user.uid);
         this._authService._getSitePrefilledData()
         .subscribe(data => {
+
           var len = domainName.indexOf('.');
 
           var domainNameShort = domainName.substring(0, len);
           console.log(domainName, domainNameShort)
           console.log(data);
-          var websiteData = {bookingTile: data.bookingTile, footer: data.footer, heroTile: data.heroTile, map: data.map, profileTile: data.profileTile};
+            this._authService._getUser()
+      .subscribe(
+      res => { 
+        var websiteData = {doctorId: res.user.uid , bookingTile: data.bookingTile, footer: data.footer, heroTile: data.heroTile, map: data.map, profileTile: data.profileTile};
           console.log(websiteData);
         this._authService._saveDummyData(websiteData, domainNameShort);
         this.router.navigate(['/web/' + domainName]);
+      });
+          
         })
         
       });

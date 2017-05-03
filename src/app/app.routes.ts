@@ -22,7 +22,8 @@ import {PhysicalConsultationComponent} from "./dashboard/table/PhysicalConsultat
 import {BloodSugarChartComponent} from "./dashboard/weeklyreports/BloodSugarChart/BloodSugarChart.component";
 import { CommonModelComponent } from "./dashboard/weeklyreports/common-model/common-model.component";
 import {DocReviewComponent}  from "./dashboard/table/DocReview/Doc-Review.component";
-
+import { OutPatientsFormComponent} from "./dashboard/OutPatients/OutPatientsForm.component";
+import { OPDComponent } from './dashboard/OPD/OPD.component';
 import {NavbarComponent} from './shared/navbar/navbar.component';
 import {AuthGuard} from "./auth.guard";
 import {CaredOnesFormMobileViewComponent} from "./dashboard/cared-ones-form-mobile-view/cared-ones-form-mobile-view.component";
@@ -67,7 +68,9 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'website', component: SelectDomainComponent},
     { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
-    { path: 'care-paths', component: CarePathsComponent }
+    { path: 'care-paths', component: CarePathsComponent },
+     { path: 'out-patients/:id', component: OutPatientsFormComponent},
+    { path: 'out-patient-dept', component: OPDComponent}
 
 ]
 
@@ -112,6 +115,7 @@ export const MODULE_COMPONENTS = [
     SlotBookingComponent,
     ProfileTileComponent,
     SelectDomainComponent,
-    CarePathsComponent
-
+    CarePathsComponent,
+    OutPatientsFormComponent,
+    OPDComponent
 ]

@@ -74,7 +74,7 @@
             <div id="proSection">
             <div  *ngIf="formReady" id="profileSection" class="card">
                 <div class="card-header" data-background-color="cureyo">
-                    <h4 class="title">{{caredone.nickName}}'s Profile</h4>
+                    <h4 class="title">{{caredone.firstName}}'s Profile</h4>
                     <p class="category">Review and Add details</p>
                 </div>
                 <div class="card-content">
@@ -98,44 +98,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group form-black label-floating is-not-empty">
-                                    <div class="form-group">
-                                    <label class="control-label">what do you call him/her?</label>
-                                    <input type="text" placeholder="eg: 'Dad'" [formControl]="CaredonesForm.controls['nickName']" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                         <!-- end of first row -->
                          <!--2nd row content (Relationship,gender and age) -->
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group form-black label-floating is-not-empty">
-                                    <div class="form-group">
-                                    <label class="control-label">Relationship</label>
-                                    <select class="form-control"  [formControl]="CaredonesForm.controls['relationship']">
-                                        <option selected disabled hidden></option>
-                                     <option value="mother">mother</option>
-                                     <option value="father">father</option>
-                                     <option value="wife">wife</option>
-                                     <option value="husband">husband</option>
-                                     <option value="brother">brother</option>
-                                     <option value="sister">sister</option>
-                                     <option value="grandfather">grandfather</option>
-                                     <option value="grandmother">grandmother</option>
-                                     <option value="son">son</option>
-                                     <option value="daughter">daughter</option>
-                                     <option value="uncle">uncle</option>
-                                     <option value="aunt">aunt</option>
-                                     <option value="nephew">nephew</option>
-                                     <option value="niece">niece</option>
-                                     <option value="friend">friend</option>
-                                     <option value="self">self</option>
-                                    </select>
-                                    </div>
-                                </div>
-                                </div>
+                           
                             
                             <div class="col-md-4">
                                 <div class="form-group form-black label-floating is-not-empty">
@@ -214,7 +182,7 @@
             <app-file-upload [currentUserID]="currentUserID" [caredoneId]="caredoneId"></app-file-upload>
          <div class="card">
                 <div class="card-header" data-background-color="cureyo">
-                    <h4 class="title">{{caredone.nickName}}'s Reports</h4>
+                    <h4 class="title">{{caredone.firstName}}'s Reports</h4>
                     <p class="category">Health reports already provided</p>
                      <a class="btn btn-round" (click)="showReportModal()">View all Reports</a>
                 </div>
@@ -256,7 +224,7 @@
                <div *ngIf="obsReady" class="col-md-4" id="obsSection">
 <div id="observerSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
     <div class="card-header" data-background-color="cureyo">
-                <h4 class="title">{{caredone.nickName}}'s Observers</h4>
+                <h4 class="title">{{caredone.firstName}}'s Observers</h4>
                 <p class="category">View & Add Observers</p>
                 </div>
                                 <!--for add new observers -->
@@ -351,13 +319,13 @@
       <div *ngIf="detailType && caredone" class="modal-body" >
         <p  style="text-align: left;">
           <br>
-          You have just added {{detailType}} for {{caredone.nickName}}. We will process these updates and take action accordingly.
+          You have just added {{detailType}} for {{caredone.firstName}}. We will process these updates and take action accordingly.
          <br> 
          </p>
          <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">What next?</h3>
           <br>
 <hr>
-        <p style="text-align: left;">You can continue adding details for {{caredone.nickName}} or add another 'Cared One' from the dashboard.</p>
+        <p style="text-align: left;">You can continue adding details for {{caredone.firstName}} or add another 'Cared One' from the dashboard.</p>
        
     
       

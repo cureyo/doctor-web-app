@@ -37,13 +37,15 @@ export class SiteCreationFormComponent implements OnInit {
         console.log("param value test in site creation form :", this.routeparam);
         var n = this.routeparam.indexOf('.')
         var pathRoute = this.routeparam.substring(0,n);
+        console.log(pathRoute)
         this._authService._getSiteData(pathRoute).
           subscribe(res => {
             this.site_PrefilledData = res;
             this.herotiles = this.site_PrefilledData.heroTile;
             this.bookingtiles = this.site_PrefilledData.bookingTile;
             this.profileTile = this.site_PrefilledData.profileTile;
-            // console.log("prefilled data res",this.site_PrefilledData);
+            
+            console.log("prefilled data res",this.site_PrefilledData);
             // console.log("hero tiles data",this.herotiles);
             // console.log("booking tiles data",this.bookingtiles);
           })

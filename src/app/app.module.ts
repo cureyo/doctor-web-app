@@ -30,6 +30,8 @@ import {Ng2AutoCompleteModule} from "ng2-auto-complete/dist/index";
 import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
 import { SelectDomainComponent } from './dashboard/select-domain/select-domain.component';
 import {PatientPreviewComponent} from './dashboard/PatientPreview/PatientPreview.component';
+import { OutPatientsFormComponent } from './dashboard/OutPatients/OutPatientsForm.component';
+import { OPDComponent } from './dashboard/OPD/OPD.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -64,7 +66,7 @@ export const firebaseAuthConfig = {
 
   declarations: [ MODULE_COMPONENTS],
 
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, PatientPreviewComponent],
 
   bootstrap: [AppComponent]
 })

@@ -35,6 +35,11 @@ export class ProfileTileComponent implements OnInit {
       })
    
       // console.log("herotiles data in herotiles component",this.herotiles);
+      this._authService._getUser()
+      .subscribe(
+
+      data => {
+        console.log(this.profileTile)
       this.profileTileForm = this._fb.group({
         title: [this.profileTile.title, Validators.required],
         experience: [this.profileTile.doctor.experience, Validators.required],
@@ -42,9 +47,11 @@ export class ProfileTileComponent implements OnInit {
         brief: [this.profileTile.doctor.brief, Validators.required],
         name: [this.profileTile.doctor.name, Validators.required],
         text: [this.profileTile.text, Validators.required],
-        image: [this.profileTile.doctor.image, Validators.required],
+        image: ['https://graph.facebook.com/' + data.user.uid + '/picture?type=large', Validators.required],
         bgPic: [this.profileTile.bgImage, Validators.required]
       });
+      });
+      console.log(this.profileTileForm);
     
   
 
@@ -79,13 +86,13 @@ export class ProfileTileComponent implements OnInit {
     this.sitename = this.routeparam.substring(0, n);
     //end of url trimming part
     console.log("the routeparam value in hero tiles:", this.sitename);
-    this._authService._saveWebContentHerotile(reminder, this.sitename).then(
+    this._authService._saveWebContentProfiletile(reminder, this.sitename).then(
       res => {
         let d = res;
         console.log("response of hero tile data", d);
         $.notify({
           icon: "notifications",
-          message: "Details for top section have been saved"
+          message: "Details for profile section have been saved"
 
         }, {
             type: 'cureyo',
@@ -95,32 +102,58 @@ export class ProfileTileComponent implements OnInit {
               align: 'right'
             }
           });
-        this.addDomain(this.sitename)
+       this.updateMetaData(reminder);
 
       })
   }
 
-  addDomain(domainName) {
+  updateMetaData(metadata2) {
+    console.log(metadata2);
+    let data = metadata2;
+    console.log(data);
+   let metadata = {
+  "description" : data.doctor.brief,
+  "image" : data.doctor.image,
+  "siteName" : data.doctor.name,
+  "tags" : [ {
+    "content" : data.doctor.brief,
+    "tag" : "description",
+    "type" : "name"
+  }, {
+    "content" : data.doctor.name + " | " + data.doctor.qual + " | " + data.doctor.experience,
+    "tag" : "og:title",
+    "type" : "property"
+  }, {
+    "content" : data.doctor.brief,
+    "tag" : "og:description",
+    "type" : "property"
+  }, {
+    "content" : data.doctor.image,
+    "tag" : "og:image",
+    "type" : "property"
+  } ],
+  "title" : data.doctor.name + " | " + data.doctor.qual + " | " + data.doctor.experience,
+  "twitter" : {
+    "cardImage" : "http://www.mycowichanvalleynow.com/wp-content/uploads/2016/12/surgery.jpg",
+    "image" : "https://cureyo.com/assets/DoctorPics/DrUSSrinivasan.png",
+    "site" : "@DrUSSrinivasan"
+  },
+  "url" : this.routeparam
+};
+this._authService._saveWebMetaData(metadata, this.sitename).then(data => {
+  $.notify({
+          icon: "notifications",
+          message: "Website metadata has been updated"
 
-
-    this.putDomain(domainName).subscribe(data => {
-      console.log(data);
-      $.notify({
-        icon: "notifications",
-        message: "Website " + this.sitename + ".cureyo.com has been created. You can check in 30-45 minutes, or open this URL in another browser to review.",
-        url: 'http://'+ this.sitename + '.cureyo.com',
-        target: '_blank'
-      }, {
-          type: 'cureyo',
-          timer: 4000,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-
-    });
-
+        }, {
+            type: 'cureyo',
+            timer: 4000,
+            placement: {
+              from: 'top',
+              align: 'right'
+            }
+          });
+})
 
 
   }

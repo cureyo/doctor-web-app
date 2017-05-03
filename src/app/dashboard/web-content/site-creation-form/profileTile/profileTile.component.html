@@ -1,6 +1,6 @@
  <div class="col-md-12">
-                <div class="card">
-                  <form [formGroup]="profileTileForm" class="formGroup" novalidate (ngSubmit)="save_heroTile(heroTile)">
+                <div *ngIf="profileTile" class="card">
+                  <form [formGroup]="profileTileForm" class="formGroup" novalidate (ngSubmit)="save_profileTile(profileTileForm)">
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="blue">
                         <h4 class="title">Profile Section</h4>
@@ -22,14 +22,14 @@
                      <!-- exeperience-->
                     <div class="col-sm-4">  
                             <div class="form-group">
-                                 <label for="title">Exeperience</label>
-                                 <input type="text" class="form-control" formControlName="expo"/>
+                                 <label for="experience">Exeperience</label>
+                                 <input type="text" class="form-control" formControlName="experience"/>
                             </div>
                     </div><!--end of Experience -->
                     <!-- Qualification-->
                     <div class="col-sm-4">  
                             <div class="form-group">
-                                 <label for="title">Qualification</label>
+                                 <label for="qual">Qualification</label>
                                  <input type="text" class="form-control" formControlName="qual"/>
                             </div>
                     </div><!--end of Qualification -->
@@ -41,24 +41,24 @@
                     <!-- About-->
                     <div class="col-md-4">  
                             <div class="form-group">
-                                 <label for="title">About</label>
-                                 <input type="text" class="form-control" formControlName="about"/>
+                                 <label for="brief">Brief</label>
+                                 <textarea type="text" class="form-control" formControlName="brief" ></textarea>
                             </div>
                     </div>
                     <!--end of About  -->
                      <!-- text for web site-->
                     <div class="col-md-4">  
                             <div class="form-group">
-                                 <label for="title">Text for site</label>
-                                 <input type="text" class="form-control" formControlName="site_text"/>
+                                 <label for="name">Name</label>
+                                 <input type="text" class="form-control" formControlName="name"/>
                             </div>
                     </div>
                     <!--end of text for web site -->
                     <!-- card title -->
                     <div class="col-sm-3">  
                             <div class="form-group">
-                                 <label for="title"> Card Title</label>
-                                 <input type="text" class="form-control" formControlName="card_title"/>
+                                 <label for="text"> Sub-text</label>
+                                 <input type="text" class="form-control" formControlName="text"/>
                             </div>
                     </div><!--end of card title -->
                 </div>
@@ -75,8 +75,8 @@
                         </label>
                       </div>          -->
                        <div class="form-group" >
-    <label class="control-label" for="bg_Pic">Select Background Image</label>
-    <select formControlName="bg_Pic" id="bg_Pic" class="form-control" (change)="changeSampleBG(heroTile.controls['bg_Pic'].value)">
+    <label class="control-label" for="bgPic">Select Background Image</label>
+    <select formControlName="bgPic" id="bgPic" class="form-control" (change)="changeSampleBG(profileTileForm.controls['bgPic'].value)">
       <option value="{{i.url}}" *ngFor="let i of backgrounds">{{i.name}}</option>
     </select>
   </div>
@@ -86,22 +86,15 @@
                             <img src="{{preview}}">
                     </div>
 
-                    <div class="col-md-4">  
-                        <div class="checkbox">
-                        <label style="padding-top:15px;">
-                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="fb_Profile">
-                          Use My Fb Profile Pic
-                        </label>
-                      </div>          
-                    </div>
+                    
                     <!-- submit button code    -->
                 <div class="col-md-4"> 
         
                       <div class="pull-right" >
-                          <button  type="submit" [ngClass]="{'hide': heroTileAdded}" [disabled]="!heroTile.valid" class="btn btn-warning">Add</button>
+                          <button  type="submit" [ngClass]="{'hide': profileTileAdded}" [disabled]="!profileTileForm.valid" class="btn btn-round btn-warning">Save</button>
                       </div>
 
-                       <div [ngClass]="{'hide': !heroTileAdded}" class="bareP">
+                       <div [ngClass]="{'hide': !profileTileAdded}" class="bareP">
                             <p>Thanks! Tile is Added </p>
                         </div>
                 </div>

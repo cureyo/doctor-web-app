@@ -1,0 +1,108 @@
+ <div class="main-content">
+    <div class="container-fluid">
+ <div class="col-md-12">
+                <div class="card" style="margin-top: 30px;">
+                  
+                    <div class="card-header" data-background-color="blue">
+                         <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;">
+
+<img tyle="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;" src="{{caredone.avatar}}" >
+          
+
+        </div>
+                        <h4 class="title">{{caredone.firstName}} {{caredone.lastName}}
+                            <br>
+                        <small style="font-weight: 300; color: #fff;">Patient # {{this.currentQ}}</small></h4>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row">
+
+
+<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        perm_identity</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Age
+        </h3>
+        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">{{age}}</small>
+
+    </div>  
+</div>
+
+<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                         school</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Education History
+        </h3>
+        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">School: {{skulName}}, <br>Education: {{level}}</small>
+
+    </div>  
+</div>
+
+<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        people</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Working History
+        </h3>
+        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">Work: {{workName}},<br> Position: {{Position}}</small>
+
+    </div>  
+</div>
+
+<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        account_balance</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">HomeTown
+        </h3>
+        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">{{hometown}}</small>
+
+    </div>  
+</div>
+
+<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        room</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">Location
+        </h3>
+        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">{{location}}</small>
+
+    </div>  
+</div>
+              </div>
+              </div>
+              <a class="btn btn-round pull-right" (click)="checkOutPatient()">Check-out Patient</a>
+                </div>
+ </div>
+ 
+
+<app-PatientDetailsFormComponent></app-PatientDetailsFormComponent>
+</div>
+ </div>
+    
