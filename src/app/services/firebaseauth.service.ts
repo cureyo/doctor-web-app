@@ -183,6 +183,18 @@ export class AuthService {
     console.log("herotile path",this.db.website)
     return this.af.database.object(this.db.website);
   }
+  public _getSiteData(pathRoute){
+    console.log("herotile path",this.db.doctorPages + pathRoute + '/content')
+    return this.af.database.object(this.db.doctorPages + pathRoute + '/content');
+  }
+   public _getBackgroundImages(){
+   
+    return this.af.database.object(this.db.doctorPages + 'BackgroundImages');
+  }
+  public _saveDummyData(data, domainNameShort) {
+    const webData = this.af.database.object(this.db.doctorPages + domainNameShort + '/content');
+    webData.set(data);
+  }
 
   public _saveUserCoverPhoto(uid, cover) {
     return this.af.database.object(this.db.users + uid)
@@ -212,6 +224,10 @@ export class AuthService {
  public _saveCarePathway(data, pathName) {
     const carePaths = this.af.database.object(this.db.carePaths + pathName );
     return carePaths.set(data);
+  }//_saveCaredOne
+   public _saveWebsite(siteName, docId) {
+    const clinicSite = this.af.database.object(this.db.users + docId + '/clinicWebsite' );
+    return clinicSite.set(siteName);
   }//_saveCaredOne
   public _saveDoctor(formData) {
     console.log("formdata");

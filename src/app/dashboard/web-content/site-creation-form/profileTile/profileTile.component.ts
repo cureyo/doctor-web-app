@@ -6,15 +6,15 @@ import { FbService } from "../../../../services/facebook.service";
 import { Http, Response, Headers } from '@angular/http';
 declare var $: any;
 @Component({
-  selector: 'app-herotiles',
-  templateUrl: './herotiles.component.html',
-  //styleUrls: ['./herotiles.component.css']
+  selector: 'app-profileTile',
+  templateUrl: './profileTile.component.html',
+  //styleUrls: ['./profileTile.component.css']
 })
-export class HerotilesComponent implements OnInit {
-  @Input() herotiles: any;
+export class ProfileTileComponent implements OnInit {
+  @Input() profileTile: any;
   @Input() routeparam: any;
-  private heroTile: FormGroup;
-  private heroTileAdded: boolean = false;
+  private profileTileForm: FormGroup;
+  private profileTileAdded: boolean = false;
   private temp: any;
   private sitename: any;
   private backgrounds: any;
@@ -33,51 +33,40 @@ export class HerotilesComponent implements OnInit {
       .subscribe(data => {
         this.backgrounds = data;
       })
-    if (this.herotiles) {
+   
       // console.log("herotiles data in herotiles component",this.herotiles);
-      this.heroTile = this._fb.group({
-        title: [this.herotiles.title, Validators.required],
-        expo: [this.herotiles.card.experience, Validators.required],
-        qual: [this.herotiles.card.qual, Validators.required],
-        about: [this.herotiles.card.text, Validators.required],
-        card_title: [this.herotiles.card.title, Validators.required],
-        site_text: [this.herotiles.text, Validators.required],
-        fb_Profile: [this.herotiles.card.image, Validators.required],
-        bg_Pic: [this.herotiles.bgImage, Validators.required]
+      this.profileTileForm = this._fb.group({
+        title: [this.profileTile.title, Validators.required],
+        experience: [this.profileTile.doctor.experience, Validators.required],
+        qual: [this.profileTile.doctor.qual, Validators.required],
+        brief: [this.profileTile.doctor.brief, Validators.required],
+        name: [this.profileTile.doctor.name, Validators.required],
+        text: [this.profileTile.text, Validators.required],
+        image: [this.profileTile.doctor.image, Validators.required],
+        bgPic: [this.profileTile.bgImage, Validators.required]
       });
-    }
-    else {
-      this.heroTile = this._fb.group({
-        title: ['your main title', Validators.required],
-        expo: ['work experience', Validators.required],
-        qual: ['your qualification', Validators.required],
-        about: ["tell us something about website", Validators.required],
-        card_title: ['put card title here'],
-        site_text: ["write some detailed text for your site", Validators.required],
-        fb_Profile: [true, Validators.required],
-        bg_Pic: [false]
-      });
-    }
+    
+  
 
   }
-  save_heroTile = (model) => {
+  save_profileTile = (model) => {
     //console.log(job);
     let job = model['value'];
     console.log(job);
     let reminder = {
       title: job['title'],
-      text: job['site_text'],
-      bgImage: job['bg_Pic'],
-      card: {
-        experience: job['expo'],
+      text: job['text'],
+      bgImage: job['bgPic'],
+      doctor: {
+        brief: job['brief'],
+        experience: job['experience'],
         qual: job['qual'],
-        text: job['about'],
-        title: job['card_title'],
-        image: job['fb_Profile']
+        name: job['name'],
+        image: job['image']
       }
     };
     console.log(reminder);
-    this.heroTileAdded = true;
+    this.profileTileAdded = true;
     console.log("reminder value herotile  :", reminder);
     this.temp = Math.floor((Math.random() * 10000) + 1);
     console.log("temp number :", this.temp);

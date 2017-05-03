@@ -3,9 +3,9 @@
                   <form [formGroup]="heroTile" class="formGroup" novalidate (ngSubmit)="save_heroTile(heroTile)">
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="blue">
-                        <h4 class="title">Hero Tiles </h4>
+                        <h4 class="title">Top Section</h4>
 
-                        <p class="category">Hero Tiles text</p>
+                        <p class="category">First section that appears on your webpage</p>
 
                     </div> <!-- card header portion end-->
                     
@@ -65,20 +65,32 @@
                 <!-- end of second row-->
                 <!-- third row-->
                 <div class="row">
-                      <div class="col-md-4">  
-                        <div class="checkbox">
+                      
+
+                    <div class="col-md-4">  
+                        <!--<div class="checkbox">
                         <label style="padding-top:15px;">
-                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="fb_Profile">
-                          Use My Fb Profile Pic
+                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="bg_Pic">
+                          click for background pic
                         </label>
-                      </div>          
+                      </div>          -->
+                       <div class="form-group" >
+    <label class="control-label" for="bg_Pic">Select Background Image</label>
+    <select formControlName="bg_Pic" id="bg_Pic" class="form-control" (change)="changeSampleBG(heroTile.controls['bg_Pic'].value)">
+      <option value="{{i.url}}" *ngFor="let i of backgrounds">{{i.name}}</option>
+    </select>
+  </div>
+                    </div>
+                    <div class="col-md-4">
+                            <h4>Background Preview</h4>
+                            <img src="{{preview}}">
                     </div>
 
                     <div class="col-md-4">  
                         <div class="checkbox">
                         <label style="padding-top:15px;">
-                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="bg_Pic">
-                          click for background pic
+                          <input type="checkbox" name="optionsCheckboxes" checked formControlName="fb_Profile">
+                          Use My Fb Profile Pic
                         </label>
                       </div>          
                     </div>

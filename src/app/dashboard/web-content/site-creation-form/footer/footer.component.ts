@@ -7,7 +7,7 @@ import {FbService} from "../../../../services/facebook.service";
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  //styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
    @Input () routeparam:any;

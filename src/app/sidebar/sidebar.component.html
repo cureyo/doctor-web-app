@@ -196,8 +196,15 @@
             </li>-->
             <!-- web site button -->
 
-               <li routerLinkActive="active">
-                    <a [routerLink]="['website']" id="WebSiteSetup" style="z-index: 100000;" (click)="domain.selectDomainMenu(domainName)">
+               <li *ngIf="!hasWebsite" routerLinkActive="active">
+                    <a [routerLink]="['website']" id="WebSiteSetup" style="z-index: 100000;">
+                        <i class="material-icons">web</i>
+                        <p>Web site</p>
+                    </a>
+
+            </li>
+            <li *ngIf="hasWebsite" routerLinkActive="active">
+                    <a [routerLink]="['/webform/' + currentUser.clinicWebsite]" id="WebSiteSetup2" style="z-index: 100000;">
                         <i class="material-icons">web</i>
                         <p>Web site</p>
                     </a>

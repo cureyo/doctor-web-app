@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-web-content',
   templateUrl: './web-content.component.html',
-  styleUrls: ['./web-content.component.css']
+  //styleUrls: ['./web-content.component.css']
 })
 export class WebContentComponent implements OnInit {
              private routeparam:any;

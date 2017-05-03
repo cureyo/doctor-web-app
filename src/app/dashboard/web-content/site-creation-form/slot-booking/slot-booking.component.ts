@@ -9,7 +9,7 @@ import {slotBookingClass} from "../../../../models/slotBooking.interface";
 @Component({
   selector: 'app-slot-booking',
   templateUrl: './slot-booking.component.html',
-  styleUrls: ['./slot-booking.component.css']
+  //styleUrls: ['./slot-booking.component.css']
 })
 export class SlotBookingComponent implements OnInit {
       @Input() routeparam:any;

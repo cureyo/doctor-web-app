@@ -21,9 +21,9 @@ export class SelectDomainComponent implements OnInit {
   private drDomain: FormGroup;
   private selectDrDomain: boolean = false;
   private caredOneId: any;
-  private displayDrDomain: boolean = false; 
+  private displayDrDomain: boolean = false;
   private array: any;
-  private routeparam:any;
+  private routeparam: any;
 
 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
@@ -36,12 +36,12 @@ export class SelectDomainComponent implements OnInit {
 
     this.drDomain = this._fb.group({
       message: [''],
-      
+
 
     });
     this.selectDrDomain = true;
   }
-  selectDomainMenu () {
+  selectDomainMenu() {
 
     this.selectDrDomain = true;
     console.log("redirecting to ", "website")
@@ -49,30 +49,54 @@ export class SelectDomainComponent implements OnInit {
 
   }
 
-  searchDomain =(model) =>{
-     let job =model['value'];
-     let reminder={};
-     this.routeparam=job['message'];
-     reminder['message value']=job['message'];
-     console.log("reminder value test ",reminder);
+  searchDomain = (model) => {
+    let job = model['value'];
+    let reminder = {};
+    this.routeparam = job['message'];
+    reminder['message value'] = job['message'];
+    console.log("reminder value test ", reminder);
     console.log("i am clicked to check domain name")
-    
- this.getData(job['message']).subscribe(data => { console.log(data);
-  this.array = data;
-  console.log(this.array)
-  this.displayDrDomain = true;
 
-   });
+    this.getData(job['message']).subscribe(data => {
+      console.log(data);
+      this.array = data;
+      console.log(this.array)
+      this.displayDrDomain = true;
 
-  
- 
+    });
+
+
+
   }
   getData(domainName) {
-    
-    const domainURL = "https://api.ote-godaddy.com/v1/domains/suggest?query="+domainName+"&country=IN&city=bangalore&sources=CC_TLD%2CEXTENSION%2CKEYWORD_SPIN%2CPREMIUM%2Ccctld%2Cextension%2Ckeywordspin%2Cpremium&tlds=.com&lengthMax=15&lengthMin=5&limit=10&waitMs=6000";
 
-      return this.http.get(domainURL)
-    .map((res:Response) => res.json());
+    const domainURL = "https://api.ote-godaddy.com/v1/domains/suggest?query=" + domainName + "&country=IN&city=bangalore&sources=CC_TLD%2CEXTENSION%2CKEYWORD_SPIN%2CPREMIUM%2Ccctld%2Cextension%2Ckeywordspin%2Cpremium&tlds=.com&lengthMax=15&lengthMin=5&limit=10&waitMs=6000";
+
+    return this.http.get(domainURL)
+      .map((res: Response) => res.json());
+
+  }
+
+  route2WebDetails(domainName) {
+    this._authService._getUser()
+      .subscribe(
+      data => {
+        this._authService._saveWebsite(domainName, data.user.uid);
+        this._authService._getSitePrefilledData()
+        .subscribe(data => {
+          var len = domainName.indexOf('.');
+
+          var domainNameShort = domainName.substring(0, len);
+          console.log(domainName, domainNameShort)
+          console.log(data);
+          var websiteData = {bookingTile: data.bookingTile, footer: data.footer, heroTile: data.heroTile, map: data.map, profileTile: data.profileTile};
+          console.log(websiteData);
+        this._authService._saveDummyData(websiteData, domainNameShort);
+        this.router.navigate(['/web/' + domainName]);
+        })
+        
+      });
+
 
   }
 

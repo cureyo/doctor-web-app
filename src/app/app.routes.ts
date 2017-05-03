@@ -42,6 +42,7 @@ import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/her
 import {FooterComponent}  from "./dashboard/web-content/site-creation-form/footer/footer.component";
 import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
 import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
+import {ProfileTileComponent} from "./dashboard/web-content/site-creation-form/profileTile/profileTile.component";
 
 import { SelectDomainComponent}  from "./dashboard/select-domain/select-domain.component";
 import { CarePathsComponent}  from "./dashboard/care-pathways/care-pathways.component";
@@ -109,6 +110,7 @@ export const MODULE_COMPONENTS = [
     BookingtileComponent,
     FooterComponent,
     SlotBookingComponent,
+    ProfileTileComponent,
     SelectDomainComponent,
     CarePathsComponent
 

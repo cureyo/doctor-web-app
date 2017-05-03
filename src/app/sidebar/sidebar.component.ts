@@ -40,6 +40,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     private coReport: boolean = false;
     private coDoctorJobs:boolean = false;
     private isDoctor: boolean = false;
+    private hasWebsite: boolean = false;
 
     ngOnInit() {
         
@@ -95,6 +96,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
                     } else {
                         this.isDoctor = false;
                         console.log("is doctor:", this.isDoctor)
+                    }
+                    if (this.currentUser.clinicWebsite) {
+                        this.hasWebsite = true;
+                        console.log("has website", this.hasWebsite)
+                    } else {
+                        this.hasWebsite = false;
+                        console.log("has website", this.hasWebsite)
                     }
                     this.getCaredones();
                     console.log(this.caredOnes)
