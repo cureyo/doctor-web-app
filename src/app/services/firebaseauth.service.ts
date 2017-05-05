@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   login(provider) {
-    console.log(provider)
+    //console.log(provider)
     this.af.auth.login({
       //provider: provider
     });
@@ -74,19 +74,19 @@ export class AuthService {
   }//logout
 
   public _saveUser(formData) {
-    console.log("formdata");
-    console.log(formData);
+    //console.log("formdata");
+    //console.log(formData);
     const db = this.af.database.object(this.db.users + formData.authUID);
     db.set(formData)
     //this.router.navigate(['dashboard']);
   }//_saveUser
   public _updateReminders(data, key) {
 
-    console.log("testing the data and key", data, key)
+    //console.log("testing the data and key", data, key)
     const db = this.af.database.object(this.db.scheduledJobs + '/' + key);
     db.set(data).then(
       (item) => {
-        console.log(item);
+        //console.log(item);
       }
     );
     return
@@ -98,14 +98,14 @@ export class AuthService {
     const db = this.af.database.object(this.db.scheduledJobs + '/' + key);
     db.remove().then(
       (item) => {
-        console.log(item);
+        //console.log(item);
       }
     );
     return
 
   }//_updateReminders
     public _getDoctorPage(pageId) {
-    console.log(this.db.doctorPages + pageId);
+    //console.log(this.db.doctorPages + pageId);
     return this.af.database.object(this.db.doctorPages + pageId);
   }//_findCaredoneByKey
 
@@ -122,78 +122,78 @@ export class AuthService {
 
   }//save onboardingReviewreview data
    public _saveWebContentFootertile(data,sitename) {
-       console.log("the sitenmae for Footer tiles",sitename);
+       //console.log("the sitenmae for Footer tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/footerTile' )
     return webcontentdata.set(data);
   }
    
    public _getCheckInDetails(clinicID, date, q) {
-        console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+        //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
         return this.af.database.object(this.db.checkIns + clinicID + '/' + date + '/' + q);
        
   }//fetch the checkin data
   public _getClinicQueue(clinicID, date) {
-     console.log(this.db.queue + clinicID + '/' + date)
+     //console.log(this.db.queue + clinicID + '/' + date)
         return this.af.database.object(this.db.queue + clinicID + '/' + date + '/q');
        
   }//fetch the checkin data
    public _setClinicQueue(clinicID, date, q) {
-     console.log(this.db.queue + clinicID + '/' + date)
+     //console.log(this.db.queue + clinicID + '/' + date)
      const queu = this.af.database.object(this.db.queue + clinicID + '/' + date );
      queu.set({q});
        
   }//fetch the checkin data
 public _findPatient(currentUserId, caredoneId) {
-    console.log("the cared patient is ", this.db.patientdetails + currentUserId + '/' + caredoneId)
+    //console.log("the cared patient is ", this.db.patientdetails + currentUserId + '/' + caredoneId)
     return this.af.database.list(this.db.patientdetails + currentUserId + '/' + caredoneId);
   }//_findPatientDetails
 
     public _saveWebContentBookingtile(data,sitename) {
-       console.log("the sitenmae for hero booking tiles",sitename);
+       //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/bookingTile' )
     return webcontentdata.set(data);
 
 
   }//save webcontentBookingTile data
    public _saveWebContentHerotile(data,sitename) {
-       console.log("the sitenmae for hero booking tiles",sitename);
+       //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/heroTile')
     return webcontentdata.set(data);
 
 
   }//save webcontentHeroTile data
      public _saveWebMetaData(data,sitename) {
-       console.log("the sitenmae for hero booking tiles",sitename);
+       //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/metaData')
     return webcontentdata.set(data);
 
   }//save webcontentHeroTile data
    public _saveWebContentProfiletile(data,sitename) {
-       console.log("the sitenmae for hero booking tiles",sitename);
+       //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/profileTile')
     return webcontentdata.set(data);
   }//save webcontentProfileTile data
    public _saveSlotBookingDetails(data,sitename) {
-       console.log("the route is :",sitename);
+       //console.log("the route is :",sitename);
     return this.af.database.object(this.db.doctorPages + '/' +sitename +'/availability' )
     .set (data);
   }//save slot booking details data
  //email login 
   createMailUser(details) {
     
-    console.log("create user details",details)
+    //console.log("create user details",details)
     this.af.auth.createUser(details)
-      .then( res=>{ console.log("response value ",res);}
+      .then( res=>{ //console.log("response value ",res);}
                
   //       function(user) {
-  //         console.log("user data in firebase",user);
-  //       console.log( user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"}));
+  //         //console.log("user data in firebase",user);
+  //       //console.log( user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"}));
   // //  user.auth.updateProfile({displayName: details.displayName, photoURL: "./assets/img/man.png"});
-  //       }
+  }
      )
   }
   loginMailUser(details) {
-    console.log("login details ",details)
+    //console.log("login details ",details)
     return this.af.auth.login(details,
           {
             provider: AuthProviders.Password,
@@ -208,11 +208,11 @@ public _findPatient(currentUserId, caredoneId) {
     return this.medicineList;
   }
   public _getSitePrefilledData(){
-    console.log("herotile path",this.db.website)
+    //console.log("herotile path",this.db.website)
     return this.af.database.object(this.db.website);
   }
   public _getSiteData(pathRoute){
-    console.log("herotile path",this.db.doctorPages + pathRoute + '/content')
+    //console.log("herotile path",this.db.doctorPages + pathRoute + '/content')
     return this.af.database.object(this.db.doctorPages + pathRoute + '/content');
   }
    public _getBackgroundImages(){
@@ -236,7 +236,7 @@ public _findPatient(currentUserId, caredoneId) {
 
   }//_getUserCoverPhoto
   public _getUserId(uid) {
-    console.log(this.db.userIds + uid);
+    //console.log(this.db.userIds + uid);
 
     return this.af.database.object(this.db.userIds + uid);
 
@@ -258,12 +258,16 @@ public _findPatient(currentUserId, caredoneId) {
     return carePaths.push({path: pathName});
   }//_saveCaredOne
   public _saveCareSchedule(pageId, patientId, activationDate, pathName) {
-    console.log({path: pathName, activatedOn: activationDate});
+    //console.log({path: pathName, activatedOn: activationDate});
     const carePaths = this.af.database.object(this.db.careSched + pageId + '/'+ patientId);
     return carePaths.set({path: pathName, activatedOn: activationDate});
   }//_saveCaredOne
    public _getCarePathway() {
     return this.af.database.list(this.db.carePathNames);
+    
+  }//_getCarePathways
+   public _getCarePath(pathName) {
+    return this.af.database.list(this.db.carePaths + pathName);
     
   }//_getCarePathways
    public _saveWebsite(siteName, docId) {
@@ -275,8 +279,8 @@ public _findPatient(currentUserId, caredoneId) {
     return clinicSite.set({access_token: accessToken});
   }//_savePageAccessToken
   public _saveDoctor(formData) {
-    console.log("formdata");
-    console.log(formData);
+    //console.log("formdata");
+    //console.log(formData);
     const db = this.af.database.object(this.db.docUsers + formData.authUID);
     db.set(formData)
     //this.router.navigate(['dashboard']);
@@ -285,11 +289,11 @@ public _findPatient(currentUserId, caredoneId) {
 
   //get the msg for caredone mobile view form
   public _getmsgFromSendMessage(currentUserId, UserID) {
-    console.log("the id's i have passed here :", currentUserId, UserID);
+    //console.log("the id's i have passed here :", currentUserId, UserID);
     return this.af.database.list(this.db.sendMessages + UserID + '/' + currentUserId);
   }
   public _getObserversList(caredOneId) {
-    console.log("i am in firebase and its caredone id:", caredOneId);
+    //console.log("i am in firebase and its caredone id:", caredOneId);
     return this.af.database.list(this.db.observers + caredOneId);
   }//_getObserversList
   public _updateCaredOne(observerId, uid, data) {
@@ -308,7 +312,7 @@ public _findPatient(currentUserId, caredoneId) {
     return this.af.database.object(this.db.onboardingReview + caredId);
   }//_findCaredoneByKey
   public _findOnboardingReviewItem(caredId, item) {
-    console.log(this.db.onboardingReview+ caredId + '/' + item)
+    //console.log(this.db.onboardingReview+ caredId + '/' + item)
     return this.af.database.list(this.db.onboardingReview+ caredId + '/' + item, {
       query: {
 
@@ -319,8 +323,8 @@ public _findPatient(currentUserId, caredoneId) {
     });
   }//_findCaredoneByKey
   public _findOnboardingReviewItemNext(caredId, item, next) {
-    console.log(this.db.onboardingReview+ caredId + '/' + item)
-    console.log(next - 1);
+    //console.log(this.db.onboardingReview+ caredId + '/' + item)
+    //console.log(next - 1);
     var count = parseInt(next) - 1;
     var limitAt = count.toString();
     return this.af.database.list(this.db.onboardingReview+ caredId + '/' + item, {
@@ -336,8 +340,8 @@ public _findPatient(currentUserId, caredoneId) {
     });
   }//_findCaredoneByKey
     public _findOnboardingReviewItemPrev(caredId, item, next) {
-    console.log(this.db.onboardingReview+ caredId + '/' + item)
-    console.log(next - 1);
+    //console.log(this.db.onboardingReview+ caredId + '/' + item)
+    //console.log(next - 1);
     var count = parseInt(next) - 1;
     var limitAt = count.toString();
     return this.af.database.list(this.db.onboardingReview+ caredId + '/' + item, {
@@ -366,12 +370,12 @@ public _findPatient(currentUserId, caredoneId) {
   }
 
   public _findCaredOne(observerId, uid) {
-    console.log(this.db.caredOnes + observerId + '/' + uid);
+    //console.log(this.db.caredOnes + observerId + '/' + uid);
     return this.af.database.object(this.db.caredOnes + observerId + '/' + uid);
   }//_findCaredOne
 
   public _findDiagnosis(observerId, uid) {
-    console.log(this.db.diagnosis + observerId + '/' + uid);
+    //console.log(this.db.diagnosis + observerId + '/' + uid);
     return this.af.database.object(this.db.diagnosis + observerId + '/' + uid);
   }//_findCaredOne
 
@@ -393,13 +397,13 @@ public _findPatient(currentUserId, caredoneId) {
   }
 
   public _fetchUser(uid) {
-    console.log(this.db.users + uid);
+    //console.log(this.db.users + uid);
     return this.af.database.object(this.db.users + uid).map(
       res => {
-        console.log("from fetchUser");
-        console.log(res);
+        //console.log("from fetchUser");
+        //console.log(res);
         if (!res.firstName) {
-          console.log("firstName not found")
+          //console.log("firstName not found")
           return false;
         } else {
           this._setUserData(res);
@@ -410,12 +414,12 @@ public _findPatient(currentUserId, caredoneId) {
   }//_fetchUser
 
   public _fetchDocUser(uid) {
-    console.log(this.db.docUsers + uid);
+    //console.log(this.db.docUsers + uid);
     return this.af.database.object(this.db.docUsers + uid).map(
       res => {
-        console.log(res);
+        //console.log(res);
         if (!res.firstName) {
-          console.log("Doctor firstName not found")
+          //console.log("Doctor firstName not found")
           return false;
         } else {
           this._setUserData(res);
@@ -436,12 +440,12 @@ public _findPatient(currentUserId, caredoneId) {
   }//_getdoctors
 
   public _getCurrentUser() {
-    console.log(this.userData);
+    //console.log(this.userData);
     if (typeof this.userData != "undefined") {
-      console.log(this.userData);
+      //console.log(this.userData);
       return this.userData;
     } else {
-      console.log("current user id called");
+      //console.log("current user id called");
       return false;
     }
 
@@ -454,7 +458,7 @@ public _findPatient(currentUserId, caredoneId) {
 
   private _changeState(user: any = null) {
     if (user) {
-       console.log("the user value in change state ",user);
+       //console.log("the user value in change state ",user);
       return {
         isAuth: true,
         user: this._getUserInfo(user)
@@ -470,14 +474,14 @@ public _findPatient(currentUserId, caredoneId) {
   }//_changeState()
 
   public _getcaredOnesList(observerId) {
-    console.log("getting cared ones for ", observerId)
-    console.log(observerId)
-    console.log(this.af.database.list(this.db.caredOnes + observerId));
+    //console.log("getting cared ones for ", observerId)
+    //console.log(observerId)
+    //console.log(this.af.database.list(this.db.caredOnes + observerId));
     return this.af.database.list(this.db.caredOnes + observerId);
   }//_getcaredOnesList
 
   public _getcaredByList(caredoneId) {
-    console.log(caredoneId)
+    //console.log(caredoneId)
     return this.af.database.list(this.db.caredOnes);
   }//_getcaredbyList
 
@@ -485,12 +489,12 @@ public _findPatient(currentUserId, caredoneId) {
  private _getUserInfo(user: any): any {
 
     if (!user) {
-      console.log("user call if null",user);
+      //console.log("user call if null",user);
       return {};
     }
-      console.log("_getUserInfo",user);
+      //console.log("_getUserInfo",user);
     let data = user.auth.providerData[0];
-    console.log("data val test",data);
+    //console.log("data val test",data);
     if (data.displayName) {
           return {
      firstName: data.displayName.split(' ')[0],
@@ -521,7 +525,7 @@ public _findPatient(currentUserId, caredoneId) {
   }//_getExerciseData
 
   public _BloodSugarData(uid) {
-    console.log(this.db.deviceReadings + uid + '/Blood_Sugar');
+    //console.log(this.db.deviceReadings + uid + '/Blood_Sugar');
     return this.af.database.object(this.db.deviceReadings + uid + '/Blood_Sugar/Tracker');
   }//_getBloodSugarData
 
@@ -576,9 +580,9 @@ public _findPatient(currentUserId, caredoneId) {
   }
   public _addCaretaker(data, caredoneId, caretakerFbId, avatar) {
 
-    console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
     data.avatar = avatar;
-    console.log(data);
+    //console.log(data);
     return this.af.database.object(this.db.caretakers + caredoneId + '/' + caretakerFbId)
       .set(data);
   }
@@ -591,8 +595,8 @@ public _findPatient(currentUserId, caredoneId) {
     });
   }
   public _getHealthReports(uid) {
-    console.log("uid data:", uid);
-    console.log("url", this.db.healthReports + uid);
+    //console.log("uid data:", uid);
+    //console.log("url", this.db.healthReports + uid);
     return this.af.database.object(this.db.healthReports + uid);
   }//_getHealthReports
 

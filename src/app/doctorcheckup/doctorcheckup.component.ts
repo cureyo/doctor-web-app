@@ -69,13 +69,13 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
         $('#myIframe').attr('src', this.fbMessURL);
         this.passThrough = "FacbkId_" + data.user.uid;
 
-        console.log("User Data received")
-        console.log(data.user);
+        //console.log("User Data received")
+        //console.log(data.user);
 
         this._authService._fetchUser(data.user.uid)
           .subscribe(res => {
-            console.log("from fetchuser");
-            console.log(res);
+            //console.log("from fetchuser");
+            //console.log(res);
             if (res) {
               this.currentUser = this._authService._getCurrentUser();
             }
@@ -101,8 +101,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'fbPageId': [''],
           'clinic': ['', Validators.required]
         });
-        console.log("this.signupForm");
-        console.log(this.signupForm);
+        //console.log("this.signupForm");
+        //console.log(this.signupForm);
         this.formReady = true;
         //this._fs.initFbMessenger()
 
@@ -133,7 +133,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   }//submitForm
 
   showError() {
-    console.log("clicked");
+    //console.log("clicked");
     this.showErrorFlag = true;
   }
 
@@ -144,7 +144,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   }
 
   submitForm3(form: any): void {
-    console.log(form);
+    //console.log(form);
 
     this._authService._saveDoctor(form);
     this._authService._saveUser(form);
@@ -166,14 +166,14 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   }//submitForm
 
   fetchPages(): void {
-    ////console.log("this does not execute 2")
+    //////console.log("this does not execute 2")
     if (this.fbAccessToken === null) {
       alert('Disconnected from Facebook. Kindly login again.');
     } else {
       let family, friends;
       this.fs.api('/me/accounts').then(
         response => {
-          console.log(response);
+          //console.log(response);
           let ctr = 0;
           this.pageNameList = response.data;
 
@@ -193,8 +193,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     this.fs.init(fbParams);
     this.fs.getLoginStatus().then(
       (response: FacebookLoginResponse) => {
-        console.log(response.status);
-        console.log(response);
+        //console.log(response.status);
+        //console.log(response);
         if (response.status === 'connected') {
 
           this.fbAccessToken = response.authResponse.accessToken;
