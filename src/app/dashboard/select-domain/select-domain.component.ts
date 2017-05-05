@@ -24,6 +24,8 @@ export class SelectDomainComponent implements OnInit {
   private displayDrDomain: boolean = false;
   private array: any;
   private routeparam: any;
+  private availableName: any;
+  private domainAvailable: boolean = false;
 
 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
@@ -57,6 +59,12 @@ export class SelectDomainComponent implements OnInit {
     console.log("reminder value test ", reminder);
     console.log("i am clicked to check domain name")
 
+    this.getAvailability(job['message']).subscribe(dataa => {
+      console.log(dataa);
+      this.availableName = dataa;
+      if (this.availableName.domain) 
+      this.domainAvailable = true;
+
     this.getData(job['message']).subscribe(data => {
       console.log(data);
       this.array = data;
@@ -64,9 +72,8 @@ export class SelectDomainComponent implements OnInit {
       this.displayDrDomain = true;
 
     });
-
-
-
+  })
+  // this.route2WebDetails(job['message'])
   }
   getData(domainName) {
 
@@ -75,6 +82,13 @@ export class SelectDomainComponent implements OnInit {
     return this.http.get(domainURL)
       .map((res: Response) => res.json());
 
+  }
+
+getAvailability(domainName) {
+
+    const availableURL = "https://api.ote-godaddy.com/v1/domains/available?domain=" + domainName + "&checkType=FAST&forTransfer=false"
+    return this.http.get(availableURL)
+      .map((res: Response) => res.json());
   }
 
   route2WebDetails(domainName) {
@@ -107,5 +121,3 @@ export class SelectDomainComponent implements OnInit {
   }
 
 }
-
-

@@ -8,9 +8,9 @@ import { AppConfig } from "../../config/app.config";
 import { Caredone } from "../../models/caredone.interface";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
-import { PatientPreviewComponent} from "../PatientPreview/PatientPreview.component"
+import { PatientPreviewComponent } from "../PatientPreview/PatientPreview.component"
 
- declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-PatientDetailsFormComponent',
   moduleId: module.id,
@@ -34,11 +34,15 @@ export class PatientDetailFormComponent implements OnInit {
   private caredOneReady: boolean = false;
   private obsReady: boolean = false;
   private repReady: boolean = false;
+  private diagnosisReady: boolean = false;
   private observerCount: any = 0;
   private reportCount: any = 0;
   private profileScore: any = 0;
   private currentUserID: any;
-
+  private currentUserPageId: any;
+  private diagnosis: any;
+  private carePathsAvlbl: any = [];
+  private showDiagnosisQuestions: boolean = false;
   constructor(
     private _fb: FormBuilder,
     private route: ActivatedRoute,
@@ -60,17 +64,18 @@ export class PatientDetailFormComponent implements OnInit {
     this._authService._getUser()
       .subscribe(
       data => {
-        console.log("checking if user logged in");
+        //console.log("checking if user logged in");
         if (!data.isAuth) {
-           window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
+          window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
         }
         else {
           this._authService._fetchUser(data.user.uid)
             .subscribe(res => {
-              console.log(res);
+              //console.log(res);
               if (res) {
                 this.currentUser = this._authService._getCurrentUser();
-                this.currentUserID = this.currentUser.authUID
+                this.currentUserID = this.currentUser.authUID;
+                this.currentUserPageId = this.currentUser.fbPageId;
                 this.route.params.subscribe(
                   params => {
                     let param = params['id'];
@@ -78,10 +83,11 @@ export class PatientDetailFormComponent implements OnInit {
                     this.getCaredOne(param);
                     this.getReports(param);
                     this.getObservers(param);
+                    this.getDiagnosis(param);
                   });
 
               } else {
-                console.log("redirecting to checkup");
+                //console.log("redirecting to checkup");
                 this.router.navigate(['doctor-checkup'])
 
               }
@@ -107,7 +113,7 @@ export class PatientDetailFormComponent implements OnInit {
 
   }
 
-    closeReportModal() {
+  closeReportModal() {
 
     $('#reportsModal').modal('hide');
     $('#profileContent').css({ position: "" });
@@ -124,8 +130,8 @@ export class PatientDetailFormComponent implements OnInit {
     window.scroll(0, -100);
     $('#profileContent').css({ position: 'fixed' });
   }
-showReportModal() {
-    
+  showReportModal() {
+
 
 
     $('#reportsModal').modal('show');
@@ -158,20 +164,20 @@ showReportModal() {
 
         setTimeout(() => {
 
-          //console.log(data);
+          ////console.log(data);
           if (data[0]) {
             var date = new Date(data[0].updatedAt);
             var imageIs, imageIsSub, strLen, strStart;
-            //console.log("data", data);
+            ////console.log("data", data);
 
             for (let i = 0; i < data.length; i++) {
-              ////console.log("report is ", report);
+              //////console.log("report is ", report);
               this._authService._fetchUser(data[i].addedBy)
                 .subscribe(res => {
-                  //console.log(res);
+                  ////console.log(res);
                   //report.addedBy = res.firstName;
                   data[i]['addedFName'] = res.firstName;
-                  //console.log(data);
+                  ////console.log(data);
                   date = new Date(data[i].updatedAt);
                   data[i]['updatedDate'] = date;
                   imageIs = data[i]['fileName'];
@@ -204,13 +210,22 @@ showReportModal() {
       })
 
   }
+  getDiagnosis(param) {
+    this._authService._findDiagnosis(this.currentUserID, param)
+      .subscribe(
+      data => {
+        this.diagnosis = data;
+        this.diagnosisReady = true;
+        console.log("diagnosis data", data);
+      });
+  }
   getCaredOne(param) {
     this._authService._findCaredOne(this.currentUserID, param)
       .subscribe(
       data => {
         this.caredone = data;
         this.caredOneReady = true;
-        //console.log("caredone data ", this.caredone);
+        ////console.log("caredone data ", this.caredone);
         this.profileScore = 0;
         for (let x in this.caredone) {
           if (x == "firstName" || x == "lastName" || x == "nickName" || x == "relationship" || x == "gender" || x == "age" || x == "email" || x == "phone" || x == "hometown" || x == "address")
@@ -223,6 +238,7 @@ showReportModal() {
             this.caredone = data;
             this.temp = Math.floor((Math.random() * 1000000000) + 1);
             this.CaredonesForm = this._fb.group({
+              carePath: this.caredone.carePath,
               firstName: [this.caredone.firstName, [Validators.required]],
               lastName: [this.caredone.lastName, [Validators.required]],
               nickName: [this.caredone.nickName, [Validators.required]],
@@ -235,11 +251,18 @@ showReportModal() {
               address: this.caredone.address
             });
 
-            //console.log(this.ObserversForm);
+            ////console.log(this.ObserversForm);
 
             this.formReady = true;
-
-            //console.log(this.dataReady);
+            this._authService._getCarePathway()
+            .subscribe(
+              data => {
+                //console.log(data);
+                this.carePathsAvlbl = data;
+                //console.log(this.carePathsAvlbl)
+              }
+            )
+            ////console.log(this.dataReady);
 
           }, 1000)
 
@@ -255,7 +278,7 @@ showReportModal() {
   save_CaredoneData = (model) => {
     let reminder = {},
       job = model['value'];
-    //console.log(job);
+    ////console.log(job);
 
     reminder['firstName'] = job['firstName'];
     reminder['lastName'] = job['lastName'];
@@ -271,17 +294,26 @@ showReportModal() {
     reminder['authProvider'] = "facebook";
     reminder['authUID'] = this.caredoneId;
     reminder['address'] = job['address'];
-    //console.log("the value of reminder in updatedcaedone profile:", reminder);
+    reminder['carePath'] = job['carePath'];
+    ////console.log("the value of reminder in updatedcaedone profile:", reminder);
     this._authService._updateCaredoneProfile(reminder, this.currentUserID, this.caredoneId)
       .then(
       data => {
-        //console.log("saved data is :", +data);
+        ////console.log("saved data is :", +data);
         this.showModal('profile details');
         // setTimeout(() => {
         //   this.router.navigate(['dashboard']);
         // }, 1500);
       }
       );
+      var today = new Date();
+      var todate = today.toString();
+      this._authService._saveCareSchedule(this.currentUserPageId, this.caredoneId, todate , job['carePath'])
+      .then(
+        data => {
+          //console.log(data);
+        }
+      )
 
   }
   // save observers data:
@@ -302,7 +334,7 @@ showReportModal() {
     let reminder = {},
       job = model['value'];
     let name = job['Ob_Name'];
-    //console.log(job);
+    ////console.log(job);
 
 
     reminder['name'] = job['Ob_Name'];
@@ -318,11 +350,11 @@ showReportModal() {
 
 
 
-    //console.log("the value of observers as reminder:", reminder);
+    ////console.log("the value of observers as reminder:", reminder);
     this._authService._saveObservers(reminder, this.temp, this.caredoneId)
       .then(
       data => {
-        //console.log("saved data is :", +data);
+        ////console.log("saved data is :", +data);
         this.ObserversForm.reset();
         this.showModal('an Observer');
         // setTimeout(() => {
@@ -333,5 +365,10 @@ showReportModal() {
 
   }
 
-
+showQuestions() {
+this.showDiagnosisQuestions = true;
+}
+closeQuestions() {
+this.showDiagnosisQuestions = false;
+}
 }

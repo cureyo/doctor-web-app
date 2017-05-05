@@ -90,7 +90,7 @@ updateTimes() {
   addOptions(check, i) {
     console.log("options being added", i)
     console.log(check.controls);
-    const control = <FormArray>check.controls['options']
+    const control = <FormArray>check.controls['options'].controls;
   //   console.log(this.carePathwayForm.controls['checkPoints'][i])
   //   const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
   //  // <FormArray>this.carePathwayForm.controls['checkPoints'].controls[i].['options']
@@ -155,7 +155,21 @@ checkTypeSelect(type, i) {
 
   onSubmit (model) {
     this._authService._saveCarePathway(model, model['name']);
+    this._authService._saveCarePathName(model['name']);
     this.carePathwayForm.reset();
+     $.notify({
+      icon: "notifications",
+      message: "Care Plan " + model['name'] + " has been saved."
+
+    }, {
+        type: 'cureyo',
+        timer: 4000,
+        placement: {
+          from: 'top',
+          align: 'right'
+        }
+      });
+
   }
 
 }

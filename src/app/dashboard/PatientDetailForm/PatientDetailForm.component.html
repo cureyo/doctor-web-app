@@ -80,6 +80,18 @@
                 <div class="card-content">
                   <!--<div class="formGroup">-->
                      <form [formGroup]="CaredonesForm" class="form">
+                          <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Select a Care Plan</label>
+                                      <select formControlName="carePath" class="form-control" >
+      <option [attr.selected]="" value="{{j.path}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
+    </select>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
                         <!--  first row (content first & last &nick name)-->
                         <div class="row">
                             <div class="col-md-4">
@@ -220,6 +232,23 @@
                 </div>
          </div>
             </div>
+        </div>
+        <div *ngIf="diagnosisReady" class="col-md-4" id="diagnosisSection">
+<div id="diagnosisSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
+    <div class="card-header" data-background-color="cureyo">
+                <h4 class="title">{{caredone.firstName}}'s Diagnosis</h4>
+                <p class="category">Based on initial triaging</p>
+                </div>
+                <p *ngIf="!diagnosis.Result"> Patient has not been triaged</p>
+                <div *ngIf="diagnosis.Result">
+                    <h5  *ngFor="let condition of diagnosis.Result.conditions"> <b>{{condition.name}}: </b><small style="font-weight: 300;" >{{condition.probability *100 | number : '1.2-2'}}%</small></h5>
+                </div>
+                <a *ngIf="diagnosis.Question && !showDiagnosisQuestions" class="btn btn-warning btn-round" (click)="showQuestions()"> Show Details</a>
+                <div *ngIf="showDiagnosisQuestions" class="card card-stats">
+                    <h5  *ngFor="let question of diagnosis.Question"><b>{{question.name}}:  </b><small style="font-weight: 300;" >{{question.choice_id}}</small></h5>
+                    <a class="btn btn-warning btn-round" (click)="closeQuestions()"> Hide Details</a>
+                </div>
+</div>
         </div>
                <div *ngIf="obsReady" class="col-md-4" id="obsSection">
 <div id="observerSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >

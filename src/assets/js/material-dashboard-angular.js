@@ -56,6 +56,10 @@ function animationSidebar($this, animate){
         $('#reportButton').css({color: '#3C4858'});
         $('#doctorJobMenu').css({color: '#3C4858'});
         $('#WebSiteSetup').css({color: '#3C4858'});
+        $('#WebSiteSetup2').css({color: '#3C4858'});
+        $('#social').css({color: '#3C4858'});
+        $('#out-patients').css({color: '#3C4858'});
+        $('#care-paths').css({color: '#3C4858'});
     if ($this.parent('li').position()) {
         $current_li_distance = $this.parent('li').position().top - 10;
 

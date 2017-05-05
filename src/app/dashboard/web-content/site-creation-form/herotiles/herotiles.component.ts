@@ -35,16 +35,22 @@ export class HerotilesComponent implements OnInit {
       })
     if (this.herotiles) {
       // console.log("herotiles data in herotiles component",this.herotiles);
-      this.heroTile = this._fb.group({
+      this._authService._getUser()
+      .subscribe(
+        data => {
+          this.heroTile = this._fb.group({
         title: [this.herotiles.title, Validators.required],
         expo: [this.herotiles.card.experience, Validators.required],
         qual: [this.herotiles.card.qual, Validators.required],
         about: [this.herotiles.card.text, Validators.required],
         card_title: [this.herotiles.card.title, Validators.required],
         site_text: [this.herotiles.text, Validators.required],
-        fb_Profile: [this.herotiles.card.image, Validators.required],
+        fb_Profile: ['https://graph.facebook.com/' + data.user.uid + '/picture?type=large', Validators.required],
         bg_Pic: [this.herotiles.bgImage, Validators.required]
       });
+        }
+      )
+      
     }
     else {
       this.heroTile = this._fb.group({

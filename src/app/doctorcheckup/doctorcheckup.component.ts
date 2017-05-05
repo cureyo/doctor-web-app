@@ -148,6 +148,18 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
 
     this._authService._saveDoctor(form);
     this._authService._saveUser(form);
+    if (form.fbPageId) {
+      this.fs.api('/'+ form.fbPageId + '?fields=access_token')
+    .then(
+      response => {
+        this._authService._savePageAccessToken(form.fbPageId, response.access_token)
+       
+      }
+    )
+
+    
+    }
+    
     //this._authService._saveDoctor(form);
     this.router.navigate(['dashboard']);
 

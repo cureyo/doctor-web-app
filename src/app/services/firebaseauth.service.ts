@@ -54,7 +54,7 @@ export class AuthService {
     this.af.auth.login({
       provider: AuthProviders.Facebook,
       method: AuthMethods.Popup,
-      scope: ["manage_pages", "publish_pages"]
+      scope: ["manage_pages", "publish_pages", "ads_management"]
     });
   }
   fbApplogin() {
@@ -253,10 +253,27 @@ public _findPatient(currentUserId, caredoneId) {
     const carePaths = this.af.database.object(this.db.carePaths + pathName );
     return carePaths.set(data);
   }//_saveCaredOne
+  public _saveCarePathName(pathName) {
+    const carePaths = this.af.database.list(this.db.carePathNames );
+    return carePaths.push({path: pathName});
+  }//_saveCaredOne
+  public _saveCareSchedule(pageId, patientId, activationDate, pathName) {
+    console.log({path: pathName, activatedOn: activationDate});
+    const carePaths = this.af.database.object(this.db.careSched + pageId + '/'+ patientId);
+    return carePaths.set({path: pathName, activatedOn: activationDate});
+  }//_saveCaredOne
+   public _getCarePathway() {
+    return this.af.database.list(this.db.carePathNames);
+    
+  }//_getCarePathways
    public _saveWebsite(siteName, docId) {
     const clinicSite = this.af.database.object(this.db.users + docId + '/clinicWebsite' );
     return clinicSite.set(siteName);
   }//_saveCaredOne
+  public _savePageAccessToken(pageId, accessToken) {
+    const clinicSite = this.af.database.object(this.db.pageAccessTokens + pageId );
+    return clinicSite.set({access_token: accessToken});
+  }//_savePageAccessToken
   public _saveDoctor(formData) {
     console.log("formdata");
     console.log(formData);
@@ -351,6 +368,11 @@ public _findPatient(currentUserId, caredoneId) {
   public _findCaredOne(observerId, uid) {
     console.log(this.db.caredOnes + observerId + '/' + uid);
     return this.af.database.object(this.db.caredOnes + observerId + '/' + uid);
+  }//_findCaredOne
+
+  public _findDiagnosis(observerId, uid) {
+    console.log(this.db.diagnosis + observerId + '/' + uid);
+    return this.af.database.object(this.db.diagnosis + observerId + '/' + uid);
   }//_findCaredOne
 
   public _findCaredonesDoctor(doctorId) {

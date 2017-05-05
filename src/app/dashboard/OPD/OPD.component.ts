@@ -31,7 +31,7 @@ export class OPDComponent implements OnInit {
   }
 
   ngOnInit() {
-console.log("ngonint")
+    console.log("ngonint")
     this.outPatient = this._fb.group({
       message: [''],
 
@@ -55,21 +55,34 @@ console.log("ngonint")
             console.log(res)
             var clinicDomain = res.clinicWebsite;
             var n = clinicDomain.indexOf('.');
-            var clinicID = clinicDomain.substring(0,n);
+            var clinicID = clinicDomain.substring(0, n);
             console.log("my clinic id is ", clinicID)
             console.log(clinicID)
             this._authService._getClinicQueue(clinicID, today)
               .subscribe(queue => {
                 console.log(queue)
                 let q = 0;
-                if (queue.$value == null) { } else {
+                if (queue.$value == null) {
+                  $.notify({
+                    icon: "notifications",
+                    message: "No patients in queue currently"
+
+                  }, {
+                      type: 'cureyo',
+                      timer: 4000,
+                      placement: {
+                        from: 'top',
+                        align: 'right'
+                      }
+                    });
+                } else {
                   q = queue.$value;
                   this._authService._getCheckInDetails(clinicID, today, q)
                     .subscribe(data => {
-                      
+
                       console.log("response data ", data);
                       console.log('redirecting to ', 'out-patients/' + data.$value);
-                      
+
                       this.router.navigate(['out-patients/' + data.$value])
 
                     })

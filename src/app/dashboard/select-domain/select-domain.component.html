@@ -3,7 +3,7 @@
   
 <form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
   novalidate>
-  <div class="row"> <div class="row"> 
+  <div class="row"> 
   <div class="col-sm-2"></div>
   <div class="col-sm-8">
   
@@ -38,20 +38,35 @@
   </div> <!--end of card-->
  
        
-  </div> <!-- end of col-md-8-->
-  
-  <div class="col-sm-2"></div>
-  </div>
-  </div>
-   <div class="col-sm-2"></div>
+ 
+ <div *ngIf="domainAvailable && !availableName.available" class="card">
+        <div class="col-sm-10">
+                          <p class="title" style=" font-size: 20px; padding-left: 1em;padding-top: 9px; margin-top: 0px;">Domain name not available</p>
+                        <hr/>
+                        </div>
+                     
+                        </div>
 
-                <div class="col-sm-8" >
-  <h3 *ngIf="displayDrDomain" style="padding-left:15px;"> Available URLs</h3>
+ <div *ngIf="domainAvailable && availableName.available" class="card">
+        <div class="col-sm-10">
+                          <p class="title" style=" font-size: 20px; padding-left: 1em;padding-top: 9px; margin-top: 0px;">{{availableName.domain}}</p>
+                        <hr/>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="clearfix">
+                              <div class="pull-right">
+                                          <button  type="submit" class="btn btn-primary btn-round" (click)="route2WebDetails(availableName.domain)" > Select</button>
+                                        </div>
+                              </div> 
+                        </div>
+                        </div>
+                
+  <h3 *ngIf="displayDrDomain && array[0]" style="padding-left:15px;"> Other Available URLs</h3>
    
    <!-- list of available web name-->
 
-      <div class="row" *ngIf="displayDrDomain">
-            <div class="row" *ngFor="let i of array; let i=index">
+      <div *ngIf="displayDrDomain">
+            <div *ngFor="let i of array; let i=index">
                 
                     <div class="card">
 
@@ -73,10 +88,12 @@
 
                 <div class="col-sm-2"></div>
             </div>
-      </div>
+     
  <!-- end of list of url's-->
+   </div> <!-- end of col-md-8-->
   
-
+  <div class="col-sm-2"></div>
+  </div>
 </form>
 
 </div>
