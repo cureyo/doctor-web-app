@@ -22,21 +22,18 @@
     </select>-->
       <form [formGroup]="findCarePaths" class="form">
                           <div class="row" style="margin-top: 10px;">
-                            <div class="col-md-12">
+                            <div style="margin: 10px; float: left; z-index: 100000; width: 80%;">
                                 <div class="form-group form-black label-floating is-not-empty">
                                     <div class="form-group">
                                     <label class="control-label">Select a Care Plan</label>
-                                      <select formControlName="carePath" class="form-control" >
+                                      <select formControlName="carePath" class="form-control" (change)="showCarePath(findCarePaths.value)">
       <option [attr.selected]="" value="{{j.path}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
     </select>
                                     </div>
                                 </div>
                             </div>
-                          </div>
-                          <div class="form-group">
-        <a class="btn btn-round" style="float: left; z-index: 10000;"
-                        (click)="showCarePath(findCarePaths.value)">Show</a>
-                          </div>
+
+                           </div>
       </form>
       </div>
       

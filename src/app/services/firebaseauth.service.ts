@@ -267,7 +267,7 @@ public _findPatient(currentUserId, caredoneId) {
     
   }//_getCarePathways
    public _getCarePath(pathName) {
-    return this.af.database.list(this.db.carePaths + pathName);
+    return this.af.database.object(this.db.carePaths + pathName);
     
   }//_getCarePathways
    public _saveWebsite(siteName, docId) {

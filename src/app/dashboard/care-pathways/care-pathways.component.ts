@@ -49,8 +49,14 @@ export class CarePathsComponent implements OnInit {
     let i = 0;
     //console.log("time pushed", i)
     for (let i = 0; i < 24; i++) {
-      this.times[i] = i + '00 hrs';
+      if (i < 10) {
+        this.times[i] = '0' + i + '00 hrs';
       ////console.log("times pushed", i)
+      }
+      else {
+        this.times[i] =  i + '00 hrs';
+      }
+      
     }
   }
   ngOnInit() {
@@ -66,7 +72,6 @@ export class CarePathsComponent implements OnInit {
         this.initCheckPoints()
       ])
     });
-    this.selectDrDomain = true;
 
     this.findCarePaths = this._fb.group({
       carePath: ''
@@ -95,44 +100,8 @@ export class CarePathsComponent implements OnInit {
       ])
     });
   }
-  initCheckPointsData(control1, data, check) {
-    console.log(control1)
-    if (data.checkType == "mcq") {
-      this.checkTypes[check] = true;
-    }
-    return this._fb.group({
-      day: [data.day, Validators.required],
-      time: [data.time, Validators.required],
-      messageText: [data.messageText, Validators.required],
-      checkType: [data.checkType, Validators.required],
-      options: this._fb.array([
-        this.initOptionsData(control1, data.options, data.checkType)
-      ])
-    });
-
-  }
-  initOptionsData(control1, data, checkType) {
-    console.log(data);
-     console.log(control1);
-    let control: FormArray, ctr =0;
-    console.log(control);
-    for (let check in data) {
-      control = <FormArray>control1.controls['options'];
-      console.log(control);
-      console.log(data[check]);
-      control.push(this.initOptionsData2(data[check].value));
-      ctr++;
-
-    }
-    console.log(control);
-    return control;
-}
-initOptionsData2(data) {
   
-  return this._fb.group({
-    value: [data, Validators.required]
-  });
-}
+ 
 initializeCheckPoints(data, check) {
   let control = this._fb.group({
       day: [data.day, Validators.required],
@@ -165,32 +134,21 @@ initializeOptions(data) {
     
 }
 loadCarePath(data) {
+   console.log(data);
   this.carePathwayForm = this._fb.group({
-    name: [data[1].$value, Validators.required],
+    name: [data.name, Validators.required],
     checkPoints: this._fb.array([
-      this.initializeCheckPoints(data[0][0], 0)
+      this.initializeCheckPoints(data.checkPoints[0], 0)
     ])
   });
 const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
 let ctr = 1;
-  for (let each in data[0]) {
+  for (let each in data.checkPoints) {
      if(each != '$key' && each != '$value' && each != '$exists' && each != '0') {
-      control.push(this.initializeCheckPoints(data[0][each], ctr));
+      control.push(this.initializeCheckPoints(data.checkPoints[each], ctr));
       ctr++;
   }}
-  //const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
-  // let ctr = 0;
-  // console.log(data);
-  // for (let check in data[0]) {
-  //   if(check != '$key' && check != '$value' && check != '$exists') {
-  //     console.log(data[0][check]);
-  //   control.push(this.initCheckPointsData(control.controls[ctr], data[0][check], check));
-  //   ctr ++;
-  //   }
-    
-
-
-  // }
+  
   console.log(this.carePathwayForm);
   var self = this;
   setTimeout(function () {
@@ -209,28 +167,31 @@ addCheckPoints() {
 
 }//addReports
 addOptions(check, i) {
-  //console.log("options being added", i)
-  //console.log(check.controls);
+  
   const control = <FormArray>check.controls['options'];
-  //   //console.log(this.carePathwayForm.controls['checkPoints'][i])
-  //   const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
-  //  // <FormArray>this.carePathwayForm.controls['checkPoints'].controls[i].['options']
-  //   //console.log(control);
-  //   //console.log(control.controls);
-  //   //console.log(control.controls[i]);
-  //   //console.log(control.controls[i].value);
-  //   //console.log(control.controls[i].value.options);
-  //   var control3 = <FormArray>this.carePathwayForm.controls['checkPoints']['controls'][i].options;
-  //   //console.log(control3);
-  //   const control2 = <FormArray>control3['options'];
-  //   //console.log(control2);
+  
   control.push(this.initOptions());
   //console.log(control);
 
 }//addReports
 
 createPathways() {
-  this.newPath = true;
+  this.carePathwayForm.reset();
+  this.newPath = false;
+     this.carePathwayForm = this._fb.group({
+      name: ['', Validators.required],
+      checkPoints: this._fb.array([
+        this.initCheckPoints()
+      ])
+    });
+    this.selectDrDomain = true;
+  setTimeout(
+    () => {
+      this.newPath = true;
+    }, 2000
+  )
+  
+  
 }
 selectDomainMenu() {
 
@@ -278,6 +239,13 @@ onSubmit(model) {
   this._authService._saveCarePathway(model, model['name']);
   this._authService._saveCarePathName(model['name']);
   this.carePathwayForm.reset();
+       this.carePathwayForm = this._fb.group({
+      name: ['', Validators.required],
+      checkPoints: this._fb.array([
+        this.initCheckPoints()
+      ])
+    });
+  this.newPath = false;
   $.notify({
     icon: "notifications",
     message: "Care Plan " + model['name'] + " has been saved."
@@ -293,6 +261,10 @@ onSubmit(model) {
 
 }
 showCarePath(model) {
+  console.log("showing")
+  console.log(model)
+  this.carePathwayForm.reset();
+  this.newPath = false;
   this._authService._getCarePath(model.carePath)
     .subscribe(
     data => {
