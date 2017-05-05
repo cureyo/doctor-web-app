@@ -47,15 +47,38 @@ export class AuthService {
     });
 
   }//login
+   
+    
 
 
   doclogin() {
-
+      console.log("doctor login firebase function called:");
+       return (
     this.af.auth.login({
       provider: AuthProviders.Facebook,
       method: AuthMethods.Popup,
-      scope: ["manage_pages", "publish_pages", "ads_management"]
-    });
+      scope: ["manage_pages", "publish_pages", "ads_management","business_management"]
+    }) 
+     )
+
+
+
+    /*  
+
+      return (
+    this.af.auth.login({
+      provider: AuthProviders.Facebook,
+      method: AuthMethods.Popup,
+      scope: [
+            "user_birthday",
+            "user_work_history", 
+            "user_hometown",
+            "user_education_history",
+            "user_location"
+       ]
+    })
+   )
+      */
   }
   fbApplogin() {
 
@@ -137,6 +160,10 @@ export class AuthService {
         return this.af.database.object(this.db.queue + clinicID + '/' + date + '/q');
        
   }//fetch the checkin data
+
+    public _getPageID(userID){
+ return this.af.database.object(this.db.users + '/' +userID +'/fbPageId')
+    }
    public _setClinicQueue(clinicID, date, q) {
      console.log(this.db.queue + clinicID + '/' + date)
      const queu = this.af.database.object(this.db.queue + clinicID + '/' + date );

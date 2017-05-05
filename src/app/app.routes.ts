@@ -51,6 +51,7 @@ import { CarePathsComponent}  from "./dashboard/care-pathways/care-pathways.comp
 import { PatientDetailFormComponent } from './dashboard/PatientDetailForm/PatientDetailForm.component';
 import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/file-upload.component';
 import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPreview.component';
+import {FbAdsFormComponent} from './fb-ads-form/fb-ads-form.component';
 
 export const MODULE_ROUTES: Route[] =[
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
@@ -63,14 +64,15 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'doctor-checkup',component:DoctorCheckupComponent },
     { path: 'doctorJob/:id',component:JobsMasterComponent },
     { path: 'clinicpage/:page', component: ClinicPageComponent },
-    {path : 'web/:id', component :WebContentComponent},
-    {path : 'webform/:id' ,component :SiteCreationFormComponent},
+    { path: 'web/:id', component :WebContentComponent},
+    { path: 'webform/:id' ,component :SiteCreationFormComponent},
     { path: 'website', component: SelectDomainComponent},
     { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
     { path: 'care-paths', component: CarePathsComponent },
-     { path: 'out-patients/:id', component: OutPatientsFormComponent},
-    { path: 'out-patient-dept', component: OPDComponent}
+    { path: 'out-patients/:id', component: OutPatientsFormComponent},
+    { path: 'out-patient-dept', component: OPDComponent},
+    { path: 'Ads', component :FbAdsFormComponent}
 
 ]
 
@@ -117,5 +119,6 @@ export const MODULE_COMPONENTS = [
     SelectDomainComponent,
     CarePathsComponent,
     OutPatientsFormComponent,
-    OPDComponent
+    OPDComponent,
+    FbAdsFormComponent
 ]

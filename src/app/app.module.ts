@@ -32,6 +32,7 @@ import { SelectDomainComponent } from './dashboard/select-domain/select-domain.c
 import {PatientPreviewComponent} from './dashboard/PatientPreview/PatientPreview.component';
 import { OutPatientsFormComponent } from './dashboard/OutPatients/OutPatientsForm.component';
 import { OPDComponent } from './dashboard/OPD/OPD.component';
+import { FbAdsFormComponent } from './fb-ads-form/fb-ads-form.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -64,7 +65,7 @@ export const firebaseAuthConfig = {
   ],
 
 
-  declarations: [ MODULE_COMPONENTS],
+  declarations: [ MODULE_COMPONENTS, FbAdsFormComponent],
 
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, PatientPreviewComponent],
 

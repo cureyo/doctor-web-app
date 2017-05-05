@@ -1,0 +1,186 @@
+ <div class="main-content">
+    <div class="container-fluid">
+        <h3> Fb Ads form </h3>
+  <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
+                    <!-- card header portion-->
+                    <!--<div class="card-header" data-background-color="blue">
+                        <h4 class="title">Exercise Tracker </h4>
+
+                        <p class="category">Exercise Tracker for {{patient.nickName}} </p>
+
+                    </div>  card header portion end-->
+                    
+              <div class="card-content table-responsive">
+               <!-- first row-->   
+              <div class="row">
+  
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="adAccount">Ad Account </label>
+              
+                                  <select  id="uid" class="form-control" formControlName="adAccount">
+                                    <option value="uid">user account Detail</option>
+                                  </select>
+                            </div>
+                    </div>
+        
+                  <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="PageID">Page ID</label>
+
+                                <select  id="cp_track_using" class="form-control" formControlName="pageID" >
+                                <option value="pageID">page ID</option>
+                                </select>
+                          </div>
+                  </div>
+ 
+
+                  <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="bID">Bid</label>
+
+                              <select  id="bID" class="form-control" formControlName="BID" >
+                                    <option value="bID">Bid</option>                          
+                              </select>
+                        </div>
+                  </div>
+            
+
+                            </div> 
+                            <!-- end of the first row-->
+                             <!-- second row-->
+                            <div class="row">
+  
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="name">name </label>
+              
+                                  <input type="text"  id="name" class="form-control" formControlName="name"/>
+                                    
+                            </div>
+                    </div>
+        
+                  <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="targetingSpec">Targeting Spec</label>
+
+                                <input type="text"  id="targetingSpec" class="form-control" formControlName="targetingSpec"/>
+                          </div>
+                  </div>
+ 
+
+                  <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="siteLink">Site Link</label>
+
+                              <input type="text"  id="link" class="form-control" formControlName="siteLink" />
+                        </div>
+                  </div>
+            
+
+                            </div>
+                            <!-- end of the second row-->
+                            <!-- third row-->
+                            <div class="row">
+  
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="caption">Caption </label>
+              
+                                  <input type="text"  id="caption" class="form-control" formControlName="caption"/>
+                            </div>
+                    </div>
+        
+                  <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="message">Message</label>
+
+                                <input type="text"  id="msg" class="form-control" formControlName="msg"/>
+                          </div>
+                  </div>
+ 
+
+                  <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="callToAction">Call to Action Type</label>
+
+                              <select  id="callToAction" class="form-control" formControlName="callToAction" >
+                                    <option value="noButton">NOButton</option>                          
+                                    <option value="likePage">LIKEPAGE</option>                          
+                                    <option value="bookTravel">BOOK TRAVEL</option>                          
+                                    <option value="installApp">INSTALL APP</option>  
+                                    <option value="butNow">BUY NOW</option>    
+                                    <option value="callNow">CALLNOW</option>
+                                    <option value="download">DOWNLOAD</option>
+                                    <option value="getDirection">GETDIRECTION</option>
+                                    <option value="getQuote">GETQUOTE/option</option>
+                                    <option value="learnMore">LEANMORE</option> 
+                                    <option value="playGame">PLAYGAME</option>
+                                    <option value="shopNow">SHOP NOW</option> 
+                                    <option value="signUp">SIGN UP</option>
+                                    <option value="subscribe">SUBSCRIBE</option>
+                                    <option value="userApp">USE APP</option>
+                                    <option value="watchVideo">WATCH VIDEO</option>
+                              </select>
+                        </div>
+                  </div>
+            
+
+                            </div> 
+                            <!-- end of the third row-->
+                                  <!-- fourth row-->
+                            <div class="row">
+  
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="title">Title </label>
+              
+                                  <input type="text"  id="title" class="form-control" formControlName="title"/>
+                                    
+                            </div>
+                    </div>
+        
+                  <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="body">Body</label>
+
+                                <input type="text"  id="body" class="form-control" formControlName="body"/>
+                          </div>
+                  </div>
+ 
+
+                  <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="url">Url</label>
+
+                              <input type="text"  id="url" class="form-control" formControlName="url"/>
+                        </div>
+                  </div>
+            
+
+                            </div>
+                            <!-- end of the fourth row-->
+                            <!-- fifth row-->
+                            <div class="row">
+                      <!-- submit button code    -->
+                
+                      <div class="pull-right" >
+                          <button [ngClass]="{'hide': fbAdsAdded}" type="submit"  class="btn btn-info">Create Carousel Ads</button>
+                      </div>
+
+                        <div [ngClass]="{'hide': !fbAdsAdded}" class="bareP">
+                            <p>Thanks! This Fb Ads form is submitted Succesfully! </p>
+                        </div>
+              
+                      <!-- end of submit button-->
+                            </div>
+                            <!-- end of the fifth row-->
+
+                    </div>
+                  </form>
+                </div>
+            </div><!--  end of medication reminder-->
+    </div>
+ </div>
