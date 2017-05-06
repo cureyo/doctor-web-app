@@ -23,7 +23,7 @@ export class FbService{
         return response.status == 'connected'?response.authResponse.accessToken: "null";
       },
       (error: any) => {
-        console.log(error);
+        //console.log(error);
         return "null";
       }
     );

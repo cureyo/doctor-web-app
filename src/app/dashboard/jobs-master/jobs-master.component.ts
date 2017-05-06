@@ -68,11 +68,11 @@ private noOfCaredOnes: number = 0;
     this._authService._getUser()
       .subscribe(
       data => {
-         console.log("the data is ",data);
+         //console.log("the data is ",data);
          this.currentUser=data.user;
-         console.log("current user data is ",this.currentUser);
+         //console.log("current user data is ",this.currentUser);
         this.currentUserID = data.user.uid;
-        console.log("current user id:",this.currentUserID);
+        //console.log("current user id:",this.currentUserID);
         this.findCaredOne(this.currentUserID);
 
 
@@ -81,23 +81,23 @@ private noOfCaredOnes: number = 0;
    getPathologicalTests(){
          this._authService._getPathologicalTests()
         .subscribe( data=>{
-           console.log("patholodical test details data :",data);
+           //console.log("patholodical test details data :",data);
                this.TestNames=data;
 
                this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
 
-                console.log("the med names is :",this.TestNames);
+                //console.log("the med names is :",this.TestNames);
         })    
    } //getpathologicalTests
    getMedicines(){
          this._authService._getMedicineNames()
         .subscribe( data=>{
-           console.log("patholodical test details data :",data);
+           //console.log("patholodical test details data :",data);
                this.MedNames=data;
                 this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
 
 
-                console.log("the med names is :",this.MedNames);
+                //console.log("the med names is :",this.MedNames);
         })    
    } //getpathologicalTests
    findCaredOne(currentUserID)
@@ -105,12 +105,12 @@ private noOfCaredOnes: number = 0;
      this.route.params.subscribe(
       params => {
         let param = params['id'];
-        console.log("caredoneKey", param);
+        //console.log("caredoneKey", param);
         this._authService._findCaredOne(currentUserID, param)
           .subscribe(
           data => {
             this.caredone = data;
-            console.log("caredone data:",this.caredone);
+            //console.log("caredone data:",this.caredone);
           })
 
       });

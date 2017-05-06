@@ -34,12 +34,12 @@ export class ProfileTileComponent implements OnInit {
         this.backgrounds = data;
       })
    
-      // console.log("herotiles data in herotiles component",this.herotiles);
+      // //console.log("herotiles data in herotiles component",this.herotiles);
       this._authService._getUser()
       .subscribe(
 
       data => {
-        console.log(this.profileTile)
+        //console.log(this.profileTile)
       this.profileTileForm = this._fb.group({
         title: [this.profileTile.title, Validators.required],
         experience: [this.profileTile.doctor.experience, Validators.required],
@@ -51,15 +51,15 @@ export class ProfileTileComponent implements OnInit {
         bgPic: [this.profileTile.bgImage, Validators.required]
       });
       });
-      console.log(this.profileTileForm);
+      //console.log(this.profileTileForm);
     
   
 
   }
   save_profileTile = (model) => {
-    //console.log(job);
+    ////console.log(job);
     let job = model['value'];
-    console.log(job);
+    //console.log(job);
     let reminder = {
       title: job['title'],
       text: job['text'],
@@ -72,11 +72,11 @@ export class ProfileTileComponent implements OnInit {
         image: job['image']
       }
     };
-    console.log(reminder);
+    //console.log(reminder);
     this.profileTileAdded = true;
-    console.log("reminder value herotile  :", reminder);
+    //console.log("reminder value herotile  :", reminder);
     this.temp = Math.floor((Math.random() * 10000) + 1);
-    console.log("temp number :", this.temp);
+    //console.log("temp number :", this.temp);
 
     //remove .com from url
     var n = this.routeparam.indexOf(".")
@@ -85,11 +85,11 @@ export class ProfileTileComponent implements OnInit {
     }
     this.sitename = this.routeparam.substring(0, n);
     //end of url trimming part
-    console.log("the routeparam value in hero tiles:", this.sitename);
+    //console.log("the routeparam value in hero tiles:", this.sitename);
     this._authService._saveWebContentProfiletile(reminder, this.sitename).then(
       res => {
         let d = res;
-        console.log("response of hero tile data", d);
+        //console.log("response of hero tile data", d);
         $.notify({
           icon: "notifications",
           message: "Details for profile section have been saved"
@@ -108,9 +108,9 @@ export class ProfileTileComponent implements OnInit {
   }
 
   updateMetaData(metadata2) {
-    console.log(metadata2);
+    //console.log(metadata2);
     let data = metadata2;
-    console.log(data);
+    //console.log(data);
    let metadata = {
   "description" : data.doctor.brief,
   "image" : data.doctor.image,
@@ -181,8 +181,8 @@ this._authService._saveWebMetaData(metadata, this.sitename).then(data => {
 
   }
   changeSampleBG(url) {
-    console.log(url)
+    //console.log(url)
     this.preview = url;
-    console.log(this.preview)
+    //console.log(this.preview)
   }
 }

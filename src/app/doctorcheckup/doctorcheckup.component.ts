@@ -6,6 +6,7 @@ import { AppConfig } from '../config/app.config';
 //import { DoctorCheckup } from "../models/doctorcheckup.interface";
 import { FbService } from "../services/facebook.service";
 
+
 import { FacebookService, FacebookLoginResponse, FacebookInitParams } from 'ng2-facebook-sdk';
 import { environment } from '../environment';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -37,7 +38,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private pageNameList: any = [];
   private pageIDList: any = [];
   private pageAccesTList: any = [];
-  private specialityList: any =[];
+  private specialityList: any = [];
+  private years: any = [];
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -52,11 +54,21 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   ) {
 
     this.initFB();
-
+    this.updateYears();
   }
-
+  updateYears() {
+    let i = 0;
+    //console.log("day pushed")
+    for (let i = 0; i < 100; i++) {
+      this.years[i] = i;
+      ////console.log("days pushed", i)
+    }
+  }
   ngOnInit() {
-    this.specialityList = ['Gynaecology', 'Medical Specialist', 'Orthopedics', 'Dental', 'Dermatology', 'Cardiology', ]
+
+
+
+    this.specialityList = ['Gynaecology', 'Medical Specialist', 'Orthopedics', 'Dental', 'Dermatology', 'Cardiology',]
 
     // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
     this._authService._getUser()
@@ -88,18 +100,19 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'lastName': [data.user.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
           'email': [data.user.email, Validators.required],
           'avatar': data.user.avatar,
-          'age': null,
+          'experience': ['', Validators.required],
           'page': null,
           'phone': ['', Validators.required],
-          'hometown': [null, Validators.required],
-          'gender': 'male',
+          'clinicLocation': [null, Validators.required],
           'authProvider': data.user.provider,
           'authUID': data.user.uid,
-          'address': ['', Validators.required],
+          'address': [''],
           'mci_number': ['', Validators.required],
           'speciality': ['', Validators.required],
           'fbPageId': [''],
-          'clinic': ['', Validators.required]
+          'clinic': ['', Validators.required],
+          'qualification': ['', Validators.required],
+          'fullName': ['Dr. ' + data.user.firstName + ' ' + data.user.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
         });
         //console.log("this.signupForm");
         //console.log(this.signupForm);
@@ -145,23 +158,32 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
 
   submitForm3(form: any): void {
     //console.log(form);
-
+    if (form.fbPageId) {
+      form['fbPageAdded'] = true;
+    }
+    else {
+      form['fbPageAdded'] = false;
+      form['fbPageId'] = "1173783939313940";
+    }
     this._authService._saveDoctor(form);
     this._authService._saveUser(form);
-    if (form.fbPageId) {
-      this.fs.api('/'+ form.fbPageId + '?fields=access_token')
-    .then(
-      response => {
-        this._authService._savePageAccessToken(form.fbPageId, response.access_token)
-       
-      }
-    )
+    if (form.fbPageAdded) {
+      this.fs.api('/' + form.fbPageId + '?fields=access_token')
+        .then(
+        response => {
+          this._authService._savePageAccessToken(form.fbPageId, response.access_token)
 
-    
+        }
+        )
+
+
+    } else {
+      this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD")
     }
-    
+
     //this._authService._saveDoctor(form);
-    this.router.navigate(['dashboard']);
+    //this.router.navigate(['website']);
+    window.location.href = window.location.origin + '/website'
 
   }//submitForm
 
@@ -188,7 +210,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
-      version: 'v2.6'
+      version: 'v2.9'
     };
     this.fs.init(fbParams);
     this.fs.getLoginStatus().then(

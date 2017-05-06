@@ -28,10 +28,10 @@ export class LabTestJobsComponent implements OnInit {
    ) {}
 
   ngOnInit() {
-    //  console.log("input val of user :",this.user);
-    //  console.log("input val of patient :",this.patient);
-    //  console.log("input val of time :",this.timeInterval);
-    //  console.log("input val of date :",this.dateInterval);
+    //  //console.log("input val of user :",this.user);
+    //  //console.log("input val of patient :",this.patient);
+    //  //console.log("input val of time :",this.timeInterval);
+    //  //console.log("input val of date :",this.dateInterval);
 
     this.stForm = this._fb.group({
       labtests: this._fb.array([
@@ -99,9 +99,9 @@ export class LabTestJobsComponent implements OnInit {
               }//elseif
 
           }//if
-          console.log("labtests is", labtests)
+          //console.log("labtests is", labtests)
           if(flag) {
-             console.log("labtests[j].name.name",labtests[j].name.name);
+             //console.log("labtests[j].name.name",labtests[j].name.name);
             reminders['Job_Tests'][ctr].Test_Name.push(labtests[j].name.name);// here is the bug
             labtests.splice(j, 1);
             j--;
@@ -110,23 +110,23 @@ export class LabTestJobsComponent implements OnInit {
         }//loop j
       ctr++;
     }//loop i
-    console.log("the reminders value ",reminders);
+    //console.log("the reminders value ",reminders);
 
     this._authService._saveReminders(reminders)
       .then(
         data => {
           this.itemAdded3 = true;
-            console.log("lab test data saved :",data);
+            //console.log("lab test data saved :",data);
         }
       );
-      console.log("the reminders value ",labtests);
+      //console.log("the reminders value ",labtests);
     // //  save data in onboarding Review
     var transTime = new Date();
       this._authService._saveOnboardingReview(reviewData,this.patient.uid, 'Lab Test/' + transTime.getTime()).then(
         res =>{
           let d=res;
           this.itemAdded3 = true;
-          console.log("response of onboarding save is",d);
+          //console.log("response of onboarding save is",d);
       })
       
   }//save

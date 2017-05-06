@@ -81,7 +81,8 @@
                   <!--<div class="formGroup">-->
                      <form [formGroup]="CaredonesForm" class="form">
                           <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
+                                <div class="col-sm-8">
                                 <div class="form-group form-black label-floating is-not-empty">
                                     <div class="form-group">
                                     <label class="control-label">Select a Care Plan</label>
@@ -89,6 +90,10 @@
       <option [attr.selected]="" value="{{j.path}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
     </select>
                                     </div>
+                                </div>
+                                </div>
+                                <div class="col-sm-4">
+                                <a (click)="showCarePlanModal()" style="cursor: pointer;">View Plans</a>
                                 </div>
                             </div>
                           </div>
@@ -374,7 +379,7 @@
   <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
     <div class="modal-content" id="reportsModal2">
       <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" aria-label="Close" (click)="closeReportModal()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Please find the reports below</b></h4>
       </div>
         <div *ngFor="let report of healthReports" class="modal-body" >
@@ -394,6 +399,22 @@
       <div class="modal-footer" style="padding-bottom: 20px;">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="preview.prescriptionButton()">Add a Note</button>
         <button type="button" class="btn btn-default" (click)="closeReportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<div class="modal fade" id="carePlansModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="carePlansModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeCarePlanModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Select a Care Plan below to view</b></h4>
+      </div>
+      <care-paths-cmp></care-paths-cmp>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+       
+        <button type="button" class="btn btn-default" (click)="closeCarePlanModal()">Close</button>
       </div>
     </div>
   </div>

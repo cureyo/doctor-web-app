@@ -54,7 +54,10 @@ export class AuthService {
     this.af.auth.login({
       provider: AuthProviders.Facebook,
       method: AuthMethods.Popup,
-      scope: ["manage_pages", "publish_pages", "ads_management"]
+      scope: ["manage_pages", "publish_pages", "ads_management", "user_friends", "user_relationships", "user_relationship_details", "pages_messaging", "business_management"]
+    }).then(
+      data => {
+        console.log(data);
     });
   }
   fbApplogin() {
@@ -220,7 +223,7 @@ public _findPatient(currentUserId, caredoneId) {
     return this.af.database.object(this.db.doctorPages + 'BackgroundImages');
   }
   public _saveDummyData(data, domainNameShort) {
-    const webData = this.af.database.object(this.db.doctorPages + domainNameShort + '/content');
+    const webData = this.af.database.object(this.db.doctorPages + domainNameShort );
     webData.set(data);
   }
 

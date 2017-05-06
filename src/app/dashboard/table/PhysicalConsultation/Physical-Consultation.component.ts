@@ -24,11 +24,11 @@ export class PhysicalConsultationComponent{
             .subscribe(res => {
                 if (res[0]) {
                       this.physicalconsult = res[0];
-                console.log("response of physical consultation is :",res);
-                console.log("physical consultation data test: ",this.physicalconsult);
+                //console.log("response of physical consultation is :",res);
+                //console.log("physical consultation data test: ",this.physicalconsult);
                 this.currentItem = res[0].$key;
-                console.log("current item check is :",this.currentItem);
-                console.log(this.currentItem);
+                //console.log("current item check is :",this.currentItem);
+                //console.log(this.currentItem);
                 var time = new Date().getTime();
                 time = parseInt(this.currentItem);
                 var date = new Date(time);

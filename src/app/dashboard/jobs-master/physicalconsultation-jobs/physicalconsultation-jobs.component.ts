@@ -55,7 +55,7 @@ export class PhysicalconsultationJobsComponent implements OnInit {
     reviewData['PhysicalConsultDrName'] = '';
     reviewData['PhysicalConsultFreq'] = job['frequency'];
     reviewData['PhysicalConsultLocation'] = '';
-    console.log("reminder value test :",reminder);
+    //console.log("reminder value test :",reminder);
      //save data in scheduled job
      this._authService._saveReminders(reminder).then(
         data => {
@@ -71,7 +71,7 @@ export class PhysicalconsultationJobsComponent implements OnInit {
       this._authService._saveOnboardingReview(reviewData, this.patient.uid, 'Physical_Consultation/' + transTime.getTime()).then(
         res =>{
           let d=res;
-          console.log("response of onboarding save is",d);
+          //console.log("response of onboarding save is",d);
       })
 
   }//savePCT

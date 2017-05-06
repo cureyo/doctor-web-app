@@ -17,7 +17,7 @@ export class WebContentComponent implements OnInit {
             params => {
             this.routeparam= params['id'];
             
-            console.log("param value test:",this.routeparam);
+            //console.log("param value test:",this.routeparam);
             //end of param
           });
   }

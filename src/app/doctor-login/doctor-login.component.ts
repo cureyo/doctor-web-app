@@ -29,19 +29,19 @@ export class DoctorLoginComponent implements OnInit {
           this.user = data.user;
           this._authService._fetchDocUser(data.user.uid)
             .subscribe(res => {
-              console.log("from login: ");
-              console.log(res);
+              //console.log("from login: ");
+              //console.log(res);
               if (res.hasOwnProperty('authUID')) {
-                this.activatedRoute.queryParams
-                  .subscribe(params => {
-                      console.log("query parameters");
-                    console.log(params);
-                    if (params['next']) {
-                      window.location.href = window.location.origin + params['next'];
-                    } else {
-                      window.location.href = window.location.origin + '/dashboard';
-                    }
-                 });
+                // this.activatedRoute.queryParams
+                //   .subscribe(params => {
+                //       //console.log("query parameters");
+                //     //console.log(params);
+                //     if (params['next']) {
+                //       window.location.href = window.location.origin + params['next'];
+                //     } else {
+                //       window.location.href = window.location.origin + '/dashboard';
+                //     }
+                //  });
 
               } else {
                 this.router.navigate(['doctor-checkup']);
@@ -62,9 +62,9 @@ export class DoctorLoginComponent implements OnInit {
 
   doclogin(provider) {
     
-      console.log("Regular browser");
+      //console.log("Regular browser");
      this._authService.doclogin();
-      console.log("rerouting from login(provider)")
+      //console.log("rerouting from login(provider)")
    
   }
   showVideo() {
@@ -81,23 +81,23 @@ export class DoctorLoginComponent implements OnInit {
     
     login['email']=job['email'];
     login['password']=job['psw'];
-    console.log("the reminder value check for manual login",reminder);
+    //console.log("the reminder value check for manual login",reminder);
     let data:any;
     this._authService. createMailUser(reminder)
     // .then(
     //   res=>{
           
-    //          console.log(res);
-    //            console.log("the reponse value of create user2",res);
+    //          //console.log(res);
+    //            //console.log("the reponse value of create user2",res);
     //           this._authService.loginMailUser(login).then(
     //             data => {
 
-    //               console.log("login response test",data);
+    //               //console.log("login response test",data);
     //                       this.router.navigate(['checkup']);
     //             }
     //           );
            
-    //     console.log("create user response",res);
+    //     //console.log("create user response",res);
     // });
        
 

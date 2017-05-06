@@ -41,7 +41,7 @@ export class FooterComponent implements OnInit {
       reminder['site_Name'] =this.routeparam;
       
       this.footerTileAdded=true;
-       console.log("reminder value footertile  :",reminder);
+       //console.log("reminder value footertile  :",reminder);
             //remove .com from url
              var n=this.routeparam.indexOf(".")
                if (n==-1){
@@ -49,11 +49,11 @@ export class FooterComponent implements OnInit {
                }
                this.sitename = this.routeparam.substring(0,n);
              //end of url trimming part
-             console.log("the routeparam value in hero tiles:",this.sitename);
+             //console.log("the routeparam value in hero tiles:",this.sitename);
         this._authService._saveWebContentFootertile(reminder,this.sitename).then(
       res =>{
           let d=res;
-          console.log("response of footer tile data",d);
+          //console.log("response of footer tile data",d);
       })
   }
 

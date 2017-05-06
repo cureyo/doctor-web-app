@@ -24,11 +24,11 @@ export class OnlineConsultationComponent{
             .subscribe(res => {
                 if (res[0]) {
                      this.onlineconsult = res[0];
-                console.log("response of online consultation is :",res);
-                console.log("online consultation data test: ",this.onlineconsult);
+                //console.log("response of online consultation is :",res);
+                //console.log("online consultation data test: ",this.onlineconsult);
                 this.currentItem = res[0].$key;
-                console.log("current item check is :",this.currentItem);
-                console.log(this.currentItem);
+                //console.log("current item check is :",this.currentItem);
+                //console.log(this.currentItem);
                 var time = new Date().getTime();
                 time = parseInt(this.currentItem);
                 var date = new Date(time);

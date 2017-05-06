@@ -101,11 +101,11 @@ export class CaredoneFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log("Cared one form called");
+    ////console.log("Cared one form called");
     //$('#myModal').hide();
     this.temp = Math.floor((Math.random() * 1000000000) + 1);
     if (this.user.directAdd == "mail") {
-      //console.log(this.user);
+      ////console.log(this.user);
       this.caredone = this._fb.group({
         firstName: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
         lastName: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
@@ -126,7 +126,7 @@ export class CaredoneFormComponent implements OnInit {
     }
     else if (this.user.directAdd == "self") {
       this.currentUser = this._authService._getCurrentUser();
-      //console.log(this.user);
+      ////console.log(this.user);
       this.caredone = this._fb.group({
         firstName: [this.currentUser.firstName, Validators.compose([Validators.minLength(1), Validators.maxLength(100)])],
         lastName: [this.currentUser.lastName, Validators.compose([Validators.minLength(1), Validators.maxLength(100)])],
@@ -148,7 +148,7 @@ export class CaredoneFormComponent implements OnInit {
 
     }
     else {
-      //console.log(this.user);
+      ////console.log(this.user);
       this.caredone = this._fb.group({
         firstName: [this.user.name.split(' ')[0], Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
         lastName: [this.user.name.split(' ')[1], Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
@@ -199,16 +199,16 @@ export class CaredoneFormComponent implements OnInit {
   }// cancelACO
 
   showError() {
-    console.log("clicked");
+    //console.log("clicked");
     this.showErrorFlag = true;
   }
   showError2() {
-    console.log("clicked");
+    //console.log("clicked");
     this.showErrorFlag2 = true;
   }
   onSubmit(model, event) {
-    //console.log(model);
-    //console.log("model");
+    ////console.log(model);
+    ////console.log("model");
     this.caredOneId = model['uid']
 
     if (model['avatar'] == "/assets/img/man.png" && model['gender'] != 'Male') {
@@ -237,7 +237,7 @@ export class CaredoneFormComponent implements OnInit {
     this.caredOneAdded = true;
     this.coMessage = model['nickName'] + ", I added you on a platform called Cureyo to help us manage your health. The team will reach out to you for your medical reports and to plan your health needs. Please cooperate with them.";
     this.caredone.reset();
-    console.log(this.coMessage);
+    //console.log(this.coMessage);
     this.coMsgForm = this._fb.group({
       message: this.coMessage,
 
@@ -248,7 +248,7 @@ export class CaredoneFormComponent implements OnInit {
 
 
   onSubmitMsg(model, event) {
-    console.log(model)
+    //console.log(model)
 
     this.coMsgForm.reset();
     this.caredOneAdded = false;
@@ -288,7 +288,7 @@ export class CaredoneFormComponent implements OnInit {
 
   }
   whatsapp(model, event) {
-    console.log(model)
+    //console.log(model)
     this.coMsgForm.reset();
     this.caredOneAdded = false;
     // if (this.checkBox) {
@@ -337,10 +337,10 @@ export class CaredoneFormComponent implements OnInit {
         document.location.href = 'tel:' + this.phoneNumber;
   }
   detectmob() {
-    // console.log(window.innerWidth)
-    // console.log(window.innerHeight)
+    // //console.log(window.innerWidth)
+    // //console.log(window.innerHeight)
     if (window.innerWidth <= 800 && window.innerHeight <= 800) {
-      console.log("small screen")
+      //console.log("small screen")
       return true;
     } else {
       return false;

@@ -33,14 +33,14 @@ constructor(
         var chkTime = new Date()
         this._authService._findOnboardingReviewItemNext(this.patient.uid, 'Lab Test', null)
             .subscribe(res => {
-                console.log(res);
-                console.log(res[0]);
-                console.log(res[1]);
+                //console.log(res);
+                //console.log(res[0]);
+                //console.log(res[1]);
                 if (res[0]) {
                      this.suggestedTests = res[0];
                 this.currentItem = res[0].$key;
                 
-                console.log(this.currentItem);
+                //console.log(this.currentItem);
                 var time = new Date().getTime();
                 time = parseInt(this.currentItem);
                 var date = new Date(time);
@@ -55,10 +55,10 @@ constructor(
     fetchNext(next) {
         this._authService._findOnboardingReviewItemNext(this.patient.uid, 'Lab Test', next)
             .subscribe(res => {
-                console.log("res[0]");
-                console.log(res);
-                console.log(res[0]);
-                console.log(res[1]);
+                //console.log("res[0]");
+                //console.log(res);
+                //console.log(res[0]);
+                //console.log(res[1]);
                 if(res[0]) {
                 this.suggestedTests = res[0];
                 this.currentItem = res[0].$key;
@@ -75,10 +75,10 @@ constructor(
         fetchPrev(next) {
         this._authService._findOnboardingReviewItemPrev(this.patient.uid, 'Lab Test', next)
             .subscribe(res => {
-                console.log("res[0]");
-                console.log(res);
-                console.log(res[0]);
-                console.log(res[1]);
+                //console.log("res[0]");
+                //console.log(res);
+                //console.log(res[0]);
+                //console.log(res[1]);
                 if(res[0]) {
                 this.suggestedTests = res[0];
                 this.currentItem = res[0].$key;

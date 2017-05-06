@@ -69,15 +69,15 @@ export class OutPatientsFormComponent implements OnInit {
         var mm = date.getMonth();
         var yyyy = date.getFullYear();
         var today = dd + '-' + mm + '-' + yyyy;
-        console.log(today)
+        //console.log(today)
 
         this._authService._fetchUser(data.user.uid)
           .subscribe(res => {
-            console.log(res)
+            //console.log(res)
             if (res) {
               this.currentUser = this._authService._getCurrentUser();
               this.currentUserID = this.currentUser.authUID
-              console.log("the current user id:", this.currentUserID);
+              //console.log("the current user id:", this.currentUserID);
               //get the param id:
               this.route.params.subscribe(
                 params => {
@@ -85,31 +85,31 @@ export class OutPatientsFormComponent implements OnInit {
                   let param = params['id'];
                   //let param = "61698978";
                   this.caredoneId = param;
-                  console.log(this.caredoneId, " is the cared one id")
+                  //console.log(this.caredoneId, " is the cared one id")
                   this.getCaredOne(param); //find caredones
                   this.getPatientdetails(param)//find patientInsights
 
-                  console.log(res)
+                  //console.log(res)
                   var clinicDomain = res.clinicWebsite;
                   var n = clinicDomain.indexOf('.');
                   var clinicID = clinicDomain.substring(0, n);
-                  console.log("my clinic id is ", clinicID)
-                  console.log(clinicID);
+                  //console.log("my clinic id is ", clinicID)
+                  //console.log(clinicID);
 
                   this._authService._getClinicQueue(clinicID, today)
                     .subscribe(queue => {
-                      console.log(queue)
+                      //console.log(queue)
                       let q = 0;
                       if (queue == null) { } else {
                         q = queue;
-                        console.log(q);
+                        //console.log(q);
                         this.currentQ = queue.$value;
                         this.clinicIDNew = clinicID;
                         this._authService._getCheckInDetails(clinicID, today, this.currentQ)
                           .subscribe(data => {
                             if (data != param) {
-                              console.log("response data ", data);
-                              console.log('redirecting to ', 'out-patients/' + data.$value);
+                              //console.log("response data ", data);
+                              //console.log('redirecting to ', 'out-patients/' + data.$value);
 
                               this.router.navigate(['out-patients/' + data.$value])
                             }
@@ -128,12 +128,12 @@ export class OutPatientsFormComponent implements OnInit {
 
   //get param function
   getCaredOne(param) {
-    console.log("ids of current user and param", this.currentUserID, param);
+    //console.log("ids of current user and param", this.currentUserID, param);
     this._authService._findCaredOne(this.currentUserID, param)
       .subscribe(
       data => {
         this.caredone = data;
-        console.log("the caredone data :", this.caredone);
+        //console.log("the caredone data :", this.caredone);
         this.nickName = this.caredone.nickName;
         this.avatar = this.caredone.avatar;
       })
@@ -144,7 +144,7 @@ export class OutPatientsFormComponent implements OnInit {
       .subscribe(
       insights => {
         this.patient = insights
-        console.log(this.patient)
+        //console.log(this.patient)
 
 
         this.birthday = this.patient[0].$value;
@@ -164,15 +164,15 @@ export class OutPatientsFormComponent implements OnInit {
         this.workName = this.WorkName.name
         this.position = this.Work[this.work].position
         this.Position = this.position.name
-        console.log(this.workName, this.Position)
+        //console.log(this.workName, this.Position)
 
-        console.log(this.work)
+        //console.log(this.work)
 
         this.age = calculateAge(this.patient[0].$value) - 1
-        console.log("age is ", this.age)
+        //console.log("age is ", this.age)
 
         function calculateAge(birthday) { // birthday is a string
-          console.log("dob is ", birthday)
+          //console.log("dob is ", birthday)
           var birthdate = new Date();
           var nMonth = birthday.indexOf('/');
           var month = birthday.substring(0, nMonth);
@@ -196,7 +196,7 @@ export class OutPatientsFormComponent implements OnInit {
           birthdate.setDate(date);
           birthdate.setMonth(month);
           birthdate.setFullYear(year);
-          console.log(birthdate);
+          //console.log(birthdate);
 
           var today = new Date();
 
@@ -214,12 +214,12 @@ export class OutPatientsFormComponent implements OnInit {
     var mm = date.getMonth();
     var yyyy = date.getFullYear();
     var today = dd + '-' + mm + '-' + yyyy;
-    console.log(today)
-    console.log(this.currentQ)
-    console.log(this.currentQ + 1);
+    //console.log(today)
+    //console.log(this.currentQ)
+    //console.log(this.currentQ + 1);
     this._authService._getCheckInDetails(this.clinicIDNew, today, this.currentQ + 1)
       .subscribe(data => {
-        console.log(data);
+        //console.log(data);
         if (data.$value && data.$value != null)
           this._authService._setClinicQueue(this.clinicIDNew, today, this.currentQ + 1);
         else {

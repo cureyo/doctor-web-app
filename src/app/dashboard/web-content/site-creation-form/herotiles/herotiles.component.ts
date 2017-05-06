@@ -34,7 +34,7 @@ export class HerotilesComponent implements OnInit {
         this.backgrounds = data;
       })
     if (this.herotiles) {
-      // console.log("herotiles data in herotiles component",this.herotiles);
+      // //console.log("herotiles data in herotiles component",this.herotiles);
       this._authService._getUser()
       .subscribe(
         data => {
@@ -67,9 +67,9 @@ export class HerotilesComponent implements OnInit {
 
   }
   save_heroTile = (model) => {
-    //console.log(job);
+    ////console.log(job);
     let job = model['value'];
-    console.log(job);
+    //console.log(job);
     let reminder = {
       title: job['title'],
       text: job['site_text'],
@@ -82,11 +82,11 @@ export class HerotilesComponent implements OnInit {
         image: job['fb_Profile']
       }
     };
-    console.log(reminder);
+    //console.log(reminder);
     this.heroTileAdded = true;
-    console.log("reminder value herotile  :", reminder);
+    //console.log("reminder value herotile  :", reminder);
     this.temp = Math.floor((Math.random() * 10000) + 1);
-    console.log("temp number :", this.temp);
+    //console.log("temp number :", this.temp);
 
     //remove .com from url
     var n = this.routeparam.indexOf(".")
@@ -95,11 +95,11 @@ export class HerotilesComponent implements OnInit {
     }
     this.sitename = this.routeparam.substring(0, n);
     //end of url trimming part
-    console.log("the routeparam value in hero tiles:", this.sitename);
+    //console.log("the routeparam value in hero tiles:", this.sitename);
     this._authService._saveWebContentHerotile(reminder, this.sitename).then(
       res => {
         let d = res;
-        console.log("response of hero tile data", d);
+        //console.log("response of hero tile data", d);
         $.notify({
           icon: "notifications",
           message: "Details for top section have been saved"
@@ -112,61 +112,14 @@ export class HerotilesComponent implements OnInit {
               align: 'right'
             }
           });
-        this.addDomain(this.sitename)
+        //this.addDomain(this.sitename)
 
       })
   }
 
-  addDomain(domainName) {
-
-
-    this.putDomain(domainName).subscribe(data => {
-      console.log(data);
-      $.notify({
-        icon: "notifications",
-        message: "Website " + this.sitename + ".cureyo.com has been created. You can check in 30-45 minutes, or open this URL in another browser to review.",
-        url: 'http://'+ this.sitename + '.cureyo.com',
-        target: '_blank'
-      }, {
-          type: 'cureyo',
-          timer: 4000,
-          placement: {
-            from: 'top',
-            align: 'right'
-          }
-        });
-
-    });
-
-
-
-  }
-  putDomain(domainName) {
-
-    const domainURL = "https://api.digitalocean.com/v2/domains/cureyo.com/records";
-    const domData = {
-      "type": "A",
-      "name": domainName,
-      "data": "139.59.76.104",
-      "priority": null,
-      "port": null,
-      "ttl": 600,
-      "weight": null
-    };
-
-
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    headers.append('Authorization', `Bearer 88e99143c6783437106e779dc1f7910f0bdf1de018c2f3b809470df8bb1074f9`);
-
-    return this.http.post(domainURL, domData, {
-      headers: headers
-    })
-      .map((res: Response) => res.json());
-
-  }
   changeSampleBG(url) {
-    console.log(url)
+    //console.log(url)
     this.preview = url;
-    console.log(this.preview)
+    //console.log(this.preview)
   }
 }

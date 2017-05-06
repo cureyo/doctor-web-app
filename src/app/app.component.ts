@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   private caredOnes: any;
   private showLoginMod: boolean = false;
   private noCaredOnes: boolean = false;
-  private showSideBar: boolean = false;
+  public showSideBar: boolean = false;
   // private isLogin: boolean = false;
 
 
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     location: PlatformLocation
   ) {
     location.onPopState(() => {
-      console.log('pressed back!');
+      //console.log('pressed back!');
 
     });
 
@@ -53,13 +53,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   showLoginModal() {
     this.showLoginMod = true;
-    console.log(this.showLoginMod);
+    //console.log(this.showLoginMod);
   }
   getCaredones() {
     this._authService._getcaredOnesList(this.currentUser.authUID).subscribe(
       data => {
-        console.log("from app.component");
-        console.log(data);
+        //console.log("from app.component");
+        //console.log(data);
         for (let i = 0; i < data.length; i++) {
 
           this._authService._getMedicationReminders(data[i].uid).subscribe(
@@ -87,8 +87,8 @@ export class AppComponent implements OnInit, AfterViewInit {
           // end of my code
         }//  for loop
         this.caredOnes = data;
-        console.log("this.caredOnes");
-        console.log(data);
+        //console.log("this.caredOnes");
+        //console.log(data);
         if (data.length == 0) {
           this.noCaredOnes = true;
         }
@@ -104,17 +104,21 @@ export class AppComponent implements OnInit, AfterViewInit {
     
     
       console.log(this.router.url);  // to print only path eg:"/login"
-      console.log(window.location.hostname);
+      console.log(window.location.pathname);
+      if (window.location.pathname == '/doctor-login' || window.location.pathname == '/logout' || window.location.pathname == '/doctor-checkup' ) {
+      this.showSideBar = false;
+       console.log(window.location.pathname, this.showSideBar);
+    }
     this._authService._getUser()
       .subscribe(
       data => {
         if (!data.isAuth) {
           console.log(window.location.pathname);
-          console.log(this.route.url);
-          console.log(this.route);
-        if (window.location.pathname != '/doctor-login' && window.location.pathname != '/logout' ) {
+          //console.log(this.route.url);
+          //console.log(this.route);
+        if (window.location.pathname != '/doctor-login' && window.location.pathname != '/logout' && window.location.pathname != '/doctor-checkup' ) {
             this.showSideBar = false;
-            console.log(window.location.pathname);
+            //console.log(window.location.pathname);
             window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
           }
           else {
@@ -126,20 +130,21 @@ export class AppComponent implements OnInit, AfterViewInit {
         else {
           this._authService._fetchUser(data.user.uid)
             .subscribe(res => {
-              console.log(res);
+              //console.log(res);
               if (res) {
 
-                //console.log("redirecting to dashboard");
-                console.log(res);
+                ////console.log("redirecting to dashboard");
+                //console.log(res);
+                console.log(window.location.pathname);
                 if (window.location.pathname != '/doctor-checkup')
                 this.showSideBar = true; 
                 else this.showSideBar = false; 
                 //this.router.navigate(['dashboard']);
 
               } else {
-                console.log("redirecting to checkup");
+                //console.log("redirecting to checkup");
 
-                this.showSideBar = true;
+                //this.showSideBar = true;
                 this.router.navigate(['/doctor-checkup'])
                 // here is the error
 
@@ -161,7 +166,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       (response: FacebookLoginResponse) => {
         if (response.status == 'connected') {
           this.fbAccessToken = response.authResponse.accessToken;
-          console.log("this.currentUser.cover;", this.currentUser.cover)
+          //console.log("this.currentUser.cover;", this.currentUser.cover)
           if (!this.currentUser.hasOwnProperty('cover')) {
             this.setUserCoverPhoto();
           } else {
@@ -186,8 +191,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else {
       this.fs.api('/' + this.currentUser.authUID + '?fields=cover').then(
         response => {
-          console.log("response: \n");
-          console.log(response);
+          //console.log("response: \n");
+          //console.log(response);
           let cover = '/assets/images/cover-sm.png';
 
           if (response.hasOwnProperty('cover'))
@@ -203,7 +208,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }//setUserCoverPhoto
 
   public isLogin() {
-    // console.log(window.location.hash);
+    // //console.log(window.location.hash);
     if (window.location.hash == '/doctor-login' || window.location.hash == '/doctor-checkup') {
       return false;
     }

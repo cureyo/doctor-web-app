@@ -23,11 +23,11 @@ export class ExerciseTrackerComponent{
             .subscribe(res => {
                 if (res[0]) {
                 this.exerciseTracker = res[0];
-                console.log("response of exerciseTracker is :",res);
-                console.log("exerciseTracker data test: ",this.exerciseTracker);
+                //console.log("response of exerciseTracker is :",res);
+                //console.log("exerciseTracker data test: ",this.exerciseTracker);
                 this.currentItem = res[0].$key;
-                console.log("current item check is :",this.currentItem);
-                console.log(this.currentItem);
+                //console.log("current item check is :",this.currentItem);
+                //console.log(this.currentItem);
                 var time = new Date().getTime();
                 time = parseInt(this.currentItem);
                 var date = new Date(time);
