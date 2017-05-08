@@ -45,12 +45,12 @@ export class PatientPreviewComponent implements OnInit {
                   this.route.params.subscribe(
       params => {
         let param = params['id'];
-        console.log("caredoneKey", param);
+        //console.log("caredoneKey", param);
         this._authService._findCaredOne(data.user.uid, param)
           .subscribe(
           data => {
             this.caredone = data;
-            console.log("caredone data:",this.caredone);
+            //console.log("caredone data:",this.caredone);
           })
 
       });

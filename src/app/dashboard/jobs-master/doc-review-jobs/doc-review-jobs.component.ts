@@ -28,7 +28,7 @@ export class DocReviewJobsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    console.log(this.user)
+    //console.log(this.user)
     this.docReviewForm = this._fb.group({
        sm_text:[''],
        reports: this._fb.array([
@@ -82,14 +82,14 @@ export class DocReviewJobsComponent implements OnInit {
 
   }//addMedicine
  saveDocReview = (model) => {
-    console.log("in save daco review :", model.value.reports[0]);
+    //console.log("in save daco review :", model.value.reports[0]);
     let job = model['value'];
        let risks =job['risks']
       let  reports = job['reports']
       let unhealthyparameters=  job['unhealthyparameters'],
       ctr = 0,
       flag;
-      console.log("reports required", reports);
+      //console.log("reports required", reports);
     let reminders = {}, commentData: any, potentialRisks = [], reportsReqd = [], unhealthyParams = [];
         reminders['Job_Type'] = "Doc Review";
         reminders['Job_By'] = this.user.uid;
@@ -103,7 +103,7 @@ export class DocReviewJobsComponent implements OnInit {
         potentialRisks = job.risks;
         //reportsReqd = job.reports;
         unhealthyParams = job.unhealthyparameters;
-     console.log("Doceview reminders value ",reminders);
+     //console.log("Doceview reminders value ",reminders);
 
       //save data in onboarding Review
       var transTime = new Date();
@@ -115,7 +115,7 @@ export class DocReviewJobsComponent implements OnInit {
               this.rflag=true;
               this.uflag=true;
           let d=res;
-          console.log("response of onboarding save is",res);
+          //console.log("response of onboarding save is",res);
       })
       }
       if (job.reports[0].rr_Name != '') {
@@ -132,7 +132,7 @@ export class DocReviewJobsComponent implements OnInit {
               this.rflag=true;
               this.uflag=true;
           let d=res;
-          console.log("response of onboarding save is",res);
+          //console.log("response of onboarding save is",res);
       })
       }
       if (potentialRisks[0].Risk != '') {
@@ -143,7 +143,7 @@ export class DocReviewJobsComponent implements OnInit {
               this.rflag=true;
               this.uflag=true;
           let d=res;
-          console.log("response of onboarding save is",res);
+          //console.log("response of onboarding save is",res);
       })
       }
       if (commentData.OverallComments != '') {
@@ -156,7 +156,7 @@ export class DocReviewJobsComponent implements OnInit {
               this.rflag=true;
               this.uflag=true;
           let d=res;
-          console.log("response of onboarding save is",res);
+          //console.log("response of onboarding save is",res);
       })
       }
       // this._authService._saveOnboardingReview(reminders,this.patient.uid, 'Doc Review').then(
@@ -166,7 +166,7 @@ export class DocReviewJobsComponent implements OnInit {
       //         this.rflag=true;
       //         this.uflag=true;
       //     let d=res;
-      //     console.log("response of onboarding save is",res);
+      //     //console.log("response of onboarding save is",res);
       // })
 
       

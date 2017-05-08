@@ -49,13 +49,13 @@ export class ClinicPageComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(
       params => {
         let param = params['page'];
-        console.log(param)
+        //console.log(param)
         this._authService._getDoctorPage(param).subscribe(
             pageData => {
-              console.log(pageData);
+              //console.log(pageData);
               this.pageDetails = pageData;
-              console.log(this.pageDetails.Content);
-              console.log(this.pageDetails.Images);
+              //console.log(this.pageDetails.Content);
+              //console.log(this.pageDetails.Images);
              this.heroBGImage = this.sanitizer.bypassSecurityTrustStyle('url(' + this.pageDetails.heroBGImage + ')');
               this.setMetadata();
 
@@ -64,7 +64,7 @@ export class ClinicPageComponent implements OnInit, AfterViewInit {
     });
     $(window).on('scroll',function(){
       var y = $(this).scrollTop();
-      console.log("scrolling");
+      //console.log("scrolling");
       if(y > 500) {
          $("nav").removeClass("navbar-transparent");
       }
@@ -80,14 +80,14 @@ export class ClinicPageComponent implements OnInit, AfterViewInit {
   }//ngAfterViewInit
 
   getSafeURL(cleanURL) {
-    //console.log(cleanURL);
+    ////console.log(cleanURL);
     return this.sanitizer.bypassSecurityTrustStyle('url(' + cleanURL + ')');
   }
 
  scroll2Appt(content) {
-  // console.log(content);
+  // //console.log(content);
    var elmnt = document.getElementById("BookAppointment");
-  // console.log(elmnt);
+  // //console.log(elmnt);
 elmnt.scrollIntoView();
 
 
@@ -99,7 +99,7 @@ elmnt.scrollIntoView();
 		let urlImage = 'Image to display';
 		let urlPage = 'url of the page';
 		let appId = 'your facebook page id';
-		console.log("seting medata");
+		//console.log("seting medata");
     //basic metadata
 		this.metadataService.setTitle(title);
 		this.metadataService.setMetaDescription(description);

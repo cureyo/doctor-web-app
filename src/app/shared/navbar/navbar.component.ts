@@ -38,12 +38,12 @@ export class NavbarComponent implements OnInit {
     }
 
     signout() {
-        console.log("logging out")
+        //console.log("logging out")
         this._authService.logout();
     }
 
     showNav() {
-        console.log("nav clicked")
+        //console.log("nav clicked")
         if (this.navState) {
             $('html').addClass('nav-open');
             this.navState = !this.navState

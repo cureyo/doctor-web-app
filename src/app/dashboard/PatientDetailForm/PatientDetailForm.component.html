@@ -69,6 +69,103 @@
           
      </div>
     <div class="row">
+        <div *ngIf="diagnosisReady" class="col-md-4" id="diagnosisSection">
+<div id="diagnosisSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
+    <div class="card-header" data-background-color="cureyo">
+                <h4 class="title">{{caredone.firstName}}'s Diagnosis</h4>
+                <p class="category">Based on initial triaging</p>
+                </div>
+                <p *ngIf="!diagnosis.Result"> Patient has not been triaged</p>
+                <div *ngIf="diagnosis.Result">
+                    <h5  *ngFor="let condition of diagnosis.Result.conditions"> <b>{{condition.name}}: </b><small style="font-weight: 300;" >{{condition.probability *100 | number : '1.2-2'}}%</small></h5>
+                </div>
+                <a *ngIf="diagnosis.Question && !showDiagnosisQuestions" class="btn btn-warning btn-round" (click)="showQuestions()"> Show Details</a>
+                <div *ngIf="showDiagnosisQuestions" class="card card-stats">
+                    <h5  *ngFor="let question of diagnosis.Question"><b>{{question.name}}:  </b><small style="font-weight: 300;" >{{question.choice_id}}</small></h5>
+                    <a class="btn btn-warning btn-round" (click)="closeQuestions()"> Hide Details</a>
+                </div>
+</div>
+        <div *ngIf="obsReady" id="obsSection">
+<div id="observerSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
+    <div class="card-header" data-background-color="cureyo">
+                <h4 class="title">{{caredone.firstName}}'s Observers</h4>
+                <p class="category">View & Add Observers</p>
+                </div>
+                                <!--for add new observers -->
+  
+  
+    <h5 class="card-title">Add New Observer</h5>
+    <div style="padding: 10%;">
+    <form [formGroup]="ObserversForm" class="form">
+    <div class="row">
+              <div class="col-sm">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Name']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div>
+    <div class="row">
+              <div class="col-sm">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">E-mail</label>
+                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Email']" class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div>
+    <div class="row">
+              <div class="col-sm">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">mobile Number</label>
+                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Phone']" class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div> 
+    <div class="actions clearfix">
+              <div class="pull-right">
+               <button type="submit"  (click)="save_NewObserverData(ObserversForm)"class="btn btn-primary pull-right">Add Observer</button>
+              </div>
+    </div>
+    </form>
+    </div>
+    
+        
+   
+  
+                        
+                  <!--end of add new observers-->
+    
+    <div class="card" style="box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25)" *ngFor="let i of observersList;let i=index">
+        <div class="card-block" *ngIf="observersList">
+            <h4 class="card-title">{{observersList[i].name}} </h4>
+
+            <div class="card-content table-responsive">               
+                <table class="table">
+                    <thead >
+                    <!--<tr> <td class="text-primary"> Name</td>   <td> {{observersList[i].name}}</td> 
+                    </tr>-->
+                    <tr> <td class="text-primary"> Email</td>  <td> {{observersList[i].email}}</td>
+                    </tr>
+                    <tr> <td class="text-primary"> Phone</td>  <td> {{observersList[i].phone}}</td> 
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div> <!-- end of careds-->
+
+      
+            </div>
+        </div>
+               
+        
 
         <div class="col-md-8">
             <div id="proSection">
@@ -81,7 +178,8 @@
                   <!--<div class="formGroup">-->
                      <form [formGroup]="CaredonesForm" class="form">
                           <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
+                                <div class="col-sm-8">
                                 <div class="form-group form-black label-floating is-not-empty">
                                     <div class="form-group">
                                     <label class="control-label">Select a Care Plan</label>
@@ -89,6 +187,10 @@
       <option [attr.selected]="" value="{{j.path}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
     </select>
                                     </div>
+                                </div>
+                                </div>
+                                <div class="col-sm-4">
+                                <a (click)="showCarePlanModal()" style="cursor: pointer;">View Plans</a>
                                 </div>
                             </div>
                           </div>
@@ -190,6 +292,8 @@
                 </div>
             </div>
         </div>
+
+         
                <div *ngIf="repReady" id="repSection">
             <app-file-upload [currentUserID]="currentUserID" [caredoneId]="caredoneId"></app-file-upload>
          <div class="card">
@@ -232,104 +336,8 @@
                 </div>
          </div>
             </div>
+            
         </div>
-        <div *ngIf="diagnosisReady" class="col-md-4" id="diagnosisSection">
-<div id="diagnosisSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
-    <div class="card-header" data-background-color="cureyo">
-                <h4 class="title">{{caredone.firstName}}'s Diagnosis</h4>
-                <p class="category">Based on initial triaging</p>
-                </div>
-                <p *ngIf="!diagnosis.Result"> Patient has not been triaged</p>
-                <div *ngIf="diagnosis.Result">
-                    <h5  *ngFor="let condition of diagnosis.Result.conditions"> <b>{{condition.name}}: </b><small style="font-weight: 300;" >{{condition.probability *100 | number : '1.2-2'}}%</small></h5>
-                </div>
-                <a *ngIf="diagnosis.Question && !showDiagnosisQuestions" class="btn btn-warning btn-round" (click)="showQuestions()"> Show Details</a>
-                <div *ngIf="showDiagnosisQuestions" class="card card-stats">
-                    <h5  *ngFor="let question of diagnosis.Question"><b>{{question.name}}:  </b><small style="font-weight: 300;" >{{question.choice_id}}</small></h5>
-                    <a class="btn btn-warning btn-round" (click)="closeQuestions()"> Hide Details</a>
-                </div>
-</div>
-        </div>
-               <div *ngIf="obsReady" class="col-md-4" id="obsSection">
-<div id="observerSection" class="card" style="width:30rem;padding: 5px 5px 5px 5px;text-align: center; transform: translate3d(0px, 0px, 0px); opacity: 1;" >
-    <div class="card-header" data-background-color="cureyo">
-                <h4 class="title">{{caredone.firstName}}'s Observers</h4>
-                <p class="category">View & Add Observers</p>
-                </div>
-                                <!--for add new observers -->
-  
-  
-    <h5 class="card-title">Add New Observer</h5>
-    <div style="padding: 10%;">
-    <form [formGroup]="ObserversForm" class="form">
-    <div class="row">
-              <div class="col-sm">
-                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <label class="control-label">Name</label>
-                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Name']"  class="form-control" >
-                                    </div>
-                                </div>
-              </div>    
-    </div>
-    <div class="row">
-              <div class="col-sm">
-                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <label class="control-label">E-mail</label>
-                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Email']" class="form-control" >
-                                    </div>
-                                </div>
-              </div>    
-    </div>
-    <div class="row">
-              <div class="col-sm">
-                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <label class="control-label">mobile Number</label>
-                                    <input type="text" [formControl]="ObserversForm.controls['Ob_Phone']" class="form-control" >
-                                    </div>
-                                </div>
-              </div>    
-    </div> 
-    <div class="actions clearfix">
-              <div class="pull-right">
-               <button type="submit"  (click)="save_NewObserverData(ObserversForm)"class="btn btn-primary pull-right">Add Observer</button>
-              </div>
-    </div>
-    </form>
-    </div>
-    
-        
-   
-  
-                        
-                  <!--end of add new observers-->
-    
-    <div class="card" style="box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25)" *ngFor="let i of observersList;let i=index">
-        <div class="card-block" *ngIf="observersList">
-            <h4 class="card-title">{{observersList[i].name}} </h4>
-
-            <div class="card-content table-responsive">               
-                <table class="table">
-                    <thead >
-                    <!--<tr> <td class="text-primary"> Name</td>   <td> {{observersList[i].name}}</td> 
-                    </tr>-->
-                    <tr> <td class="text-primary"> Email</td>  <td> {{observersList[i].email}}</td>
-                    </tr>
-                    <tr> <td class="text-primary"> Phone</td>  <td> {{observersList[i].phone}}</td> 
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
-    </div> <!-- end of careds-->
-
-      
-            </div>
-         
-        
 
         
 
@@ -374,7 +382,7 @@
   <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
     <div class="modal-content" id="reportsModal2">
       <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" aria-label="Close" (click)="closeReportModal()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Please find the reports below</b></h4>
       </div>
         <div *ngFor="let report of healthReports" class="modal-body" >
@@ -394,6 +402,22 @@
       <div class="modal-footer" style="padding-bottom: 20px;">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="preview.prescriptionButton()">Add a Note</button>
         <button type="button" class="btn btn-default" (click)="closeReportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<div class="modal fade" id="carePlansModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" id="carePlansModal2" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeCarePlanModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Select a Care Plan below to view</b></h4>
+      </div>
+      <care-paths-cmp></care-paths-cmp>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+       
+        <button type="button" class="btn btn-default" (click)="closeCarePlanModal()">Close</button>
       </div>
     </div>
   </div>

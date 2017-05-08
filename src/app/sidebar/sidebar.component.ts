@@ -46,8 +46,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         
     $.getScript('../../assets/js/material-dashboard-angular.js');
         // this.menuItems = ROUTES.filter(menuItem => menuItem.menuType !== MenuType.BRAND);
-                console.log("From sidebar component");
-                console.log(this.caredOnes);
+                //console.log("From sidebar component");
+                //console.log(this.caredOnes);
         this._authService._getUser()
             .subscribe(
             data => {
@@ -55,7 +55,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
                     //window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
                 }
                 this.isAuth = data.isAuth;
-                console.log("this executes");
+                //console.log("this executes");
                 this.getcurrentUser(data.user.uid);
 
                 this.defaultData = { id: "phoneNumber", relationship: "", name: "", imageURL: "/assets/img/man.png", directAdd: true };
@@ -92,24 +92,24 @@ export class SidebarComponent implements OnInit, AfterViewInit {
                     this.currentUser = this._authService._getCurrentUser();
                     if (this.currentUser.mci_number) {
                         this.isDoctor = true;
-                        console.log("is doctor:", this.isDoctor)
+                        //console.log("is doctor:", this.isDoctor)
                     } else {
                         this.isDoctor = false;
-                        console.log("is doctor:", this.isDoctor)
+                        //console.log("is doctor:", this.isDoctor)
                     }
                     if (this.currentUser.clinicWebsite) {
                         this.hasWebsite = true;
-                        console.log("has website", this.hasWebsite)
+                        //console.log("has website", this.hasWebsite)
                     } else {
                         this.hasWebsite = false;
-                        console.log("has website", this.hasWebsite)
+                        //console.log("has website", this.hasWebsite)
                     }
                     this.getCaredones();
-                    console.log(this.caredOnes)
+                    //console.log(this.caredOnes)
                     
             } /*else {
                     this.router.navigate(['checkup']);
-                    console.log("logout was needed")
+                    //console.log("logout was needed")
                 }*/
             });
     }//  getcurrentUser()
@@ -118,15 +118,15 @@ export class SidebarComponent implements OnInit, AfterViewInit {
            this.noCaredOnes = true;
         this._authService._getcaredOnesList(this.currentUser.authUID).subscribe(
             data => {
-                console.log("From sidebar component");
-                console.log(data);
+                //console.log("From sidebar component");
+                //console.log(data);
             
                 this.caredOnes = data;
                 this.noCaredOnes = false;
-                console.log("this.caredOnes");
-                console.log(data);
+                //console.log("this.caredOnes");
+                //console.log(data);
                 if (data.length == 0) {
-                    console.log("no cared ones")
+                    //console.log("no cared ones")
                 this.noCaredOnes = true;
                     //$("#myModal").modal('show');
                 }
@@ -141,7 +141,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.coReport = false;
         this.coProfile = false;
         this.coDoctorJobs=false;
-        console.log("Planmenu")
+        //console.log("Planmenu")
     }
      coProfileMenu() {
         
@@ -149,30 +149,30 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.coReport = false;
         this.coProfile = !this.coProfile;
          this.coDoctorJobs=false;
-        console.log("Profile menu")
+        //console.log("Profile menu")
     }
     coReportMenu() {
         this.coPlan = false;
         this.coReport = !this.coReport;
         this.coProfile = false;
          this.coDoctorJobs=false;
-        console.log("Report menu")
+        //console.log("Report menu")
     }
     coDoctorJobsMenu(){
         this.coDoctorJobs=!this.coDoctorJobs;
-         console.log("flag for doctor:",this.coDoctorJobs);
+         //console.log("flag for doctor:",this.coDoctorJobs);
         this.coPlan = false;
         this.coReport = false;
         this.coProfile = false;
         
-        console.log("Doctor job menu");
+        //console.log("Doctor job menu");
      }
     coDashboardMenu() {
         this.coPlan = false;
         this.coReport = false;
         this.coProfile = false;
         this.coDoctorJobs=false;
-        console.log("Dashboard menu")
+        //console.log("Dashboard menu")
     }
      
     resetSideBar() {
@@ -180,7 +180,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.coReport = false;
         this.coProfile = false;
         this.coDoctorJobs=false;
-        console.log("Route selected");
+        //console.log("Route selected");
  }
 }
 

@@ -44,10 +44,10 @@ export class MedicationReminderJobsComponent implements OnInit {
       mode = $(target).val(),
       medDays = $(target).parent().nextAll('.med_days'),
       medDate = $(target).parent().nextAll('.med_dates');
-    console.log(medDays);
-    console.log(medDate);
-    console.log(mode);
-    console.log(target);
+    //console.log(medDays);
+    //console.log(medDate);
+    //console.log(mode);
+    //console.log(target);
 
     if (mode == 'daily') {
       medDate.addClass('hide');
@@ -154,17 +154,17 @@ if(flag) {
 
         data => {
           this.itemAdded2 = true;
-            console.log("Medication Reminder  data saved :",data);
+            //console.log("Medication Reminder  data saved :",data);
         }
       );
-      console.log("the reminders value ",reminders);
+      //console.log("the reminders value ",reminders);
      //  save data in onboarding Review
      var transTime = new Date();
       this._authService._saveOnboardingReview(reviewData,this.patient.uid, 'Medication Reminder/' + transTime.getTime()).then(
         res =>{
           let d=res;
           this.itemAdded2 = true;
-          console.log("response of onboarding save is",d);
+          //console.log("response of onboarding save is",d);
       });
   }//save
 

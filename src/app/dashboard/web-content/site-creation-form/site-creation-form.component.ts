@@ -34,10 +34,10 @@ export class SiteCreationFormComponent implements OnInit {
       params => {
         this.routeparam = params['id'];
 
-        console.log("param value test in site creation form :", this.routeparam);
+        //console.log("param value test in site creation form :", this.routeparam);
         var n = this.routeparam.indexOf('.')
         var pathRoute = this.routeparam.substring(0,n);
-        console.log(pathRoute)
+        //console.log(pathRoute)
         this._authService._getSiteData(pathRoute).
           subscribe(res => {
             this.site_PrefilledData = res;
@@ -45,9 +45,9 @@ export class SiteCreationFormComponent implements OnInit {
             this.bookingtiles = this.site_PrefilledData.bookingTile;
             this.profileTile = this.site_PrefilledData.profileTile;
             
-            console.log("prefilled data res",this.site_PrefilledData);
-            // console.log("hero tiles data",this.herotiles);
-            // console.log("booking tiles data",this.bookingtiles);
+            //console.log("prefilled data res",this.site_PrefilledData);
+            // //console.log("hero tiles data",this.herotiles);
+            // //console.log("booking tiles data",this.bookingtiles);
           })
       });
     //end of param

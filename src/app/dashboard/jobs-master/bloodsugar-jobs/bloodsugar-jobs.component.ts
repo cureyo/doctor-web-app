@@ -22,7 +22,7 @@ export class BloodsugarJobsComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log("tbs default is not coming");
+    //console.log("tbs default is not coming");
 
     this.tbsForm = this._fb.group({
       health_matric: ['Blood Sugar'],
@@ -34,7 +34,7 @@ export class BloodsugarJobsComponent implements OnInit {
   }//ngOnInit()
 
   save_TbsData = (model) => {
-    console.log("i am here in save_Tbs");
+    //console.log("i am here in save_Tbs");
     let reminder = {},
       job = model['value'];
 
@@ -45,7 +45,7 @@ export class BloodsugarJobsComponent implements OnInit {
     reminder['Job_Time'] = job['timing'];
     reminder['Job_Type'] = "Device_Readings";
     reminder['Reading_Type'] = job['health_matric'];
-    console.log("reminder data:", reminder);
+    //console.log("reminder data:", reminder);
 
     //save data in scheduled job
     this._authService._saveReminders(reminder).then(
@@ -66,7 +66,7 @@ export class BloodsugarJobsComponent implements OnInit {
       this._authService._saveOnboardingReview(reminder, this.patient.uid, 'BloodSugar/' + transTime.getTime()).then(
         res => {
           let d = res;
-          console.log("response of onboarding save is", d);
+          //console.log("response of onboarding save is", d);
         });
     }
     else {
@@ -74,7 +74,7 @@ export class BloodsugarJobsComponent implements OnInit {
       this._authService._saveOnboardingReview(reviewData, this.patient.uid, 'BloodPressure/' + transTime.getTime()).then(
         res => {
           let d = res;
-          console.log("response of onboarding save is", d);
+          //console.log("response of onboarding save is", d);
         });
     }
 

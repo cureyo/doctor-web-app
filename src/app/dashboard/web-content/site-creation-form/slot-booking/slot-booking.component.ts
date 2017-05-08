@@ -33,7 +33,7 @@ export class SlotBookingComponent implements OnInit {
   }
 
   ngOnInit() {
-      console.log("interface class test");
+      //console.log("interface class test");
       this.slotBookingTile=this._fb.group({
        duration:['30 Min',Validators.required],
        avails: this._fb.array([
@@ -45,7 +45,7 @@ export class SlotBookingComponent implements OnInit {
      
   }
     addSlot(){
-    console.log("its called addslot");
+    //console.log("its called addslot");
     const control = <FormArray>this.slotBookingTile.controls['avails'];
      
     control.push(this.initSlots());
@@ -53,7 +53,7 @@ export class SlotBookingComponent implements OnInit {
   }//addSlot
    
    initSlots(){
-      console.log("init called");
+      //console.log("init called");
       return this._fb.group({
         fromTime: ['',Validators.required],
         toTime: ['',Validators.required],
@@ -71,7 +71,7 @@ export class SlotBookingComponent implements OnInit {
       } else {
            
           vHrs = i;
-          console.log("vhrs value",vHrs );
+          //console.log("vhrs value",vHrs );
         hrs = i % 12;
        
       }
@@ -124,7 +124,7 @@ export class SlotBookingComponent implements OnInit {
           total_time_min= (diff/100)*60;
           if (total_time_min>=d){
               slot=total_time_min/d;
-        //  console.log("total slot in this range and selected duration for:",slot);
+        //  //console.log("total slot in this range and selected duration for:",slot);
           
           for (let j=0;j<slot;j++)
            {     
@@ -144,15 +144,15 @@ export class SlotBookingComponent implements OnInit {
                  t=Number (slots[i].fromTime); 
               }
               slots[i].fromTime=t;
-            // console.log("t value ",t,ctr);
+            // //console.log("t value ",t,ctr);
                  /* Convert t value into time format  */
                   let hr,hrs,min,span,t1,t2;
                       hr=Number (t/100);
                       
                         hrs=Math.round(hr-0.1);
-                         // console.log("round hr value",hr);
+                         // //console.log("round hr value",hr);
                           min=hr-hrs;
-                         // console.log("min value:",min);
+                         // //console.log("min value:",min);
                           min= Math.round(min*60);
                         
                        if(Number(t)<1200)
@@ -162,7 +162,7 @@ export class SlotBookingComponent implements OnInit {
                        else{
                           span="PM";
                        }
-                      //console.log("test the value of hr  and min and span",hrs,min,span);
+                      ////console.log("test the value of hr  and min and span",hrs,min,span);
                        if (min==0){
                          time= String(hrs+":"+"0"+min+" "+span);
                        }
@@ -170,7 +170,7 @@ export class SlotBookingComponent implements OnInit {
                           time= String(hrs+":"+min+" "+span);
                        }
                       
-                       console.log("the time is ",time);
+                       //console.log("the time is ",time);
                    //end of time conversion
                 reminders['SLots'][ctr]=time;
                 ctr++;
@@ -178,10 +178,10 @@ export class SlotBookingComponent implements OnInit {
             
           } //end of if
           else{
-            console.log("invalid range");
+            //console.log("invalid range");
           }
     } // first loop end here
-      console.log("the reminders value ",reminders);
+      //console.log("the reminders value ",reminders);
          this.slotAdded=true;
             
              //remove .com from url
@@ -196,7 +196,7 @@ export class SlotBookingComponent implements OnInit {
       .then(
         data => {
           this.slotAdded=true;
-            console.log("slot booking data saved:");
+            //console.log("slot booking data saved:");
         }
       ); 
       //end of db part code

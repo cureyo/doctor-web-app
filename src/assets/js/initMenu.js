@@ -2,7 +2,7 @@ var mobile_menu_visible = 0,
     mobile_menu_initialized = false,
     toggle_initialized = false,
     bootstrap_nav_initialized = false;
-console.log("initializing sidebar");
+//console.log("initializing sidebar");
 $(document).ready(function(){
     $sidebar = $('.sidebar');
 
@@ -71,7 +71,7 @@ mda = {
             $toggle = $('.navbar-toggle');
 
             $toggle.click(function (){
-                console.log("oggle clicked")
+                //console.log("oggle clicked")
                 if(mobile_menu_visible == 1) {
                     $('html').removeClass('nav-open');
 
@@ -118,7 +118,7 @@ mda = {
 
     initBootstrapNavbarMenu: debounce(function(){
         if(!bootstrap_nav_initialized){
-            console.log("bootstrap_nav_initialized")
+            //console.log("bootstrap_nav_initialized")
             $navbar = $('nav').find('.navbar-collapse').first().clone(true);
 
             nav_content = '';

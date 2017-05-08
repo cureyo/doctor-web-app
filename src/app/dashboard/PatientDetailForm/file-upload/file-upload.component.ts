@@ -43,12 +43,12 @@ export class FileUploadComponent implements OnInit {
     this._authService._getHealthReports(this.caredoneId)
       .subscribe(
       data => {
-        console.log("data", data);
+        //console.log("data", data);
         this.healthReportObjectLen = data;
-        console.log("length of the object is :", this.healthReportObjectLen.length);
+        //console.log("length of the object is :", this.healthReportObjectLen.length);
       })
     this.uploader.onAfterAddingFile = (fileItem) => {
-      console.log(this.uploader.queue);
+      //console.log(this.uploader.queue);
       this.qLength = this.uploader.queue.length;
 
     }
@@ -56,31 +56,31 @@ export class FileUploadComponent implements OnInit {
   }
 
   public fileOverBase(e: any): void {
-    console.log("fileOverBase :", e);
+    //console.log("fileOverBase :", e);
     this.hasBaseDropZoneOver = e;
   }
 
   public fileOverAnother(e: any): void {
-    console.log("FileOverAnother", e);
+    //console.log("FileOverAnother", e);
     this.hasAnotherDropZoneOver = e;
   }
 
 
   // }
   onUpload(item) {
-    console.log("item val:", item);
+    //console.log("item val:", item);
     // const fileName: string = this.filename + new Date().getTime() + '.png';
-    console.log("this.textval");
-    console.log(this.textval[item.file.name])
+    //console.log("this.textval");
+    //console.log(this.textval[item.file.name])
     const timestamp: number = new Date().getTime();
     this.filename = item.file.name;
-    console.log("file name", this.filename);
+    //console.log("file name", this.filename);
     const fileRef: any = this.storage.ref(`images/${this.filename}`);
     const uploadTask: any = fileRef.put(this.uploader.queue[this.uploader.queue.length - 1]['_file']);
 
     uploadTask.on('state_changed',
-      (snapshot) => console.log(snapshot),
-      (error) => console.log(error),
+      (snapshot) => //console.log(snapshot),
+      (error) => //console.log(error),
       () => {
         const data = {
           Description: this.textval[item.file.name],
@@ -100,8 +100,8 @@ export class FileUploadComponent implements OnInit {
   }
   saveFileUploadData = (model) => {
 
-    console.log("the index in save file:", this.i);
-    console.log("the value on given index ", this.textval[this.i]);
+    //console.log("the index in save file:", this.i);
+    //console.log("the value on given index ", this.textval[this.i]);
     let reminder = {},
       job = model['value'];
 
@@ -110,12 +110,12 @@ export class FileUploadComponent implements OnInit {
     reminder['fileName'] = model.raw;
     reminder['fileUrl'] = model.src;
     reminder['updatedAt'] = model.updatedAt;
-    console.log("the reminder value for saveFileUploadData:", reminder);
+    //console.log("the reminder value for saveFileUploadData:", reminder);
 
     // to save the file on the db:
     this._authService._saveHealthReports(reminder, this.caredoneId, this.healthReportObjectLen.length).then(
       data => {
-        console.log("the data:", data);
+        //console.log("the data:", data);
       
          	$.notify({
         	icon: "notifications",

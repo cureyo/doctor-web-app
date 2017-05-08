@@ -31,7 +31,7 @@ export class OPDComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngonint")
+    //console.log("ngonint")
     this.outPatient = this._fb.group({
       message: [''],
 
@@ -44,7 +44,7 @@ export class OPDComponent implements OnInit {
     var mm = date.getMonth();
     var yyyy = date.getFullYear();
     var today = dd + '-' + mm + '-' + yyyy;
-    console.log(today)
+    //console.log(today)
 
     this._authService._getUser()
       .subscribe(
@@ -52,38 +52,57 @@ export class OPDComponent implements OnInit {
 
         this._authService._fetchUser(data.user.uid)
           .subscribe(res => {
-            console.log(res)
+            //console.log(res)
             var clinicDomain = res.clinicWebsite;
             var n = clinicDomain.indexOf('.');
             var clinicID = clinicDomain.substring(0, n);
-            console.log("my clinic id is ", clinicID)
-            console.log(clinicID)
+            //console.log("my clinic id is ", clinicID)
+            //console.log(clinicID)
             this._authService._getClinicQueue(clinicID, today)
               .subscribe(queue => {
-                console.log(queue)
+                //console.log(queue)
                 let q = 0;
                 if (queue.$value == null) {
-                  $.notify({
-                    icon: "notifications",
-                    message: "No patients in queue currently"
+                  this._authService._getCheckInDetails(clinicID, today, 0)
+                    .subscribe(
+                    line => {
+                      if (line.$value == null) {
+                        $.notify({
+                          icon: "notifications",
+                          message: "No patients in queue currently"
 
-                  }, {
-                      type: 'cureyo',
-                      timer: 4000,
-                      placement: {
-                        from: 'top',
-                        align: 'right'
+                        }, {
+                            type: 'cureyo',
+                            timer: 4000,
+                            placement: {
+                              from: 'top',
+                              align: 'right'
+                            }
+                          });
+                      } else {
+                        q = 0;
+                        this._authService._getCheckInDetails(clinicID, today, q)
+                          .subscribe(data => {
+
+                            console.log("response data ", data);
+                            //console.log('redirecting to ', 'out-patients/' + data.$value);
+
+                            window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
+
+                          })
                       }
-                    });
+                    }
+                    )
+
                 } else {
                   q = queue.$value;
                   this._authService._getCheckInDetails(clinicID, today, q)
                     .subscribe(data => {
 
-                      console.log("response data ", data);
-                      console.log('redirecting to ', 'out-patients/' + data.$value);
+                      //console.log("response data ", data);
+                      //console.log('redirecting to ', 'out-patients/' + data.$value);
 
-                      this.router.navigate(['out-patients/' + data.$value])
+                      window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
 
                     })
                 }

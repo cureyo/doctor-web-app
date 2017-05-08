@@ -43,7 +43,7 @@ private chartName: any = ['unhealthyChart1', 'unhealthyChart2', 'unhealthyChart3
   ngAfterViewInit() {
        let labTitles, labValues, exerTitles, exerValues, exerMax, medTitles, medValues, bsTitles, bsValues, bsMax,bpTitles, bpValuesSys,bpValuesDias, bpMax;
             
-            console.log("calling chart");
+            //console.log("calling chart");
             
             if (this.unhealthyRepReady) {
                 //  initDemo(labTitles, labValues, exerTitles, exerValues, exerMax, medTitles, medValues, bsTitles, bsValues, bsMax,bpTitles, bpValuesSys,bpValuesDias, bpMax, this.onboardingReview.UnhealthyParameter[0].Name, this.onboardingReview.UnhealthyParameter[0].CurrentVal, this.onboardingReview.UnhealthyParameter[0].TargetVal, this.onboardingReview.UnhealthyParameter[1].Name, this.onboardingReview.UnhealthyParameter[1].CurrentVal, this.onboardingReview.UnhealthyParameter[1].TargetVal, this.onboardingReview.UnhealthyParameter[2].Name, this.onboardingReview.UnhealthyParameter[2].CurrentVal, this.onboardingReview.UnhealthyParameter[2].TargetVal)
@@ -85,16 +85,16 @@ private chartName: any = ['unhealthyChart1', 'unhealthyChart2', 'unhealthyChart3
             this._authService._findOnboardingReviewItemNext(this.patient.uid, 'UnhealthyParameter',null)
             .subscribe(res => {
                 let unhealthyR = [];
-                console.log("unhealthy res", res)
+                //console.log("unhealthy res", res)
                 if(res[0]) {
                     let ctr = 0;
-                    console.log("unhealthy res", res[0])
+                    //console.log("unhealthy res", res[0])
                     for (let item in res[0]) {
-                        console.log(res[0][item].pName);
+                        //console.log(res[0][item].pName);
                         if (item != '$exists' && item !='$key') {
                             unhealthyR[item] = {pName: res[0][item].pName, cValue: res[0][item].cValue,tValue: res[0][item].tValue};
                     ctr++;
-                    console.log("this.unhealthyreport[ctr]",unhealthyR[item])
+                    //console.log("this.unhealthyreport[ctr]",unhealthyR[item])
                     this.unhealthyRepReady = false;
                         }
                              
@@ -103,13 +103,13 @@ private chartName: any = ['unhealthyChart1', 'unhealthyChart2', 'unhealthyChart3
                     }
                 this.unhealthyreport = unhealthyR;
                 this.unhealthyRepReady = true;
-                console.log("unhealthy report", this.unhealthyreport)
+                //console.log("unhealthy report", this.unhealthyreport)
                 this.ucurrentItem = res[0].$key;
                 var time = new Date().getTime();
                 time = parseInt(this.ucurrentItem);
                 var date = new Date(time);
                 this.ucurrentDate = date.toString();
-                console.log("unhealthy data & time ",this.unhealthyreport ,this.ucurrentDate);
+                //console.log("unhealthy data & time ",this.unhealthyreport ,this.ucurrentDate);
                 }
             });
             //end of unhealthy reports

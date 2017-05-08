@@ -61,13 +61,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }//  constructor
 
   public showModal(modalId, caredId) {
-    console.log("show modal for: ", modalId)
+    //console.log("show modal for: ", modalId)
     this.caredOneId = caredId;
 
     $('#myModal').modal('show');
 
     window.scroll(0, -100);
-    console.log($('#mainContent'));
+    //console.log($('#mainContent'));
     $('#mainContent').css({ position: 'fixed' });
   }
 
@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     $('#myModal').modal('hide');
     $('#mainContent').css({ position: "" });
-    console.log("redirecting to ", "patient-preview/" + id)
+    //console.log("redirecting to ", "patient-preview/" + id)
     this.router.navigate(['patient-preview/', id])
   }
 
@@ -96,46 +96,46 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getcurrentUser(uid) {
     this._authService._fetchUser(uid)
       .subscribe(res => {
-        console.log("from fetch user");
-        console.log(res);
+        //console.log("from fetch user");
+        //console.log(res);
         if (res) {
           this.currentUser = this._authService._getCurrentUser();
 
           this.getCaredones();
-          console.log("getting cared ones")
+          //console.log("getting cared ones")
 
           //this._cacheService.removeAll();
           //let familyData: any | null = this._cacheService.get('familyResponse');
           let friendsData = this._cacheService.get('friendResponse');
-          console.log("friendsData");
-          console.log(friendsData);
+          //console.log("friendsData");
+          //console.log(friendsData);
 
           if (friendsData != null) {
             let family, fullRelations;
             // family = familyData.data.data;
-            console.log("family");
-            // console.log(family);
+            //console.log("family");
+            // //console.log(family);
             // fullRelations = family.concat(friendsData.data);
-            console.log(this.fbFriends);
+            //console.log(this.fbFriends);
 
             this.fbFriends = friendsData.data;
-            console.log(this.fbFriends);
+            //console.log(this.fbFriends);
             this.caredonesToAdd = this.fbFriends;
 
             this.createFamily();
-            console.log(this.fbFriends);
+            //console.log(this.fbFriends);
             this.removeDupFriends();
             this.excludeCaredones(this.fbFriends);
 
           }
           else {
-            console.log("initiating facebook")
+            //console.log("initiating facebook")
             this.initFB();
           }
 
         } else {
           this.router.navigate(['doctor-checkup']);
-          console.log("doctor-checkup needed");
+          //console.log("doctor-checkup needed");
         }
       });
   }//  getcurrentUser()
@@ -151,7 +151,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
         else {
           this.isAuth = data.isAuth;
-          console.log("We are home now");
+          //console.log("We are home now");
           this.getcurrentUser(data.user.uid);
 
           this.defaultData = { id: "phoneNumber", relationship: "", name: "", imageURL: "/assets/img/man.png", directAdd: true };
@@ -169,7 +169,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getCaredones() {
     this._authService._getcaredOnesList(this.currentUser.authUID).subscribe(
       data => {
-        ////console.log(data);
+        //////console.log(data);
         for (let i = 0; i < data.length; i++) {
           //data[i]['checkToAdd'] = this.currentUser.checkToAdd;
           this._authService._getMedicationReminders(data[i].uid).subscribe(
@@ -182,10 +182,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
                   data[i]['perf'] = this.preparePerf(meds, exer);
                   this._authService._getCaredOneInsight(data[i].uid).subscribe(
                     insight => {
-                      ////console.log(insight);
+                      //////console.log(insight);
                       if (insight[0]) {
                         data[i]['insights'] = insight;
-                        ////console.log("insights added");
+                        //////console.log("insights added");
                       } else {
                         data[i]['insights'] = null;
                       }
@@ -353,17 +353,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }// prepareTotal
 
   showCaredoneForm(event, member) {
-    ////console.log("cared one being added");
+    //////console.log("cared one being added");
 
     let target = event.target || event.srcElement || event.currentTarget;
-    ////console.log(target);
+    //////console.log(target);
 
     this.deactivateAllACO(target);
 
     let cor = $(target).parent(),
       details = cor.next('.card-content2');
-    ////console.log(cor);
-    ////console.log(details);
+    //////console.log(cor);
+    //////console.log(details);
 
     cor.addClass('hide');
     cor.parent().addClass('active');
@@ -388,15 +388,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
   deactivateAllACO(target) {
 
     $(target).closest('.col-md-4').siblings().each(function (e, k) {
-      ////console.log("closest called");
+      //////console.log("closest called");
       $(k).removeClass('active');
       $(k).find('.cor').removeClass('hide');
       let details = $(k).find('.card-content2');
-      ////console.log(details);
+      //////console.log(details);
       details.addClass('hide');
       details.find('.fields').empty();
       let footer = $(k).find('.card-footer');
-      ////console.log(footer);
+      //////console.log(footer);
       footer.removeClass('hide');
     });
   }
@@ -411,12 +411,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.fs.init(fbParams);
     this.fs.getLoginStatus().catch(
         error => {
-          console.log('error: no facebook login')
+          //console.log('error: no facebook login')
         }
       ).then(
       (response: FacebookLoginResponse) => {
         if (response.status === 'connected') {
-          console.log("Facebook connected");
+          //console.log("Facebook connected");
           this.fbAccessToken = response.authResponse.accessToken;
           this.noFacebook = false;
           this.fetchFamilyfromFB();
@@ -430,8 +430,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   //Fetch family and friends from FB API and merge them together
   fetchFamilyfromFB(): void {
-    ////console.log("this does not execute 2")
-    console.log(this.fbAccessToken)
+    //////console.log("this does not execute 2")
+    //console.log(this.fbAccessToken)
     if (this.fbAccessToken === null) {
       alert('Disconnected from Facebook. Kindly login again.');
     } else {
@@ -439,17 +439,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
       let data, paging;
       this.fs.api('/' + this.currentUser.authUID + '/family?&limit=5').catch(
         error => {
-          console.log(error);
-          console.log('error: no facebook login')
+          //console.log(error);
+          //console.log('error: no facebook login')
           this.caredOnesFamily[0] = { id: "phoneNumber", relationship: "", name: "Using Email/ Phone", imageURL: "/assets/img/man.png", directAdd: "mail" };
           //this.noFacebook = true;
         }
       ).then(
         response => {
           if (response) {
-          console.log(response.paging)
-          console.log("more added");
-          console.log(response)
+          //console.log(response.paging)
+          //console.log("more added");
+          //console.log(response)
           data = response.data;
           paging = response.paging
 
@@ -463,8 +463,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }).then(() => {
           this.fbFamilyPaging(paging, data);
           console.log
-          console.log(paging)
-          console.log(data);
+          //console.log(paging)
+          //console.log(data);
           //this._cacheService.set('familyResponse', { 'data': this.fbFriends }, { expires: Date.now() + 1000 * 60 * 60 });
         })
 
@@ -473,42 +473,42 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }// fetchFamilyfromFB
 
   public fbFamilyPaging(lastResponse, friends) {
-    console.log(friends)
-    console.log(lastResponse);
-    console.log("called again")
+    //console.log(friends)
+    //console.log(lastResponse);
+    //console.log("called again")
     if (lastResponse && lastResponse.next) {
       this.fs.api(lastResponse.next).catch(
         error => {
-          console.log('error: no facebook login')
+          //console.log('error: no facebook login')
         }
       ).then(
         response => {
 
-          console.log(response);
-          console.log("more2 added");
-          //console.log(this.fbFriends)
-          //console.log(response.paging);
+          //console.log(response);
+          //console.log("more2 added");
+          ////console.log(this.fbFriends)
+          ////console.log(response.paging);
           //friends = this.fbFriends;
           friends = friends.concat(response.data);
-          console.log(friends);
+          //console.log(friends);
           //this.fbFriends = friends;
-          console.log(this.friends4Cache)
+          //console.log(this.friends4Cache)
           this.fbFamilyPaging(response.paging, friends);
         });
     } else {
       this.friends4Cache = friends;
-      console.log(this.friends4Cache);
+      //console.log(this.friends4Cache);
       this.friendsInitiate();
-      console.log("getting friends");
+      //console.log("getting friends");
       //this.createFamily();
     }
   }
   friendsInitiate() {
     var self = this;
-    console.log(this.friends4Cache)
+    //console.log(this.friends4Cache)
     this.fs.api('/' + this.currentUser.authUID + '/friends').catch(
         error => {
-          console.log('error: no facebook login')
+          //console.log('error: no facebook login')
           //this.caredOnesFamily[0] = { id: "phoneNumber", relationship: "", name: "Using Email/ Phone", imageURL: "/assets/img/man.png", directAdd: "mail" };
         }
       )
@@ -520,23 +520,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.friends4Cache = this.friends4Cache.concat(response.data);
 
         //this.fbFriends = response.data.concat(family);
-        console.log(this.friends4Cache)
+        //console.log(this.friends4Cache)
         this.fetchFbFriends(response.paging);
         }
 
-        ////console.log("this does not execute 3")
+        //////console.log("this does not execute 3")
 
       });
   }
   //fetching friends from fb via recursive call as long as pagination link exists
   fetchFbFriends(prevResponse) {
-    console.log(prevResponse.cursors);
+    //console.log(prevResponse.cursors);
     if (prevResponse.cursors) {
-      console.log(prevResponse.next);
-      console.log(prevResponse.cursors.after);
+      //console.log(prevResponse.next);
+      //console.log(prevResponse.cursors.after);
       this.fs.api('/' + this.currentUser.authUID + '/friends?after=' + prevResponse.cursors.after).catch(
         error => {
-          console.log('error: no facebook login');
+          //console.log('error: no facebook login');
        
         }
       ).then(
@@ -545,7 +545,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.fetchFbFriends(response);
         });
     } else {
-      console.log("adding to cache", this.friends4Cache)
+      //console.log("adding to cache", this.friends4Cache)
       this._cacheService.set('friendResponse', { 'data': this.friends4Cache }, { expires: Date.now() + 1000 * 60 * 60 });
 
       this.fbFriends = this.friends4Cache;
@@ -566,12 +566,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private createFamily() {
     this.noFacebook = false;
 
-    console.log(this.fbFriends);
+    //console.log(this.fbFriends);
     let friends = this.fbFriends,
       family = [],
       len = this.fbFriends.length,
       a, b, i, j = 2;
-    console.log(friends);
+    //console.log(friends);
     // this else part is for self and randome person add as caredone
 
     family[0] = { id: "phoneNumber", relationship: "", name: "Using Email/ Phone", imageURL: "/assets/img/man.png", directAdd: "mail" };
@@ -579,20 +579,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this._authService._findCaredOne(this.currentUser.authUID, this.currentUser.authUID)
       .subscribe(res => {
-        ////console.log("res");
-        ////console.log(res);
+        //////console.log("res");
+        //////console.log(res);
         if (res.firstName) { }
         else {
-          console.log(friends);
+          //console.log(friends);
           family[1] = { id: this.currentUser.authUID, relationship: "self", name: "Care for yourself", imageURL: this.currentUser.avatar, directAdd: "self" };
           j = this.famCount = 2;
-          console.log(family);
+          //console.log(family);
         }
         for (i = 0; i < len; i++) {
-          console.log("friends:", i, friends[i], "family:", j, family[j])
+          //console.log("friends:", i, friends[i], "family:", j, family[j])
           if (friends[i] && (friends[i]['relationship'] == 'father' || friends[i]['relationship'] == 'mother' || friends[i]['relationship'] == 'wife' || friends[i]['relationship'] == 'husband')) {
-            console.log("family console", +i, friends[i]['relationship'], +j, family[j - 1], friends[i]);
-            console.log("friends:", friends)
+            //console.log("family console", +i, friends[i]['relationship'], +j, family[j - 1], friends[i]);
+            //console.log("friends:", friends)
             let k = 0, alreadyPresent = false;
             for (k = 0; k < j; k++) {
               if (family[k].id == friends[i])
@@ -611,10 +611,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
           }
         }//for i
-        console.log("this is family", family)
+        //console.log("this is family", family)
         this.caredOnesFamily = family;
         this.caredonesToAdd = this.fbFriends = friends;
-        ////console.log("this.caredonesToAdd", this.caredonesToAdd)
+        //////console.log("this.caredonesToAdd", this.caredonesToAdd)
         this.excludeCaredFamily(this.caredOnesFamily)
       });
 
@@ -663,7 +663,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         let flag, a = [];
         let family = friends;
-        ////console.log("executes");
+        //////console.log("executes");
         if (res.length > 0) {
 
           family.forEach(next => {
@@ -694,7 +694,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         let flag, a = [];
         let family = friends;
-        ////console.log("executes");
+        //////console.log("executes");
         if (res.length > 0) {
 
           family.forEach(next => {

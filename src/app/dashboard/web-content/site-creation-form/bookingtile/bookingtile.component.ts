@@ -27,7 +27,7 @@ export class BookingtileComponent implements OnInit {
 
   ngOnInit() {
     if (this.bookingtiles) {
-      // console.log("bookingtiles data in bookingtiles component",this.bookingtiles);
+      // //console.log("bookingtiles data in bookingtiles component",this.bookingtiles);
       this.bookingTile = this._fb.group({
         title: [this.bookingtiles.title, Validators.required],
         tile: [this.bookingtiles.booking.tile, Validators.required],
@@ -54,7 +54,7 @@ export class BookingtileComponent implements OnInit {
     }
   }
   save_bookingTile = (model) => {
-    //  console.log("save_bookingTile Method called");
+    //  //console.log("save_bookingTile Method called");
     let job = model['value'];
     // reminder['title'] = job['title']
     // reminder['fee'] = job['fee'],
@@ -77,9 +77,9 @@ export class BookingtileComponent implements OnInit {
       }
     };
     this.bookingTileAdded = true;
-    console.log("reminder value bookingtiles :", reminder);
+    //console.log("reminder value bookingtiles :", reminder);
     this.temp = Math.floor((Math.random() * 100000) + 1);
-    console.log("temp number :", this.temp);
+    //console.log("temp number :", this.temp);
     //remove .com from url
     var n = this.routeparam.indexOf(".")
     if (n == -1) {
@@ -90,7 +90,7 @@ export class BookingtileComponent implements OnInit {
     this._authService._saveWebContentBookingtile(reminder, this.sitename).then(
       res => {
         let d = res;
-        console.log("response of booking tile data", d);
+        //console.log("response of booking tile data", d);
       })
 
 

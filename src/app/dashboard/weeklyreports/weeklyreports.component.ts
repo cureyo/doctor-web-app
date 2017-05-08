@@ -103,13 +103,13 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     let unPara1, unPara1CV, unPara1TV, unPara2, unPara2CV, unPara2TV, unPara3, unPara3CV, unPara3TV;
-    //console.log("this happened");
+    ////console.log("this happened");
     this._authService._getUser()
       .subscribe(
       data => {
         //this.currentUserID = data.user.uid;
         this.currentUser = this._authService._getCurrentUser();
-        console.log(this.currentUser);
+        //console.log(this.currentUser);
         this.getData();
       });
 
@@ -127,7 +127,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
       params => {
         let param = params['id'];
         this.caredOneID = param;
-        //console.log("this happened");
+        ////console.log("this happened");
         this.currentUser = this._authService._getCurrentUser();
         if (this.currentUser == false) {
           this._authService._getUser()
@@ -139,13 +139,13 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
               else {
                 this._authService._fetchUser(data.user.uid)
                   .subscribe(res => {
-                    console.log(res);
+                    //console.log(res);
                     if (res) {
                       this.currentUser = this._authService._getCurrentUser();
                       this.initiate(param);
 
                     } else {
-                      console.log("redirecting to checkup");
+                      //console.log("redirecting to checkup");
 
 
                       this.router.navigate(['doctor-checkup'])
@@ -164,12 +164,12 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
 
   }
   initiate(param) {
-    console.log(this.currentUser)
+    //console.log(this.currentUser)
     this._authService._findCaredOne(this.currentUser.authUID, param)
       .subscribe(
       data => {
         this.caredone = data;
-        console.log(" caredone data", this.caredone);
+        //console.log(" caredone data", this.caredone);
       }
       )
     this.getMedData(param);
@@ -201,9 +201,9 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
     this._authService._BloodSugarData(param).subscribe(
       bloodSugar => {
         //Update Blood Sugar data
-        console.log(bloodSugar[0]);
+        //console.log(bloodSugar[0]);
         if (bloodSugar[0]) {
-          //console.log(bloodSugar[0]);
+          ////console.log(bloodSugar[0]);
           let endIndex = bloodSugar.length - 1, startIndex, exLabels = [], exSeries = [];
           var exDay, i = 0, totalEx = 0, ctr = 0;
           var maxEx = 0, aveEx = 0, dailyEx = 0;
@@ -216,7 +216,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
             exDay = bloodSugar[startIndex + ctr].Title;
             exLabels[ctr] = exDay.substring(0, 2);
             exSeries[ctr] = bloodSugar[startIndex + ctr].Sugar_Value;
-            //console.log(totalEx);
+            ////console.log(totalEx);
             totalEx = totalEx + parseFloat(exSeries[ctr]);
 
             if (maxEx < exSeries[ctr]) {
@@ -224,13 +224,13 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
             }
             ctr = ctr + 1;
           }
-          console.log(exLabels);
-          console.log(exSeries)
+          //console.log(exLabels);
+          //console.log(exSeries)
           aveEx = totalEx / ctr;
 
           this.averageBS = aveEx.toFixed(2);
-          console.log("this.averageBS");
-          console.log(this.averageBS);
+          //console.log("this.averageBS");
+          //console.log(this.averageBS);
           this.bsStartDate = bloodSugar[startIndex].Title;
           this.bsEndDate = bloodSugar[endIndex].Title;
           this.bsTitles = exLabels;
@@ -275,7 +275,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
             exLabels[ctr] = exDay.substring(0, 2);
             exSeries[ctr] = bloodPressure[startIndex + ctr].Value_Systolic;
             exSeries2[ctr] = bloodPressure[startIndex + ctr].Value_Diastolic;
-            //console.log(totalEx);
+            ////console.log(totalEx);
             totalBPSys = totalBPSys + parseFloat(exSeries[ctr]);
             totalBPDias = totalBPDias + parseFloat(exSeries2[ctr]);
 
@@ -284,8 +284,8 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
             }
             ctr = ctr + 1;
           }
-          //console.log("exerMax is ", maxEx);
-          //console.log("total is ", totalEx)
+          ////console.log("exerMax is ", maxEx);
+          ////console.log("total is ", totalEx)
           aveBPsys = totalBPSys / ctr;
           aveBPdias = totalBPDias / ctr;
           this.averageBpSys = aveBPsys.toFixed(2);
@@ -297,9 +297,9 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           this.bpValuesSys = exSeries;
           this.bpValuesDias = exSeries2;
           this.bpMax = maxEx;
-          console.log("this.bpTitles");
-          console.log(this.bpTitles);
-          console.log(this.bpValuesSys);
+          //console.log("this.bpTitles");
+          //console.log(this.bpTitles);
+          //console.log(this.bpValuesSys);
         }
         else {
           this.bpStartDate = null;
@@ -321,7 +321,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
 
     this._authService._getConsultations(param).subscribe(
       consultations => {
-        console.log(consultations[0]);
+        //console.log(consultations[0]);
         let consultLen = consultations.length;
 
         if (consultations[consultLen - 1]) {
@@ -339,7 +339,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
     this.labTestCount = null;
     this._authService._getLabTests(param).subscribe(
       labTests => {
-        console.log(labTests[0]);
+        //console.log(labTests[0]);
         let consultLen = labTests.length, lbSeries = [], lbTitles = [], ctr = 0;
 
         if (labTests[consultLen - 1]) {
@@ -348,7 +348,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           this.labTestCount = labTests[consultLen - 1].UnhealthyParameter.length;
 
           for (let test of labTests[consultLen - 1].UnhealthyParameter) {
-            console.log(test);
+            //console.log(test);
             lbSeries[ctr] = test.CurrentVal;
             lbTitles[ctr] = test.Name;
             ctr = ctr + 1;
@@ -356,9 +356,9 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           }
           this.labSeries = lbSeries;
           this.labTitles = lbTitles;
-          console.log("this.labSeries");
-          console.log(this.labSeries);
-          console.log(this.labTitles);
+          //console.log("this.labSeries");
+          //console.log(this.labSeries);
+          //console.log(this.labTitles);
         }
       });
   }
@@ -373,7 +373,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
     this._authService._getExerciseData(param).subscribe(
       exer => {
         //Update Exercise data
-        //console.log(exer[0]);
+        ////console.log(exer[0]);
         if (exer[0]) {
           let endIndex = exer.length - 1, startIndex, exLabels = [], exSeries = [];
           var exDay, i = 0, totalEx = 0, ctr = 0;
@@ -385,13 +385,13 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           }
           for (i = startIndex; i < endIndex; i++) {
             if (exer[startIndex + ctr]) {
-              //console.log("exer[startIndex + ctr]")
-              //console.log(exer[startIndex + ctr]);
+              ////console.log("exer[startIndex + ctr]")
+              ////console.log(exer[startIndex + ctr]);
               exDay = exer[startIndex + ctr].Title;
               exLabels[ctr] = exDay.substring(0, 2);
 
               exSeries[ctr] = exer[startIndex + ctr].Value;
-              //console.log(totalEx);
+              ////console.log(totalEx);
               totalEx = totalEx + parseFloat(exSeries[ctr]);
 
               if (maxEx < exSeries[ctr]) {
@@ -401,8 +401,8 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
             }
 
           }
-          //console.log("exerMax is ", maxEx);
-          //console.log("total is ", totalEx)
+          ////console.log("exerMax is ", maxEx);
+          ////console.log("total is ", totalEx)
           aveEx = totalEx / ctr;
           this.averageEx = aveEx.toFixed(2);
 
@@ -423,16 +423,16 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
     this._authService._getMedicationReminders(param).subscribe(
       meds => {
 
-        //console.log("this 2 happened");
+        ////console.log("this 2 happened");
         //Update Medicine data
-        //console.log(meds[0]);
+        ////console.log(meds[0]);
         if (meds[0]) {
           let exMLabels = [], exMSeries = [], index = 0;
           for (let med of meds) {
             exMLabels[index] = med.$key;
-            //console.log("med");
-            //console.log(med);
-            ////console.log(meds[med]);
+            ////console.log("med");
+            ////console.log(med);
+            //////console.log(meds[med]);
             if (med.Tracking_Data && med.$key != ",") {
               let endMIndex = med.Tracking_Data.length - 1, startMIndex;
               var medDay, i = 0, totalMed = 0, ctr = 0;
@@ -448,12 +448,12 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
                 }
 
 
-                console.log(totalMed);
+                //console.log(totalMed);
 
                 ctr = ctr + 1;
               }
-              console.log("exerMax is ", maxMed);
-              console.log("total is ", totalMed)
+              //console.log("exerMax is ", maxMed);
+              //console.log("total is ", totalMed)
               // aveEx = totalEx/ ctr;
               aveMed[index] = 100 * totalMed / ctr;
 
@@ -467,10 +467,10 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
             this.medicineValues = exMSeries;
             let mCount = 0, aveMedicines = 0;
             for (let med in exMSeries) {
-            //  console.log(exMSeries[med]);
+            //  //console.log(exMSeries[med]);
               mCount = mCount + 1;
               aveMedicines = aveMedicines + parseInt(exMSeries[med]);
-             // console.log(aveMedicines);
+             // //console.log(aveMedicines);
 
             }
 
@@ -478,12 +478,12 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           this.medicineTitles = exMLabels;
           this.medicineValues = exMSeries;
           let mCount = 0, aveMedicines = 0;
-          console.log(exMSeries);
+          //console.log(exMSeries);
           for (let med in exMSeries) {
-            console.log(exMSeries[med]);
+            //console.log(exMSeries[med]);
             mCount = mCount + 1;
             aveMedicines = aveMedicines + parseInt(exMSeries[med]);
-            console.log(aveMedicines);
+            //console.log(aveMedicines);
           }
           this.averageMed = aveMedicines / mCount;
 
@@ -496,7 +496,7 @@ showJobs (jobType) {
   this.schedJobType = jobType;
     //  if (this.schedJobType)
     //     this.showModal = true;
-  console.log("Showing details for :", this.schedJobType);
+  //console.log("Showing details for :", this.schedJobType);
   $('#reportModal').modal('show');
   $('#reportContent').css({ position: "fixed" });
 

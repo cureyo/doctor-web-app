@@ -120,6 +120,13 @@ export class PatientDetailFormComponent implements OnInit {
 
 
   }
+  closeCarePlanModal() {
+
+    $('#carePlansModal').modal('hide');
+    $('#profileContent').css({ position: "" });
+
+
+  }
 
   showModal(itemType) {
     this.detailType = itemType;
@@ -138,6 +145,17 @@ export class PatientDetailFormComponent implements OnInit {
 
     window.scroll(0, -100);
     $('#profileContent').css({ position: 'fixed' });
+  }
+showCarePlanModal() {
+
+
+
+    $('#carePlansModal').modal('show');
+
+   
+    $('#profileContent').css({ position: 'fixed' });
+     var elmnt = document.getElementById('#carePlansModal2');
+    elmnt.scrollIntoView(true);
   }
 
 

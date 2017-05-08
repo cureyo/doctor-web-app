@@ -70,9 +70,10 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
     { path: 'care-paths', component: CarePathsComponent },
-    { path: 'out-patients/:id', component: OutPatientsFormComponent},
-    { path: 'out-patient-dept', component: OPDComponent},
-    { path: 'Ads', component :FbAdsFormComponent}
+    { path: 'Ads', component :FbAdsFormComponent},
+    { path: 'out-patients/:count/:id', component: OutPatientsFormComponent},
+    { path: 'out-patient-dept', component: OPDComponent}
+
 
 ]
 

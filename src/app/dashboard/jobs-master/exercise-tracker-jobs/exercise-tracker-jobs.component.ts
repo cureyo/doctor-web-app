@@ -28,7 +28,7 @@ export class ExerciseTrackerJobsComponent implements OnInit {
     });
   }
   save_TeData = (model) => {
-      console.log("i am here in save_Te form");
+      //console.log("i am here in save_Te form");
       let reminder = {},
       job = model['value'];
       let reviewData = {};
@@ -45,7 +45,7 @@ export class ExerciseTrackerJobsComponent implements OnInit {
 
 
      reviewData = {suggestedWalk: job['suggested_walk']};
-        console.log("reminder data:",reminder);
+        //console.log("reminder data:",reminder);
         //save data in scheduled job
      this._authService._saveReminders(reminder).then(
         data => {
@@ -62,7 +62,7 @@ export class ExerciseTrackerJobsComponent implements OnInit {
       this._authService._saveOnboardingReview(reviewData,this.patient.uid, 'Exercise_Tracker/' + transTime.getTime()).then(
       res =>{
           let d=res;
-          console.log("response of onboarding save is",d);
+          //console.log("response of onboarding save is",d);
       })
       
      

@@ -41,7 +41,7 @@ export class CaredOnesFormMobileViewComponent implements OnInit {
                                 if (res) {
                                     this.currentUser = this._authService._getCurrentUser();
                                     this.currentUserID = this.currentUser.authUID
-                                    console.log("the current user id:",this.currentUserID);
+                                    //console.log("the current user id:",this.currentUserID);
                                     //get the param id:
                                      this.route.params.subscribe(
                                         params => {
@@ -79,7 +79,7 @@ export class CaredOnesFormMobileViewComponent implements OnInit {
   }
 
  ngOnInit() { 
-       console.log("msg val check :",this.msg)
+       //console.log("msg val check :",this.msg)
         if (!this.msg){
          this.coMobileViewForm = this._fb.group({   
          sendmsg:['I added you on a platform called Cureyo to help us manage your health. The team will reach out to you for your medical reports and to plan your health needs. Please cooperate with them.']
@@ -89,22 +89,22 @@ export class CaredOnesFormMobileViewComponent implements OnInit {
   }
   
   showError() {
-    console.log("clicked");
+    //console.log("clicked");
     this.showErrorFlag = true;
   }
   showError2() {
-    console.log("clicked");
+    //console.log("clicked");
     this.showErrorFlag2 = true;
   }
   onSubmit(model, event) {
-       console.log("i am in onsubmit");
+       //console.log("i am in onsubmit");
   }
 
   detectmob() {
-    // console.log(window.innerWidth)
-    // console.log(window.innerHeight)
+    // //console.log(window.innerWidth)
+    // //console.log(window.innerHeight)
     if (window.innerWidth <= 800 && window.innerHeight <= 800) {
-     // console.log("small screen")
+     // //console.log("small screen")
       return true;
     } else {
       return false;
@@ -112,16 +112,16 @@ export class CaredOnesFormMobileViewComponent implements OnInit {
   }
    //get param function
    getCaredOne(param) {
-      console.log("ids of current user and param",this.currentUserID,param);
+      //console.log("ids of current user and param",this.currentUserID,param);
      this._authService._findCaredOne(this.currentUserID, param)
             .subscribe(
             data => {
               this.caredone = data;
-              console.log("the caredone data :",this.caredone);
+              //console.log("the caredone data :",this.caredone);
               this.nickName=this.caredone.nickName;
-               console.log("test NickName",this.nickName);
+               //console.log("test NickName",this.nickName);
               //this.caredoneId=this.caredone.authUID;
-              // console.log("caredone id:",this.caredoneId);
+              // //console.log("caredone id:",this.caredoneId);
             });
   }
 

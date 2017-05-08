@@ -89,7 +89,7 @@ export class TableComponent implements OnInit {
         this._authService._fetchUser(this.currentUserID)
           .subscribe(res => {
             this.currentUser = res;
-            console.log(this.currentUser);
+            //console.log(this.currentUser);
             this.fetchOnboardingReview();
           });
       });
@@ -134,7 +134,7 @@ export class TableComponent implements OnInit {
           };
         } else
           this.caredonesDoctor = res;
-        console.log(" doc name in getCaredoneDoctor", this.caredonesDoctor);
+        //console.log(" doc name in getCaredoneDoctor", this.caredonesDoctor);
       }
 
       )
@@ -168,17 +168,17 @@ export class TableComponent implements OnInit {
 
 
   fetchOnboardingReview() {
-    console.log(" i am in fetchOnboardingReview function:");
+    //console.log(" i am in fetchOnboardingReview function:");
     this.route.params.subscribe(
       params => {
         let param = params['id'];
         //let caredoneKey = 10156182235515068;
-        console.log("caredoneKey", param);
+        //console.log("caredoneKey", param);
         this._authService._findCaredOne(this.currentUserID, param)
           .subscribe(
           data => {
             this.caredone = data;
-            console.log(this.caredone);
+            //console.log(this.caredone);
           }
           )
         this._authService._findOnboardingReview(param)
@@ -187,26 +187,26 @@ export class TableComponent implements OnInit {
           res => {
             if (res) {
               this.onboardingReview = res;
-              console.log("onboardingReview data;", this.onboardingReview);
+              //console.log("onboardingReview data;", this.onboardingReview);
               if (this.onboardingReview.Summary) {
                 this.dataReady = true;
-                console.log(this.currentUser)
-                console.log(this.caredone)
+                //console.log(this.currentUser)
+                //console.log(this.caredone)
               }
               else {
                 this.dataReady = false;
               }
-              console.log(this.dataReady);
+              //console.log(this.dataReady);
               if (this.onboardingReview.allAdded == "added") {
                 this.allItemsAdded = true;
 
               }
               // this.sMed_len=this.onboardingReview.SuggestedMeds.length
-              console.log("onboarding object is:", this.onboardingReview);
-              //  console.log("length of SuggestedMed:", this.onboardingReview.SuggestedMeds.length);
+              //console.log("onboarding object is:", this.onboardingReview);
+              //  //console.log("length of SuggestedMed:", this.onboardingReview.SuggestedMeds.length);
               let exerTitles, exerValues, exerMax, medTitles, medValues, bsTitles, bsValues, bsMax, bpTitles, bpValuesSys, bpValuesDias, bpMax;
               this.caredonesDoctor = this._authService._findDoctor(this.onboardingReview.Doctor);
-              // console.log("calling chart");
+              // //console.log("calling chart");
               // initDemo(exerTitles, exerValues, exerMax, medTitles, medValues, bsTitles, bsValues, bsMax,bpTitles, bpValuesSys,bpValuesDias, bpMax, this.onboardingReview.UnhealthyParameter[0].Name, this.onboardingReview.UnhealthyParameter[0].CurrentVal, this.onboardingReview.UnhealthyParameter[0].TargetVal, this.onboardingReview.UnhealthyParameter[1].Name, this.onboardingReview.UnhealthyParameter[1].CurrentVal, this.onboardingReview.UnhealthyParameter[1].TargetVal, this.onboardingReview.UnhealthyParameter[2].Name, this.onboardingReview.UnhealthyParameter[2].CurrentVal, this.onboardingReview.UnhealthyParameter[2].TargetVal)
               this.getCaredoneDoctor();
             }
@@ -226,7 +226,7 @@ export class TableComponent implements OnInit {
     $('#careModal').modal('show');
 
     window.scroll(0, -100);
-    console.log($('#careplanContent'));
+    //console.log($('#careplanContent'));
     $('#careplanContent').css({ position: 'fixed' });
 
     this.getBookingData(testList);
@@ -236,11 +236,11 @@ export class TableComponent implements OnInit {
     this.labTotal = [];
     this.labArray2 = [];
     let refreshList = [], ctr = 0;
-    console.log(this.testArray);
-    console.log(this.labArray);
-    console.log(this.labArray2);
-    console.log(testList);
-    console.log(this.labTotal);
+    //console.log(this.testArray);
+    //console.log(this.labArray);
+    //console.log(this.labArray2);
+    //console.log(testList);
+    //console.log(this.labTotal);
     for (let item in testList) {
       if (item != '$exists' && item != '$key') {
         refreshList[ctr] = { name: '' };
@@ -258,31 +258,31 @@ export class TableComponent implements OnInit {
     let reqTests = testList;
     let labList = [], priceList = [], ctr = 0;
 
-    console.log(testList);
+    //console.log(testList);
 
     //this.labTotal = [0,0,0,0]
 
-    console.log(reqTests);
+    //console.log(reqTests);
     for (let test in reqTests) {
 
-      console.log(reqTests[test].name)
+      //console.log(reqTests[test].name)
       if (reqTests[test].name) {
         this._authService._findTestPrice(reqTests[test].name)
           .subscribe(res => {
             //res = JSON.parse(res);
-            console.log("res", res)
+            //console.log("res", res)
             for (let lab in res) {
               if (lab != '$exists' && lab != '$key') {
 
-                console.log(lab);
+                //console.log(lab);
                 this.testArray[test] = res;
                 if (this.labArray[lab] != undefined) {
                   if (!priceList[lab]) {
                         priceList[lab] = 0;
                       }
                   priceList[lab] = parseInt(priceList[lab]) + parseInt(res[lab].price);
-                  console.log("price list is ", priceList)
-                  console.log(priceList);
+                  //console.log("price list is ", priceList)
+                  //console.log(priceList);
                 } else {
                   this.labArray[lab] = {};
 
@@ -299,19 +299,19 @@ export class TableComponent implements OnInit {
                       }
                       this.labArray2[ctr] = this.labArray[lab];
 
-                      console.log(this.labArray)
-                      console.log(this.testArray[test][lab].price);
+                      //console.log(this.labArray)
+                      //console.log(this.testArray[test][lab].price);
                       if (!priceList[lab]) {
                         priceList[lab] = 0;
                       }
                         
                       priceList[lab] = parseInt(priceList[lab]) + parseInt(this.testArray[test][lab].price);
-                      console.log("here is the price")
-                      console.log(priceList[lab]);
+                      //console.log("here is the price")
+                      //console.log(priceList[lab]);
                       ctr++;
                       this.dataNow = true;
                       this.labTotal = priceList;
-                      console.log(this.labArray2);
+                      //console.log(this.labArray2);
 
                     }
                     )
@@ -319,10 +319,10 @@ export class TableComponent implements OnInit {
               }
             }
 
-            console.log(this.testArray);
-            console.log(this.labArray);
-            console.log(this.labArray2);
-            console.log(this.labTotal);
+            //console.log(this.testArray);
+            //console.log(this.labArray);
+            //console.log(this.labArray2);
+            //console.log(this.labTotal);
 
           });
       }
@@ -337,10 +337,10 @@ export class TableComponent implements OnInit {
   }
 
   selectVendor(lab, total) {
-    console.log("vendor selected")
+    //console.log("vendor selected")
     this.vendorSelected = true;
 
-    console.log(this.caredone)
+    //console.log(this.caredone)
     this.bookOrder = this._fb.group({
       firstName: [this.caredone.firstName, Validators.required],
       lastName: [this.caredone.lastName, Validators.required],
@@ -359,8 +359,8 @@ export class TableComponent implements OnInit {
   }
 
   onSubmit(model, event) {
-    //console.log(model);
-    //console.log("model");
+    ////console.log(model);
+    ////console.log("model");
     //this.caredOneId = model['uid']
 
     this.caredOneModel = model;
@@ -368,7 +368,7 @@ export class TableComponent implements OnInit {
     for (let stuff in this.testArray) {
       if (stuff != '$key' && stuff != '$exists') {
         items[ctr] = this.testArray[stuff].$key;
-        console.log(items[ctr])
+        //console.log(items[ctr])
         ctr++;
       }
     }

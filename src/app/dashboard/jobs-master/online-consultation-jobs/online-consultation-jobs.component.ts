@@ -41,7 +41,7 @@ export class OnlineConsultationJobsComponent implements OnInit {
 
     //Save online consultation
   saveOCT = (model) => {
-     console.log("doctor key check",this.caredonesDoctor.uid);
+     //console.log("doctor key check",this.caredonesDoctor.uid);
     let reminder = {},
       job = model['value'], reviewData = {};
 
@@ -55,7 +55,7 @@ export class OnlineConsultationJobsComponent implements OnInit {
     reminder['Doctor_Name']=this.caredonesDoctor.firstName +" "+this.caredonesDoctor.lastName;
     reviewData['Doctor'] = this.caredonesDoctor.firstName +" "+this.caredonesDoctor.lastName;
     reviewData['OnlineConsultFreq'] = job['frequency'];
-    console.log("check the reminders value:",reminder);
+    //console.log("check the reminders value:",reminder);
 
          //save data in scheduled job
      this._authService._saveReminders(reminder).then(
@@ -72,7 +72,7 @@ export class OnlineConsultationJobsComponent implements OnInit {
       this._authService._saveOnboardingReview(reviewData,this.patient.uid, 'Online_Consultation/' + transTime.getTime()).then(
         res =>{
           let d=res;
-          console.log("response of onboarding save is",d);
+          //console.log("response of onboarding save is",d);
       })
 
       

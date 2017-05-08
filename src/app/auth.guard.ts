@@ -13,16 +13,16 @@ export class AuthGuard implements CanActivate{
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<boolean>|boolean {
 
 
-    // console.log(route);
-    // console.log("\n");
-    // console.log(state);
+    // //console.log(route);
+    // //console.log("\n");
+    // //console.log(state);
     return this.auth.map((auth) => {
       // return !!auth;
       if (auth) {
-        // console.log('authenticated');
-        // console.log(route.url.toString());
+        // //console.log('authenticated');
+        // //console.log(route.url.toString());
         // if(route.url.toString() == 'login' ) {
-        //   console.log("true");
+        //   //console.log("true");
         //   this.router.navigate(['dashboard']);
         // }
         return true;
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate{
         this.router.navigate(['/doctor-login', { returnUrl: state.url }]);
         return false;
       }
-      // console.log('not authenticated');
+      // //console.log('not authenticated');
       // this.router.navigate(['login']);
       // return false;
     }); // this might not be necessary - ensure `first` is imported if you use it
@@ -56,8 +56,8 @@ export class AuthGuard implements CanActivate{
     //
     //   .mergeMap((user) => {
     //
-    //     // console.log("user.auth:\n");
-    //     // console.log(user.auth);
+    //     // //console.log("user.auth:\n");
+    //     // //console.log(user.auth);
     //     if (user && user.auth) {
     //       this.router.navigate(['dashboard']);
     //       return Observable.of(true);

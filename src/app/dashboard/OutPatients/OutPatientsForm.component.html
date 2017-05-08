@@ -1,7 +1,7 @@
  <div class="main-content">
     <div class="container-fluid">
  <div class="col-md-12">
-                <div class="card" style="margin-top: 30px;">
+                <div *ngIf="dataReady" class="card" style="margin-top: 30px;">
                   
                     <div *ngIf="caredone.avatar" class="card-header" data-background-color="blue">
                          <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;">
@@ -13,15 +13,15 @@
                         <h4 class="title">{{caredone.firstName}} {{caredone.lastName}}
                             <br>
                         <small style="font-weight: 300; color: #fff;">Patient # {{this.currentQ}}</small></h4>
-
+                       
                     </div> <!-- card header portion end-->
                     
               <div class="card-content table-responsive">
                   
               <div class="row">
 
-
-<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+<div *ngIf="hasAge" class="col-sm-4">
+<div class="card card-stats"  >
         <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
 
             <i class="material-icons" style="color: #ffffff; line-height: 50px">
@@ -29,14 +29,60 @@
 
         </div>
     <div class="card-content">
-        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Age
-        </h3>
-        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">{{age}}</small>
-
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400; line-height: 16px;"> 
+         Age
+          </h3>
+       
+        <div style="text-align:left;">
+   <p style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;"> <small ><b>{{age}} years</b></small></p>
+        </div>
     </div>  
 </div>
+</div>
 
-<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+<div *ngIf="hasHometown" class="col-sm-4">
+<div class="card card-stats"  >
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        account_balance</i>
+
+        </div>
+    <div class="card-content">
+      <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400; line-height: 16px;"> 
+         Hometown
+          </h3>
+       
+        <div style="text-align:left;">
+   <p style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;"> <small ><b>{{hometown}}</b></small></p>
+        </div>
+    </div>  
+</div>
+</div>
+
+<div *ngIf="hasLocation" class="col-sm-4">
+<div class="card card-stats" >
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        room</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400; line-height: 16px;"> 
+         Location
+          </h3>
+       
+        <div style="text-align:left;">
+   <p style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;"> <small ><b>{{location}}</b></small></p>
+        </div>
+       
+       
+    </div>  
+</div>
+</div>
+<div *ngIf="hasEducation" class="col-sm-4">
+<div class="card card-stats"  >
         <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
 
             <i class="material-icons" style="color: #ffffff; line-height: 50px">
@@ -46,12 +92,14 @@
     <div class="card-content">
         <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Education History
         </h3>
-        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">School: {{skulName}}, <br>Education: {{level}}</small>
-
+        <div style="text-align:left;" *ngFor="let school of education">
+   <p style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;"> <small ><i *ngIf="school.school">{{school.school.type}}</i> <b *ngIf="school.school">{{school.school.name}}</b> <i *ngIf="school.concentration">{{school.concentration[0].name}}</i></small></p>
+        </div>
     </div>  
 </div>
-
-<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
+</div>
+<div *ngIf="hasWork" class="col-sm-4">
+<div class="card card-stats"  >
         <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
 
             <i class="material-icons" style="color: #ffffff; line-height: 50px">
@@ -61,43 +109,23 @@
     <div class="card-content">
         <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;"> Working History
         </h3>
-        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">Work: {{workName}},<br> Position: {{Position}}</small>
+        <div style="text-align:left; " *ngFor="let job of work">
+       <p style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;"><small><i *ngIf="job.position">{{job.position.name}}</i> <b *ngIf="job.employer">{{job.employer.name}}</b> <i *ngIf="job.location">{{job.location.name}}</i></small></p>
+        
 
     </div>  
 </div>
-
-<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
-        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
-
-            <i class="material-icons" style="color: #ffffff; line-height: 50px">
-                                        account_balance</i>
-
-        </div>
-    <div class="card-content">
-        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">HomeTown
-        </h3>
-        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">{{hometown}}</small>
-
-    </div>  
 </div>
-
-<div class="card card-stats" style=" width: 275px; height: 72px; margin-top: 75px; margin-left: 25px;">
-        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="cureyo">
-
-            <i class="material-icons" style="color: #ffffff; line-height: 50px">
-                                        room</i>
-
-        </div>
-    <div class="card-content">
-        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400;">Location
-        </h3>
-        <br><small style="float: left;text-align:center; font-size: 12px; line-height: 16px;margin-top: 5px; margin-left: 45px;">{{location}}</small>
-
-    </div>  
 </div>
-              </div>
               </div>
               <a class="btn btn-round pull-right" (click)="checkOutPatient()">Check-out Patient</a>
+              </div>
+             
+              
+              <div class="card-footer">
+                    <a class="pull-left" style="cursor: pointer; margin:10px;" (click)="previousPatient()">< Previous </a>
+                        <a class="pull-right"  style="cursor: pointer;margin:10px;" (click)="nextPatient()"> Next > </a>
+              </div>
                 </div>
  </div>
  

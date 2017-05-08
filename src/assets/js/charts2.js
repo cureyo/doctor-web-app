@@ -3,7 +3,7 @@ if ('undefined' !== typeof module) {
     module.exports =  
     function initPlancharts(unPara1, unPara1CV, unPara1TV, unPara2, unPara2CV, unPara2TV, unPara3, unPara3CV, unPara3TV) {
           /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-console.log("creating chart");
+//console.log("creating chart");
         var dataEmailsSubscriptionChart1 = {
           labels: ['Current Value', 'Target Value'],
           series: [
