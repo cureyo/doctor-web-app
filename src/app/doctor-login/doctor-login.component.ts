@@ -32,16 +32,16 @@ export class DoctorLoginComponent implements OnInit {
               //console.log("from login: ");
               //console.log(res);
               if (res.hasOwnProperty('authUID')) {
-                // this.activatedRoute.queryParams
-                //   .subscribe(params => {
-                //       //console.log("query parameters");
-                //     //console.log(params);
-                //     if (params['next']) {
-                //       window.location.href = window.location.origin + params['next'];
-                //     } else {
-                //       window.location.href = window.location.origin + '/dashboard';
-                //     }
-                //  });
+                this.activatedRoute.queryParams
+                  .subscribe(params => {
+                      //console.log("query parameters");
+                    //console.log(params);
+                    if (params['next'] && params['next']!= '') {
+                      window.location.href = window.location.origin + params['next'];
+                    } else {
+                      window.location.href = window.location.origin + '/dashboard';
+                    }
+                 });
 
               } else {
                 this.router.navigate(['doctor-checkup']);

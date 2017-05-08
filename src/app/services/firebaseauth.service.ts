@@ -277,9 +277,9 @@ public _findPatient(currentUserId, caredoneId) {
     const clinicSite = this.af.database.object(this.db.users + docId + '/clinicWebsite' );
     return clinicSite.set(siteName);
   }//_saveCaredOne
-  public _savePageAccessToken(pageId, accessToken) {
+  public _savePageAccessToken(pageId, accessToken, app_access_token) {
     const clinicSite = this.af.database.object(this.db.pageAccessTokens + pageId );
-    return clinicSite.set({access_token: accessToken});
+    return clinicSite.set({access_token: accessToken, app_access_token: app_access_token});
   }//_savePageAccessToken
   public _saveDoctor(formData) {
     //console.log("formdata");

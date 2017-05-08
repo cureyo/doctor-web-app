@@ -152,8 +152,10 @@ showCarePlanModal() {
 
     $('#carePlansModal').modal('show');
 
-    window.scroll(0, -100);
+   
     $('#profileContent').css({ position: 'fixed' });
+     var elmnt = document.getElementById('#carePlansModal2');
+    elmnt.scrollIntoView(true);
   }
 
 

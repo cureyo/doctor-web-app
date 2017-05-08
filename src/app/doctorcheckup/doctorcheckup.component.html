@@ -118,9 +118,9 @@
       });
 
     };
-
+    
     (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
+       var js, fjs = d.getElementsById('fb-messenger_checkbox')[0];
        if (d.getElementById(id)) { return; }
        js = d.createElement(s); js.id = id;
        js.src = "//connect.facebook.net/en_US/sdk.js";
@@ -128,7 +128,7 @@
     }(document, 'script', 'facebook-jssdk'));
 
   </script>
-                 <div class="fb-send-to-messenger" [attr.data-messenger_app_id]="appID" [attr.data-page_id]="pageID" [attr.data-ref]="passThrough" color="blue" size="xlarge"> </div>
+                 <div id="fb-messenger_checkbox" class="fb-send-to-messenger" [attr.data-messenger_app_id]="appID" [attr.data-page_id]="pageID" [attr.data-ref]="passThrough" color="blue" size="xlarge"> </div>
                    <!--<iframe width="1000px" height="1000px" [src]="getSRCurl()" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:send_to_messenger Facebook Social Plugin" style="border: none; visibility: visible; width: 256px; height: 68px;" class=""></iframe>-->
                 <hr/>
                 <!--<button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Submit</button>-->

@@ -125,7 +125,7 @@ export class SelectDomainComponent implements OnInit {
                     websiteData = websiteData.replace(/#DrClnicId/g, domainNameShort);
                     websiteData = websiteData.replace(/#DrClinic/g, userData.clinic);
                     var websiteData2 = JSON.parse(websiteData);
-                    var websiteData3 = { availability: { SLots: [''] }, content: websiteData2.content, docDetails: websiteData2.docDetails, doctorId: websiteData2.doctorId, metaData: websiteData2.metaData }
+                    var websiteData3 = { availability: { SLots: [''] }, content: websiteData2.content, docDetails: websiteData2.docDetails, doctorId: websiteData2.doctorId, fbPageId: userData.fbPageId, metaData: websiteData2.metaData }
                     //var websiteData = {doctorId: res.user.uid , bookingTile: data.bookingTile, footer: data.footer, heroTile: data.heroTile, map: data.map, profileTile: data.profileTile};
 
 

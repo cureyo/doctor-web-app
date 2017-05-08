@@ -63,18 +63,37 @@ export class OPDComponent implements OnInit {
                 //console.log(queue)
                 let q = 0;
                 if (queue.$value == null) {
-                  $.notify({
-                    icon: "notifications",
-                    message: "No patients in queue currently"
+                  this._authService._getCheckInDetails(clinicID, today, 0)
+                    .subscribe(
+                    line => {
+                      if (line.$value == null) {
+                        $.notify({
+                          icon: "notifications",
+                          message: "No patients in queue currently"
 
-                  }, {
-                      type: 'cureyo',
-                      timer: 4000,
-                      placement: {
-                        from: 'top',
-                        align: 'right'
+                        }, {
+                            type: 'cureyo',
+                            timer: 4000,
+                            placement: {
+                              from: 'top',
+                              align: 'right'
+                            }
+                          });
+                      } else {
+                        q = 0;
+                        this._authService._getCheckInDetails(clinicID, today, q)
+                          .subscribe(data => {
+
+                            console.log("response data ", data);
+                            //console.log('redirecting to ', 'out-patients/' + data.$value);
+
+                            window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
+
+                          })
                       }
-                    });
+                    }
+                    )
+
                 } else {
                   q = queue.$value;
                   this._authService._getCheckInDetails(clinicID, today, q)
@@ -83,7 +102,7 @@ export class OPDComponent implements OnInit {
                       //console.log("response data ", data);
                       //console.log('redirecting to ', 'out-patients/' + data.$value);
 
-                      this.router.navigate(['out-patients/' + data.$value])
+                      window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
 
                     })
                 }

@@ -164,26 +164,30 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     else {
       form['fbPageAdded'] = false;
       form['fbPageId'] = "1173783939313940";
-    }
+    };
+    console.log(form);
     this._authService._saveDoctor(form);
     this._authService._saveUser(form);
     if (form.fbPageAdded) {
       this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(
         response => {
-          this._authService._savePageAccessToken(form.fbPageId, response.access_token)
+          console.log(response);
+          this._authService._savePageAccessToken(form.fbPageId, response.access_token, this.fbAccessToken)
+           window.location.href = window.location.origin + '/website'
 
         }
         )
 
 
     } else {
-      this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD")
-    }
+      this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)
+       window.location.href = window.location.origin + '/website'
+  }
 
     //this._authService._saveDoctor(form);
     //this.router.navigate(['website']);
-    window.location.href = window.location.origin + '/website'
+   
 
   }//submitForm
 
