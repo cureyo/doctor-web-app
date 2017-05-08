@@ -4,14 +4,7 @@
   <div class="col-md-12">
                 <div class="card">
                   <form [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
-                    <!-- card header portion-->
-                    <!--<div class="card-header" data-background-color="blue">
-                        <h4 class="title">Exercise Tracker </h4>
 
-                        <p class="category">Exercise Tracker for {{patient.nickName}} </p>
-
-                    </div>  card header portion end-->
-                    
               <div class="card-content table-responsive">
                <!-- first row-->   
               <div class="row">
@@ -30,7 +23,7 @@
                           <div class="form-group">
                                <label for="PageID">Page ID</label>
 
-                                <select  id="cp_track_using" class="form-control" formControlName="pageID" >
+                                <select  id="fb_Ads_pageID" class="form-control" formControlName="pageID" >
                                 <option value="pageID">page ID</option>
                                 </select>
                           </div>

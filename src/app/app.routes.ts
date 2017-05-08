@@ -3,12 +3,9 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
 import { IconsComponent } from './dashboard/icons/icons.component';
 import { TableComponent } from './dashboard/table/table.component';
-
 import { TypographyComponent } from './dashboard/typography/typography.component';
-
 import { LogoutComponent } from './dashboard/logout/logout.component';
 import {ClinicPageComponent} from "./clinicpage/clinicpage.component";
 import { WeeklyReportComponent } from './dashboard/weeklyreports/weeklyreports.component';
@@ -44,10 +41,8 @@ import {FooterComponent}  from "./dashboard/web-content/site-creation-form/foote
 import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
 import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
 import {ProfileTileComponent} from "./dashboard/web-content/site-creation-form/profileTile/profileTile.component";
-
 import { SelectDomainComponent}  from "./dashboard/select-domain/select-domain.component";
 import { CarePathsComponent}  from "./dashboard/care-pathways/care-pathways.component";
-
 import { PatientDetailFormComponent } from './dashboard/PatientDetailForm/PatientDetailForm.component';
 import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/file-upload.component';
 import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPreview.component';
@@ -73,7 +68,6 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'Ads', component :FbAdsFormComponent},
     { path: 'out-patients/:count/:id', component: OutPatientsFormComponent},
     { path: 'out-patient-dept', component: OPDComponent}
-
 
 ]
 
