@@ -17,9 +17,16 @@ export class FbAdsFormComponent implements OnInit {
    public userID:any;
    public pageID:any;
    public campaignID:any;
-   public tempcampaignID:string;
-   public bidAmount:Number=80;
+   public bidAmount:Number=8000;
    public dailybudget:Number =100000;
+   public targetResponse:any;
+  //  public fbAdsObject={
+  //      pageID:Number,
+  //      adAccountID:Number,
+  //      bidAmount:any,
+  //      targetResponse:Number,
+
+  //  }
   constructor(private _fb: FormBuilder, 
               private _authService: AuthService,  
               private route: ActivatedRoute,
@@ -45,17 +52,19 @@ export class FbAdsFormComponent implements OnInit {
     this._authService.doclogin()
       .then(data => {
         this._fs.getLoginStatus().then((response: FacebookLoginResponse) => {
-                
+         console.log("reponse for access token:",response);
        this._fs.api('/me?fields=adaccounts')
             .then(response=>{
              //  console.log("user response data is :",response);
                this.userID=response.id; //user ID
               this.adAccountID=response.adaccounts.data[1].id; //AdAccoundId
+             // this.fbAdsObject.adAccountID=this.adAccountID;
                console.log("this is the userId",this.userID);
-              console.log("fb ad account details is :",this.adAccountID);
+               console.log("fb ad account details is :",this.adAccountID);
                 this._authService._getPageID(this.userID)
                 .subscribe(pageID =>{
                      this.pageID=pageID.$value; //page id
+                    //this.fbAdsObject.pageID=this.pageID;
                     console.log("this is the user page id:",this.pageID);
 
 
@@ -64,12 +73,13 @@ export class FbAdsFormComponent implements OnInit {
                     +'/'+'campaigns?&name=My campaign&objective=LINK_CLICKS', method)
                     .then(Data=>{
                       this.campaignID=Data.id;
-                     // this.tempcampaignID=JSON.stringify(this.campaignID);
+                      
                       console.log("the campaign response is :",this.campaignID,typeof this.campaignID);  
                       //varify campaign
                     this._fs.api('/'+'search?type=adinterest&q=health')
                     .then(data=>{
                         console.log("response of varified campaign:",data);
+                       //this.fbAdsObject.bidAmount=this.bidAmount; 
                         //targeting spec
                     this._fs.api('/'+this.adAccountID 
                     +'/'+'adsets?&name=My Ad Set'+
@@ -83,31 +93,34 @@ export class FbAdsFormComponent implements OnInit {
                     '&'+'end_time=2017-12-01T18:23:34+0000&status=PAUSED',method)
                              
                     .then(response=>{
-                      console.log("targeting spec response",response);
-                      //provide ad creative
-                    this._fs.api('/' + this.adAccountID+
-                    '/'+'adimages?&filename=@https://googlecreativelab.github.io/coder-projects/projects/getting_started/assets/images/step_02.jpg',method)
-                    .then (res=>{
-                        console.log("provide ad creative response",res);
-                    //  this._fs.api('/' + this.adAccountID+
-                    //  +'/adcreatives?&name=Sample Creative'+
-                    //  '&'+ 'object_story_spec={ "link_data": { "image_hash": "<IMAGE_HASH>", "link": "<URL>", "message": "try it out" }, "page_id:"this.pageID  }' )
-                     this._fs.api('/' + this.adAccountID +'/ads?campaign_id='+this.campaignID+'&creative={"title":"test title","body":"test","object_url":"https://googlecreativelab.github.io/coder-projects/projects/getting_started/assets/images/","image_file":"test.jpg"}&name=My ad&step_02.jpg=@step_02.jpg',method)
-                     .then(res1=>{
-                         console.log("res1",res1)
-                          })
-                        })
-                      }) 
+                      this.targetResponse=response.id;
+                     // this.fbAdsObject.targetResponse=this.targetResponse;
+                      console.log("targeting spec response",this.targetResponse);
+                      this._fs.api('/' + this.adAccountID +'/ads?adset_id='+this.targetResponse+'&status=ACTIVE'+'&name=test ad'+'&bid_amount='+this.bidAmount+'&creative={"title":"test title","body":"test","object_url":"https://cureyo.com","image_url":"https://googlecreativelab.github.io/coder-projects/projects/getting_started/assets/images/step_02.jpg"}',method)
+                       .then(response1=>{
+                          console.log("ads response:",response1);
+                           })                     
+                        })      
+                         if (this.adAccountID && this.pageID && this.targetResponse) {
+             setTimeout(() => {
+           this.selfcall(this.adAccountID,this.pageID,this.bidAmount,this.targetResponse);
+        }, 2000);
+
+          }         
+          else{
+             console.log("else execute")
+          }     
                     })
                   })           
                 });                      
               })
             });
+            
          }) ;
     
 
         this.fbAdsForm=this._fb.group({
-      adAccount:[this.adAccountID,Validators.required],
+      adAccount:[,Validators.required],
       pageID:[,Validators.required],
       BID:[,Validators.required],
       name:[,Validators.required],
@@ -121,9 +134,29 @@ export class FbAdsFormComponent implements OnInit {
       url:[,Validators.required]
         });
 
-    
+         
+        
+       
   }
 
+  selfcall(adAccountID,pageID,bidAmount,targetResponse){
+     console.log("object is :",adAccountID,pageID,bidAmount,targetResponse);
+      this.fbAdsForm=this._fb.group({
+      adAccount:[adAccountID,Validators.required],
+      pageID:[pageID,Validators.required],
+      BID:[bidAmount,Validators.required],
+      name:['test ad',Validators.required],
+      targetingSpec:[targetResponse,Validators.required],
+      siteLink:['xyz@exam.com',Validators.required],
+      caption:[,Validators.required],
+      msg:['this is msg',Validators.required],
+      callToAction:['this is call to acction',Validators.required],
+      title:['title',Validators.required],
+      body:['body',Validators.required],
+      url:['url',Validators.required]
+        });
+
+  }
 
   }
       
