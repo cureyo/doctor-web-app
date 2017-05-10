@@ -47,6 +47,7 @@ import {ProfileTileComponent} from "./dashboard/web-content/site-creation-form/p
 
 import { SelectDomainComponent}  from "./dashboard/select-domain/select-domain.component";
 import { CarePathsComponent}  from "./dashboard/care-pathways/care-pathways.component";
+import { PatientHxFormComponent}  from "./dashboard/Hx-Forms/Hx-Forms.component";
 
 import { PatientDetailFormComponent } from './dashboard/PatientDetailForm/PatientDetailForm.component';
 import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/file-upload.component';
@@ -70,7 +71,8 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
     { path: 'care-paths', component: CarePathsComponent },
      { path: 'out-patients/:count/:id', component: OutPatientsFormComponent},
-    { path: 'out-patient-dept', component: OPDComponent}
+    { path: 'out-patient-dept', component: OPDComponent},
+    { path: 'patient-hx-forms', component: PatientHxFormComponent}
 
 ]
 
@@ -117,5 +119,6 @@ export const MODULE_COMPONENTS = [
     SelectDomainComponent,
     CarePathsComponent,
     OutPatientsFormComponent,
-    OPDComponent
+    OPDComponent,
+    PatientHxFormComponent
 ]

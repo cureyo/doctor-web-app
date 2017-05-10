@@ -171,25 +171,36 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
       this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(
         response => {
-          console.log(response);
+          console.log("response", response);
           this._authService._savePageAccessToken(form.fbPageId, response.access_token, this.fbAccessToken)
-          this._authService._saveDoctor(form);
-          this._authService._saveUser(form);
-          window.location.href = window.location.origin + '/website'
-
-        }
-        )
-
-
+          .then(
+            resp => {
+               this.fs.api('/' + form.authUID+ '/adaccounts')
+               .then(
+        response2 => {
+          form['adaccounts'] = response2.data;
+             this._authService._saveDoctor(form);
+          this._authService._saveUser(form).then(
+            data => {
+              console.log(data);
+              window.location.href = window.location.origin + '/website'
+            });
+            }
+          );
+       
+        });
+        });
     } else {
       this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)
       this._authService._saveDoctor(form);
-      this._authService._saveUser(form);
-      window.location.href = window.location.origin + '/website'
+      this._authService._saveUser(form).then(
+        data => {
+          console.log(data);
+          window.location.href = window.location.origin + '/website'
+        })
     }
 
-    //this._authService._saveDoctor(form);
-    //this.router.navigate(['website']);
+
 
 
   }//submitForm
