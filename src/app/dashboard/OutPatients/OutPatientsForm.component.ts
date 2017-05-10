@@ -40,6 +40,12 @@ export class OutPatientsFormComponent implements OnInit {
   private hasHometown: boolean = false;
   private hasEducation: boolean = false;
   private hasWork: boolean = false;
+  private hasDeviations: boolean = false;
+  private hasOther: boolean = false;
+  private hasNormalHistory: any = [];
+  private hasDeviationsHistory: any = [];
+  private hasOtherHistory: any = [];
+  private hasNormal: boolean = false;
   private currentQ: any = 0;
   private clinicIDNew: any;
   private dataReady: boolean = false;
@@ -85,7 +91,7 @@ export class OutPatientsFormComponent implements OnInit {
                   //console.log(this.caredoneId, " is the cared one id")
                   this.getCaredOne(param); //find caredones
                   this.getPatientdetails(param)//find patientInsights
-
+                  this.getPatientHistory(param)//get Medical history
                   //console.log(res)
                   var clinicDomain = res.clinicWebsite;
                   var n = clinicDomain.indexOf('.');
@@ -134,6 +140,42 @@ export class OutPatientsFormComponent implements OnInit {
         //console.log("the caredone data :", this.caredone);
         this.nickName = this.caredone.nickName;
         this.avatar = this.caredone.avatar;
+      })
+  }
+    getPatientHistory(param) {
+    //console.log("ids of current user and param", this.currentUserID, param);
+    this.hasOtherHistory = [];
+    this.hasNormalHistory = [];
+    this.hasDeviationsHistory = [];
+    this._authService._findPatientHistory(this.currentUserID, param)
+      .subscribe(
+      data => {
+        let ctrNormal =0, ctrOther = 0, ctrDeviations = 0;
+        
+        for (let item in data) {
+          console.log(data[item]);
+          if (item != "$key" && item !="$exists") {
+            if (data[item].standard == "NA") {
+              this.hasOther = true;
+            this.hasOtherHistory[ctrOther]= {question : data[item].question, response : data[item].response};
+            ctrOther++;
+          }
+          else if (data[item].response == data[item].standard) {
+            this.hasNormal = true;
+            this.hasNormalHistory[ctrNormal]= {question : data[item].question, response : data[item].response};
+            ctrNormal++;
+          }
+          else if (data[item].response != data[item].standard) {
+            this.hasDeviations= true;
+            this.hasDeviationsHistory[ctrDeviations]= {question : data[item].question, response : data[item].response, standard : data[item].standard};
+            ctrDeviations++;
+           }
+          }
+           
+        }
+        console.log(this.hasNormalHistory);
+        console.log(this.hasOtherHistory);
+        console.log(this.hasDeviationsHistory)
       })
   }
   getPatientdetails(param) {

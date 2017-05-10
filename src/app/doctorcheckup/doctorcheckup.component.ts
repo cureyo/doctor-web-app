@@ -93,7 +93,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
             .then(response=>{
              //  console.log("user response data is :",response);
                this.userID=response.id; //user ID
-              this.adAccountID=response.adaccounts.data[1].id; //AdAccoundId
+              this.adAccountID=response.adaccounts.data[0].id; //AdAccoundId
              // this.fbAdsObject.adAccountID=this.adAccountID;
                console.log("In DoctorCheckup this is the userId",this.userID);
                console.log("In DoctorCheckup fb ad account details is :",this.adAccountID);                   
@@ -207,28 +207,40 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     console.log(form);
 
     if (form.fbPageAdded && this.adAccountID) {
-      this.fs.api('/' + form.fbPageId + this.adAccountID+ '?fields=access_token')
+      this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(
         response => {
-          console.log(response);
-          this._authService._savePageAccessToken(form.fbPageId, response.access_token, this.fbAccessToken)
-          this._authService._saveDoctor(form);
-          this._authService._saveUser(form);
-          window.location.href = window.location.origin + '/website'
-
-        }
-        )
-
-
+          console.log("response", response);
+          this._authService._savePageAccessToken(form.fbPageId ,response.access_token, this.fbAccessToken)
+          .then(
+            resp => {
+               this.fs.api('/' + form.authUID+ '/adaccounts')
+               .then(
+        response2 => {
+          
+          form['adaccounts'] = response2.data;
+             this._authService._saveDoctor(form);
+          this._authService._saveUser(form).then(
+            data => {
+              console.log(data);
+              window.location.href = window.location.origin + '/website'
+            });
+            }
+          );
+       
+        });
+        });
     } else {
       this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)
       this._authService._saveDoctor(form);
-      this._authService._saveUser(form);
-      window.location.href = window.location.origin + '/website'
+      this._authService._saveUser(form).then(
+        data => {
+          console.log(data);
+          window.location.href = window.location.origin + '/website'
+        })
     }
 
-    //this._authService._saveDoctor(form);
-    //this.router.navigate(['website']);
+
 
 
   }//submitForm

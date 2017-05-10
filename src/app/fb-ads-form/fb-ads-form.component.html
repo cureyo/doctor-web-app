@@ -9,13 +9,13 @@
                <!-- first row-->   
               <div class="row">
   
-                    <div class="col-md-4">
+                    <div class="col-md-4" >
                             <div class="form-group">
                                  <label for="adAccount">Ad Account </label>
-              
-                                  <select  id="uid" class="form-control" formControlName="adAccount">
-                                    <option value="uid">user account Detail</option>
+                                  <select  id="uid" class="form-control" formControlName="adAccount"  *ngIf="adAccountID">
+                                    <option *ngFor="let act of adAccountID">{{act.id}}</option>
                                   </select>
+                                   
                             </div>
                     </div>
         
@@ -24,7 +24,7 @@
                                <label for="PageID">Page ID</label>
 
                                 <select  id="fb_Ads_pageID" class="form-control" formControlName="pageID" >
-                                <option value="pageID">page ID</option>
+                                <option>{{pageID}}</option>
                                 </select>
                           </div>
                   </div>
@@ -33,10 +33,9 @@
                   <div class="col-md-4">
                         <div class="form-group">
                               <label for="bID">Bid</label>
-
-                              <select  id="bID" class="form-control" formControlName="BID" >
-                                    <option value="bID">Bid</option>                          
-                              </select>
+                             
+                               <input type="text"  id="bID" class="form-control" formControlName="BID"/>
+                              
                         </div>
                   </div>
             
@@ -58,8 +57,14 @@
                   <div class="col-md-4">
                           <div class="form-group">
                                <label for="targetingSpec">Targeting Spec</label>
+                                 
+                                  <select   id="targetingSpec" class="form-control" formControlName="targetingSpec" >
+                                    <option value="IN">INDIA</option>    
+                                    <option value="US">USA</option>   
+                                    
 
-                                <input type="text"  id="targetingSpec" class="form-control" formControlName="targetingSpec"/>
+                              </select>
+                               
                           </div>
                   </div>
  

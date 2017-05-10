@@ -85,7 +85,8 @@ export class AuthService {
     //console.log("formdata");
     //console.log(formData);
     const db = this.af.database.object(this.db.users + formData.authUID);
-    db.set(formData)
+    return db.set(formData)
+    
     //this.router.navigate(['dashboard']);
   }//_saveUser
   public _updateReminders(data, key) {
@@ -254,32 +255,50 @@ public _findPatient(currentUserId, caredoneId) {
 
 
   }//_saveUserCoverPhoto
+  public getUserfromUserTable(uid){
+    return this.af.database.object(this.db.UserTable +uid)
+  }
 
 
   public _saveCaredOne(data, observerId) {
     const caredones = this.af.database.object(this.db.caredOnes + observerId + '/' + data['uid']);
     return caredones.set(data);
   }//_saveCaredOne
-
- public _saveCarePathway(data, pathName) {
-    const carePaths = this.af.database.object(this.db.carePaths + pathName );
-    return carePaths.set(data);
+ public _saveHxPathway(data, pathName) {
+    const HxPaths = this.af.database.list(this.db.HxPaths);
+    return HxPaths.push(data);
   }//_saveCaredOne
-  public _saveCarePathName(pathName) {
-    const carePaths = this.af.database.list(this.db.carePathNames );
-    return carePaths.push({path: pathName});
+  public _saveHxPathName(pathName, id) {
+    const HxPaths = this.af.database.object(this.db.HxPathNames + id);
+    return HxPaths.set({path: pathName});
+  }//_saveCaredOne
+ public _saveCarePathway(data, pathName) {
+    const carePaths = this.af.database.list(this.db.carePaths);
+    return carePaths.push(data);
+  }//_saveCaredOne
+  public _saveCarePathName(pathName, id) {
+    const carePaths = this.af.database.object(this.db.carePathNames + id);
+    return carePaths.set({path: pathName});
   }//_saveCaredOne
   public _saveCareSchedule(pageId, patientId, activationDate, pathName) {
     //console.log({path: pathName, activatedOn: activationDate});
-    const carePaths = this.af.database.object(this.db.careSched + pageId + '/'+ patientId);
+    const carePaths = this.af.database.object(this.db.careSched + pageId + '/'+ patientId + '/Paths/' +  pathName);
     return carePaths.set({path: pathName, activatedOn: activationDate});
   }//_saveCaredOne
    public _getCarePathway() {
     return this.af.database.list(this.db.carePathNames);
     
   }//_getCarePathways
+     public _getHxPathway() {
+    return this.af.database.list(this.db.HxPathNames);
+    
+  }//_getCarePathways
    public _getCarePath(pathName) {
     return this.af.database.object(this.db.carePaths + pathName);
+    
+  }//_getCarePathways
+   public _getHxPath(pathName) {
+    return this.af.database.object(this.db.HxPaths + pathName);
     
   }//_getCarePathways
    public _saveWebsite(siteName, docId) {
@@ -334,6 +353,7 @@ public _findPatient(currentUserId, caredoneId) {
       }
     });
   }//_findCaredoneByKey
+  
   public _findOnboardingReviewItemNext(caredId, item, next) {
     //console.log(this.db.onboardingReview+ caredId + '/' + item)
     //console.log(next - 1);
@@ -390,7 +410,10 @@ public _findPatient(currentUserId, caredoneId) {
     //console.log(this.db.diagnosis + observerId + '/' + uid);
     return this.af.database.object(this.db.diagnosis + observerId + '/' + uid);
   }//_findCaredOne
-
+ public _findPatientHistory(observerId, uid) {
+    //console.log(this.db.diagnosis + observerId + '/' + uid);
+    return this.af.database.object(this.db.patientHistory + observerId + '/' + uid);
+  }//_findCaredOne
   public _findCaredonesDoctor(doctorId) {
     return this.af.database.object(this.db.doctors + doctorId);
   }//_findCaredOne
@@ -446,6 +469,8 @@ public _findPatient(currentUserId, caredoneId) {
       response => this._changeState(response)
     );
   }//_getUser
+
+  
 
   public _getdoctors() {
     return this.doctorsList;
@@ -605,6 +630,22 @@ public _findPatient(currentUserId, caredoneId) {
         equalTo: caredoneId
       }
     });
+  }
+    public _getCarePathNames(carePathName) {
+    return this.af.database.list(this.db.carePaths, {
+      query: {
+        orderByChild: 'name',
+        equalTo: carePathName
+      }
+    }).first();
+  }
+    public _getHxPathNames(carePathName) {
+    return this.af.database.list(this.db.HxPaths, {
+      query: {
+        orderByChild: 'name',
+        equalTo: carePathName
+      }
+    }).first();
   }
   public _getHealthReports(uid) {
     //console.log("uid data:", uid);

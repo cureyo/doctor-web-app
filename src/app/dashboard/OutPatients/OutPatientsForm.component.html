@@ -17,7 +17,107 @@
                     </div> <!-- card header portion end-->
                     
               <div class="card-content table-responsive">
-                  
+                  <h4 style="color: #137a9c"><b>Patient Medical History</b></h4>
+                     <div class="row">
+
+<div *ngIf="hasDeviations" class="col-sm-4">
+<div class="card card-stats"  >
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="red">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        close</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400; line-height: 16px;"> 
+         Deviations
+        
+          </h3>
+          <br>
+          <hr>
+       
+                <div style="width: 100%;" *ngFor="let item of hasDeviationsHistory">
+             
+        <div style="text-align:left;">
+ 
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 12px; font-weight: 400; line-height: 16px;"> 
+        {{item.question}}
+          </h3>
+        </div>
+        <br>
+        <div style="text-align:left;">
+            <span class="label label-round label-warning">{{item.response}}</span>
+        </div>
+        <hr>
+       </div>
+    </div>  
+</div>
+</div>
+<div *ngIf="hasOther" class="col-sm-4">
+<div class="card card-stats"  >
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="orange">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        edit</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #666; font-size: 14px; font-weight: 400; line-height: 16px;"> 
+         <b>Other Answers</b>
+          </h3>
+        <br>
+          <hr>
+        <div *ngFor="let item of hasOtherHistory">
+           
+        <div style="text-align:left;">
+ 
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 12px; font-weight: 400; line-height: 16px;"> 
+        {{item.question}}
+          </h3>
+        </div>
+        <br>
+        <div style="text-align:left;">
+            <span class="label label-info">{{item.response}}</span>
+        </div>
+         <hr>
+       </div>
+    </div>  
+</div>
+</div>
+<div *ngIf="hasNormal" class="col-sm-4">
+<div class="card card-stats"  >
+        <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 50px;" data-background-color="green">
+
+            <i class="material-icons" style="color: #ffffff; line-height: 50px">
+                                        check</i>
+
+        </div>
+    <div class="card-content">
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 14px; font-weight: 400; line-height: 16px;"> 
+         Normal
+          </h3>
+           <br>
+          <hr>
+       <div  *ngFor="let item of hasNormalHistory">
+       
+   <div style="text-align:left;">
+ 
+        <h3 class="title" style="float: left; color: #137a9c; font-size: 12px; font-weight: 400; line-height: 16px;"> 
+        {{item.question}}
+          </h3>
+        </div>
+        <br>
+        <div style="text-align:left;">
+            <span class="label label-success">{{item.response}}</span>
+        </div>
+         <hr>
+       </div>
+    </div>  
+</div>
+</div>
+                     </div>
+                   
+                     <h4 style="color: #137a9c"><b>Patient Demographics</b></h4>
               <div class="row">
 
 <div *ngIf="hasAge" class="col-sm-4">

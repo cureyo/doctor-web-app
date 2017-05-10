@@ -10,12 +10,12 @@
     
     <div class="card-stats">
       <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
-        <i class="fa fa-heartbeat" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
+        <i class="fa fa-history" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
       </div>
       <div class="card-content" style="float: left; text-align: left;">
 
         <h3 class="title">
-          <small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Select a Pathway to view</small></h3>
+          <small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Select a Patient History Form to view</small></h3>
           <div style="margin: 10px;">
            <!--<select formControlName="carePaths" class="form-control">
       <option [attr.selected]="" value="{{i}}" *ngFor="let i of carePathways">{{i}}</option>
@@ -25,7 +25,7 @@
                             <div style="margin: 10px; float: left; z-index: 100000; width: 80%;">
                                 <div class="form-group form-black label-floating is-not-empty">
                                     <div class="form-group">
-                                    <label class="control-label">Select a Care Plan</label>
+                                    <label class="control-label">Select a Patient History Form</label>
                                       <select formControlName="carePath" class="form-control" (change)="showCarePath(findCarePaths.value)">
       <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
     </select>
@@ -45,7 +45,7 @@
           <div>
                     <div class="form-group">
                       <button class="btn btn-primary btn-round" 
-                        (click)="createPathways()">Create Pathway</button>
+                        (click)="createPathways()">Create Patient History Form</button>
                     </div>
           </div>
        </div> 
@@ -73,7 +73,7 @@
           <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name this Care Path" />
             </div>
             <div class="pull-left" >
-                <button type="button" id="addcheck" (click)="addCheckPoints()" class="btn btn-round btn-primary">+ add checkpoint</button>
+                <button type="button" id="addcheck" (click)="addCheckPoints()" class="btn btn-round btn-primary">+ add question</button>
                 </div>
 
                  <div class="pull-left" >
@@ -88,7 +88,7 @@
       </div>
                               
                                <div class="card-footer">
-                               <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
+                               <!--<div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
                                  <label class="control-label" for="day">Day #</label>
           <select formControlName="day" class="form-control" >
       <option [attr.selected]="" value="{{j}}" *ngFor="let j of days">{{j}}</option>
@@ -99,14 +99,26 @@
           <select formControlName="time" class="form-control" >
       <option [attr.selected]="" value="{{k}}" *ngFor="let k of times">{{k}}</option>
     </select>
+                               </div>-->
+                               <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
+                                 <label class="control-label" for="askIf">Ask If</label>
+          <select formControlName="askIf" class="form-control" >
+      <option [attr.selected]="" value="{{k.quesNo}}" *ngFor="let k of askIfs">(Ques#{{k.quesNo}}) {{k.ques}}</option>
+    </select>
                                </div>
                                <div class="form-group" style="width: 40%; float: left; z-index: 10000;">  
-                                 <label class="control-label" for="checkType">Check Type</label>
-          <select formControlName="checkType" class="form-control" (change)="checkTypeSelect(check.controls['checkType']._value, i)">
+                                 <label class="control-label" for="checkType">Question Type</label>
+          <select formControlName="checkType" class="form-control" (change)="checkTypeSelect(check, check.controls['checkType']._value, i)">
       <option value="yes-no">Yes/ No Question</option>
       <option value="mcq">Multiple Choice Question</option>
       <option value="value">Value/ Metric check</option>
       <option value="reminder">Reminder</option>
+    </select>
+                               </div>
+                                 <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
+                                 <label class="control-label" for="standard">Normal Response</label>
+          <select formControlName="standard" class="form-control" >
+      <option [attr.selected]="" value="{{k}}" *ngFor="let k of standardOps[i]">{{k}}</option>
     </select>
                                </div>
                                 <div class="form-group" style="margin: 10px; width: 100%;">  

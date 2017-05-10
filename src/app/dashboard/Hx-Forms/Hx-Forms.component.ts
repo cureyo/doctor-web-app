@@ -9,12 +9,12 @@ declare var $: any
 
 
 @Component({
-  selector: 'care-paths-cmp',
-  templateUrl: 'care-pathways.component.html',
+  selector: 'patient-hx-form',
+  templateUrl: 'Hx-Forms.component.html',
   moduleId: module.id
 })
 
-export class CarePathsComponent implements OnInit {
+export class PatientHxFormComponent implements OnInit {
   [name: string]: any;
 
   private caredone: any;
@@ -27,8 +27,10 @@ export class CarePathsComponent implements OnInit {
   private array: any;
   private routeparam: any;
   private checkTypes: any = [];
+  private standardOps: any = [];
   private days: any = [];
   private times: any = [];
+  private askIfs: any = [];
   private findCarePaths: FormGroup;
   private carePathsAvlbl: any;
 
@@ -36,6 +38,20 @@ export class CarePathsComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
 
 
+  }
+   updateAskIfs(control) {
+    let ctr = 0, asks = 0;
+    for (let item of control) {
+      ctr++
+      console.log(control[item]);
+      console.log(item);
+      console.log(item.controls['checkType']);
+      console.log(item.controls['messageText'])
+      if (item.controls['checkType'].value == 'yes-no') {
+        this.askIfs[asks] = {ques: item.controls['messageText']._value, quesNo: ctr}
+        asks++;
+      }
+    }
   }
   updateDays() {
     let i = 0;
@@ -80,7 +96,7 @@ export class CarePathsComponent implements OnInit {
     ////console.log(this.ObserversForm);
 
 
-    this._authService._getCarePathway()
+    this._authService._getHxPathway()
       .subscribe(
       data => {
         //console.log(data);
@@ -91,8 +107,10 @@ export class CarePathsComponent implements OnInit {
   }
   initCheckPoints() {
     return this._fb.group({
-      day: ['', Validators.required],
-      time: ['', Validators.required],
+      // day: ['', Validators.required],
+      // time: ['', Validators.required],
+      askIf: ['Always', Validators.required],
+      standard: ['', Validators.required],
       messageText: ['', Validators.required],
       checkType: ['', Validators.required],
       options: this._fb.array([
@@ -104,8 +122,10 @@ export class CarePathsComponent implements OnInit {
 
   initializeCheckPoints(data, check) {
     let control = this._fb.group({
-      day: [data.day, Validators.required],
-      time: [data.time, Validators.required],
+      // day: [data.day, Validators.required],
+      // time: [data.time, Validators.required],
+      askIf: [data.askIf, Validators.required],
+       standard: [data.standard, Validators.required],
       messageText: [data.messageText, Validators.required],
       checkType: [data.checkType, Validators.required],
       options: this._fb.array([
@@ -165,6 +185,8 @@ export class CarePathsComponent implements OnInit {
   }
   addCheckPoints() {
     const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
+    console.log(control.controls);
+    this.updateAskIfs(control.controls);
     control.push(this.initCheckPoints());
 
   }//addReports
@@ -174,7 +196,7 @@ export class CarePathsComponent implements OnInit {
 
     control.push(this.initOptions());
     //console.log(control);
-
+    this.updateStandard(check, 'mcq', i)
   }//addReports
 
   createPathways() {
@@ -202,12 +224,42 @@ export class CarePathsComponent implements OnInit {
     this.router.navigate(['website'])
 
   }
-  checkTypeSelect(type, i) {
+  updateStandard(check, type, i) {
+      console.log(check);
+    if (type == 'mcq') {
+    
+      let ctr =0, arr = [];
+      console.log(check.controls['options'].controls);
+      for (let item of check.controls['options'].controls) {
+        arr[ctr] = item.controls.value.value;
+        ctr++;
+      }
+      this.standardOps[i] = arr;
+    }
+      
+    else if (type == 'yes-no') {
+       this.standardOps[i] = ["Yes", "No"];
+    
+  } else if (type == 'value') {
+       this.standardOps[i] = ["NA"]
+   
+  } 
+  console.log(this.standardOps)
+  }
+  checkTypeSelect(check, type, i) {
     //console.log("check type is",type, " for ", i);
     ////console.log()
-    if (type == 'mcq')
-      this.checkTypes[i] = true;
-    else this.checkTypes[i] = false;
+    this.updateStandard(check, type, i)
+   console.log(check);
+    if (type == 'mcq') {
+      this.checkTypes[i] = true; 
+      
+    }
+      
+  else {
+    this.checkTypes[i] = false;
+  }
+  console.log(this.standardOps)
   }
   searchDomain = (model) => {
     let job = model['value'];
@@ -238,17 +290,19 @@ export class CarePathsComponent implements OnInit {
   }
 
   onSubmit(model) {
-    this._authService._getCarePathNames(model['name'])
+    let test = this._authService._getHxPathNames(model['name']);
+    console.log(test);
+    this._authService._getHxPathNames(model['name'])
       .subscribe(
       data => {
         console.log(data);
         if (data[0]) {
-          alert("This Care Path already exisits. Please save using another name");
+          alert("This Patient History Form Name exists. Please save using another name");
         } else {
-          this._authService._saveCarePathway(model, model['name'])
+          this._authService._saveHxPathway(model, model['name'])
             .then(data => {
               console.log(data.path['o'][2]);
-              this._authService._saveCarePathName(model['name'], data.path['o'][2]);
+              this._authService._saveHxPathName(model['name'], data.path['o'][2]);
               this.carePathwayForm.reset();
               this.carePathwayForm = this._fb.group({
                 name: ['', Validators.required],
@@ -285,7 +339,7 @@ export class CarePathsComponent implements OnInit {
     console.log(model)
     this.carePathwayForm.reset();
     this.newPath = false;
-    this._authService._getCarePath(model.carePath)
+    this._authService._getHxPath(model.carePath)
       .subscribe(
       data => {
         console.log(data);

@@ -184,7 +184,7 @@
                                     <div class="form-group">
                                     <label class="control-label">Select a Care Plan</label>
                                       <select formControlName="carePath" class="form-control" >
-      <option [attr.selected]="" value="{{j.path}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
+      <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
     </select>
                                     </div>
                                 </div>

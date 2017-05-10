@@ -53,7 +53,9 @@ export const AppConfig = {
     pathologicalTestDetails:  environment.envName + '/PathologicalTests',
     website:            environment.envName + '/DoctorPages/localhost/',
     carePaths:          environment.envName + '/CarePathways/',
+    HxPaths:            environment.envName + '/PatientHxForms/',
     carePathNames:      environment.envName + '/CarePathNames/',
+    HxPathNames:        environment.envName + '/PatientHxFormNames/',
     checkIns:           environment.envName + '/DoctorPages/Check-Ins/',
     queue:              environment.envName + '/DoctorPages/Queue/',
     clinicid:           environment.envName + '/UserTable/clinicId/',
@@ -61,5 +63,7 @@ export const AppConfig = {
     diagnosis:          environment.envName + '/Diagnosis/',
     careSched:          environment.envName + '/CareSchedule/',
     pageAccessTokens:   environment.envName + '/PageAccessTokens/',
+    patientHistory:     environment.envName + '/PatientHistory/',
+    UserTable:          environment.envName + '/UserTable/'
   }
 }
