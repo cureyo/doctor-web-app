@@ -20,18 +20,11 @@ export class FbAdsFormComponent implements OnInit {
    public bidAmount:Number=8000;
    public dailybudget:Number =100000;
    public targetResponse:any;
-  //  public fbAdsObject={
-  //      pageID:Number,
-  //      adAccountID:Number,
-  //      bidAmount:any,
-  //      targetResponse:Number,
-
-  //  }
   constructor(private _fb: FormBuilder, 
               private _authService: AuthService,  
               private route: ActivatedRoute,
               private router: Router,
-              private _fs: FacebookService, private _fsP: FacebookService) { 
+              private _fs: FacebookService) { 
               
               }
 
@@ -48,7 +41,6 @@ export class FbAdsFormComponent implements OnInit {
      console.log("fbparam data:",fbParams);
     this._fs.init(fbParams);
     
-   // this._fsP.init(fbParams);
     this._authService.doclogin()
       .then(data => {
         this._fs.getLoginStatus().then((response: FacebookLoginResponse) => {
