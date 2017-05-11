@@ -130,6 +130,17 @@ export class AuthService {
 
 
   }//save onboardingReviewreview data
+
+  //save FbADS Form Data
+  public _saveFbAdsFormData(uid,campaignID,data){
+   const FbAdsData = this.af.database.object(this.db.FbCampaign+'/'+uid +'/'+campaignID)
+    return FbAdsData.set(data);
+  }//save FbADS Form Data
+  //save FileUpload Data
+  public _saveFileUploadData(uid,data){
+   const FileUploadData = this.af.database.object(this.db.HealthImage+'/'+uid)
+    return FileUploadData.set(data);
+  }//save FileUpload Data
    public _saveWebContentFootertile(data,sitename) {
        //console.log("the sitenmae for Footer tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/footerTile' )

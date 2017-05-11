@@ -64,6 +64,8 @@ export const AppConfig = {
     careSched:          environment.envName + '/CareSchedule/',
     pageAccessTokens:   environment.envName + '/PageAccessTokens/',
     patientHistory:     environment.envName + '/PatientHistory/',
-    UserTable:          environment.envName + '/UserTable/'
+    UserTable:          environment.envName + '/UserTable/',
+    FbCampaign:         environment.envName + '/FbCampaign/',
+    HealthImage:         environment.envName + '/HealthImage/'
   }
 }

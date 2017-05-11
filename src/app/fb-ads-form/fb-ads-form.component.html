@@ -12,8 +12,8 @@
                     <div class="col-md-4" >
                             <div class="form-group">
                                  <label for="adAccount">Ad Account </label>
-                                  <select  id="uid" class="form-control" formControlName="adAccount"  *ngIf="adAccountID">
-                                    <option *ngFor="let act of adAccountID">{{act.id}}</option>
+                                  <select  id="uid" class="form-control" formControlName="adAccount"  *ngIf="tempAdaccountId">
+                                    <option *ngFor="let act of tempAdaccountId;" value="{{act}}">{{act}}</option>
                                   </select>
                                    
                             </div>
@@ -23,9 +23,8 @@
                           <div class="form-group">
                                <label for="PageID">Page ID</label>
 
-                                <select  id="fb_Ads_pageID" class="form-control" formControlName="pageID" >
-                                <option>{{pageID}}</option>
-                                </select>
+                                <input type="text" class="form-control" formControlName="pageID" >
+                                
                           </div>
                   </div>
  
@@ -34,7 +33,7 @@
                         <div class="form-group">
                               <label for="bID">Bid</label>
                              
-                               <input type="text"  id="bID" class="form-control" formControlName="BID"/>
+                               <input type="text"  class="form-control" formControlName="BID"/>
                               
                         </div>
                   </div>
@@ -140,32 +139,77 @@
                             </div>
                     </div>
         
-                  <div class="col-md-4">
+                  <div class="col-md-8">
                           <div class="form-group">
                                <label for="body">Body</label>
 
                                 <input type="text"  id="body" class="form-control" formControlName="body"/>
                           </div>
                   </div>
- 
-
-                  <div class="col-md-4">
-                        <div class="form-group">
-                              <label for="url">Url</label>
-
-                              <input type="text"  id="url" class="form-control" formControlName="url"/>
-                        </div>
-                  </div>
-            
 
                             </div>
                             <!-- end of the fourth row-->
                             <!-- fifth row-->
                             <div class="row">
+                               <div class="col-md-4">
+                                    <div class="form-group">
+                                            <label for="body">Start Date</label>
+
+                                           <input type="date" class="form-control" [(ngModel)]="minDate" min="2017-05-12" max="{{maxDate}}"formControlName="startdate"/>
+                                     </div>
+                                 </div>   
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                            <label for="body">End Date</label>
+
+                                           <input type="date" class="form-control" [(ngModel)]="maxDate" min="{{minDate}}" max="2017-12-12" formControlName="enddate"/>
+                                     </div>
+                                 </div>   
+                            </div>     
+                           <!--end of fifth row-->
+                           <!--6th row-->
+                           <div class="row">
+                                 
+                                       <div class="col-md-4">
+                                          <div class="form-group">
+                                          <a class="btn btn-info" id="btn-style">Choose File<input
+                                           type="file"
+                                           ng2FileSelect value="Browse" 
+                                           class="form-control"       
+                                           
+                                            [uploader]="uploader" single/>
+                                          </a>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                            <div *ngFor="let item of uploader.queue;">
+                                            <p id="fileName"><strong>{{ item?.file?.name }}</strong></p>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="uploader.queue" >
+                                    <div *ngFor="let item of uploader.queue;">    
+                                    <button type="button" class="btn btn-success btn-xs" id="actionButton"
+                                    (click)="onUpload(item); item.upload(); item.remove();" [disabled]="!item?.file?.name">
+                                    <span><i class="material-icons">file_upload</i></span> Upload
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger btn-xs" id="actionButton"
+                                    (click)="item.remove()">
+                                    <span><i class="material-icons">delete</i></span> Remove
+                                    </button>
+                                    </div>
+                                    </div>
+                                 
+                           </div>
+                           <!--end of the six row-->
+                            <!-- 7th row-->
+                            <div class="row">
                       <!-- submit button code    -->
                 
                       <div class="pull-right" >
-                          <button [ngClass]="{'hide': fbAdsAdded}" type="submit"  class="btn btn-info">Create Carousel Ads</button>
+                          <button [ngClass]="{'hide': fbAdsAdded}" type="submit" [disabled]="!urlAdded" class="btn btn-info">Create Carousel Ads</button>
                       </div>
 
                         <div [ngClass]="{'hide': !fbAdsAdded}" class="bareP">
@@ -174,8 +218,8 @@
               
                       <!-- end of submit button-->
                             </div>
-                            <!-- end of the fifth row-->
-
+                            <!-- end of the 7th row-->
+                            
                     </div>
                   </form>
                 </div>
