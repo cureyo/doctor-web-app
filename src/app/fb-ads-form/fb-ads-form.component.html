@@ -1,17 +1,22 @@
  <div class="main-content">
     <div class="container-fluid">
-        <h3> Fb Ads form </h3>
+        <h3> Facebook Advertising </h3>
   <div class="col-md-12">
                 <div class="card">
-                  <form [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
+                  <form *ngIf="formReady" [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
 
               <div class="card-content table-responsive">
-               <!-- first row-->   
+               <!-- Account details row-->   
               <div class="row">
-  
+                    <div class="col-md-12" >
+                    <h5 style="margin-bottom: 0;"><b>Account Details</b></h5>
+                    </div>
+
+                    
                     <div class="col-md-4" >
                             <div class="form-group">
                                  <label for="adAccount">Ad Account </label>
+                                 <p>Select your account that will be charged</p>
                                   <select  id="uid" class="form-control" formControlName="adAccount"  *ngIf="tempAdaccountId">
                                     <option *ngFor="let act of tempAdaccountId;" value="{{act}}">{{act}}</option>
                                   </select>
@@ -22,157 +27,86 @@
                   <div class="col-md-4">
                           <div class="form-group">
                                <label for="PageID">Page ID</label>
-
+                               <p>Select the page to link to the ad</p>
                                 <input type="text" class="form-control" formControlName="pageID" >
                                 
                           </div>
                   </div>
- 
-
-                  <div class="col-md-4">
-                        <div class="form-group">
-                              <label for="bID">Bid</label>
-                             
-                               <input type="text"  class="form-control" formControlName="BID"/>
-                              
+                 
+              </div>
+                  <!-- End of Account details row-->
+                  <!-- Campaign details row-->      
+                  <div class="row">
+                        <div class="col-md-12">
+                              <h5><b>Campaign Details</b></h5>
                         </div>
-                  </div>
-            
-
-                            </div> 
-                            <!-- end of the first row-->
-                             <!-- second row-->
-                            <div class="row">
-  
-                    <div class="col-md-4">
+                                     <div class="col-md-4">
                             <div class="form-group">
-                                 <label for="name">name </label>
-              
+                                 <label for="name">Campaign Name</label>
+                                 <p>Provide a name for this Ad Campaign</p>
                                   <input type="text"  id="name" class="form-control" formControlName="name"/>
-                                    
                             </div>
                     </div>
-        
-                  <div class="col-md-4">
-                          <div class="form-group">
-                               <label for="targetingSpec">Targeting Spec</label>
-                                 
-                                  <select   id="targetingSpec" class="form-control" formControlName="targetingSpec" >
-                                    <option value="IN">INDIA</option>    
-                                    <option value="US">USA</option>   
-                                    
-
-                              </select>
-                               
-                          </div>
-                  </div>
- 
-
-                  <div class="col-md-4">
-                        <div class="form-group">
-                              <label for="siteLink">Site Link</label>
-
-                              <input type="text"  id="link" class="form-control" formControlName="siteLink" />
-                        </div>
-                  </div>
-            
-
-                            </div>
-                            <!-- end of the second row-->
-                            <!-- third row-->
-                            <div class="row">
-  
-                    <div class="col-md-4">
-                            <div class="form-group">
-                                 <label for="caption">Caption </label>
-              
-                                  <input type="text"  id="caption" class="form-control" formControlName="caption"/>
-                            </div>
-                    </div>
-        
-                  <div class="col-md-4">
+                      <div class="col-md-4">
                           <div class="form-group">
                                <label for="message">Message</label>
-
+                               <p>Provide a Message Text for the Ad Campaign</p>
                                 <input type="text"  id="msg" class="form-control" formControlName="msg"/>
                           </div>
                   </div>
- 
-
-                  <div class="col-md-4">
+                         <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="caption">Headline </label>
+                                 <p>Provide a Caption for this Ad Campaign</p>
+                                  <input type="text"  id="caption" class="form-control" formControlName="caption"/>
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="caption">Sub-text </label>
+                                 <p>Provide a Sub-text for this Ad Campaign</p>
+                                  <input type="text"  id="subtext" class="form-control" formControlName="subtext"/>
+                            </div>
+                    </div>
+                      
+                          <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="siteLink">Site Link</label>
+                              <p>Provide the website link you want to promote</p>
+                              <input type="text"  id="link" class="form-control" formControlName="siteLink" />
+                        </div>
+                  </div>
+                                  
+                              <div class="col-md-4">
                         <div class="form-group">
                               <label for="callToAction">Call to Action Type</label>
-
+                              <p>Provide the objective you want to drive</p>
                               <select  id="callToAction" class="form-control" formControlName="callToAction" >
-                                    <option value="noButton">NOButton</option>                          
-                                    <option value="likePage">LIKEPAGE</option>                          
-                                    <option value="bookTravel">BOOK TRAVEL</option>                          
-                                    <option value="installApp">INSTALL APP</option>  
-                                    <option value="butNow">BUY NOW</option>    
-                                    <option value="callNow">CALLNOW</option>
-                                    <option value="download">DOWNLOAD</option>
-                                    <option value="getDirection">GETDIRECTION</option>
-                                    <option value="getQuote">GETQUOTE/option</option>
-                                    <option value="learnMore">LEANMORE</option> 
-                                    <option value="playGame">PLAYGAME</option>
-                                    <option value="shopNow">SHOP NOW</option> 
-                                    <option value="signUp">SIGN UP</option>
-                                    <option value="subscribe">SUBSCRIBE</option>
-                                    <option value="userApp">USE APP</option>
-                                    <option value="watchVideo">WATCH VIDEO</option>
+                                    <option *ngFor="let cta of objectives" value="{{cta.objective}}">{{cta.name}}</option>                          
+                                    
                               </select>
                         </div>
                   </div>
-            
 
-                            </div> 
-                            <!-- end of the third row-->
-                                  <!-- fourth row-->
-                            <div class="row">
-  
-                    <div class="col-md-4">
+                  </div>
+                     <div class="row">
+                                     <div class="col-md-4" >
                             <div class="form-group">
-                                 <label for="title">Title </label>
-              
-                                  <input type="text"  id="title" class="form-control" formControlName="title"/>
-                                    
+                                 <label for="imageURL">Select an Image from your Page </label>
+                                  <select  (change)="pageImageURLChange(fbAdsForm.controls['imageURL'].value)" class="form-control" formControlName="imageURL"  >
+                                    <option *ngFor="let pic of pagePhotos; let i = index;" value="{{i}}">{{pic.id}}</option>
+                                  </select>
+                                   
                             </div>
                     </div>
-        
-                  <div class="col-md-8">
-                          <div class="form-group">
-                               <label for="body">Body</label>
-
-                                <input type="text"  id="body" class="form-control" formControlName="body"/>
-                          </div>
-                  </div>
-
-                            </div>
-                            <!-- end of the fourth row-->
-                            <!-- fifth row-->
-                            <div class="row">
-                               <div class="col-md-4">
-                                    <div class="form-group">
-                                            <label for="body">Start Date</label>
-
-                                           <input type="date" class="form-control" [(ngModel)]="minDate" min="2017-05-12" max="{{maxDate}}"formControlName="startdate"/>
-                                     </div>
-                                 </div>   
-                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                            <label for="body">End Date</label>
-
-                                           <input type="date" class="form-control" [(ngModel)]="maxDate" min="{{minDate}}" max="2017-12-12" formControlName="enddate"/>
-                                     </div>
-                                 </div>   
-                            </div>     
-                           <!--end of fifth row-->
-                           <!--6th row-->
-                           <div class="row">
-                                 
+                    <div class="col-md-4" >
+                          <img style="width: 100px;" src="{{pageImagesUrl}}">
+                    </div>
+                     </div>
+                     <div class="row">
                                        <div class="col-md-4">
                                           <div class="form-group">
-                                          <a class="btn btn-info" id="btn-style">Choose File<input
+                                          <a class="btn btn-warning" id="btn-style" style="color:#fff; margin: 0; height: 40px;">Choose File<input
                                            type="file"
                                            ng2FileSelect value="Browse" 
                                            class="form-control"       
@@ -202,7 +136,104 @@
                                     </div>
                                     </div>
                                  
+                           
+                          
                            </div>
+                  <!-- End of Campaign details row-->   
+                  <!-- Targeting details row-->      
+                  <div class="row">
+                        <div class="col-md-12">
+                    <h5><b>Ad Targeting</b></h5>
+                    </div>
+                              <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="targetCountry">Select Country</label>
+                                <p>Select the target country</p>
+                                  <select   id="targetCountry" class="form-control" formControlName="targetCountry" >
+                                    <option value="IN">INDIA</option>    
+                                    <option value="US">USA</option>   
+                                    
+
+                              </select>
+                               
+                          </div>
+                  </div>
+                  <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="targetCity">Select City</label>
+                                <p>Select the target City for the Ad</p>
+                                   <input type="text"  id="targetCity" class="form-control" formControlName="targetCity" />
+                               
+                          </div>
+                  </div>
+       
+                  </div>
+                  <!-- End of Targeting details row-->   
+                   <!-- Budget details row-->      
+                  <div class="row">
+                        <div class="col-md-12">
+                    <h5><b>Ad Budget</b></h5>
+                    </div>
+                    <hr>
+                  </div>
+                  <!-- End of Budget details row-->  
+                  <div class="row"> 
+                  <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="bID">Bid (in INR)</label>
+                              <p>Provide a bid for each action selected</p>
+                             
+                               <input type="text"  class="form-control" formControlName="BID"/>
+                              
+                        </div>
+                  </div>
+                                    <div class="col-md-4">
+                        <div class="form-group">
+                              <label for="budget">Budget (in INR)</label>
+                              <p>Provide a total budget for the Campaign</p>
+                             
+                               <input type="text"  class="form-control" formControlName="budget"/>
+                              
+                        </div>
+                  </div>
+            
+
+                            </div> 
+                            <!-- end of the first row-->
+                             <!-- second row-->
+                            <div class="row">
+  
+
+        
+       
+ 
+
+          
+
+                            </div>
+                            <!-- end of the second row-->
+                         
+
+                            <!-- fifth row-->
+                            <div class="row">
+                               <div class="col-md-4">
+                                    <div class="form-group">
+                                            <label for="body">Start Date</label>
+
+                                           <input type="date" class="form-control" [(ngModel)]="minDate" min="2017-05-12" max="{{maxDate}}"formControlName="startdate"/>
+                                     </div>
+                                 </div>   
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                            <label for="body">End Date</label>
+
+                                           <input type="date" class="form-control" [(ngModel)]="maxDate" min="{{minDate}}" max="2017-12-12" formControlName="enddate"/>
+                                     </div>
+                                 </div>   
+                            </div>     
+                           <!--end of fifth row-->
+                           <!--6th row-->
+                        
                            <!--end of the six row-->
                             <!-- 7th row-->
                             <div class="row">

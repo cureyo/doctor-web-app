@@ -17,7 +17,9 @@
                     </div> <!-- card header portion end-->
                     
               <div class="card-content table-responsive">
-                  <h4 style="color: #137a9c"><b>Patient Medical History</b></h4>
+                  <h4 style="color: #137a9c"><b>Patient Medical History</b>
+                  <br>
+                  <small>For: {{primeSymptom}}</small></h4>
                      <div class="row">
 
 <div *ngIf="hasDeviations" class="col-sm-4">
@@ -116,7 +118,27 @@
 </div>
 </div>
                      </div>
-                   
+                     <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
+                       <div class="row">
+      <div class="col-md-4" *ngFor="let fitness of fitnessArray">  
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="cureyo">
+                             <div class="ct-chart" id="{{fitness.chartId}}"></div>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="title"><b>{{fitness.title}}</b></h5>
+                            <p  class="category">{{fitness.text}}</p>
+                           
+                            
+                        </div>
+                        <div class="card-footer">
+                            <div  class="stats">
+                                {{fitness.insight}}              
+                            </div>
+                        </div>
+                    </div>
+         </div>
+    </div>
                      <h4 style="color: #137a9c"><b>Patient Demographics</b></h4>
               <div class="row">
 

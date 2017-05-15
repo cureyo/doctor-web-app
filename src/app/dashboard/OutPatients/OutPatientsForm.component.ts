@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from "@angular/forms";
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { AuthService } from "../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientDetailFormComponent } from '../PatientDetailForm/PatientDetailForm.component';
@@ -19,6 +19,7 @@ export class OutPatientsFormComponent implements OnInit {
 
 
   private outPatient: FormGroup;
+  private primeSymptom: any;
   private selectOutPatient: boolean = false;
   private details: any;
   private currentUser: any;
@@ -33,7 +34,7 @@ export class OutPatientsFormComponent implements OnInit {
   private location: any;
   private hometown: any;
   private birthday: any;
-  private education: any =[];
+  private education: any = [];
   private work: any = [];
   private hasAge: boolean = false;
   private hasLocation: boolean = false;
@@ -49,6 +50,7 @@ export class OutPatientsFormComponent implements OnInit {
   private currentQ: any = 0;
   private clinicIDNew: any;
   private dataReady: boolean = false;
+  private fitnessArray: any = [];
 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http) {
 
@@ -107,19 +109,19 @@ export class OutPatientsFormComponent implements OnInit {
                   //       q = queue;
                   //       //console.log(q);
                   //       this.currentQ = queue.$value;
-                        // this.clinicIDNew = clinicID;
-                        // this._authService._getCheckInDetails(clinicID, today, this.currentQ)
-                        //   .subscribe(data => {
-                        //     if (data != param) {
-                        //       console.log("response data ", data);
-                        //       //console.log('redirecting to ', 'out-patients/' + data.$value);
+                  // this.clinicIDNew = clinicID;
+                  // this._authService._getCheckInDetails(clinicID, today, this.currentQ)
+                  //   .subscribe(data => {
+                  //     if (data != param) {
+                  //       console.log("response data ", data);
+                  //       //console.log('redirecting to ', 'out-patients/' + data.$value);
 
-                        //       //this.router.navigate(['out-patients/' + data.$value])
-                        //     }
-                        //   });
+                  //       //this.router.navigate(['out-patients/' + data.$value])
+                  //     }
+                  //   });
 
-                    //   }
-                    // });
+                  //   }
+                  // });
                 })
 
             }
@@ -140,38 +142,66 @@ export class OutPatientsFormComponent implements OnInit {
         //console.log("the caredone data :", this.caredone);
         this.nickName = this.caredone.nickName;
         this.avatar = this.caredone.avatar;
+        this._authService._getHxPathName(this.caredone.primeSymptom)
+        .subscribe(
+          data => {
+            this.primeSymptom = data.path;
+          }
+        )
       })
   }
-    getPatientHistory(param) {
+  getFitnessData(patientId) {
+    this._authService._getHumanAPIData(patientId)
+    .subscribe(
+      fitnessData => {
+        if (fitnessData.ActivitySummary) {
+          this.fitnessArray[0] = {title: "Recent Activity", text: '', insight: '' }
+          for (let item of fitnessData.ActivitySummary) {
+            
+          }
+        }
+      }
+    )
+  }
+
+
+  getPatientHistory(param) {
+    this.getFitnessData(param);
     //console.log("ids of current user and param", this.currentUserID, param);
-    this.hasOtherHistory = [];
-    this.hasNormalHistory = [];
-    this.hasDeviationsHistory = [];
+    
     this._authService._findPatientHistory(this.currentUserID, param)
       .subscribe(
       data => {
-        let ctrNormal =0, ctrOther = 0, ctrDeviations = 0;
         
+        let ctrNormal = 0, ctrOther = 0, ctrDeviations = 0;
+        this.hasOtherHistory = [];
+        this.hasNormalHistory = [];
+        this.hasDeviationsHistory = [];
+
         for (let item in data) {
           console.log(data[item]);
-          if (item != "$key" && item !="$exists") {
-            if (data[item].standard == "NA") {
+          if (item != "$key" && item != "$exists") {
+            console.log(data[item]);
+            if (data[item].standard != false && data[item].standard != true && data[item].response == "") {
+              console.log("no response")
+            }
+            else if (data[item].standard == "NA") {
               this.hasOther = true;
-            this.hasOtherHistory[ctrOther]= {question : data[item].question, response : data[item].response};
-            ctrOther++;
+              this.hasOtherHistory[ctrOther] = { question: data[item].question, response: data[item].response };
+              ctrOther++;
+            }
+            else if (data[item].response == data[item].standard) {
+              this.hasNormal = true;
+              this.hasNormalHistory[ctrNormal] = { question: data[item].question, response: data[item].response };
+              ctrNormal++;
+            }
+            else if (data[item].response != data[item].standard) {
+              this.hasDeviations = true;
+              this.hasDeviationsHistory[ctrDeviations] = { question: data[item].question, response: data[item].response, standard: data[item].standard };
+              ctrDeviations++;
+            }
           }
-          else if (data[item].response == data[item].standard) {
-            this.hasNormal = true;
-            this.hasNormalHistory[ctrNormal]= {question : data[item].question, response : data[item].response};
-            ctrNormal++;
-          }
-          else if (data[item].response != data[item].standard) {
-            this.hasDeviations= true;
-            this.hasDeviationsHistory[ctrDeviations]= {question : data[item].question, response : data[item].response, standard : data[item].standard};
-            ctrDeviations++;
-           }
-          }
-           
+
         }
         console.log(this.hasNormalHistory);
         console.log(this.hasOtherHistory);
@@ -185,17 +215,17 @@ export class OutPatientsFormComponent implements OnInit {
       insights => {
         this.patient = insights
         console.log(this.patient)
-            this.hasAge = false;
-    this.hasHometown = false;
-    this.hasWork = false;
-    this.hasEducation = false;
-    this.hasLocation = false;
+        this.hasAge = false;
+        this.hasHometown = false;
+        this.hasWork = false;
+        this.hasEducation = false;
+        this.hasLocation = false;
 
         for (let item in this.patient) {
           if (this.patient[item].$key) {
             if (this.patient[item].$key == "birthday") {
               this.birthday = this.patient[item].$value;
-               this.hasAge = true;
+              this.hasAge = true;
             }
             else if (this.patient[item].$key == "hometown") {
               this.hometown = this.patient[item].name;
@@ -204,22 +234,22 @@ export class OutPatientsFormComponent implements OnInit {
               this.location = this.patient[item].name;
               this.hasLocation = true;
             } else if (this.patient[item].$key == "work") {
-              this.work=[];
+              this.work = [];
               for (let subItem in this.patient[item]) {
                 if (subItem != '$key' && subItem != '$exists')
-                this.work[subItem] = this.patient[item][subItem];
+                  this.work[subItem] = this.patient[item][subItem];
               }
               this.hasWork = true;
-              
+
             } else if (this.patient[item].$key == "education") {
               this.education = [];
               for (let subItem in this.patient[item]) {
                 if (subItem != '$key' && subItem != '$exists')
-                this.education[subItem] = this.patient[item][subItem];
+                  this.education[subItem] = this.patient[item][subItem];
               }
               console.log(this.education);
               this.hasEducation = true;
-            } 
+            }
           }
         }
         console.log(this.education);
@@ -234,24 +264,24 @@ export class OutPatientsFormComponent implements OnInit {
         //    this.school = this.patient[1].length - 1;
         // this.education = this.patient[1]
         //  }
-        
-      //   this.schoolName = this.education[this.school].concentration
-      //   //this.level = this.schoolName[0].name
-      //   this.School = this.education[this.school].school
-      //   this.skulName = this.School.name;
-      //   if (this.patient[5]) {
-      //   this.work = this.patient[5].length - 1;
-      //   this.Work = this.patient[5];
-      //   }
-      //   if (this.Work[this.work]) {
-      //     this.position = this.Work[this.work].position;
-      //      this.WorkName = this.Work[this.work].employer
-      //   }
-      //  if (this.WorkName) {
-      //     this.workName = this.WorkName.name
-      //     this.Position = this.position.name
-      //  }
-       
+
+        //   this.schoolName = this.education[this.school].concentration
+        //   //this.level = this.schoolName[0].name
+        //   this.School = this.education[this.school].school
+        //   this.skulName = this.School.name;
+        //   if (this.patient[5]) {
+        //   this.work = this.patient[5].length - 1;
+        //   this.Work = this.patient[5];
+        //   }
+        //   if (this.Work[this.work]) {
+        //     this.position = this.Work[this.work].position;
+        //      this.WorkName = this.Work[this.work].employer
+        //   }
+        //  if (this.WorkName) {
+        //     this.workName = this.WorkName.name
+        //     this.Position = this.position.name
+        //  }
+
         //console.log(this.workName, this.Position)
 
         //console.log(this.work)
@@ -259,7 +289,7 @@ export class OutPatientsFormComponent implements OnInit {
         if (this.patient[0]) {
           this.age = calculateAge(this.birthday);
         }
-        
+
         //console.log("age is ", this.age)
 
         function calculateAge(birthday) { // birthday is a string
@@ -309,16 +339,16 @@ export class OutPatientsFormComponent implements OnInit {
     //console.log(today)
     //console.log(this.currentQ)
     console.log(this.clinicIDNew, today, next);
-    
+
     this._authService._getCheckInDetails(this.clinicIDNew, today, next)
       .subscribe(data => {
         console.log(data);
         if (data.$value && data.$value != null) {
           this._authService._setClinicQueue(this.clinicIDNew, today, next);
           this.router.navigate(['out-patients/' + data.$key + '/' + data.$value])
-       
+
         }
-           else {
+        else {
           $.notify({
             icon: "notifications",
             message: "Today's queue is completed"
@@ -335,7 +365,7 @@ export class OutPatientsFormComponent implements OnInit {
         }
       });
   }
-    nextPatient() {
+  nextPatient() {
     var date = new Date();
     var dd = date.getDate();
     var mm = date.getMonth();
@@ -345,16 +375,16 @@ export class OutPatientsFormComponent implements OnInit {
     //console.log(today)
     //console.log(this.currentQ)
     console.log(this.clinicIDNew, today, next);
-    
+
     this._authService._getCheckInDetails(this.clinicIDNew, today, next)
       .subscribe(data => {
         console.log(data);
         if (data.$value && data.$value != null) {
           //this._authService._setClinicQueue(this.clinicIDNew, today, next);
           this.router.navigate(['out-patients/' + data.$key + '/' + data.$value])
-       
+
         }
-           else {
+        else {
           $.notify({
             icon: "notifications",
             message: "Today's queue is completed"
@@ -371,7 +401,7 @@ export class OutPatientsFormComponent implements OnInit {
         }
       });
   }
-      previousPatient() {
+  previousPatient() {
     var date = new Date();
     var dd = date.getDate();
     var mm = date.getMonth();
@@ -381,16 +411,16 @@ export class OutPatientsFormComponent implements OnInit {
     //console.log(today)
     //console.log(this.currentQ)
     console.log(this.clinicIDNew, today, next);
-    
+
     this._authService._getCheckInDetails(this.clinicIDNew, today, next)
       .subscribe(data => {
         console.log(data);
         if (data.$value && data.$value != null) {
           //this._authService._setClinicQueue(this.clinicIDNew, today, next);
           this.router.navigate(['out-patients/' + data.$key + '/' + data.$value])
-       
+
         }
-           else {
+        else {
           $.notify({
             icon: "notifications",
             message: "No previous patients"

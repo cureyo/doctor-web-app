@@ -7,7 +7,7 @@ import { AppConfig } from '../config/app.config';
 import { FbService } from "../services/facebook.service";
 
 
-import { FacebookService, FacebookLoginResponse, FacebookInitParams,FacebookApiMethod } from 'ng2-facebook-sdk';
+import { FacebookService, FacebookLoginResponse, FacebookInitParams, FacebookApiMethod } from 'ng2-facebook-sdk';
 import { environment } from '../environment';
 import { DomSanitizer } from '@angular/platform-browser';
 ;
@@ -40,12 +40,12 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private pageAccesTList: any = [];
   private specialityList: any = [];
   private years: any = [];
- public adAccountID:any;
-   public userID:any;
-   public campaignID:any;
-   public bidAmount:Number=8000;
-   public dailybudget:Number =100000;
-   public targetResponse:any;
+  public adAccountID: any;
+  public userID: any;
+  public campaignID: any;
+  public bidAmount: Number = 8000;
+  public dailybudget: Number = 100000;
+  public targetResponse: any;
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -57,7 +57,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     private _authService: AuthService,
     private sanitizer: DomSanitizer,
     private router: Router,
-     private _fbs: FacebookService
+    private _fbs: FacebookService
   ) {
 
     this.initFB();
@@ -72,40 +72,29 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit() {
-  //here is the code for ads part
 
-    // let fbParams: FacebookInitParams = {
-    //   appId: AppConfig.web.appID,
-    //   xfbml: true,
-    //   version: 'v2.9',
-     
-    // };
-    let method:FacebookApiMethod= 'post';
-    console.log("In DoctorCheckup facebook method is :",method);
-     //console.log("In DoctorCheckup fbparam data:",fbParams);
-   
+    let method: FacebookApiMethod = 'post';
+    console.log("In DoctorCheckup facebook method is :", method);
+    //console.log("In DoctorCheckup fbparam data:",fbParams);
 
-      this._authService.doclogin()
-      .then(data => {
-        this._fbs.getLoginStatus().then((response: FacebookLoginResponse) => {
-         console.log("In DoctorCheckup reponse for access token:",response);
-       this._fbs.api('/me?fields=adaccounts')
-            .then(response=>{
-             //  console.log("user response data is :",response);
-               this.userID=response.id; //user ID
-              this.adAccountID=response.adaccounts.data[0].id; //AdAccoundId
-             // this.fbAdsObject.adAccountID=this.adAccountID;
-               console.log("In DoctorCheckup this is the userId",this.userID);
-               console.log("In DoctorCheckup fb ad account details is :",this.adAccountID);                   
-                    
-                    })
-                  })           
-                                    
-            
-            
-            
-         }) ;
-  //end of ads code
+
+    // this._authService.doclogin()
+    //   .then(data => {
+    //     this._fbs.getLoginStatus().then((response: FacebookLoginResponse) => {
+    //       console.log("In DoctorCheckup reponse for access token:", response);
+    //       this._fbs.api('/me?fields=adaccounts')
+    //         .then(response => {
+    //           //  console.log("user response data is :",response);
+    //           this.userID = response.id; //user ID
+    //           this.adAccountID = response.adaccounts.data[0].id; //AdAccoundId
+    //           // this.fbAdsObject.adAccountID=this.adAccountID;
+    //           console.log("In DoctorCheckup this is the userId", this.userID);
+    //           console.log("In DoctorCheckup fb ad account details is :", this.adAccountID);
+
+    //         })
+    //     })
+    // });
+    //end of ads code
 
     this.specialityList = ['Gynaecology', 'Medical Specialist', 'Orthopedics', 'Dental', 'Dermatology', 'Cardiology',]
 
@@ -189,11 +178,11 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     this.showErrorFlag = true;
   }
 
-  getSRCurl() {
-    this.fbMessURL = "https://www.facebook.com/v2.3/plugins/send_to_messenger.php?messenger_app_id=" + this.appID + "&page_id=" + this.pageID + "&ref=" + this.passThrough;
+  // getSRCurl() {
+  //   this.fbMessURL = "https://www.facebook.com/v2.3/plugins/send_to_messenger.php?messenger_app_id=" + this.appID + "&page_id=" + this.pageID + "&ref=" + this.passThrough;
 
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.fbMessURL);
-  }
+  //   return this.sanitizer.bypassSecurityTrustResourceUrl(this.fbMessURL);
+  // }
 
   submitForm3(form: any): void {
     //console.log(form);
@@ -206,29 +195,29 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     };
     console.log(form);
 
-    if (form.fbPageAdded && this.adAccountID) {
+    if (form.fbPageAdded) {
       this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(
         response => {
           console.log("response", response);
-          this._authService._savePageAccessToken(form.fbPageId ,response.access_token, this.fbAccessToken)
-          .then(
+          this._authService._savePageAccessToken(form.fbPageId, response.access_token, this.fbAccessToken)
+            .then(
             resp => {
-               this.fs.api('/' + form.authUID+ '/adaccounts')
-               .then(
-        response2 => {
-          
-          form['adaccounts'] = response2.data;
-             this._authService._saveDoctor(form);
-          this._authService._saveUser(form).then(
-            data => {
-              console.log(data);
-              window.location.href = window.location.origin + '/website'
+              this.fs.api('/' + form.authUID + '/adaccounts')
+                .then(
+                response2 => {
+
+                  form['adaccounts'] = response2.data;
+                  this._authService._saveDoctor(form);
+                  this._authService._saveUser(form).then(
+                    data => {
+                      console.log(data);
+                      window.location.href = window.location.origin + '/website'
+                    });
+                }
+                );
+
             });
-            }
-          );
-       
-        });
         });
     } else {
       this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)

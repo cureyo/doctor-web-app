@@ -66,6 +66,8 @@ export const AppConfig = {
     patientHistory:     environment.envName + '/PatientHistory/',
     UserTable:          environment.envName + '/UserTable/',
     FbCampaign:         environment.envName + '/FbCampaign/',
-    HealthImage:         environment.envName + '/HealthImage/'
+    HealthImage:        environment.envName + '/HealthImage/',
+    HumanAPIToken:      environment.envName + '/HumanAPIReturn/',
+    HumanAPIData:      environment.envName + '/PatientFitnessData/',
   }
 }

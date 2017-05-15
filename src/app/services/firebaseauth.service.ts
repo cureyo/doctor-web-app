@@ -283,6 +283,14 @@ public _findPatient(currentUserId, caredoneId) {
     const HxPaths = this.af.database.object(this.db.HxPathNames + id);
     return HxPaths.set({path: pathName});
   }//_saveCaredOne
+    public _getHxPathName(id) {
+    return this.af.database.object(this.db.HxPathNames + id);
+    //return HxPaths.set({path: pathName});
+  }//_saveCaredOne
+  public _getHumanAPIData(patientId) {
+    return this.af.database.object(this.db.HumanAPIData + patientId);
+    //return HxPaths.set({path: pathName});
+  }
  public _saveCarePathway(data, pathName) {
     const carePaths = this.af.database.list(this.db.carePaths);
     return carePaths.push(data);
