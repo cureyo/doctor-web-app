@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private caredOnesFamily: any =[];
   private caredOneId: any;
   private noFacebook: boolean = true;
-
+  private tempCurrentUserID:any;
 
   ngAfterViewInit(): void {
     // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
@@ -146,6 +146,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this._authService._getUser()
       .subscribe(
       data => {
+       
         if (!data.isAuth) {
          //window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
         }
@@ -162,7 +163,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       error => console.log(error)
       );
 
-
+     
   }
 
 

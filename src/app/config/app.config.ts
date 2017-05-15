@@ -68,6 +68,7 @@ export const AppConfig = {
     FbCampaign:         environment.envName + '/FbCampaign/',
     HealthImage:        environment.envName + '/HealthImage/',
     HumanAPIToken:      environment.envName + '/HumanAPIReturn/',
-    HumanAPIData:      environment.envName + '/PatientFitnessData/',
+    HumanAPIData:       environment.envName + '/PatientFitnessData/',
+    ActivitySummary:    environment.envName+ '/ActivitySummary/'
   }
 }

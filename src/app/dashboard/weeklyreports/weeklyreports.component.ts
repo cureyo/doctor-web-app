@@ -22,11 +22,6 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
   private physicalConsult:any='Physical_Consultation';
   private bloodSugar:any='Blood Sugar';
 
-  // private exerciseTracker: any = 'Medication Reminder';
-  // private medReminder: any = 'Medication Reminder';
-  // private medReminder: any = 'Medication Reminder';
-  // private medReminder: any = 'Medication Reminder';
-  // private medReminder: any = 'Medication Reminder';
   private currentUser: any;
   private showModal: boolean = false;
   private user: any;
@@ -98,7 +93,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
   }//  constructor
 
   ngOnInit() {
-
+    
   }
 
   ngAfterViewInit() {
@@ -356,9 +351,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           }
           this.labSeries = lbSeries;
           this.labTitles = lbTitles;
-          //console.log("this.labSeries");
-          //console.log(this.labSeries);
-          //console.log(this.labTitles);
+         
         }
       });
   }
@@ -430,9 +423,6 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
           let exMLabels = [], exMSeries = [], index = 0;
           for (let med of meds) {
             exMLabels[index] = med.$key;
-            ////console.log("med");
-            ////console.log(med);
-            //////console.log(meds[med]);
             if (med.Tracking_Data && med.$key != ",") {
               let endMIndex = med.Tracking_Data.length - 1, startMIndex;
               var medDay, i = 0, totalMed = 0, ctr = 0;
@@ -452,9 +442,7 @@ export class WeeklyReportComponent implements OnInit, AfterViewInit {
 
                 ctr = ctr + 1;
               }
-              //console.log("exerMax is ", maxMed);
-              //console.log("total is ", totalMed)
-              // aveEx = totalEx/ ctr;
+             
               aveMed[index] = 100 * totalMed / ctr;
 
               exMSeries[index] = aveMed[index].toFixed(2);
