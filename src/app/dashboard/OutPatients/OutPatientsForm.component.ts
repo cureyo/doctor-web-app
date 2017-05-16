@@ -5,7 +5,7 @@ import { AuthService } from "../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientDetailFormComponent } from '../PatientDetailForm/PatientDetailForm.component';
 import { PatientPreviewComponent } from "../PatientPreview/PatientPreview.component"
-
+import LineChart=require('../../../assets/js/linechart.js');
 declare var $: any
 
 @Component({
@@ -51,7 +51,15 @@ export class OutPatientsFormComponent implements OnInit {
   private clinicIDNew: any;
   private dataReady: boolean = false;
   private fitnessArray: any = [];
-
+  private tempCurrentUserID:any;
+  private seriesArr:any=[];
+  private labelArr:any=[];
+  private fitness:any;
+  private maxValues:any=0;
+  private minValue:any=0;
+  private title:any;
+  private average:any;
+  private msgDate:any;
   constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http) {
 
 
@@ -68,6 +76,66 @@ export class OutPatientsFormComponent implements OnInit {
     this._authService._getUser()
       .subscribe(
       data => {
+/*************************************************************************************************** */
+          //preparing  the data from the firebase for chart 
+      this.tempCurrentUserID=data.user.uid;
+      console.log("user and caredone ID:",this.tempCurrentUserID)
+     this._authService._getPatientFitnessData(this.tempCurrentUserID)
+     .subscribe(response=>{
+         var temp=response;
+         this.title=response.$key;
+         this.title=this.title.slice(0,-7);
+       console.log("responsne data for chart stage 1",temp);
+       for (var i=0;i<temp.length;i++){
+            this.minValue=temp[0].calories;
+            var startDate=temp[0].date;
+            var endDate=temp[temp.length-1].date;
+            this.msgDate="from Date:"+" "+startDate+" "+"to Date:"+" "+endDate;
+            var series=temp[i].calories;
+            var labels=temp[i].date;
+               
+            //now trim the date 
+           var labels=labels.slice(-2);
+             console.log("trim date:",labels)
+            //end of date triming 
+
+            this.seriesArr[i]=series;
+            
+            if (i==0 || i==temp.length-1)
+            {
+            this.labelArr[i]=labels;
+          }
+          else 
+          {
+             this.labelArr[i]=" ";
+          }
+          
+          this.labelArr[this.labelArr.length]="";
+          
+            //min value 
+            if (this.minValue>series){
+              this.minValue=series;
+             
+            }
+            //max value
+            if (this.maxValues<series){
+               this.maxValues=series;
+              
+            }
+            
+           // console.log("series and lable arr:", this.seriesArr,this.labelArr[i]);
+       }
+         this.average=Math.round(parseInt(this.maxValues+this.minValue)/temp.length);
+        
+      console.log("series and lable arr:",this.labelArr,this.seriesArr,this.minValue,this.maxValues,"patientsomething");
+       //call the chart.js functions 
+        var t=LineChart(this.labelArr,this.seriesArr,this.minValue,this.maxValues,"patientsomething");
+        this.fitness=t;
+        
+       // end of chart.js function call
+     })
+       //end of chart data preparation
+/*************************************************************************************************** */
         var date = new Date();
         var dd = date.getDate();
         var mm = date.getMonth();

@@ -120,20 +120,20 @@
                      </div>
                      <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
                        <div class="row">
-      <div class="col-md-4" *ngFor="let fitness of fitnessArray">  
+                        <div class="col-md-4">  
                     <div class="card" >
                         <div class="card-header card-chart" data-background-color="cureyo">
-                             <div class="ct-chart" id="{{fitness.chartId}}"></div>
+                             <div class="ct-chart" id="{{fitness}}"></div>
                         </div>
                         <div class="card-content">
-                            <h5 class="title"><b>{{fitness.title}}</b></h5>
-                            <p  class="category">{{fitness.text}}</p>
+                            <h5 class="title"><b>{{title}}</b></h5>
+                            <p  class="category">{{msgDate}}</p>
                            
                             
                         </div>
                         <div class="card-footer">
                             <div  class="stats">
-                                {{fitness.insight}}              
+                                Average {{average}} calories/Day.  
                             </div>
                         </div>
                     </div>

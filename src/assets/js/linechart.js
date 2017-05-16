@@ -1,6 +1,11 @@
-module.exports=function LineChart(Title,Values,MaxValue,ChartNameID){
-     console.log("LineChart called",Title,Values,MaxValue,ChartNameID);
-    if (Title && Values && MaxValue){
+module.exports=function LineChart(Title,Values,MinValue,MaxValue,ChartNameID){
+     console.log("LineChart called",Title,Values,ChartNameID);
+    if (Title && Values && ChartNameID)
+         { 
+            //     for(var i=0;i<Values.length;i++)
+            //       {
+            //             console.log("values print",i,typeof Values,Values[i])
+            //       }
         
            if(Values) {
                 dataLineChart = {
@@ -11,8 +16,8 @@ module.exports=function LineChart(Title,Values,MaxValue,ChartNameID){
                 optionsLinechart = {
                 lineSmooth: Chartist.Interpolation.cardinal
                 ({tension: 0}),
-                low: 0,
-                high: MaxValue, 
+                low: MinValue,
+                high: MaxValue+1000, 
                 chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
                                           };
                 console.log("dataLineChart",dataLineChart);

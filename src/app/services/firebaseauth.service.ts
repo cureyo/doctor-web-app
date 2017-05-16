@@ -118,6 +118,11 @@ export class AuthService {
     return this.af.database.object(this.db.doctorPages + pageId);
   }//_findCaredoneByKey
 
+  public _getPatientFitnessData(userID){
+      console.log("input data and params",userID)
+      return this.af.database.object(this.db.HumanAPIData+'/'+userID+'/ActivitySummary')
+  }//get the patient fitness data
+
   public _saveReminders(data) {
     return this.af.database.list(this.db.scheduledJobs)
       .push(data);
