@@ -67,6 +67,12 @@ export class OutPatientsFormComponent implements OnInit {
   private sleepSummaryDate:any;
   private sleepSummaryTrimedtitle:any;
   private sleepSummaryAverage:any;
+  //for height
+  private height:any; 
+  private heightUnit:any;
+  //for weight
+  private weight:any; 
+  private weightUnit:any;
 
  
   constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http) {
@@ -90,6 +96,10 @@ export class OutPatientsFormComponent implements OnInit {
             var activitySummaryObj=response.ActivitySummary;
             var hrSummaryObj=response.HRSummary;
             var sleepSummaryObj=response.SleepSummary;
+            this.height=response.Height.value;
+            this.heightUnit=response.Height.unit;
+            this.weight=response.Weight.value;
+            this.weightUnit=response.Weight.unit;
             this.activitySummaryChart(activitySummaryObj);
             var self = this;
             setTimeout(

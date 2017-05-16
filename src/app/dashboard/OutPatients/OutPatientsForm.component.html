@@ -118,16 +118,56 @@
 </div>
 </div>
                      </div>
-                     <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
+<!--*****************************Height and Weight*******************************************-->               
+          <!-- card for height and weight-->                     
+            <div class="row">
+                 <!-- height-->
+                 <div class="col-md-4" *ngIf="height && heightUnit">  
+                    <div class="card card-stats" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+                        <i class="material-icons" style="border-radius: 4px; width: 88px; height: 88px;">content_copy</i>
+                        <!--<img src="{{caredone.avatar}}" style="border-radius: 4px; width: 88px; height: 88px;">-->
+                        </div>
+
+                        <div class="card-content">
+                         <h3 class="title">{{height}} {{heightUnit}}
+                        <br><small>Height</small></h3>
+
+                        </div>
+                 </div>  
+                 </div>  
+                 <!--weigth-->
+                 <div class="col-md-4" *ngIf="weight && weightUnit">  
+                    <div class="card card-stats" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+                    
+                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+                        <i class="material-icons">content_copy</i>
+                        <!--<img src="{{caredone.avatar}}" style="border-radius: 4px; width: 88px; height: 88px;">-->
+                        </div>
+
+                        <div class="card-content">
+                         <h3 class="title">{{weight}} {{weightUnit}}
+                        <br><small>Weight</small></h3>
+
+                        </div>
+
+                    </div>
+                 </div>            
+            </div>
+<!--*****************************Height and Weight*******************************************-->
+            <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
+<!--*****************************charts*******************************************-->
+                     
                      <!-- this is row it will containt 3 charts at least-->
                        <div class="row">
-                            <div class="col-md-4">  
+                            <div class="col-md-4" *ngIf="activitySummarytitle && activitySummaryTrimedtitle &&activitySummaryDate &&activitySummaryAverage">  
                                 <div class="card" >
                                     <div class="card-header card-chart" data-background-color="cureyo">
                                             <div class="ct-chart" id="{{activitySummarytitle}}"></div>
                                             </div>
                                     <div class="card-content">
-                                            <h5 class="title"><b>{{activitySummaryTrimedtitle}}</b></h5>
+                                            <h5 class="title">{{activitySummaryTrimedtitle}}</h5>
                                             <p  class="category">{{activitySummaryDate}}</p>
                                     </div>
                                     <div class="card-footer">
@@ -137,14 +177,16 @@
                                     </div>
                                 </div>
                             </div>
+                             
+                           
 
-                            <div class="col-md-4" *ngIf="activitySummarytitle!=hrSummarytitle">  
+                            <div class="col-md-4" *ngIf="hrSummarytitle && hrSummaryTrimedtitle">  
                                 <div class="card" >
                                     <div class="card-header card-chart" data-background-color="cureyo">
                                             <div class="ct-chart" id="{{hrSummarytitle}}"></div>
                                             </div>
                                     <div class="card-content">
-                                            <h5 class="title"><b>{{hrSummaryTrimedtitle}}</b></h5>
+                                            <h5 class="title">Heart Rate</h5>
                                             <p  class="category">{{hrSummaryDate}}</p>
                                     </div>
                                     <div class="card-footer">
@@ -160,7 +202,7 @@
                                             <div class="ct-chart" id="{{sleepSummarytitle}}"></div>
                                             </div>
                                     <div class="card-content">
-                                            <h5 class="title"><b>{{sleepSummaryTrimedtitle}}</b></h5>
+                                            <h5 class="title">Sleep</h5>
                                             <p  class="category">{{sleepSummaryDate}}</p>
                                     </div>
                                     <div class="card-footer">
@@ -173,6 +215,7 @@
 
                       </div>
     <!-- end of the row-->
+    <!--************************Charts**************************************************-->
                      <h4 style="color: #137a9c"><b>Patient Demographics</b></h4>
               <div class="row">
 
