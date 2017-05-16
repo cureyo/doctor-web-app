@@ -69,6 +69,6 @@ export const AppConfig = {
     HealthImage:        environment.envName + '/HealthImage/',
     HumanAPIToken:      environment.envName + '/HumanAPIReturn/',
     HumanAPIData:       environment.envName + '/PatientFitnessData/',
-    ActivitySummary:    environment.envName+ '/ActivitySummary/'
+
   }
 }

@@ -119,26 +119,60 @@
 </div>
                      </div>
                      <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
+                     <!-- this is row it will containt 3 charts at least-->
                        <div class="row">
-                        <div class="col-md-4">  
-                    <div class="card" >
-                        <div class="card-header card-chart" data-background-color="cureyo">
-                             <div class="ct-chart" id="{{fitness}}"></div>
-                        </div>
-                        <div class="card-content">
-                            <h5 class="title"><b>{{title}}</b></h5>
-                            <p  class="category">{{msgDate}}</p>
-                           
-                            
-                        </div>
-                        <div class="card-footer">
-                            <div  class="stats">
-                                Average {{average}} calories/Day.  
+                            <div class="col-md-4">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{activitySummarytitle}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title"><b>{{activitySummaryTrimedtitle}}</b></h5>
+                                            <p  class="category">{{activitySummaryDate}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Average {{activitySummaryAverage}} calories/Day.  
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-         </div>
-    </div>
+
+                            <div class="col-md-4" *ngIf="activitySummarytitle!=hrSummarytitle">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{hrSummarytitle}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title"><b>{{hrSummaryTrimedtitle}}</b></h5>
+                                            <p  class="category">{{hrSummaryDate}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Average {{hrSummaryAverage}} calories/Day.  
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf="sleepSummarytitle">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{sleepSummarytitle}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title"><b>{{sleepSummaryTrimedtitle}}</b></h5>
+                                            <p  class="category">{{sleepSummaryDate}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Average Sleep {{sleepSummaryAverage}} per/day;
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                      </div>
+    <!-- end of the row-->
                      <h4 style="color: #137a9c"><b>Patient Demographics</b></h4>
               <div class="row">
 

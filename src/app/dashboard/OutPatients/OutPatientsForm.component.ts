@@ -52,21 +52,67 @@ export class OutPatientsFormComponent implements OnInit {
   private dataReady: boolean = false;
   private fitnessArray: any = [];
   private tempCurrentUserID:any;
-  private seriesArr:any=[];
-  private labelArr:any=[];
-  private fitness:any;
-  private maxValues:any=0;
-  private minValue:any=0;
-  private title:any;
-  private average:any;
-  private msgDate:any;
+  //for activity
+  private activitySummarytitle:any;
+  private activitySummaryDate:any;
+  private activitySummaryTrimedtitle:any;
+  private activitySummaryAverage:any;
+//for Hr summary
+  private hrSummarytitle:any;
+  private hrSummaryDate:any;
+  private hrSummaryTrimedtitle:any;
+  private hrSummaryAverage:any;
+  //for SleepSummary
+  private sleepSummarytitle:any;
+  private sleepSummaryDate:any;
+  private sleepSummaryTrimedtitle:any;
+  private sleepSummaryAverage:any;
+
+ 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http) {
 
 
   }
 
   ngOnInit() {
+      
+     this.route.params.subscribe(
+      params => {
+        let param = params['id'];
+        
+        /*************************************************************************************************** */
+          //preparing  the data from the firebase for chart 
+      this.tempCurrentUserID=param;
+      console.log("user and caredone ID:",this.tempCurrentUserID)
+        this._authService._getPatientFitnessData(this.tempCurrentUserID)
+        .subscribe(response=>{
+           console.log("response is :",response);
+            var activitySummaryObj=response.ActivitySummary;
+            var hrSummaryObj=response.HRSummary;
+            var sleepSummaryObj=response.SleepSummary;
+            this.activitySummaryChart(activitySummaryObj);
+            var self = this;
+            setTimeout(
+              function() {
+                self.HRSummarychart(hrSummaryObj);
 
+                      setTimeout(
+                    function() {
+                      self.SleepSummaryChart(sleepSummaryObj);
+                    }, 3000
+                  )
+              }, 2000
+            )
+            
+           
+             
+        
+       // end of chart.js function call
+     })
+       //end of chart data preparation
+/*************************************************************************************************** */
+          
+    }); 
     this.outPatient = this._fb.group({
       message: [''],
 
@@ -76,66 +122,7 @@ export class OutPatientsFormComponent implements OnInit {
     this._authService._getUser()
       .subscribe(
       data => {
-/*************************************************************************************************** */
-          //preparing  the data from the firebase for chart 
-      this.tempCurrentUserID=data.user.uid;
-      console.log("user and caredone ID:",this.tempCurrentUserID)
-     this._authService._getPatientFitnessData(this.tempCurrentUserID)
-     .subscribe(response=>{
-         var temp=response;
-         this.title=response.$key;
-         this.title=this.title.slice(0,-7);
-       console.log("responsne data for chart stage 1",temp);
-       for (var i=0;i<temp.length;i++){
-            this.minValue=temp[0].calories;
-            var startDate=temp[0].date;
-            var endDate=temp[temp.length-1].date;
-            this.msgDate="from Date:"+" "+startDate+" "+"to Date:"+" "+endDate;
-            var series=temp[i].calories;
-            var labels=temp[i].date;
-               
-            //now trim the date 
-           var labels=labels.slice(-2);
-             console.log("trim date:",labels)
-            //end of date triming 
 
-            this.seriesArr[i]=series;
-            
-            if (i==0 || i==temp.length-1)
-            {
-            this.labelArr[i]=labels;
-          }
-          else 
-          {
-             this.labelArr[i]=" ";
-          }
-          
-          this.labelArr[this.labelArr.length]="";
-          
-            //min value 
-            if (this.minValue>series){
-              this.minValue=series;
-             
-            }
-            //max value
-            if (this.maxValues<series){
-               this.maxValues=series;
-              
-            }
-            
-           // console.log("series and lable arr:", this.seriesArr,this.labelArr[i]);
-       }
-         this.average=Math.round(parseInt(this.maxValues+this.minValue)/temp.length);
-        
-      console.log("series and lable arr:",this.labelArr,this.seriesArr,this.minValue,this.maxValues,"patientsomething");
-       //call the chart.js functions 
-        var t=LineChart(this.labelArr,this.seriesArr,this.minValue,this.maxValues,"patientsomething");
-        this.fitness=t;
-        
-       // end of chart.js function call
-     })
-       //end of chart data preparation
-/*************************************************************************************************** */
         var date = new Date();
         var dd = date.getDate();
         var mm = date.getMonth();
@@ -197,7 +184,203 @@ export class OutPatientsFormComponent implements OnInit {
           });
       });
 
+  } //end of ngOnInIt 
+  //function for activity summary
+  activitySummaryChart(activitySummaryObj){
+    console.log("Activity summary Obj:",activitySummaryObj);
+             var labelArr=[];
+             var seriesArr=[];
+             var minValue;
+             var maxValue;
+             var startDate;
+             var endDate;
+             var average;
+             var series;
+             var labels;
+            //  temp=activitySummaryObj;
+             this.activitySummaryTrimedtitle="ActivitySummary";
+             this.activitySummaryTrimedtitle=this.activitySummaryTrimedtitle.slice(0,-7);
+    
+       for (var i=0;i<activitySummaryObj.length;i++){
+
+                minValue=activitySummaryObj[0].calories;
+                maxValue=activitySummaryObj[0].calories;
+                startDate=activitySummaryObj[0].date;
+                endDate=activitySummaryObj[activitySummaryObj.length-1].date;
+                this.activitySummaryDate="from Date:"+" "+startDate+" "+"to Date:"+" "+endDate;
+                series=activitySummaryObj[i].calories;
+                labels=activitySummaryObj[i].date;
+                //now trim the date 
+                labels=labels.slice(-2);
+                // console.log("trim date:",labels)
+                //end of date triming 
+
+                  seriesArr[i]=series;
+                
+                if (i==0 || i==activitySummaryObj.length-1)
+                {
+                  labelArr[i]=labels;
+                }
+                else 
+                {
+                    labelArr[i]=" ";
+                }
+              
+                 labelArr[labelArr.length]="";
+              
+                //min value 
+                if (minValue>series){
+                    minValue=series;
+                
+                }
+                //max value
+                if (maxValue<series){
+                  maxValue=series;
+                  
+                }
+              
+          }
+            this.activitySummaryAverage=Math.round(parseInt(minValue+maxValue)/activitySummaryObj.length);
+            var t=LineChart(labelArr,seriesArr,minValue,maxValue,"patientsomething");
+            console.log("patientsomething id is", t)
+            this.activitySummarytitle=t;
   }
+//end of function for activity summary
+//Hr summary chart
+HRSummarychart(hrSummaryObj){
+   console.log("hr summary Obj:",hrSummaryObj);
+
+             var hrlabelArr=[];
+             var hrseriesArr=[];
+             var hrminValue;
+             var hrmaxValue;
+             var hrstartDate;
+             var hrendDate;
+             var hraverage=0;
+             var hrseries=0;
+             var hrlabels;
+             var Datearray=[];
+            //  temp=activitySummaryObj;
+             this.hrSummaryTrimedtitle="hrSummary";
+             this.hrSummaryTrimedtitle=this.hrSummaryTrimedtitle.slice(0,-7);
+
+    
+       for (var i=0;i<hrSummaryObj.length;i++){
+                
+                  //now trim the date
+                var temp = new Date(hrSummaryObj[i].timestamp);
+                Datearray[i]= temp.getFullYear()+'-' + (temp.getMonth()+1) + '-'+temp.getDate(); 
+                //end of date trim 
+
+                hrminValue=hrSummaryObj[0].value;
+                hrmaxValue=hrSummaryObj[0].value;
+                hrseries=hrSummaryObj[i].value;
+                hrlabels=Datearray[i];
+                //now trim the date 
+                  hrlabels=hrlabels.slice(-2);
+                // console.log("trim date:",hrlabels)
+                //end of date triming 
+
+                  hrseriesArr[i]=hrseries;
+                
+                if (i==0 || i==hrSummaryObj.length-1)
+                {
+                  hrlabelArr[i]=hrlabels;
+                }
+                else 
+                {
+                    hrlabelArr[i]=" ";
+                }
+              
+                 hrlabelArr[hrlabelArr.length]="";
+              
+                //min value 
+                if (hrminValue>hrseries){
+                    hrminValue=hrseries;
+                
+                }
+                //max value
+                if (hrmaxValue<hrseries){
+                  hrmaxValue=hrseries;
+                  
+                }
+              
+          }
+                hrstartDate=Datearray[0];
+                hrendDate=Datearray[Datearray.length-1];
+                this.hrSummaryDate="from Date:"+" "+hrstartDate+" "+"to Date:"+" "+hrendDate;
+                // console.log(".hrSummaryDate",this.hrSummaryDate);
+
+                this.hrSummaryAverage=Math.round(parseInt(hrminValue+hrmaxValue)/hrSummaryObj.length);
+                var t=LineChart(hrlabelArr,hrseriesArr,hrminValue,hrmaxValue,"HrSummary");
+                console.log("id is", t)
+                this.hrSummarytitle=t;
+}
+//end of hr summary chart
+//sleep summary chart
+SleepSummaryChart(sleepSummaryObj){
+
+          console.log("sleep summary Obj:",sleepSummaryObj);
+
+             var sleeplabelArr=[];
+             var sleepseriesArr=[];
+             var sleepminValue;
+             var sleepmaxValue;
+             var sleepstartDate;
+             var sleependDate;
+             var sleepaverage=0;
+             var sleepseries=0;
+             var sleeplabels;
+            //  temp=activitySummaryObj;
+             this.sleepSummaryTrimedtitle="sleepSummary";
+             this.sleepSummaryTrimedtitle=this.sleepSummaryTrimedtitle.slice(0,-7);
+    
+       for (var i=0;i<sleepSummaryObj.length;i++){
+
+                sleepminValue=sleepSummaryObj[0].timeAsleep;
+                sleepmaxValue=sleepSummaryObj[0].timeAsleep;
+                sleepstartDate=sleepSummaryObj[0].date;
+                sleependDate=sleepSummaryObj[sleepSummaryObj.length-1].date;
+                this.sleepSummaryDate="from Date:"+" "+sleepstartDate+" "+"to Date:"+" "+sleependDate;
+                sleepseries=sleepSummaryObj[i].timeAsleep;
+                sleeplabels=sleepSummaryObj[i].date;
+                //now trim the date 
+                 sleeplabels=sleeplabels.slice(-2);
+                // console.log("trim date:",labels)
+                //end of date triming 
+
+                  sleepseriesArr[i]=sleepseries;
+                
+                if (i==0 || i==sleepSummaryObj.length-1)
+                {
+                  sleeplabelArr[i]=sleeplabels;
+                }
+                else 
+                {
+                    sleeplabelArr[i]=" ";
+                }
+              
+                 sleeplabelArr[sleeplabelArr.length]="";
+              
+                //min value 
+                if (sleepminValue>sleepseries){
+                    sleepminValue=sleepseries;
+                
+                }
+                //max value
+                if (sleepmaxValue<sleepseries){
+                  sleepmaxValue=sleepseries;
+                  
+                }
+              
+          }
+            this.sleepSummaryAverage=Math.round(parseInt(sleepminValue+sleepmaxValue)/sleepSummaryObj.length);
+            var t=LineChart(sleeplabelArr,sleepseriesArr,sleepminValue,sleepmaxValue,"sleepSummary");
+            console.log("id is", t)
+            this.sleepSummarytitle=t;
+
+}
+//end of sleep summary chart
 
   //get param function
   getCaredOne(param) {

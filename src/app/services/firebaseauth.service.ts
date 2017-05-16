@@ -120,7 +120,7 @@ export class AuthService {
 
   public _getPatientFitnessData(userID){
       console.log("input data and params",userID)
-      return this.af.database.object(this.db.HumanAPIData+'/'+userID+'/ActivitySummary')
+      return this.af.database.object(this.db.HumanAPIData+'/'+userID)
   }//get the patient fitness data
 
   public _saveReminders(data) {
