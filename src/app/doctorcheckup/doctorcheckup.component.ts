@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { AppConfig } from '../config/app.config';
 //import { DoctorCheckup } from "../models/doctorcheckup.interface";
 import { FbService } from "../services/facebook.service";
+import { Http, Response } from '@angular/http';
 
 
 import { FacebookService, FacebookLoginResponse, FacebookInitParams, FacebookApiMethod } from 'ng2-facebook-sdk';
@@ -57,7 +58,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     private _authService: AuthService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private _fbs: FacebookService
+    private _fbs: FacebookService,
+    private http: Http
   ) {
 
     this.initFB();
@@ -200,24 +202,45 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
         .then(
         response => {
           console.log("response", response);
-          this._authService._savePageAccessToken(form.fbPageId, response.access_token, this.fbAccessToken)
-            .then(
-            resp => {
-              this.fs.api('/' + form.authUID + '/adaccounts')
-                .then(
-                response2 => {
+          this.getAccessTokenData(response.access_token)
+            .subscribe(
+            data => {
+              console.log("page access token data: ", data);
+              this.getFinalAccessToken(form.authUID, data.access_token)
+                .subscribe(
+                data2 => {
+                  console.log(data2.data);
+                  let accesToken;
+                  for (let page in data2.data) {
+                    console.log(data2.data[page]);
+                    if (data2.data[page].id == form.fbPageId) {
+                      accesToken = data2.data[page].access_token;
+                    }
+                  }
+                  this._authService._savePageAccessToken(form.fbPageId, accesToken, this.fbAccessToken)
+                    .then(
+                    resp => {
+                      this.fs.api('/' + form.authUID + '/adaccounts')
+                        .then(
+                        response2 => {
 
-                  form['adaccounts'] = response2.data;
-                  this._authService._saveDoctor(form);
-                  this._authService._saveUser(form).then(
-                    data => {
-                      console.log(data);
-                      window.location.href = window.location.origin + '/website'
+                          form['adaccounts'] = response2.data;
+                          this._authService._saveDoctor(form);
+                          this._authService._saveUser(form).then(
+                            data => {
+                              console.log(data);
+                              window.location.href = window.location.origin + '/website'
+                            });
+                        }
+                        );
+
                     });
                 }
-                );
+                )
 
-            });
+            }
+            )
+
         });
     } else {
       this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)
@@ -233,7 +256,22 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
 
 
   }//submitForm
+  getAccessTokenData(tempToken) {
 
+    const domainURL = "https://graph.facebook.com/oauth/access_token?client_id=1133564906671009&client_secret=c8806fa86f03040c405eb65196ac3ed9&grant_type=fb_exchange_token&fb_exchange_token=" + tempToken;
+
+    return this.http.get(domainURL)
+      .map((res: Response) => res.json());
+
+  }
+  getFinalAccessToken(userID, tempToken2) {
+
+    const domainURL = "https://graph.facebook.com/" + userID + "/accounts?access_token=" + tempToken2;
+
+    return this.http.get(domainURL)
+      .map((res: Response) => res.json());
+
+  }
   fetchPages(): void {
     //////console.log("this does not execute 2")
     if (this.fbAccessToken === null) {

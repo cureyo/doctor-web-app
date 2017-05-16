@@ -205,9 +205,10 @@ export class CarePathsComponent implements OnInit {
   checkTypeSelect(type, i) {
     //console.log("check type is",type, " for ", i);
     ////console.log()
-    if (type == 'mcq')
-      this.checkTypes[i] = true;
-    else this.checkTypes[i] = false;
+    this.checkTypes[i] = type;
+    // if (type == 'mcq')
+    //   this.checkTypes[i] = true;
+    // else this.checkTypes[i] = false;
   }
   searchDomain = (model) => {
     let job = model['value'];
