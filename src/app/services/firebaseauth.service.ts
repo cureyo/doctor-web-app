@@ -166,6 +166,22 @@ export class AuthService {
         return this.af.database.object(this.db.checkIns + clinicID + '/' + date + '/' + q);
        
   }//fetch the checkin data
+     public _getAllCheckIns(clinicID) {
+        //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+        return this.af.database.object(this.db.checkIns + clinicID);
+       
+  }//fetch all the checkin data
+
+       public _getMessengerIds(pageID) {
+        //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+        return this.af.database.list(this.db.messagingIds + pageID);
+       
+  }//fetch the messagingIds data
+         public _getCareSchedules(pageID) {
+        //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+        return this.af.database.list(this.db.careSchedule + pageID);
+       
+  }//fetch the messagingIds data
   public _getClinicQueue(clinicID, date) {
      //console.log(this.db.queue + clinicID + '/' + date)
         return this.af.database.object(this.db.queue + clinicID + '/' + date + '/q');

@@ -19,10 +19,48 @@
 </div>
 
 </div>
-<h4>Summary</h4>
-<div class="row">
-    
-</div>
+<h4>Clinic Summary</h4>
+                 <!-- this is row it will containt 3 charts at least-->
+                       <div class="row">
+                            <div class="col-md-4" *ngIf="checkInChrtReady">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{checkInChartId}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title">{{checkInsSummaryTitle}}</h5>
+                                            <p  class="category">{{checkInsSummaryText}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Average check-Ins <b> {{averageCheckIns}} per day </b>  
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                             
+                           
+
+                            <div class="col-md-8" *ngIf="ovlSummaryChrtReady">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{ovlSummaryChartId}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title">{{ovlSummaryTitle}}</h5>
+                                            <p  class="category">{{ovlSummaryText}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Includes counts since begining
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                      </div>
+    <!-- end of the row-->
 <h4>Registered Patients</h4>
            <div class="searchbox" style="width: 300px;">
     <div class="input-group">

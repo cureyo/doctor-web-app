@@ -6,6 +6,8 @@ import { AppConfig } from '../../config/app.config';
 import initDemo = require('../../../assets/js/charts.js');
 import { CaredoneFormComponent } from "../caredone-form/caredone-form.component";
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
+import LineChart=require('../../../assets/js/linechart.js');
+import BarChart=require('../../../assets/js/barchart.js');
 
 declare var $: any
 
@@ -23,8 +25,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private isAuth: boolean;
   private noCaredOnes: boolean = false;
   private fbAccessToken: string;
+  private totalCheckIns: any = 0;
   private caredOnes: any = [];
   private caredOnesCopy: any = [];
+  private checkInsTblDates: any = [];
+  private checkInsTblCount: any = [];
   private onboardingReview: any;
   private noOfCaredOnes: number = 0;
   private noOfCaredBy: number = 0;
@@ -39,6 +44,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private caredOneId: any;
   private noFacebook: boolean = true;
   private tempCurrentUserID:any;
+  private totalMsngrConnects: any;
+  private totalCaresScheduled: any;
+  private checkInChartId: any = "checkInChart";
+  private ovlSummaryChartId: any = "ovlSummaryChartId";
+  private checkInChrtReady: boolean = false;
+  private ovlSummaryChrtReady: boolean = false;
+  private averageCheckIns: any;
+  private checkInsSummaryTitle: any = "Patient Check-ins";
+  private checkInsSummaryText: any = "In the last week";
+  private ovlSummaryTitle: any = "Patient Funnel";
+  private ovlSummaryText: any = "Other statistics";
 
   ngAfterViewInit(): void {
     // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
@@ -103,6 +119,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.currentUser = this._authService._getCurrentUser();
 
           this.getCaredones();
+          this.getClinicSummary(this.currentUser.clinicWebsite, this.currentUser.fbPageId, this.currentUser.fbPageAdded)
 
 
         } else {
@@ -376,5 +393,99 @@ export class HomeComponent implements OnInit, AfterViewInit {
       footer.removeClass('hide');
     });
   }
+getClinicSummary(clinicIdFull, pageId, pagePresent) {
+  let n = clinicIdFull.indexOf('.'), minValue1, maxValue1;
+  if (n == -1) {
+    n = clinicIdFull.length;
+  }
+  let clinicId = clinicIdFull.substring(0, n);
+  this._authService._getAllCheckIns(clinicId)
+  .subscribe(
+    checkIns => {
+      console.log(checkIns);
+      let ctr = 0, cnt = 0, strt = 0, tempArr = [];
+      
+      
+     
+      console.log(checkIns)
+      for (let item in checkIns) {
+        if (item != '$exists' && item != '$key' && item != 'length' ) {
+        
+        
+        
+        
+          this.checkInsTblDates[ctr] = item.substring(0,5)
+          if (checkIns[item].length)
+          this.checkInsTblCount[ctr] = checkIns[item].length;
+          else 
+          this.checkInsTblCount[ctr] = 0;
+          this.totalCheckIns = parseInt(this.totalCheckIns) + this.checkInsTblCount[ctr];
+          ctr++;
+          if ( this.checkInsTblCount[ctr] > maxValue1) {
+            maxValue1 = this.checkInsTblCount[ctr]
+          } 
+          if (this.checkInsTblCount[ctr] < minValue1) {
+            minValue1 = this.checkInsTblCount[ctr]
+          }
+        cnt++;
+          
+        }
+      }
+       console.log(this.checkInsTblDates);
+      console.log(this.checkInsTblCount);
+      //Keep only information for last week
+      if (cnt > 7) {
+        this.checkInsTblCount.splice(0, cnt -7);
+        this.checkInsTblDates.splice(0, cnt -7)
+      }
+      var sum = this.checkInsTblCount.reduce(function(a, b) { return a + b; }, 0);
+      if (cnt > 7)
+      this.averageCheckIns = sum/7;
+      else 
+      this.averageCheckIns = sum/cnt;
 
+      this.averageCheckIns = this.averageCheckIns.toFixed(1);
+
+      console.log(this.checkInsTblDates);
+      console.log(this.checkInsTblCount);
+      console.log(this.totalCheckIns);
+      if (pagePresent) {
+        this._authService._getMessengerIds(pageId)
+        .subscribe(
+          msngrData => {
+            this.totalMsngrConnects = msngrData.length;
+            this._authService._getCareSchedules(pageId)
+            .subscribe(
+              csData => {
+                this.totalCaresScheduled = csData.length;
+                console.log(this.totalCaresScheduled);
+                console.log(this.totalMsngrConnects);
+                 this.checkInChrtReady = true;
+                 this.ovlSummaryChrtReady = true;
+                  var self = this;
+                  setTimeout(
+                    function() {
+                      
+                      var t = LineChart(self.checkInsTblDates,self.checkInsTblCount,minValue1,maxValue1,self.checkInChartId);
+                  console.log("checkInChartId :", t);
+                  setTimeout(
+                    function() {
+                      var ctLabels = ["Total Check-Ins", "Messenger Connects", "Care Plans Scheduled"]
+                      var ctSeries = [self.totalCheckIns, self.totalMsngrConnects, self.totalCaresScheduled]
+                      var t = BarChart(ctLabels,ctSeries,self.totalCheckIns,self.ovlSummaryChartId);
+                  console.log("checkInChartId :", t);
+                    }, 2000
+                  )
+                       
+                    }, 2000
+                  )
+              }
+            )
+          }
+        )
+      }
+
+    }
+  )
+}
 }// DashboardComponent
