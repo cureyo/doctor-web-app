@@ -120,7 +120,7 @@ export class AuthService {
 
   public _getPatientFitnessData(userID){
       console.log("input data and params",userID)
-      return this.af.database.object(this.db.HumanAPIData+'/'+userID+'/ActivitySummary')
+      return this.af.database.object(this.db.HumanAPIData+'/'+userID)
   }//get the patient fitness data
 
   public _saveReminders(data) {
@@ -141,6 +141,10 @@ export class AuthService {
 
 
   }//save onboardingReviewreview data
+  //get the transactionDate
+    public _getTransactionData(objectId){
+      return this.af.database.object(this.db.transactionTable+'/'+objectId);
+    }
   //save FbADS Form Data
   public _saveFbAdsFormData(uid,campaignID,data){
    const FbAdsData = this.af.database.object(this.db.FbCampaign+'/'+uid +'/'+campaignID)

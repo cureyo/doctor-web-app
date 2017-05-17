@@ -80,6 +80,7 @@
                 <button [disabled]="!carePathwayForm.valid" type="submit" class="btn btn-round">Save</button>
                 </div>
    </div>
+   <!-- form array name checkPoints-->
    <div formArrayName="checkPoints">
   <div class="card card-stats" *ngFor="let check of carePathwayForm.controls.checkPoints.controls; let i=index">
                              <div [formGroupName]="i">
@@ -87,7 +88,7 @@
         {{i}}
       </div>
                               
-                               <div class="card-footer">
+                               <div class="card-footer"> <!-- card footer-->
                                <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
                                  <label class="control-label" for="day">Day #</label>
           <select formControlName="day" class="form-control" >
@@ -112,6 +113,7 @@
     </select>
                                </div>
                                 <div  class="form-group" style="margin: 10px; width: 100%;">  
+
           <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
             </div>
                 <div *ngIf="checkTypes[i] == 'consult-reminder'"  class="form-group" style="margin: 10px; width: 100%;">  
@@ -137,15 +139,15 @@
                       <a class="btn btn-primary btn-round" 
                         (click)="addOptions(check, i)">Add Option</a>
                     </div>
-            </div>
-                           <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder'"
+            </div> <!-- card footer-->
+          <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder'"
           [objectId]="objectIdVal" 
           [timeInterval]="timeInterval" 
           [dateInterval]="dateInterval"
           [MedNames]="MedNames">
-   </app-medication-reminder-carepath>
+          </app-medication-reminder-carepath>
    
-   <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
+          <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
           [objectId]="objectIdVal" 
           [timeInterval]="timeInterval" 
           [dateInterval]="dateInterval"
@@ -157,9 +159,10 @@
           [dateInterval]="dateInterval"
           [consultantId]="consultant[i]"></app-physicalconsultation-carepath>
                              
-                             </div>
+          </div>
   </div>
    </div>
+   <!-- form array name checkPoints-->
    </div>
    </div>
 </form>
