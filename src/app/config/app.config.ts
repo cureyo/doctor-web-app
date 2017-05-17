@@ -33,6 +33,7 @@ export const AppConfig = {
     observers:          environment.envName + '/Observers/',
     caretakers:         environment.envName + '/CareTakers/',
     onboardingReview:   environment.envName + '/OnboardingReview/',
+    transactionTable:   environment.envName + '/TransactionTable/',
     virtualCaredOne:    environment.envName + '/VirtualCaredOne/',
     virtualObserver:    environment.envName + '/VirtualObserver/',
     virtualCareTaker:   environment.envName + '/VirtualCareTaker/',

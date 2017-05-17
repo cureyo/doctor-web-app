@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from "@ang
 import { Http, Response } from '@angular/http';
 import { AuthService } from "../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
 
 declare var $: any
 
@@ -27,13 +27,24 @@ export class CarePathsComponent implements OnInit {
   private array: any;
   private routeparam: any;
   private checkTypes: any = [];
+  private objectIdVal: any = [];
   private days: any = [];
   private times: any = [];
+  public timeInterval: any = [];
+  public dateInterval: any = [];
   private findCarePaths: FormGroup;
   private carePathsAvlbl: any;
+  private MedNames: any;
+  private TestNames: any;
+  private consultant: any = []; 
 
 
-  constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
+  constructor(
+    private _fb: FormBuilder,
+    private _authService: AuthService,
+    private router: Router,
+    private http: Http,
+    private _cacheService: CacheService) {
 
 
   }
@@ -60,6 +71,7 @@ export class CarePathsComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
     this.updateDays();
     this.updateTimes();
     this.drDomain = this._fb.group({
@@ -68,6 +80,7 @@ export class CarePathsComponent implements OnInit {
     this.selectDrDomain = true;
     this.carePathwayForm = this._fb.group({
       name: ['', Validators.required],
+      objectId: this.objectIdVal,
       checkPoints: this._fb.array([
         this.initCheckPoints()
       ])
@@ -95,6 +108,7 @@ export class CarePathsComponent implements OnInit {
       time: ['', Validators.required],
       messageText: ['', Validators.required],
       checkType: ['', Validators.required],
+      consultant: [],
       options: this._fb.array([
         this.initOptions()
       ])
@@ -108,6 +122,7 @@ export class CarePathsComponent implements OnInit {
       time: [data.time, Validators.required],
       messageText: [data.messageText, Validators.required],
       checkType: [data.checkType, Validators.required],
+      consultant: [data.consultant],
       options: this._fb.array([
         this.initializeOptions(data.options[0])
       ])
@@ -203,11 +218,43 @@ export class CarePathsComponent implements OnInit {
 
   }
   checkTypeSelect(type, i) {
-    //console.log("check type is",type, " for ", i);
+    console.log("check type is",type, " for ", i);
     ////console.log()
-    if (type == 'mcq')
-      this.checkTypes[i] = true;
-    else this.checkTypes[i] = false;
+    if (type == "med-reminder") {
+      this.setIntervals();
+      this._authService._getMedicineNames()
+        .subscribe(data => {
+          //console.log("patholodical test details data :",data);
+          this.MedNames = data;
+          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
+
+          this.checkTypes[i] = type;
+
+          //console.log("the med names is :",this.MedNames);
+        })
+    } else if (type == "test-reminder") {
+      this.setIntervals();
+      this._authService._getPathologicalTests()
+        .subscribe(data => {
+          //console.log("patholodical test details data :",data);
+          this.TestNames = data;
+
+          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+          this.checkTypes[i] = type;
+          //console.log("the med names is :",this.TestNames);
+        })
+    } else if (type == "consult-reminder") {
+      this.consultant[i] = Math.floor((Math.random() * 1000000000) + 1);
+      this.checkTypes[i] = type;
+    this.setIntervals();}
+    else {
+
+      this.checkTypes[i] = type;
+    }
+
+    // if (type == 'mcq')
+    //   this.checkTypes[i] = true;
+    // else this.checkTypes[i] = false;
   }
   searchDomain = (model) => {
     let job = model['value'];
@@ -294,6 +341,37 @@ export class CarePathsComponent implements OnInit {
       }
       )
   }
+  //set time interval for medicine timings
+  setIntervals = () => {
+    let hrs, md;
+
+    for (let i = 5; i < 24; i++) {
+      if (i == 12) {
+        hrs = i;
+      } else {
+        hrs = i % 12;
+      }
+      if (hrs < 10) {
+        hrs = "0" + hrs;
+      }
+
+      md = (i >= 12) ? ' PM' : ' AM';
+      this.timeInterval.push(hrs + ":00" + md);
+      this.timeInterval.push(hrs + ":30" + md);
+    }
+
+    for (let i = 1; i <= 31; i++) {
+      this.dateInterval.push(i);
+    }
+
+  }//setTimeInterval
+
+consultantSelect(value, i) {
+  console.log(value, i);
+  
+}
+
+
 }
 
 

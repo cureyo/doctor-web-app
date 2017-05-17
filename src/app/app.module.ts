@@ -33,6 +33,7 @@ import {PatientPreviewComponent} from './dashboard/PatientPreview/PatientPreview
 import { OutPatientsFormComponent } from './dashboard/OutPatients/OutPatientsForm.component';
 import { OPDComponent } from './dashboard/OPD/OPD.component';
 import { FbAdsFormComponent } from './fb-ads-form/fb-ads-form.component';
+import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
 
 // Must export the config
 export const firebaseConfig = {
@@ -67,7 +68,7 @@ export const firebaseAuthConfig = {
 
   declarations: [ MODULE_COMPONENTS, FbAdsFormComponent],
 
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, PatientPreviewComponent],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent],
 
   bootstrap: [AppComponent]
 })

@@ -34,6 +34,13 @@ import {MedicationReminderJobsComponent} from "./dashboard/jobs-master/medicatio
 import {OnlineConsultationJobsComponent}  from "./dashboard/jobs-master/online-consultation-jobs/online-consultation-jobs.component";
 import {PhysicalconsultationJobsComponent}  from "./dashboard/jobs-master/physicalconsultation-jobs/physicalconsultation-jobs.component";
 import {DocReviewJobsComponent} from "./dashboard/jobs-master/doc-review-jobs/doc-review-jobs.component";
+import {BloodsugarCareComponent } from "./dashboard/care-pathways/bloodsugar-carepath/bloodsugar-carepath.component";
+import {ExerciseTrackerCareComponent} from "./dashboard/care-pathways/exercise-tracker-carepath/exercise-tracker-carepath.component";
+import {LabTestCareComponent} from "./dashboard/care-pathways/lab-test-carepath/lab-test-carepath.component";
+import {MedicationReminderCareComponent} from "./dashboard/care-pathways/medication-reminder-carepath/medication-reminder-carepath.component";
+import {OnlineConsultationCareComponent}  from "./dashboard/care-pathways/online-consultation-carepath/online-consultation-carepath.component";
+import {PhysicalconsultationCareComponent}  from "./dashboard/care-pathways/physicalconsultation-carepath/physicalconsultation-carepath.component";
+import {DocReviewCareComponent} from "./dashboard/care-pathways/doc-review-carepath/doc-review-carepath.component";
 import {WebContentComponent} from "./dashboard/web-content/web-content.component";
 import {SiteCreationFormComponent} from "./dashboard/web-content/site-creation-form/site-creation-form.component";
 import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/herotiles/herotiles.component";
@@ -108,6 +115,13 @@ export const MODULE_COMPONENTS = [
     OnlineConsultationJobsComponent,
     PhysicalconsultationJobsComponent,
     DocReviewJobsComponent,
+    BloodsugarCareComponent,
+    ExerciseTrackerCareComponent,
+    LabTestCareComponent,
+    MedicationReminderCareComponent,
+    OnlineConsultationCareComponent,
+    PhysicalconsultationCareComponent,
+    DocReviewCareComponent,
     WebContentComponent,
     SiteCreationFormComponent,
     HerotilesComponent,

@@ -162,11 +162,51 @@
                           <div class="form-group">
                                <label for="targetCity">Select City</label>
                                 <p>Select the target City for the Ad</p>
-                                   <input type="text"  id="targetCity" class="form-control" formControlName="targetCity" />
+                                   <input type="text"  style="width:70%; float: left; z-index: 10000;" id="targetCitySearch" class="form-control" formControlName="targetCitySearch" />
+                               <a (click)="searchCity(fbAdsForm.value)" style="width:20%; float: left; z-index: 10000;">Search</a>
+                          </div>
+                               <div class="form-group">
+                               <select id="targetCity" class="form-control" formControlName="targetCity">
+                                    <option *ngFor="let city of cityList;" value="{{city.key}}">{{city.name}}, {{city.region}}, {{city.country_name}}</option>
+                                  </select>
+                          </div>
+                  </div>
+                 
+                        <div class="col-md-2">
+                          <div class="form-group">
+                               <label for="targetCity">Min Age</label>
+                                <p>Of Audience</p>
+                                   <select  id="min_age" class="form-control" formControlName="min_age">
+                                    <option *ngFor="let age of ageGroup;" value="{{age}}">{{age}}</option>
+                                  </select>
+                                   
                                
                           </div>
                   </div>
-       
+            <div class="col-md-2">
+                          <div class="form-group">
+                               <label for="targetCity">Max Age</label>
+                                <p>Of Audience</p>
+                                   <select  id="max_age" class="form-control" formControlName="max_age">
+                                    <option *ngFor="let age of ageGroup;" value="{{age}}">{{age}}</option>
+                                  </select>
+                          </div>
+                  </div>
+                  </div>
+                  <div class="row">
+                            <div class="col-md-4">
+                          <div class="form-group">
+                               <label for="targetCity">Other Targeting</label>
+                                <p>Search other targeting criteria</p>
+                                   <input type="text"  style="width:70%; float: left; z-index: 10000;" id="targetingSpecSearch" class="form-control" formControlName="targetingSpecSearch" />
+                               <a (click)="detailedSearch(fbAdsForm.value)" style="width:20%; float: left; z-index: 10000;">Search</a>
+                          </div>
+                               <div class="form-group">
+                               <select id="targetingSpecs" class="form-control" formControlName="targetingSpecs">
+                                    <option *ngFor="let spec of tgtSpecList;" value="{{spec}}">{{spec.name}}, {{spec.type}} [Size: {{spec.audience_size}}]</option>
+                                  </select>
+                          </div>
+                  </div>
                   </div>
                   <!-- End of Targeting details row-->   
                    <!-- Budget details row-->      

@@ -135,7 +135,12 @@ export class AuthService {
 
 
   }//save onboardingReviewreview data
+    public _saveTransactionData(data, objectId, route) {
+    const onboardingdata = this.af.database.object(this.db.transactionTable + '/' + objectId + '/' + route)
+    return onboardingdata.set(data);
 
+
+  }//save onboardingReviewreview data
   //save FbADS Form Data
   public _saveFbAdsFormData(uid,campaignID,data){
    const FbAdsData = this.af.database.object(this.db.FbCampaign+'/'+uid +'/'+campaignID)
