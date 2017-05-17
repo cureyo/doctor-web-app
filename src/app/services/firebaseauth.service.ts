@@ -652,6 +652,20 @@ public _findPatient(currentUserId, caredoneId) {
     return this.af.database.object(this.db.caretakers + caredoneId + '/' + caretakerFbId)
       .set(data);
   }
+    public _addPartner(data, userId,route) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+   
+    return this.af.database.list(this.db.Partners + userId + '/' + route)
+      .push(data);
+  }
+      public _getPartner(userId) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+   
+    return this.af.database.object(this.db.Partners + userId )
+      
+  }
   public _getCaredOneJobs(caredoneId) {
     return this.af.database.list(this.db.scheduledJobs, {
       query: {

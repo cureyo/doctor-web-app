@@ -111,14 +111,14 @@
       <option value="test-reminder">Lab Test Reminder</option>
     </select>
                                </div>
-                                <div *ngIf="checkTypes[i] != 'consult-reminder'" class="form-group" style="margin: 10px; width: 100%;">  
+                                <div  class="form-group" style="margin: 10px; width: 100%;">  
           <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
             </div>
                 <div *ngIf="checkTypes[i] == 'consult-reminder'"  class="form-group" style="margin: 10px; width: 100%;">  
                                  <label class="control-label" for="consultant">Consultation with</label>
           <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
       
-      <option value="test-reminder">Lab Test Reminder</option>
+      <option value="{{partner.key}}" *ngFor="let partner of partnerList;">{{partner.name}}</option>
     </select>
                                </div>
             <div *ngIf="checkTypes[i] == 'mcq'" formArrayName="options">
@@ -150,11 +150,12 @@
           [timeInterval]="timeInterval" 
           [dateInterval]="dateInterval"
           [MedNames]="TestNames"></app-lab-test-carepath>
-             <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected"
+             <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected[i]"
           [objectId]="objectIdVal" 
+          [doctorId] = "doctorId"
           [timeInterval]="timeInterval" 
           [dateInterval]="dateInterval"
-          [category]="consultant[i]"></app-physicalconsultation-carepath>
+          [consultantId]="consultant[i]"></app-physicalconsultation-carepath>
                              
                              </div>
   </div>

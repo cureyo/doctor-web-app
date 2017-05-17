@@ -29,6 +29,7 @@ export class CarePathsComponent implements OnInit {
   private checkTypes: any = [];
   private objectIdVal: any = [];
   private days: any = [];
+  private partnerList: any = [];
   private times: any = [];
   public timeInterval: any = [];
   public dateInterval: any = [];
@@ -36,7 +37,9 @@ export class CarePathsComponent implements OnInit {
   private carePathsAvlbl: any;
   private MedNames: any;
   private TestNames: any;
-  private consultant: any = []; 
+  private doctorId: any;
+  private consultant: any = [];
+  private consultantSelected: any = [];
 
 
   constructor(
@@ -221,7 +224,7 @@ export class CarePathsComponent implements OnInit {
 
   }
   checkTypeSelect(type, i) {
-    console.log("check type is",type, " for ", i);
+    console.log("check type is", type, " for ", i);
     ////console.log()
     if (type == "med-reminder") {
       this.setIntervals();
@@ -247,9 +250,40 @@ export class CarePathsComponent implements OnInit {
           //console.log("the med names is :",this.TestNames);
         })
     } else if (type == "consult-reminder") {
-      this.consultant[i] = Math.floor((Math.random() * 1000000000) + 1);
-      this.checkTypes[i] = type;
-    this.setIntervals();}
+      this._authService._getUser()
+        .subscribe(
+        userData => {
+          this.doctorId = userData.user.uid;
+          this._authService._getPartner(userData.user.uid)
+            .subscribe(
+            partnerData => {
+
+              if (partnerData['consultant']) {
+                let ctr = 0, partnersC = [];
+                let consultants = partnerData['consultant'];
+                console.log(partnerData['consultant']);
+                for (let item in consultants) {
+
+                  console.log(item)
+                  if (item != 'length' && item != '$exists' && item != '$key') {
+                    partnersC[ctr] = consultants[item];
+                    partnersC[ctr]['key'] = item;
+                    ctr++
+                  }
+
+                }
+                this.partnerList = partnersC;
+                console.log(this.partnerList);
+                
+                this.checkTypes[i] = type;
+                this.setIntervals();
+              }
+            }
+            )
+
+        }
+        )
+    }
     else {
 
       this.checkTypes[i] = type;
@@ -370,10 +404,12 @@ export class CarePathsComponent implements OnInit {
 
   }//setTimeInterval
 
-consultantSelect(value, i) {
-  console.log(value, i);
-  
-}
+  consultantSelect(value, i) {
+    console.log(value, i);
+    this.consultant[i] = value;
+    this.consultantSelected[i] = true;
+
+  }
 
 
 }

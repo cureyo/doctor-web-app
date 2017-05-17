@@ -13,15 +13,16 @@ import { AppConfig } from "../../../config/app.config";
   //styleUrls: ['./physicalconsultation-carepath.component.css']
 })
 export class PhysicalconsultationCareComponent implements OnInit {
-        @Input() objectId:any;
-        @Input () timeInterval:any;
-        @Input () dateInterval:any;
-        @Input () category:any;
-   public pctForm: FormGroup;
-   private itemAdded7: boolean = false;
-   private address: Object = null;
-   private pctDrName: string = '';
-    constructor(
+  @Input() objectId: any;
+  @Input() doctorId: any;
+  @Input() timeInterval: any;
+  @Input() dateInterval: any;
+  @Input() consultantId: any;
+  public pctForm: FormGroup;
+  private itemAdded7: boolean = false;
+  private address: Object = null;
+  private pctDrName: string = '';
+  constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
     private route: ActivatedRoute,
@@ -32,47 +33,44 @@ export class PhysicalconsultationCareComponent implements OnInit {
 
   ngOnInit() {
     this.pctForm = this._fb.group({
-        frequency: ['monthly', [Validators.required]],
-        date: ['1', [Validators.required]],
-        timing: ['10:00 AM', [Validators.required]],
+      frequency: ['monthly', [Validators.required]],
+      date: ['1', [Validators.required]],
+      timing: ['10:00 AM', [Validators.required]],
 
-      });
+    });
   }
 
-   savePCT = (model) => {
+  savePCT = (model) => {
     let reminder = {}, reviewData = {},
       job = model['value']
       ;
+    this._authService._getPartner(this.doctorId)
+      .subscribe(
+      partnerData => {
+        
+        reminder['Job_By'] = this.doctorId;
+        reminder['Job_For'] = "#patientId";
+        reminder['Job_Frequency'] = job['frequency'];
+        reminder['Job_Time'] = job['timing'];
+        reminder['Job_Date'] = job['date'];
+        reminder['Job_Type'] = "Physical_Consultation";
+        reminder['ConsultantId'] = this.consultantId;
+        reminder['ConsultDrName'] = partnerData['consultant'][this.consultantId].name;
+        reminder['ConsultFee'] = partnerData['consultant'][this.consultantId].fee;
+        //console.log("reminder value test :",reminder);
+        //save data in scheduled job
 
-    reminder['Job_By'] =  "#doctorId";
-    reminder['Job_For'] =  "#patientId";
-    reminder['Job_Frequency'] = job['frequency'];
-    reminder['Job_Time'] = job['timing'];
-    reminder['Job_Date'] = job['date'];
-    reminder['Job_Type'] = "Physical_Consultation";
-    reminder['ConsultantId'] = job['consultantId'];
-    reviewData['PhysicalConsultDrName'] = '';
-    reviewData['PhysicalConsultFreq'] = job['frequency'];
-    reviewData['PhysicalConsultLocation'] = '';
-    //console.log("reminder value test :",reminder);
-     //save data in scheduled job
-     this._authService._saveReminders(reminder).then(
-        data => {
-          this.itemAdded7 = true;
+        
 
-          setTimeout(() =>  {
-           //this.router.navigate(['doctorJob']);
-          },2000);
-        }
-      );
-      //save data in onboarding Review
-      var transTime = new Date();
- 
-          this._authService._saveTransactionData(reviewData, this.objectId, 'Physical_Consultation/').then(
-      res => {
-        let d = res;
-          //console.log("response of onboarding save is",d);
-      })
+        this._authService._saveTransactionData(reminder, this.objectId, this.consultantId).then(
+          res => {
+            this.itemAdded7 = true;
+            let d = res;
+            //console.log("response of onboarding save is",d);
+          })
+      }
+      )
+
 
   }//savePCT
 }

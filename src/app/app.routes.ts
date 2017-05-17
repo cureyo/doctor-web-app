@@ -28,6 +28,7 @@ import {DoctorLoginComponent} from "./doctor-login/doctor-login.component";
 import {DoctorCheckupComponent }  from "./doctorcheckup/doctorcheckup.component";
 import {JobsMasterComponent} from "./dashboard/jobs-master/jobs-master.component";
 import {BloodsugarJobsComponent } from "./dashboard/jobs-master/bloodsugar-jobs/bloodsugar-jobs.component";
+import {PartnerComponent } from "./dashboard/partners/partners.component";
 import {ExerciseTrackerJobsComponent} from "./dashboard/jobs-master/exercise-tracker-jobs/exercise-tracker-jobs.component";
 import {LabTestJobsComponent} from "./dashboard/jobs-master/lab-test-jobs/lab-test-jobs.component";
 import {MedicationReminderJobsComponent} from "./dashboard/jobs-master/medication-reminder-jobs/medication-reminder-jobs.component";
@@ -77,7 +78,8 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'Ads', component :FbAdsFormComponent},
     { path: 'out-patients/:count/:id', component: OutPatientsFormComponent},
     { path: 'out-patient-dept', component: OPDComponent},
-    { path: 'patient-hx-forms', component: PatientHxFormComponent}
+    { path: 'patient-hx-forms', component: PatientHxFormComponent},
+     { path: 'partners', component: PartnerComponent}
 
 
 ]
@@ -122,6 +124,7 @@ export const MODULE_COMPONENTS = [
    // OnlineConsultationCareComponent,
     PhysicalconsultationCareComponent,
     //DocReviewCareComponent,
+    PartnerComponent,
     WebContentComponent,
     SiteCreationFormComponent,
     HerotilesComponent,

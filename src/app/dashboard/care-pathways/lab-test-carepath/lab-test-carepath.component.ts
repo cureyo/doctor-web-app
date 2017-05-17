@@ -121,7 +121,7 @@ export class LabTestCareComponent implements OnInit {
       //console.log("the reminders value ",labtests);
     // //  save data in onboarding Review
     var transTime = new Date();
-      this._authService._saveTransactionData(reviewData,this.objectId,  'Lab Test/').then(
+      this._authService._saveTransactionData(reviewData,this.objectId,  'Lab_Test/').then(
         res =>{
           let d=res;
           this.itemAdded3 = true;
