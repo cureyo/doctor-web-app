@@ -46,6 +46,7 @@ export class MedicationReminderCareComponent implements OnInit {
          console.log("response data based one the object Id:",response);
               
              if (this.medData){
+               console.log("its called wid",this.medData)
                var index=0;
               this.MedForm = this._fb.group({
               medicines:this._fb.array([ 

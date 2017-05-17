@@ -36,7 +36,7 @@ export class LabTestCareComponent implements OnInit {
                             });
           
      //here is the code to get the transaction data
-    this._authService._getTransactionData(538056344)
+    this._authService._getTransactionData(this.objectId)
     .subscribe(response=>{
             this.labData=response.LabTest;
          console.log("response data based one the object Id:",response);

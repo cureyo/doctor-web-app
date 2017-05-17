@@ -18,10 +18,11 @@ export class PhysicalconsultationCareComponent implements OnInit {
   @Input() timeInterval: any;
   @Input() dateInterval: any;
   @Input() consultantId: any;
-  public pctForm: FormGroup;
+  public  pctForm: FormGroup;
   private itemAdded7: boolean = false;
   private address: Object = null;
   private pctDrName: string = '';
+  private physicalData:any;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -29,16 +30,42 @@ export class PhysicalconsultationCareComponent implements OnInit {
     private _authService: AuthService,
     private router: Router,
     private http: Http
+    
   ) { }
 
   ngOnInit() {
-    this.pctForm = this._fb.group({
-      frequency: ['monthly', [Validators.required]],
-      date: ['1', [Validators.required]],
-      timing: ['10:00 AM', [Validators.required]],
+      
+      if(this.objectId){
+                     this.pctForm = this._fb.group({
+                      frequency: ['monthly', [Validators.required]],
+                      date: ['1', [Validators.required]],
+                      timing: ['10:00 AM', [Validators.required]],
+                              });
+        this._authService._getTransactionData(477872276)
+        .subscribe(response=>{
+            var id=this.consultantId;
+                this.physicalData=response.id;
+            console.log("response data based one the object Id:",response);
+                  
+                if (this.physicalData){
+                       console.log("inside the data") ;
+                      this.pctForm = this._fb.group({
+                      frequency: [this.physicalData.Job_Frequency, [Validators.required]],
+                      date: [this.physicalData.Job_Date, [Validators.required]],
+                      timing: [this.physicalData.Job_Time, [Validators.required]],
+                           });
+                }
+        });
+      }
+      else{
+          this.pctForm = this._fb.group({
+          frequency: ['monthly', [Validators.required]],
+          date: ['1', [Validators.required]],
+          timing: ['10:00 AM', [Validators.required]],
+                      });
+      }
 
-    });
-  }
+  } //ngOnInIt
 
   savePCT = (model) => {
     let reminder = {}, reviewData = {},
