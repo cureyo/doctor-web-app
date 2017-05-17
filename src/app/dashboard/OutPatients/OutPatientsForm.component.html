@@ -119,6 +119,9 @@
 </div>
 </div>
                      </div>
+                     <!--*****************************charts*******************************************-->
+                       <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
+
 <!--*****************************Height and Weight*******************************************-->               
           <!-- card for height and weight-->                     
             <div class="row">
@@ -126,8 +129,8 @@
                  <div class="col-md-4" *ngIf="height && heightUnit">  
                     <div class="card card-stats" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
                     
-                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
-                        <i class="material-icons" style="border-radius: 4px; width: 88px; height: 88px;">content_copy</i>
+                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px;" data-background-color="cureyo">
+                        <i class="material-icons" style="border-radius: 4px; width: 88px; height: 88px; line-height:88px; color: #fff;">vertical_align_top</i>
                         <!--<img src="{{caredone.avatar}}" style="border-radius: 4px; width: 88px; height: 88px;">-->
                         </div>
 
@@ -142,8 +145,8 @@
                  <div class="col-md-4" *ngIf="weight && weightUnit">  
                     <div class="card card-stats" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
                     
-                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
-                        <i class="material-icons">content_copy</i>
+                        <div class="card-header" style="width: 90px; height: 90px; padding: 1px; " data-background-color="cureyo">
+                        <i class="material-icons" style="border-radius: 4px; width: 88px; height: 88px; line-height:88px;  color: #fff;">settings_input_svideo</i>
                         <!--<img src="{{caredone.avatar}}" style="border-radius: 4px; width: 88px; height: 88px;">-->
                         </div>
 
@@ -157,8 +160,7 @@
                  </div>            
             </div>
 <!--*****************************Height and Weight*******************************************-->
-            <h4 style="color: #137a9c"><b>Patient Fitness</b></h4>
-<!--*****************************charts*******************************************-->
+          
                      
                      <!-- this is row it will containt 3 charts at least-->
                        <div class="row">
@@ -168,12 +170,12 @@
                                             <div class="ct-chart" id="{{activitySummarytitle}}"></div>
                                             </div>
                                     <div class="card-content">
-                                            <h5 class="title">{{activitySummaryTrimedtitle}}</h5>
+                                            <h5 class="title">{{activitySummaryTrimedtitle}} (in Cals)</h5>
                                             <p  class="category">{{activitySummaryDate}}</p>
                                     </div>
                                     <div class="card-footer">
                                             <div  class="stats">
-                                            Average {{activitySummaryAverage}} calories/Day.  
+                                            Average burn <b> {{activitySummaryAverage}} calories/ day </b>  
                                             </div>
                                     </div>
                                 </div>
@@ -187,12 +189,12 @@
                                             <div class="ct-chart" id="{{hrSummarytitle}}"></div>
                                             </div>
                                     <div class="card-content">
-                                            <h5 class="title">Heart Rate</h5>
+                                            <h5 class="title">Heart Rate (in BPM)</h5>
                                             <p  class="category">{{hrSummaryDate}}</p>
                                     </div>
                                     <div class="card-footer">
                                             <div  class="stats">
-                                            Average {{hrSummaryAverage}} calories/Day.  
+                                            Average <b>{{hrSummaryAverage}} BPM</b>
                                             </div>
                                     </div>
                                 </div>
@@ -203,12 +205,12 @@
                                             <div class="ct-chart" id="{{sleepSummarytitle}}"></div>
                                             </div>
                                     <div class="card-content">
-                                            <h5 class="title">Sleep</h5>
+                                            <h5 class="title">Sleep (in mins)</h5>
                                             <p  class="category">{{sleepSummaryDate}}</p>
                                     </div>
                                     <div class="card-footer">
                                             <div  class="stats">
-                                            Average Sleep {{sleepSummaryAverage}} per/day;
+                                            Average Sleep <b>{{sleepSummaryAverage}} hours/ day</b>
                                             </div>
                                     </div>
                                 </div>
