@@ -48,7 +48,7 @@ export class CarePathsComponent implements OnInit {
     private router: Router,
     private http: Http,
     private _cacheService: CacheService) {
-
+       
 
   }
   updateDays() {
@@ -74,6 +74,7 @@ export class CarePathsComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.setIntervals();
     this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
     this.updateDays();
     this.updateTimes();
@@ -265,7 +266,7 @@ export class CarePathsComponent implements OnInit {
     console.log("check type is", type, " for ", i);
     ////console.log()
     if (type == "med-reminder") {
-      this.setIntervals();
+      // this.setIntervals();
       this._authService._getMedicineNames()
         .subscribe(data => {
           //console.log("patholodical test details data :",data);
@@ -277,7 +278,7 @@ export class CarePathsComponent implements OnInit {
           //console.log("the med names is :",this.MedNames);
         })
     } else if (type == "test-reminder") {
-      this.setIntervals();
+      // this.setIntervals();
       this._authService._getPathologicalTests()
         .subscribe(data => {
           //console.log("patholodical test details data :",data);
@@ -289,7 +290,7 @@ export class CarePathsComponent implements OnInit {
         })
     } else if (type == "consult-reminder") {
       this.checkTypes[i] = type;
-      this.setIntervals();
+      // this.setIntervals();
 
     }
     else {
@@ -409,9 +410,11 @@ export class CarePathsComponent implements OnInit {
     for (let i = 1; i <= 31; i++) {
       this.dateInterval.push(i);
     }
+     console.log("date interval",this.dateInterval);
+
 
   }//setTimeInterval
-
+    
   consultantSelect(value, i) {
     console.log(value, i);
     this.consultant[i] = value;

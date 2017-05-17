@@ -34,21 +34,20 @@ export class PhysicalconsultationCareComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      
+      var ConstID=this.consultantId;
       if(this.objectId){
+              console.log("if called",this.objectId)
                      this.pctForm = this._fb.group({
-                      frequency: ['monthly', [Validators.required]],
-                      date: ['1', [Validators.required]],
-                      timing: ['10:00 AM', [Validators.required]],
+                      frequency: ['', [Validators.required]],
+                      date: [this.dateInterval, [Validators.required]],
+                      timing: ['', [Validators.required]],
                               });
-        this._authService._getTransactionData(477872276)
+        this._authService._getTransactionData(this.objectId)
         .subscribe(response=>{
             var id=this.consultantId;
-                this.physicalData=response.id;
-            console.log("response data based one the object Id:",response);
-                  
+                this.physicalData=response[ConstID];              
                 if (this.physicalData){
-                       console.log("inside the data") ;
+                     console.log("this.physiclData",this.physicalData);
                       this.pctForm = this._fb.group({
                       frequency: [this.physicalData.Job_Frequency, [Validators.required]],
                       date: [this.physicalData.Job_Date, [Validators.required]],
@@ -58,9 +57,10 @@ export class PhysicalconsultationCareComponent implements OnInit {
         });
       }
       else{
+        console.log("else called ",this.objectId);
           this.pctForm = this._fb.group({
           frequency: ['monthly', [Validators.required]],
-          date: ['1', [Validators.required]],
+          date: [this.dateInterval, [Validators.required]],
           timing: ['10:00 AM', [Validators.required]],
                       });
       }
