@@ -1,0 +1,111 @@
+<div class="main-content" id="partnerContent">
+<div class="container-fluid">
+    <!--Existing Consultants-->
+    <div *ngIf="consultantsPresent" class="row">
+        <h4>Consultant Partners</h4>
+        <br>
+        <div class="col-md-4" *ngFor="let partner of currentConsultants;">
+            <div class="card card-profile">
+                <div class="card-avatar" style="width: 100px; height: 100px;" data-background-color="cureyo">
+                    
+                        <img *ngIf="partner.img" class="img" src="{{partner.img}}" />
+                        <i *ngIf="!partner.img" class="material-icons" style="color: #ffffff; line-height: 100px; font-size: 60px;">{{partner.icon}} </i>
+                </div>
+
+                <div class="content">
+                    <h6 class="category text-gray">{{partner.type}}</h6>
+                    <h4 class="card-title">{{partner.name}}</h4>
+                    <p class="card-content">
+                        {{partner.email}} | 
+                        {{partner.phone}}
+                        <br>
+                        <b *ngIf="partner.fee">Fee: {{partner.fee}}</b>
+                    </p>
+                    <a href="tel:{{partner.phone}}" class="btn btn-danger btn-round">Call</a>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!--Existing Vendors-->
+    <div *ngIf="vendorsPresent" class="row">
+        <h4>Vendor Partners</h4>
+        <br>
+        <div class="col-md-4" *ngFor="let partner of currentVendors;">
+            <div class="card card-profile">
+                <div class="card-avatar" style="width: 100px; height: 100px;" data-background-color="cureyo">
+                    
+                        <img *ngIf="partner.img" class="img" src="{{partner.img}}" />
+                        <i *ngIf="!partner.img" class="material-icons" style="color: #ffffff; line-height: 100px; font-size: 60px;">{{partner.icon}} </i>
+                </div>
+
+                <div class="content">
+                    <h6 class="category text-gray">{{partner.type}}</h6>
+                    <h4 class="card-title">{{partner.name}}</h4>
+                    <p class="card-content">
+                        {{partner.email}} | 
+                        {{partner.phone}}
+                        
+                    </p>
+                    <a href="tel:{{partner.phone}}" class="btn btn-danger btn-round">Call</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--Add a partner-->
+<div class="card">
+    <div class="card-content">
+ <form *ngIf="formReady" [formGroup]="partnerForm" class="form">
+    <div class="row">
+              <div class="col-sm-4">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" [formControl]="partnerForm.controls['name']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>  
+               <div class="col-sm-2">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Type</label>
+                                      <select formControlName="type" class="form-control" (change)="changeAddType(partnerForm.controls['type'])">
+      <option value="{{i}}" *ngFor="let item of types; let i = index;" >{{item.name}}</option>
+    </select>
+                                    </div>
+                                </div>
+              </div>    
+               <div class="col-sm-3">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Email Id</label>
+                                    <input type="text" [formControl]="partnerForm.controls['email']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+               <div class="col-sm-2">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">10-digit Phone</label>
+                                    <input type="text" [formControl]="partnerForm.controls['phone']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>     
+              <div *ngIf="addingConsultant" class="col-sm-1">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Fee</label>
+                                    <input type="text" [formControl]="partnerForm.controls['fee']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>    
+    </div>
+      <div class="actions clearfix">
+              <div class="pull-right">
+               <button (click)="addPartner(partnerForm)"class="btn btn-warning btn-round pull-right">Add Partner</button>
+              </div>
+    </div>
+ </form>
+    </div>
+</div>
+</div>
+</div>
