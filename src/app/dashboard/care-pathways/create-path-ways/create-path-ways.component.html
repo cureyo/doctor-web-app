@@ -1,0 +1,94 @@
+<form (keydown.enter)="$event.preventDefault()" class="form">
+        <div class="row">
+                <div class="col-sm-10 col-md-offset-1">
+                            <div class="card card-stats">
+                            <div class="form-group" style="margin: 10px;">  
+                            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name this Care Path" />
+                            </div>
+                            <div class="pull-left" >
+                            <button type="button" id="addcheck"  class="btn btn-round btn-primary">+ add checkpoint</button>
+                            </div>
+
+                            <div class="pull-left" >
+                            <button class="btn btn-round">Save</button>
+                            </div>
+                            </div>
+
+                <!-- form array name checkPoints-->
+                <div formArrayName="checkPoints">
+                            <div class="card card-stats">
+                                    <!--<div [formGroupName]="i">-->
+                                            <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">                                
+                                            </div>
+
+                                            <div class="card-footer"> <!-- card footer-->
+
+                                                            <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
+                                                                    <label class="control-label" for="day">Day #</label>
+                                                                    <select class="form-control" >
+                                                                    <option  value="1"></option>
+                                                                    </select>
+                                                            </div>
+
+
+                                                            <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
+                                                                    <label class="control-label" for="time">Time</label>
+                                                                    <select class="form-control" >
+                                                                    <option  value="1"></option>
+                                                                    </select>
+                                                            </div>
+
+
+                                                            <div class="form-group" style="width: 40%; float: left; z-index: 10000;">  
+                                                                        <label class="control-label" for="checkType">Check Type</label>
+                                                                        <select  class="form-control">
+                                                                        <option value="yes-no">Yes/ No Question</option>
+                                                                        <option value="mcq">Multiple Choice Question</option>
+                                                                        <option value="value">Value/ Metric check</option>
+                                                                        <option value="consult-reminder">Consultation Reminder</option>
+                                                                        <option value="med-reminder">Medication Reminder</option>
+                                                                        <option value="test-reminder">Lab Test Reminder</option>
+                                                                        </select>
+                                                            </div>
+
+
+
+                                                            <div  class="form-group" style="margin: 10px; width: 100%;">  
+                                                                        <input type="text" class="form-control" id="messageText"  placeholder="Message/ Question text" />
+                                                            </div>
+
+                                                            <div  class="form-group" style="margin: 10px; width: 100%;">  
+                                                                        <label class="control-label" for="consultant">Consultation with</label>
+                                                                        <select  class="form-control" >
+
+                                                                        <option value="1212"> KSJV</option>
+                                                                        </select>
+                                                            </div>
+
+
+
+                                                            <div formArrayName="options">
+                                                                <div >
+                                                                        <!--<div [formGroupName]="k">-->
+                                                                                <div class="form-group" style="margin: 10px; width: 80%; margin-left:5%;"> 
+                                                                                        <br> 
+                                                                                        <input type="text" class="form-control" id="value"  placeholder="Option" />
+                                                                                </div>
+                                                                        <!--</div>-->
+                                                                </div>
+                                                            </div>
+
+
+                                                            <br>
+                                                            <div  class="form-group">
+                                                                    <a class="btn btn-primary btn-round">Add Option</a>
+                                                                    
+                                                            </div>
+
+                                                  </div> <!-- card footer-->
+                                            <!--</div>-->
+                                    </div>
+                             </div>
+                    </div>
+           </div>
+</form>

@@ -1,171 +1,71 @@
 
-
 <form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
   novalidate>
-  <div class="row">
-  
-  <div class="col-sm-10 col-md-offset-1">
-  
-  <div class="card" *ngIf="selectDrDomain" style="padding-top: 0px;margin-top: 55px;">
-    
-    <div class="card-stats">
-      <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
-        <i class="fa fa-heartbeat" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
-      </div>
-      <div class="card-content" style="float: left; text-align: left;">
 
-        <h3 class="title">
-          <small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Select a Pathway to view</small></h3>
-          <div style="margin: 10px;">
-           <!--<select formControlName="carePaths" class="form-control">
-      <option [attr.selected]="" value="{{i}}" *ngFor="let i of carePathways">{{i}}</option>
-    </select>-->
-      <form [formGroup]="findCarePaths" class="form">
-                          <div class="row" style="margin-top: 10px;">
-                            <div style="margin: 10px; float: left; z-index: 100000; width: 80%;">
-                                <div class="form-group form-black label-floating is-not-empty">
-                                    <div class="form-group">
-                                    <label class="control-label">Select a Care Plan</label>
-                                      <select formControlName="carePath" class="form-control" (change)="showCarePath(findCarePaths.value)">
-      <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
-    </select>
-                                    </div>
-                                </div>
+      <div class="row">
+           <div class="col-sm-10 col-md-offset-1">
+                 <div class="card" *ngIf="selectDrDomain" style="padding-top: 0px;margin-top: 55px;">
+                      <div class="card-stats">
+                              <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
+                              <i class="fa fa-heartbeat" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
+                              </div>
+        <!-- ********************************************************************************************************************************************************-->    
+        <div class="card-content" style="float: left; text-align: left;">
+
+            <h3 class="title">
+            <small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Select a Pathway to view</small>
+            </h3>
+              
+        <!-- ****************************************************************************-->       
+                <div style="margin: 10px;">
+          
+                <form [formGroup]="findCarePaths" class="form">
+                        <div class="row" style="margin-top: 10px;">
+                              <div style="margin: 10px; float: left; z-index: 100000; width: 80%;">
+                                      <div class="form-group form-black label-floating is-not-empty">
+                                            <div class="form-group">
+
+                                                    <label class="control-label">Select a Care Plan</label>
+                                                    <select formControlName="carePath" class="form-control" (change)="showCarePath(findCarePaths.value)">
+                                                    <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>            
+                                                    </select>
+
+                                            </div>
+                                      </div>
+                              </div>
+                        </div>
+                </form>
+            </div> <!-- <div style="margin: 10px;">-->
+
+
+            <!-- ****************************************************************************--> 
+            
+          
+              <h3 class="title">
+                    <small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Or Create a new one</small>
+              </h3>
+
+
+            <!-- ****************************************************************************-->
+                <div class="clearfix" style="margin-right: 10px;">
+                      <div>
+                            <div class="form-group">
+                                  <button class="btn btn-primary btn-round" 
+                                  (click)="createPathways()">Create Pathway</button>
                             </div>
-
-                           </div>
-      </form>
-      </div>
-      
-       <!--search button code -->
-        <h3 class="title">
-          <small style="float: left; font-size: 20px; line-height:auto;padding-top: 15px">Or Create a new one</small></h3>
-       
-          <div class="clearfix" style="margin-right: 10px;">
-          <div>
-                    <div class="form-group">
-                      <button class="btn btn-primary btn-round" 
-                        (click)="createPathways()">Create Pathway</button>
-                    </div>
-          </div>
-       </div> 
-       </div> <!--end of card content-->
-      
-    </div> <!--end of card stats-->
-     
-
-  </div> <!--end of card-->
- 
-       
-  </div> <!-- end of col-md-8-->
-  
-  </div>
-
-  
-
+                      </div>
+                </div> 
+              <!-- ****************************************************************************--> 
+            </div> <!--end of card content-->
+      <!-- ********************************************************************************************************************************************************-->         
+        
+                      </div> <!--end of card stats-->
+                  </div> <!--end of card-->
+              </div> <!-- end of col-md-10-->
+        </div>  <!-- end of row-->
+        <app-create-path-ways></app-create-path-ways>
 </form>
-<form *ngIf="newPath" [formGroup]="carePathwayForm" (keydown.enter)="$event.preventDefault()" (ngSubmit)="onSubmit(carePathwayForm.value)" class="form">
-   <div class="row">
+
   
-  <div class="col-sm-10 col-md-offset-1">
-   <div class="card card-stats">
-   <div class="form-group" style="margin: 10px;">  
-          <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name this Care Path" />
-            </div>
-            <div class="pull-left" >
-                <button type="button" id="addcheck" (click)="addCheckPoints()" class="btn btn-round btn-primary">+ add checkpoint</button>
-                </div>
-
-                 <div class="pull-left" >
-                <button [disabled]="!carePathwayForm.valid" type="submit" class="btn btn-round">Save</button>
-                </div>
-   </div>
-   <!-- form array name checkPoints-->
-   <div formArrayName="checkPoints">
-  <div class="card card-stats" *ngFor="let check of carePathwayForm.controls.checkPoints.controls; let i=index">
-                             <div [formGroupName]="i">
-                             <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
-        {{i}}
-      </div>
-                              
-                               <div class="card-footer"> <!-- card footer-->
-                               <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
-                                 <label class="control-label" for="day">Day #</label>
-          <select formControlName="day" class="form-control" >
-      <option [attr.selected]="" value="{{j}}" *ngFor="let j of days">{{j}}</option>
-    </select>
-                               </div>
-                                <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
-                                 <label class="control-label" for="time">Time</label>
-          <select formControlName="time" class="form-control" >
-      <option [attr.selected]="" value="{{k}}" *ngFor="let k of times">{{k}}</option>
-    </select>
-                               </div>
-                               <div class="form-group" style="width: 40%; float: left; z-index: 10000;">  
-                                 <label class="control-label" for="checkType">Check Type</label>
-          <select formControlName="checkType" class="form-control" (change)="checkTypeSelect(check.controls['checkType']._value, i)">
-      <option value="yes-no">Yes/ No Question</option>
-      <option value="mcq">Multiple Choice Question</option>
-      <option value="value">Value/ Metric check</option>
-      <option value="consult-reminder">Consultation Reminder</option>
-      <option value="med-reminder">Medication Reminder</option>
-      <option value="test-reminder">Lab Test Reminder</option>
-    </select>
-                               </div>
-
-                                <div  class="form-group" style="margin: 10px; width: 100%;">  
-          <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
-            </div>
-                <div *ngIf="checkTypes[i] == 'consult-reminder'"  class="form-group" style="margin: 10px; width: 100%;">  
-                      <label class="control-label" for="consultant">Consultation with</label>
-          <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
-      
-      <option value="{{partner.key}}" *ngFor="let partner of partnerList;">{{partner.name}}</option>
-    </select>
-                               </div>
-            <div *ngIf="checkTypes[i] == 'mcq'" formArrayName="options">
-  <div *ngFor="let opt of check.controls.options.controls; let k=index">
-                             <div [formGroupName]="k">
-                              <div class="form-group" style="margin: 10px; width: 80%; margin-left:5%;"> 
-                                <br> 
-          <input type="text" class="form-control" id="value" formControlName="value" placeholder="Option" />
-            </div>
-                             </div>
-  </div>
-            </div>
-
-            <br>
-   <div *ngIf="checkTypes[i] == 'mcq'" class="form-group">
-                      <a class="btn btn-primary btn-round" 
-                        (click)="addOptions(check, i)">Add Option</a>
-                    </div>
-            </div> <!-- card footer-->
-           <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder'"
-          [objectId]="objectIdVal" 
-          [timeInterval]="timeInterval" 
-          [dateInterval]="dateInterval"
-          [MedNames]="MedNames">
-          </app-medication-reminder-carepath>
-   
-          <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
-          [objectId]="objectIdVal" 
-          [timeInterval]="timeInterval" 
-          [dateInterval]="dateInterval"
-          [MedNames]="TestNames"></app-lab-test-carepath>
-             <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected[i]"
-          [objectId]="objectIdVal" 
-          [doctorId] = "doctorId"
-          [timeInterval]="timeInterval" 
-          [dateInterval]="dateInterval"
-          [consultantId]="consultant[i]"></app-physicalconsultation-carepath>
-
-                             
-          </div>
-  </div>
-   </div>
-   <!-- form array name checkPoints-->
-   </div>
-   </div>
-</form>
 
 
