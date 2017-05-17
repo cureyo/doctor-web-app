@@ -1,0 +1,115 @@
+
+  <!--physical-consultation-carepath !-->
+  <div class="col-md-12">
+                <div class="card">
+                   <form [formGroup]="pctForm" class="formGroup" novalidate (ngSubmit)="savePCT(pctForm)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Consultation </h4>
+
+                        <!--<p class="category">Physical Consultation for {{patient.nickName}} </p>-->
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row">
+    <!--  other Doctor Name formcontrol-->
+                    <!--<div class="col-md-3">
+                            <div class="form-group">
+                                <label for="pct_drname">Physical consultation with</label>
+
+                                  <input type="text" class="form-control" id="pct_drname" formControlName="drname" #drname (keyup.enter)="setDrName(drname.value)"
+                                          (blur)="setDrName(drname.value)" />
+                            </div>
+                    </div>-->
+     <!-- End of Doctor Name formcontrol-->
+     
+  <!--location formcontrol-->         
+                  <!--<div class="col-md-3">
+                          <div class="form-group">
+                              <label for="pct_location">Location</label>
+
+                              <input type="text"
+                              formControlName="location" 
+                              class="form-control"
+                              id="pct_location" 
+                              />
+                          </div>
+                  </div>-->
+<!-- End of location formcontrol-->  
+<!-- Frequency formcontrol-->
+                  <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="pct_frequency">Frequency</label>
+
+                            <select formControlName="frequency" id="pct_frequency" class="form-control">
+                              <option value="monthly">Monthly</option>
+                              <option value="2months">Every 2 Months</option>
+                              <option value="3months">Every 3 Months</option>
+                              <option value="4months">Every 4 Months</option>
+                              <option value="5months">Every 5 Months</option>
+                              <option value="6months">Every 6 Months</option>
+                              <option value="annually">Annually</option>
+                            </select>
+                        </div>
+                  </div>
+<!-- End of  frequency formcontrol--> 
+<!-- Date Formcontrol-->
+                  <div class="col-md-4">
+                       <div class="form-group">
+                              <label for="pct_date">Date</label>
+
+                              <select formControlName="date" id="pct_date" class="form-control">
+                                <option value="{{i}}" *ngFor="let i of dateInterval">{{i}}</option>
+                              </select>
+                       </div>
+                    
+                  </div>
+<!--End of Date Formcontrol-->
+<!-- Time Formcontrol-->
+                  <div class="col-md-4">
+                       <div class="form-group">
+                               <label for="pct_timing">Timing</label>
+
+                                <select formControlName="timing" id="pct_timing" class="form-control">
+                                  <option value="{{t}}" *ngFor="let t of timeInterval">{{t}}</option>
+                                </select>
+                       </div>
+                    
+                  </div>
+<!--End of Time Formcontrol-->
+<!-- uber booking links and involments -->
+                         <!--<div class="clearfix">
+                                <label for="pct_phy_assist">
+                                  <input type="checkbox" formControlName="phy_assist" id="pct_phy_assist" />
+                                  Provide manual assistance to accompany {{patient.nickname}} to the consultation. If caretaker is unavailable, we will arrange assistance (charged separately).
+                                </label>
+                        </div> -->
+                       <!-- uber booking link-->
+                      <!--<div class="clearfix">
+                        <label for="pct_uber_booking">
+                          <input type="checkbox" formControlName="uber_booking" id="pct_uber_booking" />
+                          Arrange transport for the consultation. We typically use Uber for booking cabs.
+                        </label>
+                      </div>-->
+
+<!-- end of uber booking link-->
+
+
+                            </div> <!-- end of row-->
+<!-- submit button code    -->
+                <div class="actions clearfix">
+                      <div class="pull-right" >
+                          <button [ngClass]="{'hide': itemAdded7}" type="submit" [disabled]="!pctForm.valid" class="btn btn-warning">Add</button>
+                      </div>
+
+                        <div [ngClass]="{'hide': !itemAdded7}" class="bareP">
+                            <p>Thanks! This Care Item has been scheduled!</p>
+                        </div>
+                </div>
+<!-- end of submit button-->
+                    </div>
+                  </form>
+                </div>
+            </div><!--  end of medication reminder-->

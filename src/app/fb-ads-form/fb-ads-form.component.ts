@@ -39,6 +39,10 @@ export class FbAdsFormComponent implements OnInit {
   public tempAdaccountId: any = [];
   private pagePhotos: any = [];
   private objectives: any = [];
+  private cityList: any = [];
+  private tgtSpecList: any = [];
+  private ageGroup: any = [];
+  private citySearched: boolean = false;
   storage: any;
   uploader: FileUploader = new FileUploader({ url: '' });
   uid: string;
@@ -54,15 +58,20 @@ export class FbAdsFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    let i = 18;
+    for (i = 18; i < 66; i ++) {
+      this.ageGroup[i-18] = i;
+    }
+    
     this.objectives = [
-      {cta: "LIKE_PAGE", objective: "PAGE_LIKES", name: "Page Likes"},
-      {cta: "CONTACT_US", objective: "LINK_CLICKS", name: "Contact Us"},
-      {cta: "LEARN_MORE", objective: "LINK_CLICKS", name: "Learn More"},
-      {cta: "REGISTER_NOW", objective: "LINK_CLICKS", name: "Register Now"}
+      { cta: "LIKE_PAGE", objective: "PAGE_LIKES", name: "Page Likes" },
+      { cta: "CONTACT_US", objective: "LINK_CLICKS", name: "Contact Us" },
+      { cta: "LEARN_MORE", objective: "LINK_CLICKS", name: "Learn More" },
+      { cta: "REGISTER_NOW", objective: "LINK_CLICKS", name: "Register Now" }
     ]
     var date = new Date();
     console.log("today date:", date)
-    
+
 
     this._authService._getUser()
       .subscribe(userResponse => {
@@ -78,7 +87,7 @@ export class FbAdsFormComponent implements OnInit {
             if (this.clinicID == -1) {
               this.clinicID = userTable.clinicWebsite.length;
             };
-           
+
             this.clinicID = userTable.clinicWebsite.substring(0, this.clinicID);
             this.clinicID = "http://" + this.clinicID + ".cureyo.com";
             console.log("Clinic ID", this.clinicID);
@@ -129,6 +138,7 @@ export class FbAdsFormComponent implements OnInit {
       budget: [, Validators.required],
       name: [, Validators.required],
       targetCountry: [, Validators.required],
+      targetCitySearch: [],
       targetCity: [, Validators.required],
       siteLink: [clinicID, Validators.required],
       caption: [, Validators.required],
@@ -137,6 +147,10 @@ export class FbAdsFormComponent implements OnInit {
       subtext: [, Validators.required],
       startdate: [, Validators.required],
       enddate: [, Validators.required],
+      max_age: ['65', Validators.required],
+      min_age: ['18', Validators.required],
+      targetingSpecs: [],
+      targetingSpecSearch: [],
       imageURL: []
     });
     this.formReady = true;
@@ -154,18 +168,18 @@ export class FbAdsFormComponent implements OnInit {
         if (response.status === 'connected') {
 
           this.fbAccessToken = response.authResponse.accessToken;
-           this._fs.api('/' + pageId + '/photos?type=uploaded&fields=link,id,picture,images')
-              .then(
-              data => {
-                console.log(data);
-                this.pagePhotos = data.data;
-                this._fs.api('/' + pageId + '/photos?type=tagged&fields=link,id,picture,images')
-              .then(
-              data2 => {
-                this.pagePhotos = this.pagePhotos.concat(data2.data);
-              });
-              }
-              )
+          this._fs.api('/' + pageId + '/photos?type=uploaded&fields=link,id,picture,images')
+            .then(
+            data => {
+              console.log(data);
+              this.pagePhotos = data.data;
+              this._fs.api('/' + pageId + '/photos?type=tagged&fields=link,id,picture,images')
+                .then(
+                data2 => {
+                  this.pagePhotos = this.pagePhotos.concat(data2.data);
+                });
+            }
+            )
         } else {
           this.fbAccessToken = null;
         }
@@ -195,15 +209,15 @@ export class FbAdsFormComponent implements OnInit {
     this.adAccountID = job['adAccount'];
     if (job['imageURL']) {
       this.fileUrl = this.pageImagesUrl;
-    this.fileUrl = encodeURIComponent(this.fileUrl)
-      .replace(/!/g, '%21')
-      .replace(/'/g, '%27')
-      .replace(/\(/g, '%28')
-      .replace(/\)/g, '%29')
-      .replace(/\*/g, '%2A')
-      .replace(/%20/g, '+');
-      
-    } 
+      this.fileUrl = encodeURIComponent(this.fileUrl)
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A')
+        .replace(/%20/g, '+');
+
+    }
     this._authService._getPageID(this.userID)
       .subscribe(pageID => {
         this.pageID = pageID.$value;
@@ -224,9 +238,9 @@ export class FbAdsFormComponent implements OnInit {
                   '&' + 'bid_amount=' + this.bidAmount +
                   '&' + 'daily_budget=' + this.dailybudget +
                   '&' + 'campaign_id=' + this.campaignID +
-                  '&' + 'targeting={"geo_locations":{"countries":["' + job['targetCountry'] + '"], "cities":["' + job['targetCity'] + '"]}}' +
-                   '&' + 'start_time=' + job['startdate'] +
-                  '&' + 'end_time='  + job['enddate'] +'&status=PAUSED', method)
+                  '&' + 'targeting={"geo_locations":{"countries":["' + job['targetCountry'] + '"], "cities":[{"key":"' + job['targetCity'] + '"}]}}' +
+                  '&' + 'start_time=' + job['startdate'] +
+                  '&' + 'end_time=' + job['enddate'] + '&status=PAUSED', method)
                 this._fs.api('/' + job['adAccount']
                   + '/' + 'adsets?&name=' + this.campaignID +
                   '&' + 'optimization_goal=REACH' +
@@ -234,9 +248,9 @@ export class FbAdsFormComponent implements OnInit {
                   '&' + 'bid_amount=' + this.bidAmount +
                   '&' + 'daily_budget=' + this.dailybudget +
                   '&' + 'campaign_id=' + this.campaignID +
-                  '&' + 'targeting={"geo_locations":{"countries":["' + job['targetCountry'] + '"], "cities":["' + job['targetCity'] + '"]}}' +
+                  '&' + 'targeting={"geo_locations":{"countries":["' + job['targetCountry'] + '"], "cities":[{"key":"' + job['targetCity'] + '"]}}' +
                   '&' + 'start_time=' + job['startdate'] +
-                  '&' + 'end_time='  + job['enddate'] +'&status=PAUSED', method)
+                  '&' + 'end_time=' + job['enddate'] + '&status=PAUSED', method)
 
                   .then(response => {
                     this.targetResponse = response.id;
@@ -244,7 +258,7 @@ export class FbAdsFormComponent implements OnInit {
                     console.log("targeting spec response", '/' + job['adAccount'] +
                       '/ads?adset_id=' + this.targetResponse +
                       '&status=ACTIVE' +
-                      '&name=' + job['name'] + 
+                      '&name=' + job['name'] +
                       '&bid_amount=' + this.bidAmount +
                       '&creative={"title":"' + job['name'] + '","body":"' + job['subtext'] + '","object_url":"' + job['siteLink'] + '","image_url":"' + this.fileUrl + '"}');
                     this._fs.api('/' + job['adAccount'] +
@@ -347,7 +361,7 @@ export class FbAdsFormComponent implements OnInit {
     AdsData['caption'] = AdsJob['caption'];
     AdsData['msg'] = AdsJob['msg'];
     AdsData['callToAction'] = AdsJob['callToAction'];
-    
+
     AdsData['subtext'] = AdsJob['subtext'];
     AdsData['startTime'] = AdsJob['startdate'];
     AdsData['endTime'] = AdsJob['enddate'];
@@ -378,6 +392,29 @@ export class FbAdsFormComponent implements OnInit {
       }
     }
 
+  }
+  searchCity(value) {
+    console.log(value);
+    this._fs.api('/search?location_types=["city"]&type=adgeolocation&q=' + value.targetCitySearch)
+    .then(
+      data => {
+        console.log(data);
+        this.cityList = data.data;
+        //this.citySearched = true;
+      }
+    )
+  }
+    detailedSearch(value) {
+      console.log(this.tempAdaccountId);
+    console.log(value);
+    this._fs.api('/'+ this.tempAdaccountId[0] + '/targetingsearch?q=' + value.targetingSpecSearch)
+    .then(
+      data => {
+        console.log(data);
+        this.tgtSpecList = data.data;
+        
+      }
+    )
   }
 }
 

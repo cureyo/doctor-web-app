@@ -1,0 +1,95 @@
+<!--Blood Sugar & Pressure Job-->
+  <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="tbsForm" class="formGroup" novalidate (ngSubmit)="save_TbsData(tbsForm)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Blood Sugar Tracker </h4>
+
+                        <p class="category">Blood Sugar Tracker for {{patient.nickName}} </p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row" *ngIf="patient && user">
+    <!-- health matric formcontrol-->
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="tbs_health_matric">Health Metric to track</label>
+
+                                  <select formControlName="health_matric" id="tbs_health_matric" class="form-control" >
+                                        <option value="Blood Sugar">Blood Sugar</option>
+                                        <option value="Blood Pressure">Blood Pressure</option>
+                                  </select>
+                            </div>
+                    </div>
+     <!-- End of health matric formcontrol-->
+     <!-- Tracking Frequency formcontrol-->
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="tbs_track_freq">Tracking Frequency</label>
+
+                                <select formControlName="Track_feq" id="tbs_track_freq" class="form-control" >
+                                      <option value="Not Required">Daily</option>
+                                      <option value="daily">Daily</option>
+                                      <option value="Every 2 Days">Every 2 Days</option>
+                                      <option value="Every 3 Days">Every 3 Days</option>
+                                      <option value="Every 4 Days">Every 4 Days</option>
+                                      <option value="Every 5 Days">Every 5 Days</option>
+                                      <option value="Every 6 Days">Every 6 Days</option>
+                                      <option value="Weekly">Weekly</option>
+                                      <option value="Forthnigthly">Forthnigthly</option>
+                                      <option value="Monthly">Monthly</option>
+                                </select>
+                            </div>
+                    </div>
+  <!-- End of Tracking Frequency formcontrol-->   
+  <!-- Timing formcontrol-->         
+                  <div class="col-md-3">
+                          <div class="form-group">
+                               <label for="tbs_medicineTiming">Timing</label>
+
+                                <select formControlName="timing" id="tbs_medicineTiming" class="form-control">
+                                        <option value="Morning" >Morning</option>
+                                        <option value="after sleep" >after sleep</option>
+                                        <option value="Before Breakfast" >Before Breakfast</option>
+                                        <option value="After Breakfast" >After Breakfast</option>
+                                        <option value="Before Lunch" >Before Lunch</option>
+                                        <option value="After Lunch" >After Lunch</option>
+                                        <option value="Before Dinner" >Before Dinner</option>
+                                        <option value="After Dinner" >After Dinner</option>
+                                        <option value="Before sleeping" >Before sleeping</option>
+                                </select>
+                          </div>
+                  </div>
+<!-- End of timing formcontrol-->  
+<!-- Report Frequency formcontrol-->
+                  <div class="col-md-3">
+                        <div class="form-group">
+                             <label for="cp_reportFrequency">Report Frequency</label>
+
+                              <select formControlName="reportFrequency" id="cp_reportFrequency" class="form-control" >
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                              </select>
+                        </div>
+                  </div>
+            <!-- End of Report Frequency formcontrol--> 
+
+                            </div> <!-- end of row-->
+<!-- submit button code    -->
+                <div class="actions clearfix">
+                      <div class="pull-right" >
+                          <button [ngClass]="{'hide': itemAdded4}" type="submit" [disabled]="!tbsForm.valid" class="btn btn-warning">Add</button>
+                      </div>
+
+                        <div [ngClass]="{'hide': !itemAdded4}" class="bareP">
+                            <p>Thanks! This Care Item has been scheduled!</p>
+                        </div>
+                </div>
+<!-- end of submit button-->
+                    </div>
+                  </form>
+                </div>
+            </div><!--  end of medication reminder-->

@@ -60,6 +60,7 @@ export class OutPatientsFormComponent implements OnInit {
   private title:any;
   private average:any;
   private msgDate:any;
+  private hasHx: boolean = false;
   constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http) {
 
 
@@ -240,19 +241,24 @@ export class OutPatientsFormComponent implements OnInit {
     this._authService._findPatientHistory(this.currentUserID, param)
       .subscribe(
       data => {
+        console.log("Patient HX Data", data);
         
         let ctrNormal = 0, ctrOther = 0, ctrDeviations = 0;
         this.hasOtherHistory = [];
         this.hasNormalHistory = [];
         this.hasDeviationsHistory = [];
-
-        for (let item in data) {
+        if (data[0]) {
+            for (let item in data) {
           console.log(data[item]);
+          this.hasHx = true;
           if (item != "$key" && item != "$exists") {
             console.log(data[item]);
-            if (data[item].standard != false && data[item].standard != true && data[item].response == "") {
+            if (data[item].standard != false && data[item].standard != true && !data[item].response) {
               console.log("no response")
             }
+            // else if (data[item].response == "") {
+            //    console.log("no response")
+            // }
             else if (data[item].standard == "NA") {
               this.hasOther = true;
               this.hasOtherHistory[ctrOther] = { question: data[item].question, response: data[item].response };
@@ -271,6 +277,10 @@ export class OutPatientsFormComponent implements OnInit {
           }
 
         }
+        } else {
+          this.hasHx = false;
+        }
+      
         console.log(this.hasNormalHistory);
         console.log(this.hasOtherHistory);
         console.log(this.hasDeviationsHistory)

@@ -106,13 +106,21 @@
       <option value="yes-no">Yes/ No Question</option>
       <option value="mcq">Multiple Choice Question</option>
       <option value="value">Value/ Metric check</option>
+      <option value="consult-reminder">Consultation Reminder</option>
       <option value="med-reminder">Medication Reminder</option>
       <option value="test-reminder">Lab Test Reminder</option>
     </select>
                                </div>
-                                <div class="form-group" style="margin: 10px; width: 100%;">  
+                                <div *ngIf="checkTypes[i] != 'consult-reminder'" class="form-group" style="margin: 10px; width: 100%;">  
           <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
             </div>
+                <div *ngIf="checkTypes[i] == 'consult-reminder'"  class="form-group" style="margin: 10px; width: 100%;">  
+                                 <label class="control-label" for="consultant">Consultation with</label>
+          <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
+      
+      <option value="test-reminder">Lab Test Reminder</option>
+    </select>
+                               </div>
             <div *ngIf="checkTypes[i] == 'mcq'" formArrayName="options">
   <div *ngFor="let opt of check.controls.options.controls; let k=index">
                              <div [formGroupName]="k">
@@ -123,19 +131,31 @@
                              </div>
   </div>
             </div>
-               <app-medication-reminder-jobs *ngIf="checkTypes[i] == 'med-reminder'"
-          [user]="currentUserID" 
-          [patient]="caredone" 
-          [timeInterval]="timeInterval" 
-          [dateInterval]="dateInterval"
-          [MedNames]="MedNames">
-   </app-medication-reminder-jobs>
+
             <br>
    <div *ngIf="checkTypes[i] == 'mcq'" class="form-group">
                       <a class="btn btn-primary btn-round" 
                         (click)="addOptions(check, i)">Add Option</a>
                     </div>
             </div>
+                           <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder'"
+          [objectId]="objectIdVal" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [MedNames]="MedNames">
+   </app-medication-reminder-carepath>
+   
+   <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
+          [objectId]="objectIdVal" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [MedNames]="TestNames"></app-lab-test-carepath>
+             <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected"
+          [objectId]="objectIdVal" 
+          [timeInterval]="timeInterval" 
+          [dateInterval]="dateInterval"
+          [category]="consultant[i]"></app-physicalconsultation-carepath>
+                             
                              </div>
   </div>
    </div>

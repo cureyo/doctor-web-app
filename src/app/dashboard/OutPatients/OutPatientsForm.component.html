@@ -19,8 +19,9 @@
               <div class="card-content table-responsive">
                   <h4 style="color: #137a9c"><b>Patient Medical History</b>
                   <br>
-                  <small>For: {{primeSymptom}}</small></h4>
-                     <div class="row">
+                  <small *ngIf="hasHx" >For: {{primeSymptom}}</small>
+                  <small *ngIf="!hasHx" >No Medical History recorded</small></h4>
+                     <div *ngIf="hasHx" class="row">
 
 <div *ngIf="hasDeviations" class="col-sm-4">
 <div class="card card-stats"  >
