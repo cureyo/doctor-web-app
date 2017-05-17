@@ -104,6 +104,38 @@ export class CarePathsComponent implements OnInit {
         //console.log(this.carePathsAvlbl)
       }
       )
+    this._authService._getUser()
+      .subscribe(
+      userData => {
+        this.doctorId = userData.user.uid;
+        this._authService._getPartner(userData.user.uid)
+          .subscribe(
+          partnerData => {
+
+            if (partnerData['consultant']) {
+              let ctr = 0, partnersC = [];
+              let consultants = partnerData['consultant'];
+              console.log(partnerData['consultant']);
+              for (let item in consultants) {
+
+                console.log(item)
+                if (item != 'length' && item != '$exists' && item != '$key') {
+                  partnersC[ctr] = consultants[item];
+                  partnersC[ctr]['key'] = item;
+                  ctr++
+                }
+
+              }
+              this.partnerList = partnersC;
+              console.log(this.partnerList);
+
+
+            }
+          }
+          )
+
+      }
+      )
   }
   initCheckPoints() {
     return this._fb.group({
@@ -131,10 +163,15 @@ export class CarePathsComponent implements OnInit {
       ])
     });
     const control2 = <FormArray>control.controls['options'];
-    if (data.checkType == "mcq") {
-      this.checkTypes[check] = true;
-      console.log(this.checkTypes)
+
+    this.checkTypes[check] = data.checkType;
+    if (data.consultant) {
+      this.consultant[check] = data.consultant;
+      this.consultantSelected[check] = true;
     }
+
+    console.log(this.checkTypes)
+
     console.log(data.options);
     for (let each in data.options) {
       if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
@@ -154,6 +191,7 @@ export class CarePathsComponent implements OnInit {
   }
   loadCarePath(data) {
     console.log(data);
+    this.objectIdVal = data.objectId;
     this.carePathwayForm = this._fb.group({
       name: [data.name, Validators.required],
       objectId: [data.objectId, Validators.required],
@@ -250,39 +288,9 @@ export class CarePathsComponent implements OnInit {
           //console.log("the med names is :",this.TestNames);
         })
     } else if (type == "consult-reminder") {
-      this._authService._getUser()
-        .subscribe(
-        userData => {
-          this.doctorId = userData.user.uid;
-          this._authService._getPartner(userData.user.uid)
-            .subscribe(
-            partnerData => {
+      this.checkTypes[i] = type;
+      this.setIntervals();
 
-              if (partnerData['consultant']) {
-                let ctr = 0, partnersC = [];
-                let consultants = partnerData['consultant'];
-                console.log(partnerData['consultant']);
-                for (let item in consultants) {
-
-                  console.log(item)
-                  if (item != 'length' && item != '$exists' && item != '$key') {
-                    partnersC[ctr] = consultants[item];
-                    partnersC[ctr]['key'] = item;
-                    ctr++
-                  }
-
-                }
-                this.partnerList = partnersC;
-                console.log(this.partnerList);
-                
-                this.checkTypes[i] = type;
-                this.setIntervals();
-              }
-            }
-            )
-
-        }
-        )
     }
     else {
 

@@ -36,7 +36,7 @@ export class LabTestCareComponent implements OnInit {
                             });
           
      //here is the code to get the transaction data
-    this._authService._getTransactionData(538056344)
+    this._authService._getTransactionData(this.objectId)
     .subscribe(response=>{
             this.labData=response.LabTest;
          console.log("response data based one the object Id:",response);
@@ -163,7 +163,7 @@ export class LabTestCareComponent implements OnInit {
       //console.log("the reminders value ",labtests);
     // //  save data in onboarding Review
     var transTime = new Date();
-      this._authService._saveTransactionData(reviewData,this.objectId,  'Lab_Test/').then(
+      this._authService._saveTransactionData(reviewData,this.objectId,  'LabTest/').then(
         res =>{
           let d=res;
           this.itemAdded3 = true;

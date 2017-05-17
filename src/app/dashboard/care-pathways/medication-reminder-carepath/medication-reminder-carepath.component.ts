@@ -206,7 +206,7 @@ export class MedicationReminderCareComponent implements OnInit {
     //console.log("the reminders value ",reminders);
     //  save data in onboarding Review
     var transTime = new Date();
-    this._authService._saveTransactionData(reviewData, this.objectId, 'Medication Reminder/').then(
+    this._authService._saveTransactionData(reviewData, this.objectId, 'MedicationReminder/').then(
       res => {
         let d = res;
         this.itemAdded2 = true;
