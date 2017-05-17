@@ -80,7 +80,7 @@ export class CarePathsComponent implements OnInit {
     this.selectDrDomain = true;
     this.carePathwayForm = this._fb.group({
       name: ['', Validators.required],
-      objectId: this.objectIdVal,
+      objectId: [this.objectIdVal, Validators.required],
       checkPoints: this._fb.array([
         this.initCheckPoints()
       ])
@@ -153,6 +153,7 @@ export class CarePathsComponent implements OnInit {
     console.log(data);
     this.carePathwayForm = this._fb.group({
       name: [data.name, Validators.required],
+      objectId: [data.objectId, Validators.required],
       checkPoints: this._fb.array([
         this.initializeCheckPoints(data.checkPoints[0], 0)
       ])
@@ -195,8 +196,10 @@ export class CarePathsComponent implements OnInit {
   createPathways() {
     this.carePathwayForm.reset();
     this.newPath = false;
+    this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
     this.carePathwayForm = this._fb.group({
       name: ['', Validators.required],
+      objectId: [this.objectIdVal, Validators.required],
       checkPoints: this._fb.array([
         this.initCheckPoints()
       ])
@@ -285,6 +288,7 @@ export class CarePathsComponent implements OnInit {
   }
 
   onSubmit(model) {
+    console.log(model);
     this._authService._getCarePathNames(model['name'])
       .subscribe(
       data => {
