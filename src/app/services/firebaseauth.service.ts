@@ -141,6 +141,10 @@ export class AuthService {
 
 
   }//save onboardingReviewreview data
+  //get the transactionDate
+    public _getTransactionData(objectId){
+      return this.af.database.object(this.db.transactionTable+'/'+objectId);
+    }
   //save FbADS Form Data
   public _saveFbAdsFormData(uid,campaignID,data){
    const FbAdsData = this.af.database.object(this.db.FbCampaign+'/'+uid +'/'+campaignID)

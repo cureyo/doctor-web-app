@@ -17,6 +17,7 @@ export class LabTestCareComponent implements OnInit {
        
    public stForm: FormGroup;
    private itemAdded3: boolean = false;
+   private labData:any;
  constructor(
               private _fb: FormBuilder,
               private _fs: FbService,
@@ -27,24 +28,65 @@ export class LabTestCareComponent implements OnInit {
    ) {}
 
   ngOnInit() {
-    //  //console.log("input val of user :",this.user);
-    //  //console.log("input val of patient :",this.patient);
-    //  //console.log("input val of time :",this.timeInterval);
-    //  //console.log("input val of date :",this.dateInterval);
+   if(this.objectId){
+          this.stForm = this._fb.group({
+              labtests: this._fb.array([
+              this.initLabTest()
+                              ])
+                            });
+          
+     //here is the code to get the transaction data
+    this._authService._getTransactionData(538056344)
+    .subscribe(response=>{
+            this.labData=response.LabTest;
+         console.log("response data based one the object Id:",response);
+              
+             if (this.labData){
+               var index=0;
+              this.stForm = this._fb.group({
+             labtests:this._fb.array([ 
+              this.initLabTestData(index)
+                              ])
+                            });
+              for (var i=1;i<this.labData.length;i++){
+                console.log("loop",i);
+                 this.addLabTestData(i);
+              }
+             }  
+    })
+     
+     }
+     else{   
+              this.stForm = this._fb.group({
+              labtests: this._fb.array([
+              this.initLabTest()
+                              ])
+                            });
+            }    
+       
+  }//end of ngOnInIt
 
-    this.stForm = this._fb.group({
-      labtests: this._fb.array([
-        this.initLabTest()
-      ])
+  initLabTestData(i) {
+      return this._fb.group({
+      name: [this.labData[i].TestName, Validators.required],
+      frequency: [this.labData[i].TestFreq, Validators.required],
+      day: [this.labData[i].TestDay],
+      date: [this.labData[i].TestDate, Validators.required],
+      timing: [this.labData[i].TestTime, Validators.required],
     });
-  }
+  }//iniMedicine's
+  addLabTestData(i) {
+    const control = <FormArray>this.stForm.controls['labtests'];
+    control.push(this.initLabTestData(i));
+
+  }//addMedicine
   initLabTest(){
       return this._fb.group({
         name: ['', Validators.required],
         frequency: ['', Validators.required],
         day: ['Saturday'],
-        date: ['2',Validators.required],
-        timing: ['10:00 AM', Validators.required],
+        date: ['',Validators.required],
+        timing: ['', Validators.required],
     });
   }//initLabTest's
   addLabTest(){

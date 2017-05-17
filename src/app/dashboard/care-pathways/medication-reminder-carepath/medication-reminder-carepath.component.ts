@@ -20,6 +20,7 @@ export class MedicationReminderCareComponent implements OnInit {
   public showDate: boolean = false;
   public MedForm: FormGroup;
   private itemAdded2: boolean = false;
+  private medData:any;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -31,14 +32,76 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   ngOnInit() {
-    this.MedForm = this._fb.group({
-      medicines: this._fb.array([
-        this.initMedicines()
-      ])
-    });
-  }
+       if(this.objectId){
+          this.MedForm = this._fb.group({
+              medicines: this._fb.array([
+              this.initMedicines()
+                              ])
+                            });
+          
+     //here is the code to get the transaction data
+    this._authService._getTransactionData(this.objectId)
+    .subscribe(response=>{
+            this.medData=response.MedicationReminder;
+         console.log("response data based one the object Id:",response);
+              
+             if (this.medData){
+               var index=0;
+              this.MedForm = this._fb.group({
+              medicines:this._fb.array([ 
+              this.initMedicinesData(index)
+                              ])
+                            });
+              for (var i=1;i<this.medData.length;i++){
+                console.log("loop",i);
+                 this.addMedicineData(i);
+              }
+             }  
+    })
+     
+     }
+     else{   
+              this.MedForm = this._fb.group({
+              medicines: this._fb.array([
+              this.initMedicines()
+                              ])
+                            });
+            }    
+       
+  }//end of ngOnInIt
 
-  switchDay = (event) => {
+  initMedicinesData(i) {
+      return this._fb.group({
+      name: [this.medData[i].MedName, Validators.required],
+      frequency: [this.medData[i].MedFreq, Validators.required],
+      day: [this.medData[i].MedDay],
+      date: [this.medData[i].MedDate, Validators.required],
+      timing: [this.medData[i].MedTiming, Validators.required],
+    });
+  }//iniMedicine's
+  addMedicineData(i) {
+    const control = <FormArray>this.MedForm.controls['medicines'];
+    control.push(this.initMedicinesData(i));
+
+  }//addMedicine
+
+
+  initMedicines() {
+    return this._fb.group({
+      name: ['', Validators.required],
+      frequency: ['', Validators.required],
+      day: ['saturday'],
+      date: ['2', Validators.required],
+      timing: ['', Validators.required],
+    });
+  }//iniMedicine's
+  addMedicine() {
+    const control = <FormArray>this.MedForm.controls['medicines'];
+    control.push(this.initMedicines());
+
+  }//addMedicine
+
+   switchDay = (event) => {
     let target = event.target || event.srcElement || event.currentTarget,
       mode = $(target).val(),
       medDays = $(target).parent().nextAll('.med_days'),
@@ -68,22 +131,6 @@ export class MedicationReminderCareComponent implements OnInit {
     }//else
 
   }//switchDay()
-
-
-  initMedicines() {
-    return this._fb.group({
-      name: ['', Validators.required],
-      frequency: ['', Validators.required],
-      day: ['saturday'],
-      date: ['2', Validators.required],
-      timing: ['', Validators.required],
-    });
-  }//iniMedicine's
-  addMedicine() {
-    const control = <FormArray>this.MedForm.controls['medicines'];
-    control.push(this.initMedicines());
-
-  }//addMedicine
 
 
   saveMed = (model) => {
