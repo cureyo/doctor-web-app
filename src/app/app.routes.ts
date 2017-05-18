@@ -81,6 +81,7 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'out-patient-dept', component: OPDComponent},
     { path: 'patient-hx-forms', component: PatientHxFormComponent},
      { path: 'partners', component: PartnerComponent}
+    
 
 
 ]

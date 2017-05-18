@@ -1,4 +1,4 @@
-<form (keydown.enter)="$event.preventDefault()" class="form">
+<form *ngIf="newPath" [formGroup]="carePathwayForm" (keydown.enter)="$event.preventDefault()" (ngSubmit)="onSubmit(carePathwayForm.value)" class="form">
         <div class="row">
                 <div class="col-sm-10 col-md-offset-1">
                             <div class="card card-stats">
@@ -6,42 +6,43 @@
                             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name this Care Path" />
                             </div>
                             <div class="pull-left" >
-                            <button type="button" id="addcheck"  class="btn btn-round btn-primary">+ add checkpoint</button>
+                            <button type="button" id="addcheck" (click)="addCheckPoints()"  class="btn btn-round btn-primary">+ add checkpoint</button>
                             </div>
 
                             <div class="pull-left" >
-                            <button class="btn btn-round">Save</button>
+                            <button [disabled]="!carePathwayForm.valid" type="submit" class="btn btn-round">Save</button>
                             </div>
                             </div>
 
                 <!-- form array name checkPoints-->
                 <div formArrayName="checkPoints">
-                            <div class="card card-stats">
-                                    <!--<div [formGroupName]="i">-->
-                                            <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">                                
+                            <div class="card card-stats" *ngFor="let check of carePathwayForm.controls.checkPoints.controls; let i=index">
+                                    <div [formGroupName]="i">
+                                            <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">   
+                                                      {{i}}                             
                                             </div>
 
                                             <div class="card-footer"> <!-- card footer-->
 
                                                             <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
                                                                     <label class="control-label" for="day">Day #</label>
-                                                                    <select class="form-control" >
-                                                                    <option  value="1"></option>
+                                                                    <select formControlName="day" class="form-control" >
+                                                                    <option  [attr.selected]="" value="{{j}}" *ngFor="let j of days">{{j}}</option>
                                                                     </select>
                                                             </div>
 
 
                                                             <div class="form-group" style="width: 20%; float: left; z-index: 10000;">  
                                                                     <label class="control-label" for="time">Time</label>
-                                                                    <select class="form-control" >
-                                                                    <option  value="1"></option>
+                                                                    <select formControlName="time" class="form-control" >
+                                                                    <option [attr.selected]="" value="{{k}}" *ngFor="let k of times">{{k}}</option>
                                                                     </select>
                                                             </div>
 
 
                                                             <div class="form-group" style="width: 40%; float: left; z-index: 10000;">  
                                                                         <label class="control-label" for="checkType">Check Type</label>
-                                                                        <select  class="form-control">
+                                                                        <select formControlName="checkType" class="form-control" (change)="checkTypeSelect(check.controls['checkType']._value, i)">
                                                                         <option value="yes-no">Yes/ No Question</option>
                                                                         <option value="mcq">Multiple Choice Question</option>
                                                                         <option value="value">Value/ Metric check</option>
@@ -54,39 +55,40 @@
 
 
                                                             <div  class="form-group" style="margin: 10px; width: 100%;">  
-                                                                        <input type="text" class="form-control" id="messageText"  placeholder="Message/ Question text" />
+                                                                        <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
                                                             </div>
 
-                                                            <div  class="form-group" style="margin: 10px; width: 100%;">  
+                                                            <div *ngIf="checkTypes[i] == 'consult-reminder'"  class="form-group" style="margin: 10px; width: 100%;">  
                                                                         <label class="control-label" for="consultant">Consultation with</label>
-                                                                        <select  class="form-control" >
+                                                                        <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
 
-                                                                        <option value="1212"> KSJV</option>
+                                                                        <option value="{{partner.key}}" *ngFor="let partner of partnerList;">{{partner.name}}</option>
                                                                         </select>
-                                                            </div>
+                                                           </div>
 
 
-
-                                                            <div formArrayName="options">
-                                                                <div >
-                                                                        <!--<div [formGroupName]="k">-->
-                                                                                <div class="form-group" style="margin: 10px; width: 80%; margin-left:5%;"> 
+                                                            <div *ngIf="checkTypes[i] == 'mcq'" formArrayName="options">
+                                                                        <div *ngFor="let opt of check.controls.options.controls; let k=index">
+                                                                                <div [formGroupName]="k">
+                                                                                        <div class="form-group" style="margin: 10px; width: 80%; margin-left:5%;"> 
                                                                                         <br> 
-                                                                                        <input type="text" class="form-control" id="value"  placeholder="Option" />
+                                                                                        <input type="text" class="form-control" id="value" formControlName="value" placeholder="Option" />
+                                                                                        </div>
                                                                                 </div>
-                                                                        <!--</div>-->
-                                                                </div>
-                                                            </div>
+                                                                        </div>
+                                                             </div>
 
 
                                                             <br>
-                                                            <div  class="form-group">
-                                                                    <a class="btn btn-primary btn-round">Add Option</a>
-                                                                    
-                                                            </div>
-
+                                                                <div *ngIf="checkTypes[i] == 'mcq'" class="form-group">
+                                                                        <a class="btn btn-primary btn-round" 
+                                                                        (click)="addOptions(check, i)">Add Option</a>
+                                                                </div>
+                                                                <div class="pull-right">
+                                                                        <button type="submit" class="btn btn-info">submit</button>
+                                                                </div>
                                                   </div> <!-- card footer-->
-                                            <!--</div>-->
+                                            </div>
                                     </div>
                              </div>
                     </div>
