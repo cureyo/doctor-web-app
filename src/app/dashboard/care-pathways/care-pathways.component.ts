@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 import { AuthService } from "../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
-
+// import {CreatePathWaysComponent} from './create-path-ways/create-path-ways.component';
 declare var $: any
 
 
@@ -51,48 +51,18 @@ export class CarePathsComponent implements OnInit {
        
 
   }
-  updateDays() {
-    let i = 0;
-    //console.log("day pushed")
-    for (let i = 0; i < 200; i++) {
-      this.days[i] = i;
-      ////console.log("days pushed", i)
-    }
-  }
-  updateTimes() {
-    let i = 0;
-    //console.log("time pushed", i)
-    for (let i = 0; i < 24; i++) {
-      if (i < 10) {
-        this.times[i] = '0' + i + '00 hrs';
-        ////console.log("times pushed", i)
-      }
-      else {
-        this.times[i] = i + '00 hrs';
-      }
-
-    }
-  }
+  
   ngOnInit() {
-    this.setIntervals();
+    
     this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
-    this.updateDays();
-    this.updateTimes();
-    this.drDomain = this._fb.group({
-      message: [''],
-    });
-    this.selectDrDomain = true;
-    this.carePathwayForm = this._fb.group({
-      name: ['', Validators.required],
-      objectId: [this.objectIdVal, Validators.required],
-      checkPoints: this._fb.array([
-        this.initCheckPoints()
-      ])
-    });
-
     this.findCarePaths = this._fb.group({
       carePath: ''
     });
+   
+     this.drDomain=this._fb.group({
+       carePath:[]
+     })
+
 
     ////console.log(this.ObserversForm);
 
@@ -118,8 +88,6 @@ export class CarePathsComponent implements OnInit {
               let consultants = partnerData['consultant'];
               console.log(partnerData['consultant']);
               for (let item in consultants) {
-
-                console.log(item)
                 if (item != 'length' && item != '$exists' && item != '$key') {
                   partnersC[ctr] = consultants[item];
                   partnersC[ctr]['key'] = item;
@@ -128,32 +96,17 @@ export class CarePathsComponent implements OnInit {
 
               }
               this.partnerList = partnersC;
-              console.log(this.partnerList);
-
-
             }
-          }
+           }
           )
-
-      }
+        }
       )
   }
-  initCheckPoints() {
-    return this._fb.group({
-      day: ['', Validators.required],
-      time: ['', Validators.required],
-      messageText: ['', Validators.required],
-      checkType: ['', Validators.required],
-      consultant: [],
-      options: this._fb.array([
-        this.initOptions()
-      ])
-    });
-  }
+  
 
 
   initializeCheckPoints(data, check) {
-    let control = this._fb.group({
+      let control = this._fb.group({
       day: [data.day, Validators.required],
       time: [data.time, Validators.required],
       messageText: [data.messageText, Validators.required],
@@ -212,168 +165,16 @@ export class CarePathsComponent implements OnInit {
     console.log(this.carePathwayForm);
     var self = this;
     setTimeout(function () {
-      self.newPath = true;
+      
+
       console.log("showing form now")
     }, 2000)
   }
-  initOptions() {
-    return this._fb.group({
-      value: ['Option', Validators.required]
-    });
-  }
-  addCheckPoints() {
-    const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
-    control.push(this.initCheckPoints());
-
-  }//addReports
-  addOptions(check, i) {
-
-    const control = <FormArray>check.controls['options'];
-
-    control.push(this.initOptions());
-    //console.log(control);
-
-  }//addReports
-
-  createPathways() {
-    this.carePathwayForm.reset();
-    this.newPath = false;
-    this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
-    this.carePathwayForm = this._fb.group({
-      name: ['', Validators.required],
-      objectId: [this.objectIdVal, Validators.required],
-      checkPoints: this._fb.array([
-        this.initCheckPoints()
-      ])
-    });
-    this.selectDrDomain = true;
-    setTimeout(
-      () => {
-        this.newPath = true;
-      }, 2000
-    )
+  
+  
 
 
-  }
-  selectDomainMenu() {
-
-    this.selectDrDomain = true;
-    //console.log("redirecting to ", "website")
-    this.router.navigate(['website'])
-
-  }
-  checkTypeSelect(type, i) {
-    console.log("check type is", type, " for ", i);
-    ////console.log()
-    if (type == "med-reminder") {
-      // this.setIntervals();
-      this._authService._getMedicineNames()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.MedNames = data;
-          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
-
-          this.checkTypes[i] = type;
-
-          //console.log("the med names is :",this.MedNames);
-        })
-    } else if (type == "test-reminder") {
-      // this.setIntervals();
-      this._authService._getPathologicalTests()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.TestNames = data;
-
-          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
-          this.checkTypes[i] = type;
-          //console.log("the med names is :",this.TestNames);
-        })
-    } else if (type == "consult-reminder") {
-      this.checkTypes[i] = type;
-      // this.setIntervals();
-
-    }
-    else {
-
-      this.checkTypes[i] = type;
-    }
-
-    // if (type == 'mcq')
-    //   this.checkTypes[i] = true;
-    // else this.checkTypes[i] = false;
-  }
-  searchDomain = (model) => {
-    let job = model['value'];
-    let reminder = {};
-    this.routeparam = job['message'];
-    reminder['message value'] = job['message'];
-    //console.log("reminder value test ", reminder);
-    //console.log("i am clicked to check domain name")
-
-    this.getData(job['message']).subscribe(data => {
-      //console.log(data);
-      this.array = data;
-      //console.log(this.array)
-      this.displayDrDomain = true;
-
-    });
-
-
-
-  }
-  getData(domainName) {
-
-    const domainURL = "https://api.ote-godaddy.com/v1/domains/suggest?query=" + domainName + "&country=IN&city=bangalore&sources=CC_TLD%2CEXTENSION%2CKEYWORD_SPIN%2CPREMIUM%2Ccctld%2Cextension%2Ckeywordspin%2Cpremium&tlds=.com&lengthMax=15&lengthMin=5&limit=10&waitMs=6000";
-
-    return this.http.get(domainURL)
-      .map((res: Response) => res.json());
-
-  }
-
-  onSubmit(model) {
-    console.log(model);
-    this._authService._getCarePathNames(model['name'])
-      .subscribe(
-      data => {
-        console.log(data);
-        if (data[0]) {
-          alert("This Care Path already exisits. Please save using another name");
-        } else {
-          this._authService._saveCarePathway(model, model['name'])
-            .then(data => {
-              console.log(data.path['o'][2]);
-              this._authService._saveCarePathName(model['name'], data.path['o'][2]);
-              this.carePathwayForm.reset();
-              this.carePathwayForm = this._fb.group({
-                name: ['', Validators.required],
-                checkPoints: this._fb.array([
-                  this.initCheckPoints()
-                ])
-              });
-              this.newPath = false;
-              $.notify({
-                icon: "notifications",
-                message: "Care Plan " + model['name'] + " has been saved."
-
-              }, {
-                  type: 'cureyo',
-                  timer: 4000,
-                  placement: {
-                    from: 'top',
-                    align: 'right'
-                  }
-                });
-
-            });
-        }
-
-      }
-      )
-
-
-
-
-  }
+   
   showCarePath(model) {
     console.log("showing")
     console.log(model)
@@ -389,31 +190,7 @@ export class CarePathsComponent implements OnInit {
       )
   }
   //set time interval for medicine timings
-  setIntervals = () => {
-    let hrs, md;
-
-    for (let i = 5; i < 24; i++) {
-      if (i == 12) {
-        hrs = i;
-      } else {
-        hrs = i % 12;
-      }
-      if (hrs < 10) {
-        hrs = "0" + hrs;
-      }
-
-      md = (i >= 12) ? ' PM' : ' AM';
-      this.timeInterval.push(hrs + ":00" + md);
-      this.timeInterval.push(hrs + ":30" + md);
-    }
-
-    for (let i = 1; i <= 31; i++) {
-      this.dateInterval.push(i);
-    }
-     console.log("date interval",this.dateInterval);
-
-
-  }//setTimeInterval
+ 
     
   consultantSelect(value, i) {
     console.log(value, i);

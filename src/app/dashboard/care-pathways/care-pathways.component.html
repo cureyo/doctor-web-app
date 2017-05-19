@@ -1,10 +1,10 @@
 
-<form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
+<form  [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
   novalidate>
 
       <div class="row">
            <div class="col-sm-10 col-md-offset-1">
-                 <div class="card" *ngIf="selectDrDomain" style="padding-top: 0px;margin-top: 55px;">
+                 <div class="card"  style="padding-top: 0px;margin-top: 55px;">
                       <div class="card-stats">
                               <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
                               <i class="fa fa-heartbeat" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
@@ -51,7 +51,7 @@
                       <div>
                             <div class="form-group">
                                   <button class="btn btn-primary btn-round" 
-                                  (click)="createPathways()">Create Pathway</button>
+                                  (click)="createpathwaysId.createPathways()">Create Pathway</button>
                             </div>
                       </div>
                 </div> 
@@ -64,7 +64,10 @@
               </div> <!-- end of col-md-10-->
         </div>  <!-- end of row-->
         <!-- this is the component used for to create path ways-->
-        <app-create-path-ways [newPath]="newPath"></app-create-path-ways>
+        <app-create-path-ways  #createpathwaysId></app-create-path-ways>
+
+        
+
 
 </form>
 

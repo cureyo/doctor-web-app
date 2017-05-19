@@ -48,41 +48,43 @@ export class CreatePathWaysComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.setIntervals();
-       this.updateDays();
-      this.updateTimes();
-     this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
-    this.carePathwayForm = this._fb.group({
-      name: ['', Validators.required],
-      objectId: [this.objectIdVal, Validators.required],
-      checkPoints: this._fb.array([
-        this.initCheckPoints()
-      ])
-    });
+        this.setIntervals();
+        this.updateDays();
+        this.updateTimes();
+
+        this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
+
+        this.carePathwayForm = this._fb.group({
+              name: ['', Validators.required],
+              objectId: [this.objectIdVal, Validators.required],
+              checkPoints: this._fb.array([
+              this.initCheckPoints()
+              ])
+        });
   } //ng OninIt
    
-    updateDays() {
-    let i = 0;
-    //console.log("day pushed")
-    for (let i = 0; i < 200; i++) {
-      this.days[i] = i;
-      ////console.log("days pushed", i)
-    }
-  }
-  updateTimes() {
-    let i = 0;
-    //console.log("time pushed", i)
-    for (let i = 0; i < 24; i++) {
-      if (i < 10) {
-        this.times[i] = '0' + i + '00 hrs';
-        ////console.log("times pushed", i)
+      updateDays() {
+            let i = 0;
+            //console.log("day pushed")
+            for (let i = 0; i < 200; i++) {
+            this.days[i] = i;
+            ////console.log("days pushed", i)
       }
-      else {
-        this.times[i] = i + '00 hrs';
       }
+      updateTimes() {
+            let i = 0;
+            //console.log("time pushed", i)
+            for (let i = 0; i < 24; i++) {
+                  if (i < 10) {
+                  this.times[i] = '0' + i + '00 hrs';
+                  ////console.log("times pushed", i)
+                  }
+                  else {
+                  this.times[i] = i + '00 hrs';
+                  }
 
-    }
-  }
+            }
+      }
     
     initOptions() {
     return this._fb.group({
@@ -122,50 +124,10 @@ export class CreatePathWaysComponent implements OnInit {
   }
  
 
-    onSubmit(model) {
-    console.log(model);
-    this._authService._getCarePathNames(model['name'])
-      .subscribe(
-      data => {
-        console.log(data);
-        if (data[0]) {
-          alert("This Care Path already exisits. Please save using another name");
-        } else {
-          this._authService._saveCarePathway(model, model['name'])
-            .then(data => {
-              console.log(data.path['o'][2]);
-              this._authService._saveCarePathName(model['name'], data.path['o'][2]);
-              this.carePathwayForm.reset();
-              this.carePathwayForm = this._fb.group({
-                name: ['', Validators.required],
-                checkPoints: this._fb.array([
-                  this.initCheckPoints()
-                ])
-              });
-              $.notify({
-                icon: "notifications",
-                message: "Care Plan " + model['name'] + " has been saved."
-
-              }, {
-                  type: 'cureyo',
-                  timer: 4000,
-                  placement: {
-                    from: 'top',
-                    align: 'right'
-                  }
-                });
-
-            });
-        }
-
-      }
-      )
-
-  }
-
+  
    checkTypeSelect(type, i) {
-     console.log("checkTypeSelect called");
-     
+     //console.log("checkTypeSelect called");
+
     if (type == "med-reminder") {
       // this.setIntervals();
       this._authService._getMedicineNames()
@@ -227,10 +189,75 @@ export class CreatePathWaysComponent implements OnInit {
     for (let i = 1; i <= 31; i++) {
       this.dateInterval.push(i);
     }
-     console.log("date interval",this.dateInterval);
+     //console.log("date interval",this.dateInterval);
 
 
   }//setTimeInterval
+  createPathways() {
+    this.carePathwayForm.reset();
+    this.newPath = false;
+    this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
+    this.carePathwayForm = this._fb.group({
+      name: ['', Validators.required],
+      objectId: [this.objectIdVal, Validators.required],
+      checkPoints: this._fb.array([
+        this.initCheckPoints()
+      ])
+    });
+    this.selectDrDomain = true;
+    setTimeout(
+      () => {
+        this.newPath = true;
+      }, 2000
+    )
+
+
+  }
+
+
+
+
+   onSubmit(model) {
+            console.log(model);
+            this._authService._getCarePathNames(model['name'])
+            .subscribe(
+                      data => {
+                            //console.log(data);
+                            if (data[0]) {
+                                 alert("This Care Path already exisits. Please save using another name");
+                             }
+                            else {
+                                  this._authService._saveCarePathway(model, model['name'])
+                                  .then(data => {
+                                        //console.log(data.path['o'][2]);
+                                        this._authService._saveCarePathName(model['name'], data.path['o'][2]);
+                                              this.carePathwayForm.reset();
+                                              this.carePathwayForm = this._fb.group({
+                                                    name: ['', Validators.required],
+                                                    checkPoints: this._fb.array([
+                                                    this.initCheckPoints()
+                                                    ])
+                                              });
+                                              $.notify({
+                                                  icon: "notifications",
+                                                  message: "Care Plan " + model['name'] + " has been saved."
+
+                                              }, {
+                                                  type: 'cureyo',
+                                                  timer: 4000,
+                                                  placement: {
+                                                  from: 'top',
+                                                  align: 'right'
+                                              }
+                                        });
+
+                                  });
+                            }
+
+                      }
+            )
+
+  }
     
 
 
