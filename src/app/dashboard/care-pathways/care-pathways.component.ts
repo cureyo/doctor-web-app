@@ -103,8 +103,7 @@ export class CarePathsComponent implements OnInit {
   }
   
   //set time interval for medicine timings
- 
-    
+
   consultantSelect(value, i) {
     console.log(value, i);
     this.consultant[i] = value;

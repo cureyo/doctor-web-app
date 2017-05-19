@@ -79,7 +79,7 @@ export class ExistingPathWaysComponent implements OnInit {
            
            }
 
-            console.log("Days is:",this.days);
+            //.log("Days is:",this.days);
       }
       updateTimes() {
             var  i = 0;
@@ -93,7 +93,7 @@ export class ExistingPathWaysComponent implements OnInit {
                   }
 
             }
-             console.log("times pushed", this.times)
+             //.log("times pushed", this.times)
       }
 
         setIntervals = () => {
@@ -117,14 +117,14 @@ export class ExistingPathWaysComponent implements OnInit {
     for (let i = 1; i <= 31; i++) {
       this.dateInterval.push(i);
     }
-     //console.log("date interval",this.dateInterval);
+     ////.log("date interval",this.dateInterval);
 
 
   }//setTimeInterval
 
 
   loadCarePath(data) {
-          console.log("loadCarePath called:",data);
+          //console.log.log("loadCarePath called:",data);
           this.objectIdVal = data.objectId;
           this.existingPathWays = this._fb.group({
             name: [data.name, Validators.required],
@@ -142,22 +142,41 @@ export class ExistingPathWaysComponent implements OnInit {
           }
         }
 
-    console.log(this.existingPathWays);
+    //console.log.log(this.existingPathWays);
     var self = this;
     setTimeout(function () {
-      console.log("showing form now")
+      //console.log.log("showing form now")
     }, 2000)
   }
+  
+   initCheckPoints() {
+    return this._fb.group({
+      day: ['', Validators.required],
+      time: ['', Validators.required],
+      messageText: ['', Validators.required],
+      checkType: ['', Validators.required],
+      consultant: [],
+      options: this._fb.array([
+        this.initializeOptions(this.DATA)
+      ])
+    });
+  }
 
+ addCheckPoints() {
+    const control = <FormArray>this.existingPathWays.controls['checkPoints'];
+    control.push(this.initCheckPoints());
+
+  }
+  
 
   showCarePath(model) {
-    console.log("showing model",model) 
+    //console.log.log("showing model",model) 
    // this.newPath = false;
     this._authService._getCarePath(model.carePath)
       .subscribe(
       data => {
         this.DATA=data;
-        console.log("shoe care path data is",data);
+        //console.log.log("shoe care path data is",data);
         if (data){
                 this.dataloaded=true;    
                 this.loadCarePath(data);
@@ -168,7 +187,7 @@ export class ExistingPathWaysComponent implements OnInit {
 
 
    initializeOptions(data) {
-     console.log("initializeOptions click wid data",data);
+     //console.log.log("initializeOptions click wid data",data);
     return this._fb.group({
       value: [data.value, Validators.required]
     });
@@ -176,7 +195,7 @@ export class ExistingPathWaysComponent implements OnInit {
 
 
    initializeCheckPoints(data, check) {
-     console.log("intitializecheckPoints",data,check);
+     //console.log.log("intitializecheckPoints",data,check);
       let control = this._fb.group({
       day: [data.day, Validators.required],
       time: [data.time, Validators.required],
@@ -187,7 +206,7 @@ export class ExistingPathWaysComponent implements OnInit {
         this.initializeOptions(data.options[0])
       ])
     });
-      console.log("find out the control value:",control);
+      //console.log.log("find out the control value:",control);
     const control2 = <FormArray>control.controls['options'];
 
     this.checkTypes[check] = data.checkType;
@@ -196,18 +215,59 @@ export class ExistingPathWaysComponent implements OnInit {
       this.consultantSelected[check] = true;
     }
 
-    console.log("this.checkTypes",this.checkTypes)
+    //console.log.log("this.checkTypes",this.checkTypes)
 
-    console.log("data.options",data.options);
+    //console.log.log("data.options",data.options);
     for (let each in data.options) {
       if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
         control2.push(this.initializeOptions(data.options[each]));
 
       }
     }
-    console.log("control 2 data:",control2);
+    //console.log.log("control 2 data:",control2);
     return control;
 
+  }
+
+
+     checkTypeSelect(type, i) {
+       console.log("checktype is called:",type,i)
+    if (type == "med-reminder") {
+      // this.setIntervals();
+      this._authService._getMedicineNames()
+        .subscribe(data => {
+          ////console.log.log("patholodical test details data :",data);
+          this.MedNames = data;
+          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
+
+          this.checkTypes[i] = type;
+
+          //console.log("the med names is :",this.MedNames);
+        })
+    } else if (type == "test-reminder") {
+      // this.setIntervals();
+      this._authService._getPathologicalTests()
+        .subscribe(data => {
+          //console.log("patholodical test details data :",data);
+          this.TestNames = data;
+
+          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+          this.checkTypes[i] = type;
+          //console.log("the med names is :",this.TestNames);
+        })
+    } else if (type == "consult-reminder") {
+      this.checkTypes[i] = type;
+      // this.setIntervals();
+
+    }
+    else {
+
+      this.checkTypes[i] = type;
+    }
+
+    // if (type == 'mcq')
+    //   this.checkTypes[i] = true;
+    // else this.checkTypes[i] = false;
   }
 
 

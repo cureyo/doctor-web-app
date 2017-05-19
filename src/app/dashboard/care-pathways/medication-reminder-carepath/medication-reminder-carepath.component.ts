@@ -32,6 +32,7 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   ngOnInit() {
+      console.log("MedName as input is",this.MedNames);
        if(this.objectId){
           this.MedForm = this._fb.group({
               medicines: this._fb.array([
@@ -135,8 +136,10 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   saveMed = (model) => {
-
+  alert("this is medication model"+model);
     let job = model['value'];
+    console.log("this is medication job",Object.keys(job));
+   // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
     let medicines = job['medicines'],
       ctr = 0,
       flag;
@@ -195,7 +198,8 @@ export class MedicationReminderCareComponent implements OnInit {
       }//loop j
       ctr++;
     }//loop i
-
+    console.log("reminder value  test:",reminders);
+    console.log("review data is :",reviewData);
     this._authService._saveReminders(reminders)
       .then(
 
@@ -204,7 +208,7 @@ export class MedicationReminderCareComponent implements OnInit {
         //console.log("Medication Reminder  data saved :",data);
       }
       );
-    //console.log("the reminders value ",reminders);
+    console.log("the reminders value ",reminders);
     //  save data in onboarding Review
     var transTime = new Date();
     this._authService._saveTransactionData(reviewData, this.objectId, 'MedicationReminder/').then(

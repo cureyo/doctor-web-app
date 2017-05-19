@@ -11,12 +11,11 @@ declare var $: any
   styleUrls: ['./create-path-ways.component.css']
 })
 export class CreatePathWaysComponent implements OnInit {
-   @Input() newPath:any;
   private caredone: any;
   private drDomain: FormGroup;
   private carePathwayForm: FormGroup;
   private selectDrDomain: boolean = false;
- 
+  private newPath:boolean=false;
   private caredOneId: any;
   private displayDrDomain: boolean = false;
   private array: any;
@@ -194,8 +193,8 @@ export class CreatePathWaysComponent implements OnInit {
 
   }//setTimeInterval
   createPathways() {
+     this.newPath=true;
     this.carePathwayForm.reset();
-    this.newPath = false;
     this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
     this.carePathwayForm = this._fb.group({
       name: ['', Validators.required],
@@ -207,7 +206,6 @@ export class CreatePathWaysComponent implements OnInit {
     this.selectDrDomain = true;
     setTimeout(
       () => {
-        this.newPath = true;
       }, 2000
     )
 

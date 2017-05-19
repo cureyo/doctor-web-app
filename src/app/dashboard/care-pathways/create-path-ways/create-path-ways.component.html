@@ -86,6 +86,26 @@
                                                                 </div>
         
                                                   </div> <!-- card footer-->
+                                                <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder'"
+                                                        [objectId]="objectIdVal" 
+                                                        [timeInterval]="timeInterval" 
+                                                        [dateInterval]="dateInterval"
+                                                        [MedNames]="MedNames">
+                                                </app-medication-reminder-carepath>
+                                                                
+                                                <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
+                                                        [objectId]="objectIdVal" 
+                                                        [timeInterval]="timeInterval" 
+                                                        [dateInterval]="dateInterval"
+                                                        [MedNames]="TestNames">
+                                                </app-lab-test-carepath>
+                                                <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected[i]"
+                                                        [objectId]="objectIdVal" 
+                                                        [doctorId] = "doctorId"
+                                                        [timeInterval]="timeInterval" 
+                                                        [dateInterval]="dateInterval"
+                                                        [consultantId]="consultant[i]">
+                                                </app-physicalconsultation-carepath>
                                             </div>
                                     </div>
                              </div>
