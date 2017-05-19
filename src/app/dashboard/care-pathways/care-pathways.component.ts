@@ -18,10 +18,8 @@ export class CarePathsComponent implements OnInit {
   [name: string]: any;
 
   private caredone: any;
-  private drDomain: FormGroup;
-  private carePathwayForm: FormGroup;
-  private selectDrDomain: boolean = false;
-  private newPath: boolean = false;
+ 
+  private carePathWays: FormGroup;
   private caredOneId: any;
   private displayDrDomain: boolean = false;
   private array: any;
@@ -55,14 +53,15 @@ export class CarePathsComponent implements OnInit {
   ngOnInit() {
     
     this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
-    this.findCarePaths = this._fb.group({
-      carePath: ''
-    });
-   
-     this.drDomain=this._fb.group({
-       carePath:[]
-     })
 
+   
+     this.carePathWays=this._fb.group({
+
+     });
+
+     this.findCarePaths=this._fb.group({
+        carePath:[]
+     })
 
     ////console.log(this.ObserversForm);
 
@@ -103,92 +102,6 @@ export class CarePathsComponent implements OnInit {
       )
   }
   
-
-
-  initializeCheckPoints(data, check) {
-      let control = this._fb.group({
-      day: [data.day, Validators.required],
-      time: [data.time, Validators.required],
-      messageText: [data.messageText, Validators.required],
-      checkType: [data.checkType, Validators.required],
-      consultant: [data.consultant],
-      options: this._fb.array([
-        this.initializeOptions(data.options[0])
-      ])
-    });
-    const control2 = <FormArray>control.controls['options'];
-
-    this.checkTypes[check] = data.checkType;
-    if (data.consultant) {
-      this.consultant[check] = data.consultant;
-      this.consultantSelected[check] = true;
-    }
-
-    console.log(this.checkTypes)
-
-    console.log(data.options);
-    for (let each in data.options) {
-      if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
-        control2.push(this.initializeOptions(data.options[each]));
-
-      }
-    }
-    return control;
-
-  }
-  initializeOptions(data) {
-    return this._fb.group({
-      value: [data.value, Validators.required]
-    });
-
-
-  }
-  loadCarePath(data) {
-    console.log(data);
-    this.objectIdVal = data.objectId;
-    this.carePathwayForm = this._fb.group({
-      name: [data.name, Validators.required],
-      objectId: [data.objectId, Validators.required],
-      checkPoints: this._fb.array([
-        this.initializeCheckPoints(data.checkPoints[0], 0)
-      ])
-    });
-    const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
-    let ctr = 1;
-    for (let each in data.checkPoints) {
-      if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
-        control.push(this.initializeCheckPoints(data.checkPoints[each], ctr));
-        ctr++;
-      }
-    }
-
-    console.log(this.carePathwayForm);
-    var self = this;
-    setTimeout(function () {
-      
-
-      console.log("showing form now")
-    }, 2000)
-  }
-  
-  
-
-
-   
-  showCarePath(model) {
-    console.log("showing")
-    console.log(model)
-    this.carePathwayForm.reset();
-    this.newPath = false;
-    this._authService._getCarePath(model.carePath)
-      .subscribe(
-      data => {
-        console.log(data);
-        this.loadCarePath(data);
-
-      }
-      )
-  }
   //set time interval for medicine timings
  
     

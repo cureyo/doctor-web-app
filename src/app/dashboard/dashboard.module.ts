@@ -18,7 +18,8 @@ import { BookingtileComponent } from './web-content/site-creation-form/bookingti
 import { SlotBookingComponent } from './web-content/site-creation-form/slot-booking/slot-booking.component';
 import { SelectDomainComponent } from './select-domain/select-domain.component';
 import { FooterComponent } from './web-content/site-creation-form/footer/footer.component';
-import { CreatePathWaysComponent } from './care-pathways/create-path-ways/create-path-ways.component'
+import { CreatePathWaysComponent } from './care-pathways/create-path-ways/create-path-ways.component';
+import { ExistingPathWaysComponent } from './care-pathways/existing-path-ways/existing-path-ways.component'
 @NgModule({
     imports: [ RouterModule, CommonModule ],
     declarations:[
@@ -39,7 +40,8 @@ import { CreatePathWaysComponent } from './care-pathways/create-path-ways/create
                     SlotBookingComponent,
                     SelectDomainComponent,
                     FooterComponent,
-                    CreatePathWaysComponent 
+                    CreatePathWaysComponent,
+                    ExistingPathWaysComponent 
                        ],
     exports: [ DashboardComponent ]
 

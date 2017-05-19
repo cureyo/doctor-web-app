@@ -37,7 +37,7 @@ import {PhysicalconsultationJobsComponent}  from "./dashboard/jobs-master/physic
 import {DocReviewJobsComponent} from "./dashboard/jobs-master/doc-review-jobs/doc-review-jobs.component";
 import {BloodsugarCareComponent } from "./dashboard/care-pathways/bloodsugar-carepath/bloodsugar-carepath.component";
 import {CreatePathWaysComponent } from "./dashboard/care-pathways/create-path-ways/create-path-ways.component";
-//import {ExerciseTrackerCareComponent} from "./dashboard/care-pathways/exercise-tracker-carepath/exercise-tracker-carepath.component";
+import {ExistingPathWaysComponent} from "./dashboard/care-pathways/existing-path-ways/existing-path-ways.component";
 import {LabTestCareComponent} from "./dashboard/care-pathways/lab-test-carepath/lab-test-carepath.component";
 import {MedicationReminderCareComponent} from "./dashboard/care-pathways/medication-reminder-carepath/medication-reminder-carepath.component";
 //import {OnlineConsultationCareComponent}  from "./dashboard/care-pathways/online-consultation-carepath/online-consultation-carepath.component";
@@ -59,6 +59,7 @@ import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPrevi
 import {FbAdsFormComponent} from './fb-ads-form/fb-ads-form.component';
 
 export const MODULE_ROUTES: Route[] =[
+
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
     { path: 'dashboard', component: HomeComponent },
     { path: 'careplans/:id', component: TableComponent },
@@ -80,7 +81,7 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'out-patients/:count/:id', component: OutPatientsFormComponent},
     { path: 'out-patient-dept', component: OPDComponent},
     { path: 'patient-hx-forms', component: PatientHxFormComponent},
-     { path: 'partners', component: PartnerComponent}
+    { path: 'partners', component: PartnerComponent}
     
 
 
@@ -120,12 +121,9 @@ export const MODULE_COMPONENTS = [
     PhysicalconsultationJobsComponent,
     DocReviewJobsComponent,
     BloodsugarCareComponent,
-   // ExerciseTrackerCareComponent,
     LabTestCareComponent,
     MedicationReminderCareComponent,
-   // OnlineConsultationCareComponent,
     PhysicalconsultationCareComponent,
-    //DocReviewCareComponent,
     PartnerComponent,
     WebContentComponent,
     SiteCreationFormComponent,
@@ -140,6 +138,7 @@ export const MODULE_COMPONENTS = [
     OPDComponent,
     FbAdsFormComponent,
     PatientHxFormComponent,
-    CreatePathWaysComponent
+    CreatePathWaysComponent,
+    ExistingPathWaysComponent
 
 ]

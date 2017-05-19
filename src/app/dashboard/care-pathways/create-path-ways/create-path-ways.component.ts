@@ -23,7 +23,7 @@ export class CreatePathWaysComponent implements OnInit {
   private routeparam: any;
   private checkTypes: any = [];
   private objectIdVal: any = [];
-  private days: any = [];
+  public days: any = [];
   private partnerList: any = [];
   private times: any = [];
   public timeInterval: any = [];
@@ -68,7 +68,7 @@ export class CreatePathWaysComponent implements OnInit {
             //console.log("day pushed")
             for (let i = 0; i < 200; i++) {
             this.days[i] = i;
-            ////console.log("days pushed", i)
+            // console.log("days pushed", i)
       }
       }
       updateTimes() {
@@ -213,10 +213,6 @@ export class CreatePathWaysComponent implements OnInit {
 
 
   }
-
-
-
-
    onSubmit(model) {
             console.log(model);
             this._authService._getCarePathNames(model['name'])
