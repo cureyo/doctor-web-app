@@ -1,10 +1,27 @@
  <div class="main-content">
     <div class="container-fluid">
+          <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
         <h3> Facebook Advertising </h3>
-  <div class="col-md-12">
-                <div class="card">
+  
+                
                   <form *ngIf="formReady" [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
-
+                        <div class="row">
+                        <div class="col-md-5">
+                        <div class="card">
+                              <div class="card-content table-responsive">
+                              <h5 style="margin-bottom: 0;"><b>Ad Preview</b></h5>
+                              <br>
+                              <div id="adPreviewDiv">
+                                    </div>
+                          
+                              <a class="btn btn-round btn-warning" (click)="generateAdPreview(fbAdsForm)">Show Preview</a>
+                        </div>
+                        </div>
+                        </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-md-12">
+                        <div class="card">
               <div class="card-content table-responsive">
                <!-- Account details row-->   
               <div class="row">
@@ -82,7 +99,7 @@
                               <label for="callToAction">Call to Action Type</label>
                               <p>Provide the objective you want to drive</p>
                               <select  id="callToAction" class="form-control" formControlName="callToAction" >
-                                    <option *ngFor="let cta of objectives" value="{{cta.objective}}">{{cta.name}}</option>                          
+                                    <option *ngFor="let cta of objectives; let i = index" value="{{i}}">{{cta.name}}</option>                          
                                     
                               </select>
                         </div>
@@ -292,8 +309,11 @@
                             <!-- end of the 7th row-->
                             
                     </div>
+                    </div>
+                        </div>
+                  </div>
                   </form>
-                </div>
-            </div><!--  end of medication reminder-->
+                
+           
     </div>
  </div>

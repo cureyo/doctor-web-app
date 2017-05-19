@@ -1,6 +1,8 @@
+<div class="main-content">
 
-<div class="col-sm-12">
-  
+    <div class="container-fluid">
+<onboarding-header-cmp [section]="section"></onboarding-header-cmp>
+
 <form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
   novalidate>
   <div class="row"> 
@@ -96,4 +98,5 @@
   </div>
 </form>
 
+</div>
 </div>

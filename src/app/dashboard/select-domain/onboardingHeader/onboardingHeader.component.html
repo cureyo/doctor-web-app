@@ -1,0 +1,32 @@
+
+
+  <div *ngIf="onboarding" class="row">
+    <div class="card">
+      <div class="col-md-3">
+        <div class="card-header" [attr.data-background-color]="(website == true)?'cureyo':'grey'" stye="color: #fff; z-index:10000">
+           <i class="fa fa-window-maximize" style="color: #ffffff; "></i>
+          Website
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card-header" [attr.data-background-color]="(facebook == true)?'cureyo':'grey'" stye="color: #fff;">
+           <i class="fa fa-facebook" style="color: #ffffff; "></i>
+          Facebook Promotion
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card-header" [attr.data-background-color]="(partners == true)?'cureyo':'grey'" stye="color: #fff;">
+          <i class="fa fa-handshake-o" style="color: #ffffff; "></i>
+          Partners
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card-header"  [attr.data-background-color]="(care == true)?'cureyo':'grey'" stye="color: #fff;">
+          <i class="fa fa-heartbeat" style="color: #ffffff; "></i>
+          Care
+        </div>
+      </div>
+      <p>{{textToShow}}</p>
+      <a *ngIf="takeNext" class="pull-right btn btn-warning btn-round" (click)="takeToNext()">Next ></a>
+    </div>
+  </div>

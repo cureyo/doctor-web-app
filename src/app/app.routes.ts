@@ -48,7 +48,9 @@ import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/her
 import {FooterComponent}  from "./dashboard/web-content/site-creation-form/footer/footer.component";
 import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
 import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
+import {PhySlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-bookingPhy/slot-booking-phy.component";
 import {ProfileTileComponent} from "./dashboard/web-content/site-creation-form/profileTile/profileTile.component";
+import {SpecializationsTileComponent} from "./dashboard/web-content/site-creation-form/specializationsTile/specializationsTile.component";
 import { SelectDomainComponent}  from "./dashboard/select-domain/select-domain.component";
 import { CarePathsComponent}  from "./dashboard/care-pathways/care-pathways.component";
 import { PatientHxFormComponent}  from "./dashboard/Hx-Forms/Hx-Forms.component";
@@ -56,6 +58,7 @@ import { PatientDetailFormComponent } from './dashboard/PatientDetailForm/Patien
 import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/file-upload.component';
 import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPreview.component';
 import {FbAdsFormComponent} from './fb-ads-form/fb-ads-form.component';
+import {OnboardingHeaderComponent} from "./dashboard/select-domain/onboardingHeader/onboardingHeader.component";
 
 export const MODULE_ROUTES: Route[] =[
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
@@ -129,8 +132,11 @@ export const MODULE_COMPONENTS = [
     SiteCreationFormComponent,
     HerotilesComponent,
     BookingtileComponent,
+    SpecializationsTileComponent,
     FooterComponent,
+    OnboardingHeaderComponent,
     SlotBookingComponent,
+    PhySlotBookingComponent,
     ProfileTileComponent,
     SelectDomainComponent,
     CarePathsComponent,

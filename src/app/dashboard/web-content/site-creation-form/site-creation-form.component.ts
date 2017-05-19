@@ -5,7 +5,7 @@ import { AuthService } from "../../../services/firebaseauth.service";
 import { FbService } from "../../../services/facebook.service";
 import { HerotilesComponent } from "./herotiles/herotiles.component";
 import { BookingtileComponent } from "./bookingtile/bookingtile.component";
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -19,13 +19,18 @@ export class SiteCreationFormComponent implements OnInit {
   private herotiles: any;
   private bookingtiles: any;
   private profileTile: any;
+  private section: any = "website";
+  private online: any = "Online";
+  private physical: any = "Physical";
+  private websiteLink: any;
 
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
     private route: ActivatedRoute,
     private _authService: AuthService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -37,6 +42,8 @@ export class SiteCreationFormComponent implements OnInit {
         //console.log("param value test in site creation form :", this.routeparam);
         var n = this.routeparam.indexOf('.')
         var pathRoute = this.routeparam.substring(0,n);
+         let tempURL2 = "http://"+ pathRoute + ".cureyo.com";
+        this.websiteLink = this.sanitizer.bypassSecurityTrustResourceUrl(tempURL2);
         //console.log(pathRoute)
         this._authService._getSiteData(pathRoute).
           subscribe(res => {

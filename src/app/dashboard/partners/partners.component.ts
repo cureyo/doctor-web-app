@@ -18,6 +18,7 @@ export class PartnerComponent implements OnInit {
     [name: string]: any;
 
     private caredone: any;
+    private section: any = "partners";
     private partnerForm: FormGroup;
     private selectDrDomain: boolean = false;
     private caredOneId: any;

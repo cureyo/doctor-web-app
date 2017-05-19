@@ -25,6 +25,8 @@ export const AppConfig = {
   },
   database: {
     doctors:            'DoctorsTable/',
+    hlDbIndex:         'healthLineDB/health-topics/Index/',
+    hlDatabase:         'healthLineDB/health-topics/health-topic/',
     users:              environment.envName + '/UserTable/',
     scheduledJobs:      environment.envName + '/Scheduled_Jobs/',
     caredOnes:          environment.envName + '/CaredOnes/',

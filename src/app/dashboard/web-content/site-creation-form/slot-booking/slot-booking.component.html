@@ -3,9 +3,9 @@
                   <form [formGroup]="slotBookingTile" class="formGroup" novalidate (ngSubmit)="save_slotBookingTile(slotBookingTile)">
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="blue">
-                        <h4 class="title">Your Availability </h4>
+                        <h4 class="title">{{type}} Consultation Availability </h4>
 
-                        <p class="category">Indicate your availability for online consultations</p>
+                        <p class="category">Indicate your availability for {{type}} Consultations</p>
 
                     </div> <!-- card header portion end-->
                     
@@ -57,6 +57,15 @@
                              </div>
                     </div>
                         <!--end of to time-->
+                        <div *ngIf="type == 'Online'" class="col-sm-4"> 
+                        <div class="form-group">
+                                 <label for="title">Available for Mode </label>
+                                  <select formControlName="mode" class="form-control">
+                                     <option value="video" [selected]="video">Video Consultation</option>
+                                     <option value="phone">Phone Consultation</option>
+                                  </select>
+                             </div>
+                        </div>
                             <!--end of time slot -->
 
 

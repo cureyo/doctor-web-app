@@ -227,10 +227,15 @@ public _findPatient(currentUserId, caredoneId) {
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename +'/content/profileTile')
     return webcontentdata.set(data);
   }//save webcontentProfileTile data
-   public _saveSlotBookingDetails(data,sitename) {
+   public _saveSlotBookingDetails(data,sitename, type) {
        //console.log("the route is :",sitename);
-    return this.af.database.object(this.db.doctorPages + '/' +sitename +'/availability' )
+    return this.af.database.object(this.db.doctorPages + '/' +sitename +'/' + type + '/availability' )
     .set (data);
+  }//save slot booking details data
+   public _saveSpecializationDetails(data,sitename) {
+       //console.log("the route is :",sitename);
+    return this.af.database.object(this.db.doctorPages + '/' +sitename +'/content/specializations' )
+    .set(data);
   }//save slot booking details data
  //email login 
   createMailUser(details) {
@@ -350,9 +355,26 @@ public _findPatient(currentUserId, caredoneId) {
     return this.af.database.object(this.db.HxPaths + pathName);
     
   }//_getCarePathways
+     public _getHealthLineData(id) {
+       console.log("calling search for Id: ", id, this.db.hlDatabase + id)
+    return this.af.database.object(this.db.hlDatabase + id  );
+    
+  }//_saveCaredOne
    public _saveWebsite(siteName, docId) {
     const clinicSite = this.af.database.object(this.db.users + docId + '/clinicWebsite' );
     return clinicSite.set(siteName);
+  }//_saveCaredOne
+  public _saveSpecializationsData(siteName, data) {
+    const clinicSite = this.af.database.list(this.db.doctorPages + '/' + siteName +'/specializations');
+    return clinicSite.push(data);
+  }//_saveCaredOne
+   public _saveWebsiteSpeciaizations(siteName, data, count) {
+    const clinicSite = this.af.database.object(this.db.doctorPages + '/' + siteName +'/content/specializations/' + count);
+    return clinicSite.set(data);
+  }//_saveCaredOne
+   public _getWebsiteSpeciaizations(siteName) {
+    return this.af.database.list(this.db.doctorPages + '/' + siteName +'/content/specializations');
+    
   }//_saveCaredOne
   public _savePageAccessToken(pageId, accessToken, app_access_token) {
     const clinicSite = this.af.database.object(this.db.pageAccessTokens + pageId );
@@ -398,6 +420,27 @@ public _findPatient(currentUserId, caredoneId) {
 
         orderByKey: true,
         limitToLast: 1
+
+      }
+    });
+  }//_findCaredoneByKey
+  
+  public _getTermData(item) {
+    console.log("query", {
+        orderByChild: "_title",
+        startAt: item,
+        endAt: item+"\uf8ff",
+        limitToLast: 10
+
+      });
+    //console.log(this.db.onboardingReview+ caredId + '/' + item)
+    return this.af.database.list(this.db.hlDbIndex, {
+      query: {
+        orderByKey: true,
+        //equalTo: item,
+        startAt: item,
+       //endAt:  item+"\uf8ff",
+        limitToFirst: 10
 
       }
     });

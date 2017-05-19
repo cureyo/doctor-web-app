@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { AppConfig } from '../config/app.config';
 //import { DoctorCheckup } from "../models/doctorcheckup.interface";
 import { FbService } from "../services/facebook.service";
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, Jsonp, URLSearchParams, ResponseContentType } from '@angular/http';
 
 
 import { FacebookService, FacebookLoginResponse, FacebookInitParams, FacebookApiMethod } from 'ng2-facebook-sdk';
@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 ;
 
 declare var $: any;
+
 @Component({
   templateUrl: 'doctorcheckup.component.html',
   selector: 'doctorcheckup-cmp',
@@ -35,6 +36,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   pageID: any;
   passThrough: any;
   private currentUserID: any;
+  private times: any = 0;
   private fbMessURL: any;
   private pageNameList: any = [];
   private pageIDList: any = [];
@@ -47,6 +49,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   public bidAmount: Number = 8000;
   public dailybudget: Number = 100000;
   public targetResponse: any;
+  private diseaseList: any =[];
+  private listReady: any = [];
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -59,7 +63,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private _fbs: FacebookService,
-    private http: Http
+    private http: Http,
+    private _jsonp: Jsonp
   ) {
 
     this.initFB();
@@ -139,6 +144,9 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'address': [''],
           'mci_number': ['', Validators.required],
           'speciality': ['', Validators.required],
+          'specializations': this.fb.array([
+            this.initSpecializations()
+          ]),
           'fbPageId': [''],
           'clinic': ['', Validators.required],
           'qualification': ['', Validators.required],
@@ -154,7 +162,12 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
       //end => { this.initFbCheckboxPlugin(this.currentUserID); }
     );
   }
-
+  initSpecializations() {
+    return this.fb.group({
+      name: ['', Validators.required],
+      details: ['', Validators.required]
+    });
+  }
   ngAfterViewInit() {
     // this.initFbCheckboxPlugin(this.currentUserID);
   }//ngAfterViewInit
@@ -175,8 +188,9 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
 
   }//submitForm
 
-  showError() {
+  showError(item) {
     //console.log("clicked");
+console.log(item);
     this.showErrorFlag = true;
   }
 
@@ -229,7 +243,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
                           this._authService._saveUser(form).then(
                             data => {
                               console.log(data);
-                              window.location.href = window.location.origin + '/website'
+                              window.location.href = window.location.origin + '/website?onboarding=yes'
                             });
                         }
                         );
@@ -314,5 +328,31 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
       (error: any) => console.error(error)
     );
   }// initFB()
-
+  findDetails(item, i) {
+    console.log(item);
+    console.log(item.value)
+    console.log(i)
+    this.getMedicalDetails(item.value.name, i)
+      // .subscribe(
+      // data => {
+      //   console.log(data);
+      // });
+  }
+  getMedicalDetails(item, i) {
+    console.log(item);
+    this._authService._getTermData(item)
+    .subscribe(
+      data => {
+        console.log(data);
+        this.diseaseList[i] = data;
+        if (data[0])
+        this.listReady[i] = true;
+        else 
+        this.listReady[i] = false;
+      }
+    )
+   }
+addSpecializations(form) {
+  form.push(this.initSpecializations())
 }
+ }

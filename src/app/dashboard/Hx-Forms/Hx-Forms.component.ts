@@ -18,6 +18,7 @@ export class PatientHxFormComponent implements OnInit {
   [name: string]: any;
 
   private caredone: any;
+  private section: any = "care";
   private drDomain: FormGroup;
   private carePathwayForm: FormGroup;
   private selectDrDomain: boolean = false;

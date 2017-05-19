@@ -27,16 +27,17 @@ export class SelectDomainComponent implements OnInit {
   private availableName: any;
   private domainAvailable: boolean = false;
   private sitename: any;
+  
+  private section: any = "website";
 
-
-  constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
+  constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private activatedRouter: ActivatedRoute, private http: Http) {
 
 
   }
 
   ngOnInit() {
 
-
+    
     this.drDomain = this._fb.group({
       message: [''],
 
@@ -113,6 +114,7 @@ export class SelectDomainComponent implements OnInit {
                     console.log(userData);
                     var data1 = JSON.stringify(data);
 
+
                     var websiteData = data1.replace(/#DrfullName/g, userData.fullName);
                     websiteData = websiteData.replace(/#DrQualification/g, userData.qualification);
                     websiteData = websiteData.replace(/#DrSpeciality/g, userData.speciality);
@@ -130,8 +132,41 @@ export class SelectDomainComponent implements OnInit {
 
 
                     this._authService._saveDummyData(websiteData3, domainNameShort);
-                    this.addDomain(domainNameShort)
-                    this.router.navigate(['/web/' + domainName]);
+                    this.addDomain(domainNameShort);
+                    if (userData.specializations) {
+                      let ctr = 0;
+                      for (let item in userData.specializations) {
+
+                        this._authService._getHealthLineData(userData.specializations[item].details) 
+                        .subscribe(
+                          hlData=> {
+                            console.log(hlData);
+                            console.log(userData.specializations[item]);
+                            let dataWeb = {title:  hlData['_title'],  brief: hlData['_meta-desc'], description: hlData['full-summary']};
+                            let dataDetails = {givenName: userData.specializations[item].name, id: userData.specializations[item].details,  meta: hlData['_meta-desc'], summary: hlData['full-summary']};
+                            this._authService._saveWebsiteSpeciaizations(domainNameShort, dataWeb, ctr)
+                            .then(
+                              data2 => {
+                            this._authService._saveSpecializationsData(domainNameShort, dataDetails)
+                            ctr++;
+                              }
+                            );
+
+                          }
+                        )
+                      }
+                    }
+                    this.activatedRouter.queryParams
+                    .subscribe(
+                      params => {
+                        if (params['onboarding'] == "yes") {
+                           this.router.navigate(['/web/' + domainName],  {queryParams: {onboarding:"yes"}});
+                        } else {
+                           this.router.navigate(['/web/' + domainName]);
+                        }
+                      }
+                    )
+                   
                   }
                   )
 

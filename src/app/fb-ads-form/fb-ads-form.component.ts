@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AppConfig } from '../config/app.config';
 import { FileUploader, FileUploadModule, FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import { FirebaseApp, FirebaseRef } from 'angularfire2';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 declare var jquery;
 @Component({
   selector: 'app-fb-ads-form',
@@ -15,6 +16,7 @@ declare var jquery;
 export class FbAdsFormComponent implements OnInit {
   public fbAdsForm: FormGroup;
   private fbAdsAdded: boolean = false;
+  private section: any = "facebook";
   public adAccountID: any;
   private pageImagesUrl: any;
   public userID: any;
@@ -43,6 +45,9 @@ export class FbAdsFormComponent implements OnInit {
   private tgtSpecList: any = [];
   private ageGroup: any = [];
   private citySearched: boolean = false;
+  private adPreview: any;
+  private previewURL: any;
+  private previewReady: boolean = false;
   storage: any;
   uploader: FileUploader = new FileUploader({ url: '' });
   uid: string;
@@ -52,17 +57,18 @@ export class FbAdsFormComponent implements OnInit {
     private _authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private _fs: FacebookService) {
+    private _fs: FacebookService,
+    public sanitizer: DomSanitizer) {
     this.storage = firebaseApp.storage();
     this.ref = fb.database().ref();
   }
 
   ngOnInit() {
     let i = 18;
-    for (i = 18; i < 66; i ++) {
-      this.ageGroup[i-18] = i;
+    for (i = 18; i < 66; i++) {
+      this.ageGroup[i - 18] = i;
     }
-    
+
     this.objectives = [
       { cta: "LIKE_PAGE", objective: "PAGE_LIKES", name: "Page Likes" },
       { cta: "CONTACT_US", objective: "LINK_CLICKS", name: "Contact Us" },
@@ -130,14 +136,15 @@ export class FbAdsFormComponent implements OnInit {
 
   }
   reForm(pageID, adAccountID, clinicID) {
+
     console.log("its called::", pageID);
     this.fbAdsForm = this._fb.group({
       adAccount: [, Validators.required],
       pageID: [{ value: this.pageID, disabled: true }, [Validators.required]],
-      BID: [, Validators.required],
-      budget: [, Validators.required],
+      BID: ['10', Validators.required],
+      budget: ['100', Validators.required],
       name: [, Validators.required],
-      targetCountry: [, Validators.required],
+      targetCountry: ['IN', Validators.required],
       targetCitySearch: [],
       targetCity: [, Validators.required],
       siteLink: [clinicID, Validators.required],
@@ -396,25 +403,80 @@ export class FbAdsFormComponent implements OnInit {
   searchCity(value) {
     console.log(value);
     this._fs.api('/search?location_types=["city"]&type=adgeolocation&q=' + value.targetCitySearch)
-    .then(
+      .then(
       data => {
         console.log(data);
         this.cityList = data.data;
         //this.citySearched = true;
       }
-    )
+      )
   }
-    detailedSearch(value) {
-      console.log(this.tempAdaccountId);
+  detailedSearch(value) {
+    console.log(this.tempAdaccountId);
     console.log(value);
-    this._fs.api('/'+ this.tempAdaccountId[0] + '/targetingsearch?q=' + value.targetingSpecSearch)
-    .then(
+    this._fs.api('/' + this.tempAdaccountId[0] + '/targetingsearch?q=' + value.targetingSpecSearch)
+      .then(
       data => {
         console.log(data);
         this.tgtSpecList = data.data;
-        
+
       }
-    )
+      )
+  }
+  generateAdPreview(adform) {
+    let model = adform.value;
+    if (model['imageURL']) {
+      this.fileUrl = this.pageImagesUrl;
+      this.fileUrl = encodeURIComponent(this.fileUrl)
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A')
+        .replace(/%20/g, '+');
+
+    }
+    this.previewReady = false;
+    console.log(adform.value);
+    //let model = adform.value;
+    let fbParams: FacebookInitParams = {
+      appId: AppConfig.web.appID,
+      xfbml: true,
+      version: 'v2.9'
+    };
+    console.log("this is fbparam:", fbParams);
+    this._fs.init(fbParams);
+    this._fs.getLoginStatus().then(
+      (response: FacebookLoginResponse) => {
+        this.fbAccessToken = response.authResponse.accessToken;
+        console.log(this.fbAccessToken)
+        if (response.status === 'connected') {
+
+          console.log('/' + model['adAccount'] + '/generatepreviews?ad_format=MOBILE_FEED_STANDARD&creative[object_story_spec][link_data][call_to_action][type]=' + this.objectives[model['callToAction']].cta + '&creative[object_story_spec][link_data][call_to_action][value][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][description]=' + model['subtext'] + '&creative[object_story_spec][link_data][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][message]=' + model['msg'] + '&creative[object_story_spec][link_data][name]=' + model['caption'] + '&creative[object_story_spec][link_data][picture]=' + this.fileUrl + '&creative[object_story_spec][page_id]=' + this.pageID);
+          this._fs.api('/' + model['adAccount'] + '/generatepreviews?ad_format=MOBILE_FEED_STANDARD&creative[object_story_spec][link_data][call_to_action][type]=' + this.objectives[model['callToAction']].cta + '&creative[object_story_spec][link_data][call_to_action][value][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][description]=' + model['subtext'] + '&creative[object_story_spec][link_data][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][message]=' + model['msg'] + '&creative[object_story_spec][link_data][name]=' + model['caption'] + '&creative[object_story_spec][link_data][picture]=' + this.fileUrl + '&creative[object_story_spec][page_id]=' + this.pageID)
+            .then(
+            data => {
+              var d = document.getElementById("adPreviewDiv");
+              console.log(d);
+
+              console.log(d.innerHTML);
+              d.innerHTML = data.data[0].body;
+              console.log(data);
+              this.previewReady = false;
+              this.adPreview = data.data[0].body;
+              console.log(this.adPreview);
+
+              let strt = this.adPreview.indexOf('="');
+              let tempURL = this.adPreview.substring(strt + 2, this.adPreview.length);
+              console.log(tempURL)
+              let n = tempURL.indexOf('" width');
+              let tempURL2 = tempURL.substring(0, n);
+              this.previewURL = this.sanitizer.bypassSecurityTrustResourceUrl(tempURL2);
+              console.log(this.previewURL);
+              this.previewReady = true;
+            });
+        }
+      });
   }
 }
 

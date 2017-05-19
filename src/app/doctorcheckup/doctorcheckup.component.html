@@ -66,6 +66,37 @@
     <label class="control-label" for="co_speciality">Specialization (e.g., Gynaecologist)</label>
     <input type="text" class="form-control" [formControl]="signupForm.controls['speciality']" />
   </div>
+
+   <div class="medicines" formArrayName="specializations">
+                        <div class="clearfix medicine" *ngFor="let item of signupForm.controls.specializations.controls; let i=index">
+                         <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+              <div class="row">
+    <!-- Test Name formcontrol-->
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label class="control-label" for="name">Search</label>
+                      <input type="text" class="form-control" (change)="findDetails(item, i)" formControlName="name" />
+                      </div>
+                      
+                    </div>
+                    
+                        <div class="col-md-7">
+                      <div class="form-group" *ngIf="listReady[i]">
+                        <label class="control-label" for="details">Select Exact</label>
+                      <select formControlName="details" class="form-control">
+      <option value="{{k.id}}" *ngFor="let k of diseaseList[i];">{{k.$key}}</option>
+    </select>
+                      </div>
+                      
+                        </div>
+   </div>
+                         </div>
+                        </div>
+   </div>
+     <div class="row">
+   <a class="btn btn-round btn-warning" (click)="addSpecializations(signupForm.controls.specializations.controls)">Add More</a>
+  </div>
               <div class="form-group" style="width: 48%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['clinic'].valid && signupForm.controls['clinic'].touched}">
                 <label class="control-label" >Clinic Name</label>
                 <input type="text" class="form-control" [formControl]="signupForm.controls['clinic']" />
@@ -133,7 +164,7 @@
                 <hr/>
                 <!--<button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Submit</button>-->
                 <button *ngIf="showErrorFlag || signupForm.valid" type="submit" (click)="submitForm3(signupForm.value)"  class="btn btn-primary" [disabled]="!signupForm.valid" style="float: left;" >Submit</button>
-                <button *ngIf="!showErrorFlag && !signupForm.valid" class="btn btn-primary" (click)="showError()" style="float: left;">Submit</button>
+                <button *ngIf="!showErrorFlag && !signupForm.valid" class="btn btn-primary" (click)="showError(signupForm.value)" style="float: left;">Submit</button>
    
     
                 <!--<label *ngIf="buttonClicked">Make sure to click on the "Send to Messenger" button above.</label>
