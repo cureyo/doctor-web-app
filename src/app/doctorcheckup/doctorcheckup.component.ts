@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from "../services/firebaseauth.service";
 import { Router } from "@angular/router";
 import { AppConfig } from '../config/app.config';
@@ -201,7 +201,7 @@ console.log(item);
   // }
 
   submitForm3(form: any): void {
-    //console.log(form);
+    console.log(form['specializations']);
     if (form.fbPageId) {
       form['fbPageAdded'] = true;
     }
@@ -262,7 +262,7 @@ console.log(item);
       this._authService._saveUser(form).then(
         data => {
           console.log(data);
-          window.location.href = window.location.origin + '/website'
+          window.location.href = window.location.origin + '/website?onboarding=yes'
         })
     }
 
@@ -353,6 +353,8 @@ console.log(item);
     )
    }
 addSpecializations(form) {
-  form.push(this.initSpecializations())
+   const control = <FormArray>this.signupForm.controls['specializations'];
+    control.push(this.initSpecializations());
+ 
 }
  }

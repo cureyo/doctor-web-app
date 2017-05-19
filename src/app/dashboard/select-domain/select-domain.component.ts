@@ -27,7 +27,7 @@ export class SelectDomainComponent implements OnInit {
   private availableName: any;
   private domainAvailable: boolean = false;
   private sitename: any;
-  
+
   private section: any = "website";
 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private activatedRouter: ActivatedRoute, private http: Http) {
@@ -37,7 +37,7 @@ export class SelectDomainComponent implements OnInit {
 
   ngOnInit() {
 
-    
+
     this.drDomain = this._fb.group({
       message: [''],
 
@@ -134,39 +134,78 @@ export class SelectDomainComponent implements OnInit {
                     this._authService._saveDummyData(websiteData3, domainNameShort);
                     this.addDomain(domainNameShort);
                     if (userData.specializations) {
-                      let ctr = 0;
+                      let ctr = [], count = 0;
                       for (let item in userData.specializations) {
-
-                        this._authService._getHealthLineData(userData.specializations[item].details) 
-                        .subscribe(
-                          hlData=> {
+                        console.log(item);
+                        ctr[item] = count;
+                        count++;
+                        this._authService._getHealthLineData(userData.specializations[item].details)
+                          .subscribe(
+                          hlData => {
                             console.log(hlData);
                             console.log(userData.specializations[item]);
-                            let dataWeb = {title:  hlData['_title'],  brief: hlData['_meta-desc'], description: hlData['full-summary']};
-                            let dataDetails = {givenName: userData.specializations[item].name, id: userData.specializations[item].details,  meta: hlData['_meta-desc'], summary: hlData['full-summary']};
-                            this._authService._saveWebsiteSpeciaizations(domainNameShort, dataWeb, ctr)
-                            .then(
+                            let dataWeb = { title: hlData['_title'], brief: hlData['_meta-desc'], description: hlData['full-summary'] };
+                            let dataDetails = { givenName: userData.specializations[item].name, id: userData.specializations[item].details, meta: hlData['_meta-desc'], summary: hlData['full-summary'] };
+                            let pageIDtemp, adIDtemp;
+                            if (userData.fbPageAdded) 
+                            pageIDtemp = userData.fbPageId;
+                            else 
+                            pageIDtemp = '';
+                            if (userData.adAccounts) 
+                            adIDtemp = userData.adAccounts[0]
+                            else 
+                            adIDtemp = '';
+                            let adData = {
+                              "BID": 10,
+                              "adAccount": adIDtemp,
+                              "budget": 100,
+                              "callToAction": 1,
+                              "caption": "Visit " + userData.clinic + " for " + hlData['_title'],
+                              "enddate": "",
+                              "imageURL": "",
+                              "max_age": 65,
+                              "min_age": 18,
+                              "msg":  hlData['_meta-desc'],
+                              "name": hlData['_title'] + "[Ad]",
+                              "pageID": userData.fbPageId,
+                              "siteLink": "http://" + domainNameShort + ".cureyo.com",
+                              "startdate": "2017-05-26",
+                              "subtext": userData.fullName + " is an expert " + userData.speciality,
+                              "targetCity": 1018450,
+                              "targetCitySearch": userData.clinicLocation,
+                              "targetCountry": "IN",
+                              "targetingSpecSearch": "",
+                              "targetingSpecs": ""
+                            };
+                            this._authService._saveWebsiteSpeciaizations(domainNameShort, dataWeb, ctr[item])
+                              .then(
                               data2 => {
-                            this._authService._saveSpecializationsData(domainNameShort, dataDetails)
-                            ctr++;
+                                this._authService._saveSpecializationsData(domainNameShort, dataDetails)
+                                  .then(
+                                  data4 => {
+
+                                    this._authService._saveFbAdsFormData(userData.uid, hlData['_title'], adData);
+                                  }
+                                  )
+
                               }
-                            );
+                              );
 
                           }
-                        )
+                          )
                       }
                     }
                     this.activatedRouter.queryParams
-                    .subscribe(
+                      .subscribe(
                       params => {
                         if (params['onboarding'] == "yes") {
-                           this.router.navigate(['/web/' + domainName],  {queryParams: {onboarding:"yes"}});
+                          this.router.navigate(['/web/' + domainName], { queryParams: { onboarding: "yes" } });
                         } else {
-                           this.router.navigate(['/web/' + domainName]);
+                          this.router.navigate(['/web/' + domainName]);
                         }
                       }
-                    )
-                   
+                      )
+
                   }
                   )
 
@@ -187,7 +226,7 @@ export class SelectDomainComponent implements OnInit {
       $.notify({
         icon: "notifications",
         message: "Website " + domainName + ".cureyo.com has been created. You can check in 30-45 minutes, or open this URL in another browser to review.",
-        url: 'http://'+ domainName + '.cureyo.com',
+        url: 'http://' + domainName + '.cureyo.com',
         target: '_blank'
       }, {
           type: 'cureyo',

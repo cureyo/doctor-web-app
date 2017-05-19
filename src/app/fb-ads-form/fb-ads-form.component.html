@@ -1,4 +1,4 @@
- <div class="main-content">
+ <div class="main-content" id="fbContent">
     <div class="container-fluid">
           <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
         <h3> Facebook Advertising </h3>
@@ -11,6 +11,11 @@
                               <div class="card-content table-responsive">
                               <h5 style="margin-bottom: 0;"><b>Ad Preview</b></h5>
                               <br>
+                              <label for="adName">Select Campaign</label>
+                               <p>View your pre-created/ existing Campaigns</p>
+                                <select  id="pageID" class="form-control" >
+                                    <option *ngFor="let ad of currentAdsList;" value="{{ad.id}}">{{ad.name}}</option>
+                                  </select>
                               <div id="adPreviewDiv">
                                     </div>
                           
@@ -35,7 +40,7 @@
                                  <label for="adAccount">Ad Account </label>
                                  <p>Select your account that will be charged</p>
                                   <select  id="uid" class="form-control" formControlName="adAccount"  *ngIf="tempAdaccountId">
-                                    <option *ngFor="let act of tempAdaccountId;" value="{{act}}">{{act}}</option>
+                                    <option *ngFor="let act of tempAdaccountId;" value="{{act.id}}">{{act.id}}</option>
                                   </select>
                                    
                             </div>
@@ -45,7 +50,9 @@
                           <div class="form-group">
                                <label for="PageID">Page ID</label>
                                <p>Select the page to link to the ad</p>
-                                <input type="text" class="form-control" formControlName="pageID" >
+                                <select  id="pageID" class="form-control" formControlName="pageID"  *ngIf="tempAdaccountId">
+                                    <option *ngFor="let page of pageNameList;" value="{{page.id}}">{{page.name}}</option>
+                                  </select>
                                 
                           </div>
                   </div>
@@ -297,7 +304,7 @@
                       <!-- submit button code    -->
                 
                       <div class="pull-right" >
-                          <button [ngClass]="{'hide': fbAdsAdded}" type="submit" [disabled]="!urlAdded" class="btn btn-info">Create Carousel Ads</button>
+                          <button [ngClass]="{'hide': fbAdsAdded}" type="submit" [disabled]="!urlAdded" class="btn btn-info">Start Ad Campaign</button>
                       </div>
 
                         <div [ngClass]="{'hide': !fbAdsAdded}" class="bareP">
@@ -317,3 +324,49 @@
            
     </div>
  </div>
+<div class="modal fade" id="fbModal" role="dialog" aria-labelledby="fbModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="fbModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="fbModalLabel" style="float: left;"><b>Oops! We need more work before starting Facebook Ads!</b></h4>
+         </div>
+         <div class="modal-body" >
+         <p style="text-align: left;">
+          <br>
+          For running Facebook Ads, you must have a Facebook Page and Facebook Ad Account associated with your account. Seems like these may be missing for you.
+         <br> 
+         </p>
+      
+      
+            <div *ngIf="pageMissing">
+       
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">Setup Facebook Page</h3>
+          <br>
+<hr>
+        <p style="text-align: left;">Setting up a Facebook page is easy. Just click on the button below and follow the instructions on Facebook. You can create a bare minimum page for now - we will help you beautify it! </p>
+       <a class="btn btn-warning btn-round" href="https://www.facebook.com/pages/create/" target="blank">Create Page</a>
+    </div>
+         <div *ngIf="adAccountMissing">
+        <p style="text-align: left;">
+          
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">Setup Facebook Ad Account</h3>
+          <br>
+<hr>
+        <p style="text-align: left;">To create a Facebook Ads account, you just need to add billing details to your account. Please click on the button below to complete this step. </p>
+       <a class="btn btn-warning btn-round" href="https://www.facebook.com/ads/manage/settings.php" target="blank">Create Ad Account</a>
+    </div>
+
+
+
+        You can come back here once you have taken the necessary action on Facebook - we will be waiting for you 😊 
+        <br>Alternatively, you can move on and come back here later, by clicking on 'Social' on the sidebar.
+      </div>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <button type="button" style="float: left; z-index: 10000; margin-left: 20px;" class="btn btn-primary" data-dismiss="modal" (click)="addDetails(caredOneId)">Done!</button>
+        <button type="button" style="float: left; z-index: 10000;" class="btn btn-default" (click)="closeModal()">May be Later</button>
+      </div>
+    </div>
+  </div>
+  
+</div>

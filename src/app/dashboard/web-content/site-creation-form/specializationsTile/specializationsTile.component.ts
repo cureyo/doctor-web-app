@@ -45,7 +45,8 @@ export class SpecializationsTileComponent implements OnInit {
       webSpecData => {
         console.log(webSpecData)
         console.log(webSpecData[0])
-        this.specializationForm = this._fb.group({
+        if(webSpecData[0]) {
+            this.specializationForm = this._fb.group({
 
           specializations: this._fb.array([
             this.initSpecs(webSpecData[0])
@@ -61,6 +62,18 @@ export class SpecializationsTileComponent implements OnInit {
             control.push(this.initSpecs(webSpecData[each]));
         }
         this.formReady = true;
+      
+        }
+        else {
+          this.specializationForm = this._fb.group({
+
+          specializations: this._fb.array([
+            this.initSlots()
+
+          ])
+        });
+        this.formReady = true;
+        }
       }
       )
 

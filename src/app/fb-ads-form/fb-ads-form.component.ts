@@ -8,6 +8,7 @@ import { FileUploader, FileUploadModule, FileSelectDirective, FileDropDirective 
 import { FirebaseApp, FirebaseRef } from 'angularfire2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 declare var jquery;
+declare var $: any
 @Component({
   selector: 'app-fb-ads-form',
   templateUrl: './fb-ads-form.component.html',
@@ -32,9 +33,12 @@ export class FbAdsFormComponent implements OnInit {
   private qLength: number = 0;
   public hasBaseDropZoneOver: boolean = false;
   public hasAnotherDropZoneOver: boolean = false;
+  public adAccountMissing: boolean = false;
+  public pageMissing: boolean = false;
   public formReady: boolean = false;
   public urlAdded: boolean = false;
   private textval: any = [];
+  private pageNameList: any = [];
   public filename: any;
   public storedflag: boolean = false;
   public fileUrl: any;
@@ -98,9 +102,12 @@ export class FbAdsFormComponent implements OnInit {
             this.clinicID = "http://" + this.clinicID + ".cureyo.com";
             console.log("Clinic ID", this.clinicID);
             this.pageID = userTable.fbPageId;
-            this.adAccountID = userTable.adaccounts;
-            for (var i = 0; i < this.adAccountID.length; i++)
-              this.tempAdaccountId[i] = this.adAccountID[i].id;
+            if (userTable.adaccounts) {
+              this.adAccountID = userTable.adaccounts;
+              for (var i = 0; i < this.adAccountID.length; i++)
+                this.tempAdaccountId[i] = this.adAccountID[i].id;
+            }
+
 
             console.log("temp Adaccount Id is :", this.tempAdaccountId);
             console.log("page id and adaccount id :", this.pageID, this.adAccountID);
@@ -115,23 +122,6 @@ export class FbAdsFormComponent implements OnInit {
 
 
       })
-    // this.fbAdsForm = this._fb.group({
-    //   adAccount: [, Validators.required],
-    //   pageID: [{ value: this.pageID, disabled: true }, [Validators.required]],
-    //   BID: [, Validators.required],
-    //    budget: [, Validators.required],
-    //   name: [, Validators.required],
-    //   targetingSpec: [, Validators.required],
-    //   siteLink: [this.clinicID, Validators.required],
-    //   caption: [, Validators.required],
-    //   msg: [, Validators.required],
-    //   callToAction: [, Validators.required],
-    //   title: [, Validators.required],
-    //   body: [, Validators.required],
-    //   startdate: [, Validators.required],
-    //   enddate: [, Validators.required],
-    //   imageURL: []
-    // });
 
 
   }
@@ -140,7 +130,7 @@ export class FbAdsFormComponent implements OnInit {
     console.log("its called::", pageID);
     this.fbAdsForm = this._fb.group({
       adAccount: [, Validators.required],
-      pageID: [{ value: this.pageID, disabled: true }, [Validators.required]],
+      pageID: [this.pageID, [Validators.required]],
       BID: ['10', Validators.required],
       budget: ['100', Validators.required],
       name: [, Validators.required],
@@ -175,18 +165,11 @@ export class FbAdsFormComponent implements OnInit {
         if (response.status === 'connected') {
 
           this.fbAccessToken = response.authResponse.accessToken;
-          this._fs.api('/' + pageId + '/photos?type=uploaded&fields=link,id,picture,images')
-            .then(
-            data => {
-              console.log(data);
-              this.pagePhotos = data.data;
-              this._fs.api('/' + pageId + '/photos?type=tagged&fields=link,id,picture,images')
-                .then(
-                data2 => {
-                  this.pagePhotos = this.pagePhotos.concat(data2.data);
-                });
-            }
-            )
+
+          this.fetchPages();
+  
+         
+
         } else {
           this.fbAccessToken = null;
         }
@@ -195,7 +178,79 @@ export class FbAdsFormComponent implements OnInit {
     );
   }// initFB()
 
+  fetchPages(): void {
+    //////console.log("this does not execute 2")
+    if (this.fbAccessToken === null) {
+      alert('Disconnected from Facebook. Kindly login again.');
+    } else {
+      let family, friends;
+      this._fs.api('/me/accounts').then(
+        response => {
+          //console.log(response);
+          let ctr = 0;
+          this.pageNameList = response.data;
+          console.log("this.pageNameList",this.pageNameList);
+          this.fetchAdAccounts();
+          
+
+        })
+
+
+    }// else
+  }// fetchPages
+    fetchAdAccounts(): void {
+    //////console.log("this does not execute 2")
+    if (this.fbAccessToken === null) {
+      alert('Disconnected from Facebook. Kindly login again.');
+    } else {
+     
+          this._fs.api('/me?fields=adaccounts')
+            .then(response => {
+              //  console.log("user response data is :",response);
+              //this.userID = response.id; //user ID
+              this.tempAdaccountId = response.adaccounts.data; //AdAccoundId
+              console.log("this.tempAdaccountId",this.tempAdaccountId);
+              // this.fbAdsObject.adAccountID=this.adAccountID;
+              //console.log("In DoctorCheckup this is the userId", this.userID);
+              console.log("In DoctorCheckup fb ad account details is :", this.adAccountID);
+              console.log("First FB Page:", this.pageNameList[0])
+          console.log("First Ad Account:", this.tempAdaccountId[0])
+          if (this.pageNameList[0] == null || this.tempAdaccountId[0] == null)
+          {
+           if (this.pageNameList[0] == null)
+           this.pageMissing = true;
+           else 
+           this.pageMissing = false;
+
+           if (this.tempAdaccountId[0] == null)
+           this.adAccountMissing = true;
+           else 
+           this.adAccountMissing = false;
+           
+             this.showModal();
+          }
+
+            })
+
+
+    }// else
+  }// fetchPages
+  getPagePhotos(pageId) {
+    this._fs.api('/' + pageId + '/photos?type=uploaded&fields=link,id,picture,images')
+      .then(
+      data => {
+        console.log(data);
+        this.pagePhotos = data.data;
+        this._fs.api('/' + pageId + '/photos?type=tagged&fields=link,id,picture,images')
+          .then(
+          data2 => {
+            this.pagePhotos = this.pagePhotos.concat(data2.data);
+          });
+      }
+      )
+  }
   save_fbAdsForm = (model) => {
+    console.log(model.value);
     let job = model['value'];
     console.log("this is model:", job);
     this.bidAmount = job['BID'];
@@ -477,6 +532,17 @@ export class FbAdsFormComponent implements OnInit {
             });
         }
       });
+  }
+
+    public showModal() {
+    console.log("show modal for: ", "fbContent")
+   
+
+    $('#fbModal').modal('show');
+
+    window.scroll(0, -100);
+    //console.log($('#mainContent'));
+    $('#fbContent').css({ position: 'fixed' });
   }
 }
 

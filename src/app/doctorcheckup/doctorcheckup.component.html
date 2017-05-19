@@ -39,8 +39,8 @@
 
 
               <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['phone'].valid && signupForm.controls['phone'].touched}">
-                <label class="control-label" for="user_phone">Mobile Number</label>
-                <input type="text" class="form-control" id="user_phone" [formControl]="signupForm.controls['phone']" 
+                <label class="control-label" for="user_phone">10 Digit Mobile Number</label>
+                <input type="text" class="form-control" id="user_phone" [formControl]="signupForm.controls['phone']" pattern="(7|8|9)\d{9}"
                 />
               </div>
                <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['fullName'].valid && signupForm.controls['fullName'].touched}">
@@ -66,11 +66,13 @@
     <label class="control-label" for="co_speciality">Specialization (e.g., Gynaecologist)</label>
     <input type="text" class="form-control" [formControl]="signupForm.controls['speciality']" />
   </div>
-
+<div class="card card-content">
+  <h4>Add your Specialization Areas</h4>
    <div class="medicines" formArrayName="specializations">
                         <div class="clearfix medicine" *ngFor="let item of signupForm.controls.specializations.controls; let i=index">
                          <div [formGroupName]="i">
                     <!--  end of interface implementation -->  
+                    
               <div class="row">
     <!-- Test Name formcontrol-->
                     <div class="col-md-5">
@@ -82,6 +84,9 @@
                     </div>
                     
                         <div class="col-md-7">
+                           <div class="form-group" *ngIf="!listReady[i]" style="text-align: left;">
+                             Type to see options
+                           </div>
                       <div class="form-group" *ngIf="listReady[i]">
                         <label class="control-label" for="details">Select Exact</label>
                       <select formControlName="details" class="form-control">
@@ -94,8 +99,10 @@
                          </div>
                         </div>
    </div>
+
      <div class="row">
    <a class="btn btn-round btn-warning" (click)="addSpecializations(signupForm.controls.specializations.controls)">Add More</a>
+  </div>
   </div>
               <div class="form-group" style="width: 48%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['clinic'].valid && signupForm.controls['clinic'].touched}">
                 <label class="control-label" >Clinic Name</label>

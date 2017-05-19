@@ -369,6 +369,7 @@ public _findPatient(currentUserId, caredoneId) {
     return clinicSite.push(data);
   }//_saveCaredOne
    public _saveWebsiteSpeciaizations(siteName, data, count) {
+     console.log("Adding specialization data for", siteName, count, data)
     const clinicSite = this.af.database.object(this.db.doctorPages + '/' + siteName +'/content/specializations/' + count);
     return clinicSite.set(data);
   }//_saveCaredOne

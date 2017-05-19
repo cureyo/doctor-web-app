@@ -22,6 +22,7 @@ export class PhySlotBookingComponent implements OnInit {
   private sitename: any;
   private doctorData: any;
   private select: any;
+  private formReady: boolean = false;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -55,6 +56,7 @@ export class PhySlotBookingComponent implements OnInit {
 
               ])
             });
+            this.formReady = true;
           }
           )
       }

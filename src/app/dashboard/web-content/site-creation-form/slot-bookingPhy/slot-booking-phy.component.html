@@ -1,6 +1,6 @@
  <div class="col-md-12">
                 <div class="card">
-                  <form [formGroup]="slotBookingTile" class="formGroup" novalidate (ngSubmit)="save_slotBookingTile(slotBookingTile)">
+                  <form *ngIf="formReady" [formGroup]="slotBookingTile" class="formGroup" novalidate (ngSubmit)="save_slotBookingTile(slotBookingTile)">
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="blue">
                         <h4 class="title">{{typePhy}} Consultation Availability </h4>
@@ -17,9 +17,12 @@
                             <div class="form-group">
                                  <label for="title">Time Duration </label>
                                   <select formControlName="duration" class="form-control">
+                                    <option value="10">10 Min</option>
+                                    <option value="15">15 Min</option>
                                     <option value="30">30 Min</option>
+                                    <option value="30">45 Min</option>
                                     <option value="60">1 Hr</option>
-                                    <option value="90">1:30 HR</option>
+                                    <option value="90">1.5 HR</option>
                                     <option value="120">2 Hr</option>
                                 
                                   </select>
@@ -84,7 +87,7 @@
               </div>
               
                 <div [ngClass]="{'hide': !slotAdded}" class="bareP">
-                    <p>Thanks! This Care Item has been scheduled!</p>
+                    <p>Thanks! These slots have been added.</p>
                 </div>
                 <!-- end of submit button-->
 

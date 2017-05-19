@@ -26,7 +26,11 @@
           Care
         </div>
       </div>
+      <hr/>
+      <div class="card-footer">
+      <p><b>{{headingToShow}}</b></p>
       <p>{{textToShow}}</p>
-      <a *ngIf="takeNext" class="pull-right btn btn-warning btn-round" (click)="takeToNext()">Next ></a>
+      <a *ngIf="takeNext" class="pull-right btn btn-warning btn-round" (click)="nextPage()" >Done</a>
+    </div>
     </div>
   </div>
