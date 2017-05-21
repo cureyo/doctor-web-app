@@ -75,26 +75,41 @@
                     
               <div class="row">
     <!-- Test Name formcontrol-->
-                    <div class="col-md-5">
+                    <!--<div class="col-md-5">
                       <div class="form-group">
                         <label class="control-label" for="name">Search</label>
                       <input type="text" class="form-control" (change)="findDetails(item, i)" formControlName="name" />
                       </div>
                       
-                    </div>
+                    </div>-->
                     
-                        <div class="col-md-7">
+                        <!--<div class="col-md-7">
                            <div class="form-group" *ngIf="!listReady[i]" style="text-align: left;">
                              Type to see options
-                           </div>
-                      <div class="form-group" *ngIf="listReady[i]">
+                           </div>-->
+                      <!--<div class="form-group" *ngIf="listReady[i]">
                         <label class="control-label" for="details">Select Exact</label>
                       <select formControlName="details" class="form-control">
       <option value="{{k.id}}" *ngFor="let k of diseaseList[i];">{{k.$key}}</option>
     </select>
-                      </div>
+                      </div>-->
                       
-                        </div>
+                       
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                 <label for="details">search</label>
+                                  <input auto-complete
+                                  
+                                   display-property-name="name"
+                                  value-property-name="name"
+                                  [list-formatter]="autocompleListFormatter"
+                                  class="form-control"
+                                  formControlName="details"
+                                  [source]="fullHList"
+                                  min-chars="3"
+                                  id="details"/>
+                             </div>
+                     </div>
    </div>
                          </div>
                         </div>
@@ -169,8 +184,14 @@
                  <div id="fb-messenger_checkbox" class="fb-send-to-messenger" [attr.data-messenger_app_id]="appID" [attr.data-page_id]="pageID" [attr.data-ref]="passThrough" color="blue" size="xlarge"> </div>
                    <!--<iframe width="1000px" height="1000px" [src]="getSRCurl()" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:send_to_messenger Facebook Social Plugin" style="border: none; visibility: visible; width: 256px; height: 68px;" class=""></iframe>-->
                 <hr/>
+                 <div *ngIf="OTPAsked" class="form-group" style="margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['numberConfirmed'].valid && signupForm.controls['numberConfirmed'].touched}">
+                <label class="control-label" >Confirm your number</label>
+                <input type="text" class="form-control" [formControl]="signupForm.controls['numberConfirmed']" placeholder="Enter the OTP sent" />
+                <a class="btn btn-round" (click)="confirmOTP(signupForm.controls['numberConfirmed'].value)">Confirm</a>
+                
+              </div>
                 <!--<button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Submit</button>-->
-                <button *ngIf="showErrorFlag || signupForm.valid" type="submit" (click)="submitForm3(signupForm.value)"  class="btn btn-primary" [disabled]="!signupForm.valid" style="float: left;" >Submit</button>
+                <button *ngIf="showErrorFlag || signupForm.valid" type="submit" (click)="submitForm3(signupForm.value)"  class="btn btn-primary" [disabled]="!signupForm.valid || !OTPConfirmed" style="float: left;" >Submit</button>
                 <button *ngIf="!showErrorFlag && !signupForm.valid" class="btn btn-primary" (click)="showError(signupForm.value)" style="float: left;">Submit</button>
    
     

@@ -5,30 +5,35 @@
       <div class="col-md-3">
         <div class="card-header" [attr.data-background-color]="(website == true)?'cureyo':'grey'" stye="color: #fff; z-index:10000">
            <i class="fa fa-window-maximize" style="color: #ffffff; "></i>
-          Website
+          <b style="font-size: 14px;">Build</b>
+       <br> <small> your Website</small>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card-header" [attr.data-background-color]="(facebook == true)?'cureyo':'grey'" stye="color: #fff;">
            <i class="fa fa-facebook" style="color: #ffffff; "></i>
-          Facebook Promotion
+           <b style="font-size: 14px;">Promote</b>
+      <br>  <small> on Facebook</small>
+         
         </div>
       </div>
       <div class="col-md-3">
         <div class="card-header" [attr.data-background-color]="(partners == true)?'cureyo':'grey'" stye="color: #fff;">
           <i class="fa fa-handshake-o" style="color: #ffffff; "></i>
-          Partners
+          <b style="font-size: 14px;">Partner</b>
+        <br><small> & build your team</small>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card-header"  [attr.data-background-color]="(care == true)?'cureyo':'grey'" stye="color: #fff;">
           <i class="fa fa-heartbeat" style="color: #ffffff; "></i>
-          Care
+          <b style="font-size: 14px;">Care</b>
+       <br> <small> for your patients</small>
         </div>
       </div>
       <hr/>
       <div class="card-footer">
-      <p><b>{{headingToShow}}</b></p>
+      <p  style="margin-top: 20px;"><b>{{headingToShow}}</b></p>
       <p>{{textToShow}}</p>
       <a *ngIf="takeNext" class="pull-right btn btn-warning btn-round" (click)="nextPage()" >Done</a>
     </div>

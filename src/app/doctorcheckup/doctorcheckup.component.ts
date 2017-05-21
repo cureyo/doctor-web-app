@@ -27,6 +27,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   public signupForm: FormGroup;
   private formReady: boolean = false;
   private showErrorFlag: boolean = false;
+  private OTPAsked: boolean = false;
+  private OTPValue: any;
   isAuth: boolean;
   buttonClicked: boolean;
   buttonClicked1: boolean;
@@ -35,6 +37,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   appID: any;
   pageID: any;
   passThrough: any;
+  private OTPConfirmed: boolean = false;
   private currentUserID: any;
   private times: any = 0;
   private fbMessURL: any;
@@ -49,8 +52,9 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   public bidAmount: Number = 8000;
   public dailybudget: Number = 100000;
   public targetResponse: any;
-  private diseaseList: any =[];
+  private diseaseList: any = [];
   private listReady: any = [];
+  private fullHList: any = [];
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -83,7 +87,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     let method: FacebookApiMethod = 'post';
     console.log("In DoctorCheckup facebook method is :", method);
     //console.log("In DoctorCheckup fbparam data:",fbParams);
-
+    this.getAllMedicalData();
 
     // this._authService.doclogin()
     //   .then(data => {
@@ -150,6 +154,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'fbPageId': [''],
           'clinic': ['', Validators.required],
           'qualification': ['', Validators.required],
+          'numberConfirmed': [, Validators.required],
           'fullName': ['Dr. ' + data.user.firstName + ' ' + data.user.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
         });
         //console.log("this.signupForm");
@@ -164,7 +169,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   }
   initSpecializations() {
     return this.fb.group({
-      name: ['', Validators.required],
+     // name: ['', Validators.required],
       details: ['', Validators.required]
     });
   }
@@ -189,11 +194,25 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   }//submitForm
 
   showError(item) {
-    //console.log("clicked");
-console.log(item);
+    console.log("item.", item.phone);
+
+    this.OTPValue = Math.floor((Math.random() * 1000) + 1);
+    if (item.phone) {
+       console.log(this.OTPValue);
+      this._authService._RequestOTP(item.phone, this.OTPValue)
+      this.OTPAsked = true;
+    } else {
+      alert("Please enter phone number")
+    }
+    
+    console.log(item);
     this.showErrorFlag = true;
   }
-
+confirmOTP(otp) {
+  if (otp == this.OTPValue) {
+    this.OTPConfirmed = true;
+  }
+}
   // getSRCurl() {
   //   this.fbMessURL = "https://www.facebook.com/v2.3/plugins/send_to_messenger.php?messenger_app_id=" + this.appID + "&page_id=" + this.pageID + "&ref=" + this.passThrough;
 
@@ -210,7 +229,11 @@ console.log(item);
       form['fbPageId'] = "1173783939313940";
     };
     console.log(form);
-
+    for (let spe in form.specializations) {
+     
+      form.specializations[spe]['details']['toString'] = null;
+      console.log(form.specializations[spe]);
+    }
     if (form.fbPageAdded) {
       this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(
@@ -333,28 +356,41 @@ console.log(item);
     console.log(item.value)
     console.log(i)
     this.getMedicalDetails(item.value.name, i)
-      // .subscribe(
-      // data => {
-      //   console.log(data);
-      // });
+    // .subscribe(
+    // data => {
+    //   console.log(data);
+    // });
   }
   getMedicalDetails(item, i) {
     console.log(item);
     this._authService._getTermData(item)
-    .subscribe(
+      .subscribe(
       data => {
         console.log(data);
         this.diseaseList[i] = data;
         if (data[0])
-        this.listReady[i] = true;
-        else 
-        this.listReady[i] = false;
+          this.listReady[i] = true;
+        else
+          this.listReady[i] = false;
       }
-    )
-   }
-addSpecializations(form) {
-   const control = <FormArray>this.signupForm.controls['specializations'];
+      )
+  }
+  getAllMedicalData() {
+
+    this._authService.getAllMedicalData()
+      .subscribe(
+      data => {
+        //this.fullHList = data;
+        for (let i in data) {
+          this.fullHList[i] = {name: data[i].$key , value: data[i].$key, id: data[i].id}
+        }
+        console.log(this.fullHList);
+      }
+      )
+  }
+  addSpecializations(form) {
+    const control = <FormArray>this.signupForm.controls['specializations'];
     control.push(this.initSpecializations());
- 
+
+  }
 }
- }

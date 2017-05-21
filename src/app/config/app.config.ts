@@ -75,6 +75,7 @@ export const AppConfig = {
     ActivitySummary:    environment.envName + '/ActivitySummary/',
     Partners:           environment.envName + '/Partners/',
     messagingIds:       environment.envName + '/MessagingIds/',
-    careSchedule:       environment.envName + '/CareSchedule/'
+    careSchedule:       environment.envName + '/CareSchedule/',
+    OTPRequests:        environment.envName + '/OTPRequests/'
   }
 }

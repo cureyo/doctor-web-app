@@ -139,52 +139,59 @@ export class SelectDomainComponent implements OnInit {
                         console.log(item);
                         ctr[item] = count;
                         count++;
-                        this._authService._getHealthLineData(userData.specializations[item].details)
+                        this._authService._getHealthLineData(userData.specializations[item].details.id)
                           .subscribe(
                           hlData => {
                             console.log(hlData);
                             console.log(userData.specializations[item]);
                             let dataWeb = { title: hlData['_title'], brief: hlData['_meta-desc'], description: hlData['full-summary'] };
-                            let dataDetails = { givenName: userData.specializations[item].name, id: userData.specializations[item].details, meta: hlData['_meta-desc'], summary: hlData['full-summary'] };
+                            let dataDetails = { givenName: userData.specializations[item].details.name, id: userData.specializations[item].details.id, meta: hlData['_meta-desc'], summary: hlData['full-summary'] };
                             let pageIDtemp, adIDtemp;
-                            if (userData.fbPageAdded) 
-                            pageIDtemp = userData.fbPageId;
-                            else 
-                            pageIDtemp = '';
-                            if (userData.adAccounts) 
-                            adIDtemp = userData.adAccounts[0]
-                            else 
-                            adIDtemp = '';
+                            if (userData.fbPageAdded)
+                              pageIDtemp = userData.fbPageId;
+                            else
+                              pageIDtemp = '';
+                            if (userData.adAccounts)
+                              adIDtemp = userData.adAccounts[0]
+                            else
+                              adIDtemp = 'NA';
+
                             let adData = {
                               "BID": 10,
                               "adAccount": adIDtemp,
                               "budget": 100,
                               "callToAction": 1,
                               "caption": "Visit " + userData.clinic + " for " + hlData['_title'],
-                              "enddate": "",
-                              "imageURL": "",
+                              "enddate": "NA",
+                              "imageURL": "NA",
                               "max_age": 65,
                               "min_age": 18,
-                              "msg":  hlData['_meta-desc'],
-                              "name": hlData['_title'] + "[Ad]",
+                              "msg": hlData['_meta-desc'],
+                              "name": hlData['_title'],
                               "pageID": userData.fbPageId,
                               "siteLink": "http://" + domainNameShort + ".cureyo.com",
-                              "startdate": "2017-05-26",
+                              "startdate": "NA",
                               "subtext": userData.fullName + " is an expert " + userData.speciality,
-                              "targetCity": 1018450,
+                              "targetCity": "NA",
                               "targetCitySearch": userData.clinicLocation,
                               "targetCountry": "IN",
-                              "targetingSpecSearch": "",
-                              "targetingSpecs": ""
+                              "targetingSpecSearch": "NA",
+                              "targetingSpecs": "NA",
+                              "imgSearch": hlData['_title'],
+                              "showForm": [],
+                              "refname":hlData['_title']+ "[AD]",
                             };
                             this._authService._saveWebsiteSpeciaizations(domainNameShort, dataWeb, ctr[item])
                               .then(
                               data2 => {
+                                console.log(dataDetails)
                                 this._authService._saveSpecializationsData(domainNameShort, dataDetails)
                                   .then(
                                   data4 => {
 
-                                    this._authService._saveFbAdsFormData(userData.uid, hlData['_title'], adData);
+                                    this._authService._saveFbAdsFormData(userData.authUID, hlData['_title'], adData).then(
+                                      data => console.log(data)
+                                    );
                                   }
                                   )
 

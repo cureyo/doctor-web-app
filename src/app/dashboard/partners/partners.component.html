@@ -100,6 +100,16 @@
                                 </div>
               </div>    
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Message</label>
+                                    <input type="text" [formControl]="partnerForm.controls['message']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>
+    </div>
       <div class="actions clearfix">
               <div class="pull-right">
                <button (click)="addPartner(partnerForm)"class="btn btn-warning btn-round pull-right">Add Partner</button>

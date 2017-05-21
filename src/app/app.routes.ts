@@ -59,6 +59,7 @@ import { FileUploadComponent } from './dashboard/PatientDetailForm/file-upload/f
 import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPreview.component';
 import {FbAdsFormComponent} from './fb-ads-form/fb-ads-form.component';
 import {OnboardingHeaderComponent} from "./dashboard/select-domain/onboardingHeader/onboardingHeader.component";
+import {ImageSearchComponent} from './fb-ads-form/image-search/image-search.component';
 
 export const MODULE_ROUTES: Route[] =[
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
@@ -127,6 +128,7 @@ export const MODULE_COMPONENTS = [
    // OnlineConsultationCareComponent,
     PhysicalconsultationCareComponent,
     //DocReviewCareComponent,
+    ImageSearchComponent,
     PartnerComponent,
     WebContentComponent,
     SiteCreationFormComponent,

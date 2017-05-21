@@ -63,7 +63,8 @@ export class PartnerComponent implements OnInit {
                     phone: ['', Validators.required],
                     fee: [''],
                     icon: [''],
-                    img: ['']
+                    img: [''],
+                    message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
                 });
                 this.userId = data.user.uid;
 
