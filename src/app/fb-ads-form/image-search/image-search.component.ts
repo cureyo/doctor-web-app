@@ -68,6 +68,7 @@ export class ImageSearchComponent implements OnInit {
   }
 
   searchForGImages(searchQuery) {
+    console.log(searchQuery);
     let searchQueryEdit = searchQuery + " Images";
     let searchURL = "https://www.googleapis.com/customsearch/v1?q=" + searchQueryEdit + "&key=AIzaSyCbRKrQajn5-XpRZ-DcLC4doBeCZ_xOG_A&num=10&cx=017396431536091938880:snzyldd9qac&imgSize=huge"
     this.httpSGet(searchURL)

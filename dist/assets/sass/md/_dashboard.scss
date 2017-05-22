@@ -1,0 +1,368 @@
+#dashboard {
+  margin-bottom: 50px;
+  min-height: 400px;
+  
+
+  .text-primary {
+    color: $textPrimary;
+  }
+  p {
+    margin: 0;
+  }
+  .ncta{
+    color: $lightBlue;
+    float: right;
+    font-size: 15px;
+    padding: 10px;
+  }//ncta
+
+  .ncta2{
+    color: $lightBlue;
+    font-size: 15px;
+  }//ncta2 - added by Chatty
+
+  .ncta3{
+    color: $grey;
+    font-size: 12px;
+  }//ncta3 - added by Chatty
+
+}//dashboard
+
+
+#main {
+
+  .underline {
+    border: $blueBorder;
+    display: block;
+  }
+}
+
+#caredGroup{
+  h1,h2,h3,h4 {
+    margin-bottom: 0;
+  }
+
+  .underline{
+    margin-left: 135px;
+  }
+
+  .addcaredone {
+    line-height:15px;
+    background-color: transparent;
+    &:hover, &:focus, &:active, &:link{
+      text-decoration: none;
+      outline: none;
+    }
+  }
+
+  .caredones {
+
+    margin-top: 20px;
+    .caredone{
+      border: $lightBorder;
+      @include box-shadow(1px 3px 1px #ddd);
+      min-height: 410px;
+      padding: 10px;
+      margin-bottom: 20px;
+      @include transition(all 0.5s ease-out);
+
+      &:hover{
+        @include transition(all 0.3s ease);
+        @include transform(rotate(0deg) scale(1.1));
+        @include box-shadow(5px 5px 5px #ddd);
+      }
+      .cop, .cor {
+        display: inline-block;
+      }//cop/cor
+      .cop{
+        img{
+            width: 80px;
+            height: 80px;//Added by Chatty
+        }//cop->img
+      }//cop
+      .cor{
+        margin-left: 8px;
+        margin-top: 15px;
+
+        h4, p{
+          margin: 0;
+          max-width: 150px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        p.text-muted{
+          padding-bottom: 0;
+        }
+      }//cor
+
+      .no-data{
+        padding: 0 20px;
+
+        .hyphen {
+          background-color: #777;
+          height: 3px;
+          //margin: 30px auto 10px;//Chatty commented
+          margin: 25px auto 10px;//Chatty Code
+          width: 13px;
+        }//hyphen
+
+        p{
+          color: #777;
+          //margin-top: 16px;//Chatty Commented
+        }
+      }//no-data
+
+      .aci{
+        //margin-top: 50px;
+        margin-top: 30px;//chatty code
+        margin-bottom: 10px;// chatty code
+        .ms-link {
+          display: block;
+          font-size: 14px;
+          margin-top: 15px;
+          text-decoration: underline;
+        }
+        .btn {
+          border-radius: 25px;
+          @include box-shadow(1px 1px 1px #ccc);
+          font-family: $fontRoboto;
+          font-weight: 600;
+          font-size: 12px;
+        }//btn
+        .btn1 {
+          border-radius: 25px;
+          @include box-shadow(1px 1px 1px #ccc);
+          font-family: $fontRoboto;
+          font-weight: 600;
+        }//btn
+      }//aci
+
+      .reports{
+        margin: 20px 0 40px;
+        text-align: center;
+        .report{
+          border: 2px solid $orange;
+          @include border-radius(4px);
+          color: $grey;
+          display: inline-block;
+          //padding: 8px; Commented by Chatty
+          //padding-bottom: 10px; //Commented Code by Chatty
+          text-align: center;
+
+          &.active{
+            color: $orange;
+            margin-bottom: 10px;
+          //  padding-top: 14px; //CHatty Code
+          //  padding-bottom: 14px;
+           //   padding-bottom: 10px;//Chatty code
+            .input-data{
+              padding: 10px;
+              padding-bottom: 0px;//Chatty Code
+              .ptage{
+                //font-size: 36px;
+                font-size: 24px; //Chatty code
+              }
+            }
+          }//report.active
+
+          .ptage{
+            font-family: $fontRoboto;
+            font-size: 28px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0;
+            @include text-shadow(1px 2px 2px #ddd);
+          }
+          &:nth-child(2){
+            color: $grey;
+          }
+        }//report
+
+        &.big{
+          margin-bottom: 25px !important;
+         .report{
+            &:nth-child(2) {
+             /* Commented by Chatty
+             border-bottom-left-radius: 0;
+              border-left: 0 none;
+              border-top-left-radius: 0;
+              margin-top: 8px;
+              margin-left: 0; */
+            }
+          }
+        }//reports.big
+
+      }//reports
+
+      .status {
+        border: 2px solid #ccc;
+        border-radius: 30px;
+        font-size: $fontXX;
+        margin: auto;
+        padding: 7px 0;
+        text-align: center;
+        width: 80%;
+        p{
+          display: inline-block;
+          margin: 5px 0 0 5px;
+        }
+      }//status
+      .healthDets {
+        display: block;
+        margin: 15px auto;
+        text-decoration: none;
+        span{
+          vertical-align: text-bottom;
+        }
+        p{
+          display: inline-block;
+          margin: 5px 0 0 5px;
+        }
+
+        &:hover{
+          text-decoration: none;
+        }
+      }//status Added by Chatty
+
+      .instructions {
+        line-height: 24px;
+        margin-top: 20px;
+      }//instructions
+
+    }//caredone
+
+  }//caredones
+
+  #findandadd > h4 {
+    color: #777;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 3px;
+    margin-left: 15px;
+  }
+
+  .searchbox{
+    margin-left: 15px;
+    width: 250px;
+
+    .input-group {
+      .form-control {
+        border-right: none;
+        @include box-shadow(none);
+
+        &:focus{
+          @include box-shadow(none);
+          border-color: #cccccc;
+        }
+
+      }//form-control
+      span{
+        background-color: $light;
+        top: 0;
+      }//span
+    }//input-group
+
+  }//searchbox
+
+  .suggestions{
+    margin: 10px 0 30px 15px;
+    .item {
+      border: $lightBorder;
+      @include box-shadow(1px 3px 1px #ccc);
+      display: inline-block;
+      //margin-bottom: 10px; //commented by Chatty
+      margin-bottom: 10px;
+      margin-right: 10px;//added by Chatty
+      
+      padding: 5px 25px 5px 10px;
+      vertical-align: top;
+      width: 45%;
+      min-width: 250px; //Chatty code
+      .cop{
+        img {
+          width: 60px;
+          height: 60px; //Chatty Code
+          margin-right: 10px;
+        }
+      }//cop
+      @include transition(all 0.5s ease-out);
+
+      &:hover{
+        @include transition(all 0.3s ease);
+        @include transform(rotate(0deg) scale(1.02));
+        @include box-shadow(5px 5px 5px #ddd);
+      }
+
+      //&:hover{
+      //  @include transform(rotate(0deg) scale(1.1));
+      //  @include box-shadow(5px 5px 5px #ddd);
+      //}
+
+      &:nth-child(2n) {
+        //margin-left: 15px;//commented by Chatty
+      }//nth-child
+
+      .cor {
+        margin-left: 70px;
+        h4{
+          margin: 10px 0 0;
+        }
+        p{
+          display: inline-block;
+        }
+      }
+
+      &.active{
+        .cop{
+          text-align: center;
+          float: none !important;
+          margin: 10px 0;
+          @include transition(all 0.5s ease-out);
+
+      &:hover{
+        @include transition(all 0.3s ease);
+        @include transform(rotate(0deg) scale(1.02));
+        @include box-shadow(5px 5px 5px #ddd);
+      }
+          img{
+            width: 100px;
+            height: 100px; //Chatty Code
+          }
+          
+        }
+
+      }
+    }//item
+  }//suggestions
+
+}//caredGroup
+
+.attention {
+  .underline {
+    margin-left: 205px;
+  }
+  .cards-group{
+    margin-top: 20px;
+    .card {
+      border: $lightBorder;
+      border-radius: 3px;
+      @include box-shadow(1px 3px 1px #ddd);
+      height: 230px;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+
+      &.active {
+        color: $textPrimary;
+      }
+      .details{
+        margin-top: 20px;
+      }//details
+      .info{
+        color: #333;
+        margin-left: 70px;
+      }//info
+    }//card
+
+  }//cards-group
+
+}//attention
