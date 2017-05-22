@@ -402,7 +402,8 @@ export class FbAdsFormComponent implements OnInit {
           let ctr = 0;
           this.pageNameList = response.data;
           console.log("this.pageNameList", this.pageNameList);
-          this.pageIdSelected = this.pageNameList[2].id;
+          if (this.pageNameList[0])
+          this.pageIdSelected = this.pageNameList[0].id;
           console.log("this.pageIdSelected", this.pageIdSelected)
           this.fetchAdAccounts();
 

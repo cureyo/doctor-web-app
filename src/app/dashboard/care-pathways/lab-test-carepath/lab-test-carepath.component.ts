@@ -142,7 +142,7 @@ export class LabTestCareComponent implements OnInit {
           }//if
           //console.log("labtests is", labtests)
           if(flag) {
-             //console.log("labtests[j].name.name",labtests[j].name.name);
+            
             reminders['Job_Tests'][ctr].Test_Name.push(labtests[j].name.name);// here is the bug
             labtests.splice(j, 1);
             j--;
