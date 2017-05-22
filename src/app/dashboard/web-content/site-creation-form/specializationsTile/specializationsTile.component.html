@@ -1,0 +1,75 @@
+ <div class="col-md-12">
+                <div class="card">
+                  <form *ngIf="formReady" [formGroup]="specializationForm" class="formGroup" novalidate (ngSubmit)="save_specializationForm(specializationForm)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Your Specializations </h4>
+
+                        <p class="category">Provide brief descriptions of your specializations</p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                    
+                  
+                           
+                     
+                       <!-- interface implementation to repeat the div's -->
+                    <div class="medicines" formArrayName="specializations">
+                        <div class="clearfix medicine" *ngFor="let avail of specializationForm.controls.specializations.controls; let i=index">
+                             <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+                     <!-- second row-->
+                        <div class="card">
+
+                            <!-- time slot-->
+                            <div class="col-md-4" style="padding-left:6px;">  
+                            <div class="form-group">
+                                 <label for="title">Name/ Title </label>
+                                  <input type="text" class="form-control" formControlName="title"/>
+                             </div>
+                            </div>
+                        <div class="col-md-10">  
+                            <div class="form-group">
+                                 <label for="brief">Brief</label>
+                                  <input type="text" class="form-control" formControlName="brief"/>
+                             </div>
+                    </div>
+                        
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                 <label for="description">Description</label>
+                                  <textarea type="text" class="form-control" formControlName="description"></textarea>
+                             </div>
+                    </div>
+                        
+                        <!--end of to time-->
+                            <!--end of time slot -->
+
+
+              </div> <!-- end of second row-->
+               <!-- closing tags of interface implementation-->
+                       
+                      </div>
+                    </div> 
+                  </div>
+                    <!-- closing tags of interface implementation-->
+                            <!-- add more lab tests-->
+              <div class="pull-left">
+                    <button  [ngClass]="{'hide': slotAdded}" type="button" (click)="addSlot()" class="btn btn-round btn-primary">+ add more</button>
+              </div>
+              <!-- end of add more test--> 
+              <!-- submit buttons--> 
+              <div class="pull-right" >
+                  <button [ngClass]="{'hide': slotAdded}" type="submit" [disabled]="!specializationForm.valid" class="btn btn-round btn-warning">Save</button>
+              </div>
+              
+                <div [ngClass]="{'hide': !slotAdded}" class="bareP">
+                    <p>Thanks! This Care Item has been scheduled!</p>
+                </div>
+                <!-- end of submit button-->
+
+                    </div>
+                  </form>
+                </div>
+            </div> 

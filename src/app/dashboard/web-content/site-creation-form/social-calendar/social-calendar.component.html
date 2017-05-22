@@ -1,0 +1,90 @@
+ <div class="col-md-12">
+                <div class="card">
+                  <form [formGroup]="socialForm" class="formGroup" novalidate (ngSubmit)="save_socialForm(socialForm)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Social Calendar</h4>
+
+                        <p class="category">Footer Tiles text</p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                  
+              <div class="row">
+                       <!-- title-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Share News articles </label>
+                                
+                                 <select formControlName="newsArticlesFreq" class="form-control" >
+                                        <option value="Daily">Daily</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                  </select>
+                            </div>
+                    </div><!--end of title -->
+                     <!-- exeperience-->
+                   <!-- title-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Did you knows </label>
+                                
+                                 <select formControlName="didUKnowFreq" class="form-control" >
+                                        <option value="Daily">Daily</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                  </select>
+                            </div>
+                    </div><!--end of title -->
+                     <!-- exeperience-->
+                        <!-- title-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Share Case Studies </label>
+                                
+                                 <select formControlName="caseStudyFreq" class="form-control" >
+                                        <option value="Daily">Daily</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                  </select>
+                            </div>
+                    </div><!--end of title -->
+                     <!-- exeperience-->
+                   
+                    
+                            </div> <!-- end of 1st row-->
+           <!-- second row-->
+             <div class="row">
+                              <!-- submit button code    -->
+                      <div class="pull-right" style="margin-right: 10px;" >
+                          <button  type="submit" [ngClass]="{'hide': socialFormAdded}" [disabled]="!socialForm.valid" class="btn btn-round btn-warning">Save</button>
+                      </div>
+
+                       <div [ngClass]="{'hide': !socialFormAdded}" class="bareP">
+                            <p>Thanks! Tile is Added </p>
+                        </div>
+                <!--</div>-->
+<!-- end of submit button-->
+                           </div>
+  <!-- end of second row-->                         
+                    </div>
+                  </form>
+                </div>
+            </div> 
+            <div class="col-md-4" *ngFor="let article of articleArray">  
+                                <div class="card card-stats" >
+                                    <div class="card-header" style="width: 90px; height: 90px; padding: 1px; background-color:#fff; ">
+                                            <img src="{{article.thread.main_image}}">
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;" class="title">{{article.title}}</h5>
+                                            <p style="text-overflow: ellipsis; overflow: hidden; width: 100%; height: 20px;" class="category">{{article.title}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            <a href="{{article.url}}" class="btn btn-round" target="_blank"> Read</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>

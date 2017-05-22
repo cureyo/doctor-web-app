@@ -19,7 +19,59 @@
 </div>
 
 </div>
-           
+<h4>Clinic Summary</h4>
+                 <!-- this is row it will containt 3 charts at least-->
+                       <div class="row">
+                            <div class="col-md-4" *ngIf="checkInChrtReady">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{checkInChartId}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title">{{checkInsSummaryTitle}}</h5>
+                                            <p  class="category">{{checkInsSummaryText}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Average check-Ins <b> {{averageCheckIns}} per day </b>  
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                             
+                           
+
+                            <div class="col-md-8" *ngIf="ovlSummaryChrtReady">  
+                                <div class="card" >
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" id="{{ovlSummaryChartId}}"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title">{{ovlSummaryTitle}}</h5>
+                                            <p  class="category">{{ovlSummaryText}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                            <div  class="stats">
+                                            Includes counts since begining
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                      </div>
+    <!-- end of the row-->
+<h4>Registered Patients</h4>
+           <div class="searchbox" style="width: 300px;">
+    <div class="input-group">
+        <input (keyup)="filterFriends($event)" (blur)="filterFriends($event)" type="text" class="form-control" placeholder="Search Patients"
+            aria-describedby="basic-addon2">
+        <span class="input-group-addon" id="basic-addon2">
+            <i class="material-icons">search</i>
+        </span>
+    </div>
+                
+</div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let caredone of caredOnes" >
                 <a [routerLink]="['/patient-preview/'+caredone.uid]">
                 <div>
@@ -29,7 +81,7 @@
 <img src="{{caredone.avatar}}" style="border-radius: 4px; width: 88px; height: 88px;">
 </div>
 <div class="card-content">
-    <p class="category">{{caredone.nickName}}</p>
+    <p class="category">{{caredone.firstName}} {{caredone.lastName}}</p>
     <h3 *ngIf="caredone.total" class="title">{{caredone.input}}%
         <br><small>health score</small></h3>
     <h3 *ngIf="!caredone.total" class="title">NA
@@ -49,7 +101,7 @@
 </div>
 <!--</div>-->
 <section id="AddSection">
-<h4>Add Cared Ones </h4>
+<h4>Add Patients </h4>
 <div class="row">
     <div class="col-md-4" *ngFor="let member of caredOnesFamily" style="z-index:0;"> 
 
@@ -83,20 +135,11 @@
 
 </div>
 
-<h4>Add from Facebook Relations</h4>
+<!--<h4>Add from Facebook Relations</h4>-->
 
-<div class="searchbox" style="width: 300px;">
-    <div class="input-group">
-        <input (keyup)="filterFriends($event)" (blur)="filterFriends($event)" type="text" class="form-control" placeholder="Search Facebook Relations"
-            aria-describedby="basic-addon2">
-        <span class="input-group-addon" id="basic-addon2">
-            <i class="material-icons">search</i>
-        </span>
-    </div>
-                
-</div>
+
 <!--searchbox-->
-<div class="row">
+<!--<div class="row">
 
     <div class="col-md-4" *ngFor="let member of caredonesToAdd">
 
@@ -104,7 +147,7 @@
             <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
 <!--<i class="material-icons">content_copy</i>-->
 
-<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
+<!--<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
 <img *ngIf="!member.imageURL" src="https://graph.facebook.com/{{member.id}}/picture?type=large" style="border-radius: 4px; width: 60px; height: 60px;">
 </div>
 <div class="card-content">
@@ -123,8 +166,8 @@
 
 
 
-</div>
-<h4>Friends who use Cureyo</h4>
+</div>-->
+<!--<h4>Friends who use Cureyo</h4>
 <div class="row">
 
     <div class="col-md-4" *ngFor="let member of caredonesToAdd">
@@ -133,7 +176,7 @@
             <div class="card-header" style="width: 60px; height: 60px; padding: 0px;">
 <!--<i class="material-icons">content_copy</i>-->
 
-<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
+<!--<img *ngIf="member.imageURL" src="{{member.imageURL}}" style="width: 60px; height: 60px; border-radius: 4px;">
 <img *ngIf="!member.imageURL" src="https://graph.facebook.com/{{member.id}}/picture?type=large" style="border-radius: 4px; width: 60px; height: 60px;">
 </div>
 <div class="card-content">
@@ -151,7 +194,7 @@
 
 
 
-</div>
+</div>-->
 </section>
 
 </div>

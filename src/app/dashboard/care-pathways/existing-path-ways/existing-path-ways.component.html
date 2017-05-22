@@ -87,14 +87,14 @@
         
                                                   </div> <!-- card footer-->
 
-                                                                                    <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder'"
+                                                                                    <app-medication-reminder-carepath *ngIf="checkTypes[i] == 'med-reminder' && MedNames"
                                                                                                         [objectId]="objectIdVal" 
                                                                                                         [timeInterval]="timeInterval" 
-                                                                                                        [dateInterval]="dateInterval"
+                                                                                                        [dateInterval]="dateInterval" 
                                                                                                         [MedNames]="MedNames">
                                                                                     </app-medication-reminder-carepath>
                                                                                                             
-                                                                                    <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
+                                                                                    <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder' TestNames"
                                                                                                         [objectId]="objectIdVal" 
                                                                                                         [timeInterval]="timeInterval" 
                                                                                                         [dateInterval]="dateInterval"

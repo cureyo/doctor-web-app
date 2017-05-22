@@ -28,8 +28,9 @@ export class SelectDomainComponent implements OnInit {
   private domainAvailable: boolean = false;
   private sitename: any;
 
+  private section: any = "website";
 
-  constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
+  constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private activatedRouter: ActivatedRoute, private http: Http) {
 
 
   }
@@ -113,6 +114,7 @@ export class SelectDomainComponent implements OnInit {
                     console.log(userData);
                     var data1 = JSON.stringify(data);
 
+
                     var websiteData = data1.replace(/#DrfullName/g, userData.fullName);
                     websiteData = websiteData.replace(/#DrQualification/g, userData.qualification);
                     websiteData = websiteData.replace(/#DrSpeciality/g, userData.speciality);
@@ -130,8 +132,87 @@ export class SelectDomainComponent implements OnInit {
 
 
                     this._authService._saveDummyData(websiteData3, domainNameShort);
-                    this.addDomain(domainNameShort)
-                    this.router.navigate(['/web/' + domainName]);
+                    this.addDomain(domainNameShort);
+                    if (userData.specializations) {
+                      let ctr = [], count = 0;
+                      for (let item in userData.specializations) {
+                        console.log(item);
+                        ctr[item] = count;
+                        count++;
+                        this._authService._getHealthLineData(userData.specializations[item].details.id)
+                          .subscribe(
+                          hlData => {
+                            console.log(hlData);
+                            console.log(userData.specializations[item]);
+                            let dataWeb = { title: hlData['_title'], brief: hlData['_meta-desc'], description: hlData['full-summary'] };
+                            let dataDetails = { givenName: userData.specializations[item].details.name, id: userData.specializations[item].details.id, meta: hlData['_meta-desc'], summary: hlData['full-summary'] };
+                            let pageIDtemp, adIDtemp;
+                            if (userData.fbPageAdded)
+                              pageIDtemp = userData.fbPageId;
+                            else
+                              pageIDtemp = '';
+                            if (userData.adAccounts)
+                              adIDtemp = userData.adAccounts[0]
+                            else
+                              adIDtemp = 'NA';
+
+                            let adData = {
+                              "BID": 10,
+                              "adAccount": adIDtemp,
+                              "budget": 100,
+                              "callToAction": 1,
+                              "caption": "Visit " + userData.clinic + " for " + hlData['_title'],
+                              "enddate": "NA",
+                              "imageURL": "NA",
+                              "max_age": 65,
+                              "min_age": 18,
+                              "msg": hlData['_meta-desc'],
+                              "name": hlData['_title'],
+                              "pageID": userData.fbPageId,
+                              "siteLink": "http://" + domainNameShort + ".cureyo.com",
+                              "startdate": "NA",
+                              "subtext": userData.fullName + " is an expert " + userData.speciality,
+                              "targetCity": "NA",
+                              "targetCitySearch": userData.clinicLocation,
+                              "targetCountry": "IN",
+                              "targetingSpecSearch": "NA",
+                              "targetingSpecs": "NA",
+                              "imgSearch": hlData['_title'],
+                              "showForm": [],
+                              "refname":hlData['_title']+ "[AD]",
+                            };
+                            this._authService._saveWebsiteSpeciaizations(domainNameShort, dataWeb, ctr[item])
+                              .then(
+                              data2 => {
+                                console.log(dataDetails)
+                                this._authService._saveSpecializationsData(domainNameShort, dataDetails)
+                                  .then(
+                                  data4 => {
+
+                                    this._authService._saveFbAdsFormData(userData.authUID, hlData['_title'], adData).then(
+                                      data => console.log(data)
+                                    );
+                                  }
+                                  )
+
+                              }
+                              );
+
+                          }
+                          )
+                      }
+                    }
+                    this.activatedRouter.queryParams
+                      .subscribe(
+                      params => {
+                        if (params['onboarding'] == "yes") {
+                          this.router.navigate(['/web/' + domainName], { queryParams: { onboarding: "yes" } });
+                        } else {
+                          this.router.navigate(['/web/' + domainName]);
+                        }
+                      }
+                      )
+
                   }
                   )
 
@@ -152,7 +233,7 @@ export class SelectDomainComponent implements OnInit {
       $.notify({
         icon: "notifications",
         message: "Website " + domainName + ".cureyo.com has been created. You can check in 30-45 minutes, or open this URL in another browser to review.",
-        url: 'http://'+ domainName + '.cureyo.com',
+        url: 'http://' + domainName + '.cureyo.com',
         target: '_blank'
       }, {
           type: 'cureyo',

@@ -1,6 +1,7 @@
 <div class="main-content" id="partnerContent">
 <div class="container-fluid">
     <!--Existing Consultants-->
+    <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
     <div *ngIf="consultantsPresent" class="row">
         <h4>Consultant Partners</h4>
         <br>
@@ -8,8 +9,8 @@
             <div class="card card-profile">
                 <div class="card-avatar" style="width: 100px; height: 100px;" data-background-color="cureyo">
                     
-                        <img *ngIf="partner.img" class="img" src="{{partner.img}}" />
-                        <i *ngIf="!partner.img" class="material-icons" style="color: #ffffff; line-height: 100px; font-size: 60px;">{{partner.icon}} </i>
+                        <img *ngIf="partner.uid" class="img" src="https://graph.facebook.com/{{partner.uid}}/picture?type=large" />
+                        <i *ngIf="!partner.uid" class="material-icons" style="color: #ffffff; line-height: 100px; font-size: 60px;">{{partner.icon}} </i>
                 </div>
 
                 <div class="content">
@@ -78,7 +79,7 @@
                                 <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <label class="control-label">Email Id</label>
-                                    <input type="text" [formControl]="partnerForm.controls['email']"  class="form-control" >
+                                    <input type="text" [formControl]="partnerForm.controls['email']"  class="form-control"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$">
                                     </div>
                                 </div>
               </div>    
@@ -86,7 +87,7 @@
                                 <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <label class="control-label">10-digit Phone</label>
-                                    <input type="text" [formControl]="partnerForm.controls['phone']"  class="form-control" >
+                                    <input type="text" pattern="(7|8|9)\d{9}" [formControl]="partnerForm.controls['phone']"  class="form-control" >
                                     </div>
                                 </div>
               </div>     
@@ -98,6 +99,16 @@
                                     </div>
                                 </div>
               </div>    
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Message</label>
+                                    <input type="text" [formControl]="partnerForm.controls['message']"  class="form-control" >
+                                    </div>
+                                </div>
+              </div>
     </div>
       <div class="actions clearfix">
               <div class="pull-right">

@@ -25,6 +25,8 @@ export const AppConfig = {
   },
   database: {
     doctors:            'DoctorsTable/',
+    hlDbIndex:         'healthLineDB/health-topics/Index/',
+    hlDatabase:         'healthLineDB/health-topics/health-topic/',
     users:              environment.envName + '/UserTable/',
     scheduledJobs:      environment.envName + '/Scheduled_Jobs/',
     caredOnes:          environment.envName + '/CaredOnes/',
@@ -51,6 +53,7 @@ export const AppConfig = {
     orderDetails:       environment.envName +  '/Orders/',
     docUsers:           environment.envName + '/DoctorUsers/',
     doctorPages:        environment.envName + '/DoctorPages/',
+    socialCalendar:     environment.envName + '/socialCalendar/',
     pathologicalTestDetails:  environment.envName + '/PathologicalTests',
     website:            environment.envName + '/DoctorPages/localhost/',
     carePaths:          environment.envName + '/CarePathways/',
@@ -70,8 +73,12 @@ export const AppConfig = {
     HealthImage:        environment.envName + '/HealthImage/',
     HumanAPIToken:      environment.envName + '/HumanAPIReturn/',
     HumanAPIData:       environment.envName + '/PatientFitnessData/',
-    ActivitySummary:    environment.envName+ '/ActivitySummary/',
-    Partners:    environment.envName+ '/Partners/'
 
+    ActivitySummary:    environment.envName + '/ActivitySummary/',
+    Partners:           environment.envName + '/Partners/',
+    PartnerIndex:       environment.envName + '/PartnersIndex/',
+    messagingIds:       environment.envName + '/MessagingIds/',
+    careSchedule:       environment.envName + '/CareSchedule/',
+    OTPRequests:        environment.envName + '/OTPRequests/'
   }
 }

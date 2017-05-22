@@ -1,14 +1,46 @@
- <div class="main-content">
+ <div class="main-content" id="fbContent">
     <div class="container-fluid">
+          <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
         <h3> Facebook Advertising </h3>
-  <div class="col-md-12">
-                <div class="card">
+  
+                
                   <form *ngIf="formReady" [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
+                        <div class="row">
+                        <div class="col-md-5">
+                        <div class="card">
+                              <div class="card-content table-responsive">
+                              <h5 style="margin-bottom: 0;"><b>Ad Preview</b></h5>
+                              <br>
+                              <label for="adName">Select Campaign</label>
+                               <p>View your pre-created/ existing Campaigns</p>
+                                <select  id="showForm" class="form-control" (change)="changeShownAd(fbAdsForm.controls['showForm']._value);" formControlName="showForm">
+                                    <option *ngFor="let ad of currentAdsList; let i = index;" value="{{i}}">{{ad.refname}}</option>
+                                  </select>
 
+                              <div id="adPreviewDiv">
+                                    </div>
+                          
+                              <a class="btn btn-round btn-warning" (click)="generateAdPreview(fbAdsForm)">Show Preview</a>
+                        </div>
+                        </div>
+                        </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-md-12">
+                        <div class="card">
               <div class="card-content table-responsive">
                <!-- Account details row-->   
               <div class="row">
                     <div class="col-md-12" >
+                              <div class="row">
+                       <div class="col-md-4">
+                            <div class="form-group">
+                                 <label for="name">Reference Name</label>
+                                 <p>Provide a name for this Ad Campaign</p>
+                                  <input type="text"  id="refname" class="form-control" formControlName="name"/>
+                            </div>
+                    </div>
+               </div>
                     <h5 style="margin-bottom: 0;"><b>Account Details</b></h5>
                     </div>
 
@@ -18,7 +50,7 @@
                                  <label for="adAccount">Ad Account </label>
                                  <p>Select your account that will be charged</p>
                                   <select  id="uid" class="form-control" formControlName="adAccount"  *ngIf="tempAdaccountId">
-                                    <option *ngFor="let act of tempAdaccountId;" value="{{act}}">{{act}}</option>
+                                    <option *ngFor="let act of tempAdaccountId;" value="{{act.id}}">{{act.id}}</option>
                                   </select>
                                    
                             </div>
@@ -28,7 +60,9 @@
                           <div class="form-group">
                                <label for="PageID">Page ID</label>
                                <p>Select the page to link to the ad</p>
-                                <input type="text" class="form-control" formControlName="pageID" >
+                                <select  id="pageID" class="form-control" formControlName="pageID"  *ngIf="tempAdaccountId">
+                                    <option *ngFor="let page of pageNameList;" value="{{page.id}}">{{page.name}}</option>
+                                  </select>
                                 
                           </div>
                   </div>
@@ -82,7 +116,7 @@
                               <label for="callToAction">Call to Action Type</label>
                               <p>Provide the objective you want to drive</p>
                               <select  id="callToAction" class="form-control" formControlName="callToAction" >
-                                    <option *ngFor="let cta of objectives" value="{{cta.objective}}">{{cta.name}}</option>                          
+                                    <option *ngFor="let cta of objectives; let i = index" value="{{i}}">{{cta.name}}</option>                          
                                     
                               </select>
                         </div>
@@ -90,56 +124,11 @@
 
                   </div>
                      <div class="row">
-                                     <div class="col-md-4" >
-                            <div class="form-group">
-                                 <label for="imageURL">Select an Image from your Page </label>
-                                  <select  (change)="pageImageURLChange(fbAdsForm.controls['imageURL'].value)" class="form-control" formControlName="imageURL"  >
-                                    <option *ngFor="let pic of pagePhotos; let i = index;" value="{{i}}">{{pic.id}}</option>
-                                  </select>
                                    
-                            </div>
-                    </div>
-                    <div class="col-md-4" >
-                          <img style="width: 100px;" src="{{pageImagesUrl}}">
-                    </div>
+                    <app-image-search *ngIf="pageIdSelected && imgSearchType && imgReady" [savePath]="savePath" [searchType]="imgSearchType" [fbPageId]="pageIdSelected" [defaultKeyWord]="defaultImgSearch"></app-image-search>
+                        
                      </div>
-                     <div class="row">
-                                       <div class="col-md-4">
-                                          <div class="form-group">
-                                          <a class="btn btn-warning" id="btn-style" style="color:#fff; margin: 0; height: 40px;">Choose File<input
-                                           type="file"
-                                           ng2FileSelect value="Browse" 
-                                           class="form-control"       
-                                           
-                                            [uploader]="uploader" single/>
-                                          </a>
-                                          </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                          <div class="form-group">
-                                            <div *ngFor="let item of uploader.queue;">
-                                            <p id="fileName"><strong>{{ item?.file?.name }}</strong></p>
-                                            </div>
-                                          </div>
-                                    </div>
-                                    <div class="col-md-4" *ngIf="uploader.queue" >
-                                    <div *ngFor="let item of uploader.queue;">    
-                                    <button type="button" class="btn btn-success btn-xs" id="actionButton"
-                                    (click)="onUpload(item); item.upload(); item.remove();" [disabled]="!item?.file?.name">
-                                    <span><i class="material-icons">file_upload</i></span> Upload
-                                    </button>
-
-                                    <button type="button" class="btn btn-danger btn-xs" id="actionButton"
-                                    (click)="item.remove()">
-                                    <span><i class="material-icons">delete</i></span> Remove
-                                    </button>
-                                    </div>
-                                    </div>
-                                 
-                           
-                          
-                           </div>
-                  <!-- End of Campaign details row-->   
+                  
                   <!-- Targeting details row-->      
                   <div class="row">
                         <div class="col-md-12">
@@ -163,11 +152,11 @@
                                <label for="targetCity">Select City</label>
                                 <p>Select the target City for the Ad</p>
                                    <input type="text"  style="width:70%; float: left; z-index: 10000;" id="targetCitySearch" class="form-control" formControlName="targetCitySearch" />
-                               <a (click)="searchCity(fbAdsForm.value)" style="width:20%; float: left; z-index: 10000;">Search</a>
+                               <a (click)="searchCity(fbAdsForm)" style="width:20%; float: left; z-index: 10000;">Search</a>
                           </div>
-                               <div class="form-group">
+                               <div *ngIf="citiesReady" class="form-group">
                                <select id="targetCity" class="form-control" formControlName="targetCity">
-                                    <option *ngFor="let city of cityList;" value="{{city.key}}">{{city.name}}, {{city.region}}, {{city.country_name}}</option>
+                                    <option *ngFor="let city of cityList; let i = index;" value="{{city.key}}" [selected]="i == 0">{{city.name}}, {{city.region}}, {{city.country_name}}</option>
                                   </select>
                           </div>
                   </div>
@@ -260,14 +249,14 @@
                                     <div class="form-group">
                                             <label for="body">Start Date</label>
 
-                                           <input type="date" class="form-control" [(ngModel)]="minDate" min="2017-05-12" max="{{maxDate}}"formControlName="startdate"/>
+                                           <input type="date" class="form-control" [(ngModel)]="minDate" min="{{minDate}}" value="{{strtDte}}" (change)="changeDate(fbAdsForm.controls['startdate'].value)" formControlName="startdate"/>
                                      </div>
                                  </div>   
-                                 <div class="col-md-4">
+                                 <div *ngIf="endDateReady" class="col-md-4">
                                     <div class="form-group">
                                             <label for="body">End Date</label>
 
-                                           <input type="date" class="form-control" [(ngModel)]="maxDate" min="{{minDate}}" max="2017-12-12" formControlName="enddate"/>
+                                           <input type="date" class="form-control" [(ngModel)]="maxDate" min="{{endMinDate}}" value="{{endDte}}" formControlName="enddate"/>
                                      </div>
                                  </div>   
                             </div>     
@@ -280,7 +269,8 @@
                       <!-- submit button code    -->
                 
                       <div class="pull-right" >
-                          <button [ngClass]="{'hide': fbAdsAdded}" type="submit" [disabled]="!urlAdded" class="btn btn-info">Create Carousel Ads</button>
+                          <button *ngIf="!waiting" [ngClass]="{'hide': fbAdsAdded}" type="submit" [disabled]="!fbAdsForm.valid" class="btn btn-info">Start Ad Campaign</button>
+                          <p *ngIf="waiting"> Loading...</p>
                       </div>
 
                         <div [ngClass]="{'hide': !fbAdsAdded}" class="bareP">
@@ -292,8 +282,110 @@
                             <!-- end of the 7th row-->
                             
                     </div>
+                    </div>
+                        </div>
+                  </div>
                   </form>
-                </div>
-            </div><!--  end of medication reminder-->
+                
+           
     </div>
  </div>
+<div class="modal fade" id="fbModal" role="dialog" aria-labelledby="fbModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="fbModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="fbModalLabel" style="float: left;"><b>Oops! We need more work before starting Facebook Ads!</b></h4>
+         </div>
+         <div class="modal-body" >
+         <p style="text-align: left;">
+          <br>
+          For running Facebook Ads, you must have a Facebook Page and Facebook Ad Account associated with your account. Seems like these may be missing for you.
+         <br> 
+         </p>
+      
+      
+            <div *ngIf="pageMissing">
+       
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">Setup Facebook Page</h3>
+          <br>
+<hr>
+        <p style="text-align: left;">Setting up a Facebook page is easy. Just click on the button below and follow the instructions on Facebook. You can create a bare minimum page for now - we will help you beautify it! </p>
+       <a class="btn btn-warning btn-round" href="https://www.facebook.com/pages/create/" target="blank">Create Page</a>
+    </div>
+         <div *ngIf="adAccountMissing">
+        <p style="text-align: left;">
+          
+         <h3 class="title" style="float: left; color: #137a9c; text-align: left; font-size: 16px; font-weight: 400;">Setup Facebook Ad Account</h3>
+          <br>
+<hr>
+        <p style="text-align: left;">To create a Facebook Ads account, you just need to add billing details to your account. Please click on the button below to complete this step. </p>
+       <a class="btn btn-warning btn-round" href="https://www.facebook.com/ads/manage/settings.php" target="blank">Create Ad Account</a>
+    </div>
+
+
+
+        You can come back here once you have taken the necessary action on Facebook - we will be waiting for you 😊 
+        <br>Alternatively, you can move on and come back here later, by clicking on 'Social' on the sidebar.
+      </div>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <button type="button" style="float: left; z-index: 10000; margin-left: 20px;" class="btn btn-primary" data-dismiss="modal" (click)="addDetails(caredOneId)">Done!</button>
+        <button type="button" style="float: left; z-index: 10000;" class="btn btn-default" (click)="closeModal()">May be Later</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<div class="modal fade" id="fbDoneModal" role="dialog" aria-labelledby="fbDoneModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="fbDoneModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="fbDoneModalLabel" style="float: left;"><b>Congratulations! Your ad is ready.</b></h4>
+         </div>
+         <div class="modal-body" >
+         <p style="text-align: left;">
+          <br>
+          Below are the details of your campaign.
+         <br> 
+         </p>
+      <div class="row">
+     <div class="col-md-7" id="adDonePreviewDiv">
+                                    </div>
+        <div *ngIf="doneModal" class="col-md-5">
+              <h4><b>Whom are we targeting?</b></h4>
+              
+              People living in <b >{{fullModel.targetCitySearch}}</b> between the age group of <b>{{fullModel.min_age}}</b> and  <b>{{fullModel.max_age}}</b>
+             <br>
+             <hr>
+              <h4><b>When are we going to run the Ad?</b></h4>
+             
+              From <b>{{fullModel.startdate}}</b> to  <b>{{fullModel.enddate}}</b>
+               <br>
+               <hr>
+    <h4><b>How much will we spend?</b></h4>
+              
+               We will spend <b>Rs.{{fullModel.BID}}</b> for each click to our website and will spend a maximum of <b>Rs.{{fullModel.budget}}</b> per day
+      <br>  
+    
+      </div>  
+      </div>
+
+
+<div class="row">
+        You will receive a mail from Facebook once the ad is approved. You can reach out to us at +919967092749.
+        <br>Soon you will be able to see analytics about how your ads are performing
+</div>
+         </div>
+
+      
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <!--<button type="button" style="float: left; z-index: 10000; margin-left: 20px;" class="btn btn-primary" data-dismiss="modal" (click)="addDetails(caredOneId)">Done!</button>-->
+        <button type="button" style="float: left; z-index: 10000;" class="btn btn-primary" (click)="closeDoneModal()">Done</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<app-social-calendar></app-social-calendar>

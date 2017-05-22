@@ -13,12 +13,14 @@ import {slotBookingClass} from "../../../../models/slotBooking.interface";
 })
 export class SlotBookingComponent implements OnInit {
       @Input() routeparam:any;
+      @Input() type:any;
       public timeInterval: any;
       public timeValue: any;
       public dateInterval: any;
       private slotBookingTile:FormGroup;
       private slotAdded:boolean=false;
       private sitename:any;
+      private doctorData:any;
    constructor(
               private _fb: FormBuilder,
               private _fs: FbService,
@@ -33,6 +35,7 @@ export class SlotBookingComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.type);
       //console.log("interface class test");
       this.slotBookingTile=this._fb.group({
        duration:['30 Min',Validators.required],
@@ -41,6 +44,7 @@ export class SlotBookingComponent implements OnInit {
         
       ])
      });
+ 
 
      
   }
@@ -53,10 +57,12 @@ export class SlotBookingComponent implements OnInit {
   }//addSlot
    
    initSlots(){
-      //console.log("init called");
-      return this._fb.group({
+      console.log("init called", this.type);
+      let select = 'video';
+       return this._fb.group({
         fromTime: ['',Validators.required],
         toTime: ['',Validators.required],
+        mode: [select,Validators.required],
     });
   }//iniSlots
 
@@ -192,7 +198,7 @@ export class SlotBookingComponent implements OnInit {
                this.sitename = this.routeparam.substring(0,n);
              //end of url trimming part
               //save data into the db
-         this._authService._saveSlotBookingDetails(reminders,this.sitename)
+         this._authService._saveSlotBookingDetails(reminders,this.sitename, this.type)
       .then(
         data => {
           this.slotAdded=true;

@@ -1,6 +1,10 @@
 
-<form  [formGroup]="carePathWays" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%" 
-  novalidate>
+<form  [formGroup]="carePathWays" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%" >
+<div class="main-content" id="carePathContent">
+<div class="container-fluid">
+    <!--Existing Consultants-->
+    <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
+
 
       <div class="row">
            <div class="col-sm-10 col-md-offset-1">
@@ -64,15 +68,11 @@
               </div> <!-- end of col-md-10-->
         </div>  <!-- end of row-->
         <!-- this is the component used for to create path ways-->
-        <app-create-path-ways  #createCarePathWaysID></app-create-path-ways>
+        <app-create-path-ways  #createCarePathWaysID ></app-create-path-ways>
         <app-existing-path-ways #existingCarePathWaysID></app-existing-path-ways>
 
 
         
-
-
+</div>
+</div>
 </form>
-
-  
-
-

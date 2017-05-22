@@ -3,9 +3,9 @@
                   <form [formGroup]="slotBookingTile" class="formGroup" novalidate (ngSubmit)="save_slotBookingTile(slotBookingTile)">
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="blue">
-                        <h4 class="title">Your Availability </h4>
+                        <h4 class="title">{{type}} Consultation Availability </h4>
 
-                        <p class="category">Indicate your availability for online consultations</p>
+                        <p class="category">Indicate your availability for {{type}} Consultations</p>
 
                     </div> <!-- card header portion end-->
                     
@@ -17,9 +17,12 @@
                             <div class="form-group">
                                  <label for="title">Time Duration </label>
                                   <select formControlName="duration" class="form-control">
+                                 <option value="10">10 Min</option>
+                                    <option value="15">15 Min</option>
                                     <option value="30">30 Min</option>
+                                    <option value="30">45 Min</option>
                                     <option value="60">1 Hr</option>
-                                    <option value="90">1:30 HR</option>
+                                    <option value="90">1.5 HR</option>
                                     <option value="120">2 Hr</option>
                                 
                                   </select>
@@ -57,6 +60,15 @@
                              </div>
                     </div>
                         <!--end of to time-->
+                        <div *ngIf="type == 'Online'" class="col-sm-4"> 
+                        <div class="form-group">
+                                 <label for="title">Available for Mode </label>
+                                  <select formControlName="mode" class="form-control">
+                                     <option value="video" [selected]="video">Video Consultation</option>
+                                     <option value="phone">Phone Consultation</option>
+                                  </select>
+                             </div>
+                        </div>
                             <!--end of time slot -->
 
 
@@ -78,7 +90,7 @@
               </div>
               
                 <div [ngClass]="{'hide': !slotAdded}" class="bareP">
-                    <p>Thanks! This Care Item has been scheduled!</p>
+                    <p>Thanks! These slots have been added.</p>
                 </div>
                 <!-- end of submit button-->
 

@@ -1,17 +1,36 @@
 <div class="main-content">
     <div class="container-fluid">
           <!--hero tiles-->
+          <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
+        <div class="row">
+                        <div class="col-md-12">
+                        <div class="card">
+                              <div class="card-content table-responsive">
+                              <h5 style="margin-bottom: 0;"><b>Your Website Preview</b></h5>
+                              <br>
+                              <iframe [src]="websiteLink" width="100%" height="400" scroll="yes"></iframe>
+                             
+                               <a class="pull-left btn btn-warning btn-round" [href]="websiteLink" target="blank">Visit Site</a>
+                                 </div>
+                        </div>
+                        </div>
+                  </div>
+                  
         <app-herotiles *ngIf="herotiles && routeparam"
          [herotiles]="herotiles"  [routeparam]="routeparam"></app-herotiles>
          <!--end of hero tiles-->
          <!-- booking tiles-->
          <app-bookingtile *ngIf="bookingtiles && routeparam"
          [bookingtiles]="bookingtiles" [routeparam]="routeparam"></app-bookingtile>
+         <app-specializationsTile *ngIf="routeparam"
+           [routeparam]="routeparam"></app-specializationsTile>
          <!-- end of booking tiles-->
          <!--slot booking -->
-         <app-slot-booking *ngIf="routeparam"
-         [routeparam]="routeparam"></app-slot-booking>
+         <app-slot-booking *ngIf="routeparam && online"
+         [routeparam]="routeparam" [type]="online"></app-slot-booking>
          <!-- end of slot booking-->
+         <app-slot-booking-phy *ngIf="routeparam && physical"
+         [routeparam]="routeparam" [typePhy]="physical"></app-slot-booking-phy>
           <!--slot booking -->
          <app-profileTile *ngIf="routeparam && profileTile"
          [profileTile]="profileTile" [routeparam]="routeparam"></app-profileTile>

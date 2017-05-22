@@ -43,7 +43,18 @@ export class OPDComponent implements OnInit {
     var dd = date.getDate();
     var mm = date.getMonth();
     var yyyy = date.getFullYear();
-    var today = dd + '-' + mm + '-' + yyyy;
+     let ddStr, mmStr;
+              if (dd < 10) 
+              ddStr = "0" + dd;
+              else
+              ddStr = dd;
+
+              if (mm < 10)
+              mmStr = "0" + mm;
+              else 
+              mmStr = mm;
+
+              var today = mmStr + '-' + ddStr + '-' + yyyy;
     //console.log(today)
 
     this._authService._getUser()

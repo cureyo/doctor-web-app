@@ -18,6 +18,7 @@ export class PatientHxFormComponent implements OnInit {
   [name: string]: any;
 
   private caredone: any;
+  private section: any = "care";
   private drDomain: FormGroup;
   private carePathwayForm: FormGroup;
   private selectDrDomain: boolean = false;
@@ -121,6 +122,24 @@ export class PatientHxFormComponent implements OnInit {
 
 
   initializeCheckPoints(data, check) {
+    if (data.checkType == 'mcq') {
+    
+      let ctr =0, arr = [];
+      
+      for (let item of data.options) {
+        arr[ctr] = item.value;
+        ctr++;
+      }
+      this.standardOps[check] = arr;
+    }
+      
+    else if (data.checkType == 'yes-no') {
+       this.standardOps[check] = ["Yes", "No"];
+    
+  } else if (data.checkType == 'value') {
+       this.standardOps[check] = ["NA"]
+   
+  } 
     let control = this._fb.group({
       // day: [data.day, Validators.required],
       // time: [data.time, Validators.required],
@@ -164,9 +183,11 @@ export class PatientHxFormComponent implements OnInit {
     });
     const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
     let ctr = 1;
+    //this.checkTypeSelect(control, data.checkPoints[0].checkType, ctr)
     for (let each in data.checkPoints) {
       if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
         control.push(this.initializeCheckPoints(data.checkPoints[each], ctr));
+        
         ctr++;
       }
     }
@@ -174,6 +195,7 @@ export class PatientHxFormComponent implements OnInit {
     console.log(this.carePathwayForm);
     var self = this;
     setTimeout(function () {
+      self.updateAskIfs(self.carePathwayForm.controls);
       self.newPath = true;
       console.log("showing form now")
     }, 2000)

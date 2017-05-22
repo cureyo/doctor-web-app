@@ -18,6 +18,7 @@ export class PartnerComponent implements OnInit {
     [name: string]: any;
 
     private caredone: any;
+    private section: any = "partners";
     private partnerForm: FormGroup;
     private selectDrDomain: boolean = false;
     private caredOneId: any;
@@ -62,7 +63,8 @@ export class PartnerComponent implements OnInit {
                     phone: ['', Validators.required],
                     fee: [''],
                     icon: [''],
-                    img: ['']
+                    img: [''],
+                    message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
                 });
                 this.userId = data.user.uid;
 
@@ -122,7 +124,14 @@ export class PartnerComponent implements OnInit {
         let type = this.types[model['type']].type;
         model['icon'] = this.types[model['type']].icon;
         model['type'] = this.types[model['type']].name;
-        this._authService._addPartner(model, this.userId, type)
+        model['category'] = type;
+        this._authService._addPartner(model, this.userId, type, model.phone).then(
+            data => {
+                console.log(data);
+                this._authService._savePartnerName(model.phone, this.userId, model);
+                this.partnerForm.reset();
+            }
+        )
     }
     changeAddType(partnerForm) {
         console.log(partnerForm)

@@ -55,6 +55,25 @@ export class ExistingPathWaysComponent implements OnInit {
         this.setIntervals();
         this.updateDays();
         this.updateTimes();
+        this._authService._getMedicineNames()
+        .subscribe(data => {
+          ////console.log.log("patholodical test details data :",data);
+          this.MedNames = data;
+          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
+
+         
+
+          //console.log("the med names is :",this.MedNames);
+        });
+        this._authService._getPathologicalTests()
+        .subscribe(data => {
+          //console.log("patholodical test details data :",data);
+          this.TestNames = data;
+
+          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+         
+          //console.log("the med names is :",this.TestNames);
+        })
 
         this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
 
@@ -233,28 +252,13 @@ export class ExistingPathWaysComponent implements OnInit {
      checkTypeSelect(type, i) {
        console.log("checktype is called:",type,i)
     if (type == "med-reminder") {
+       this.checkTypes[i] = type;
       // this.setIntervals();
-      this._authService._getMedicineNames()
-        .subscribe(data => {
-          ////console.log.log("patholodical test details data :",data);
-          this.MedNames = data;
-          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
-
-          this.checkTypes[i] = type;
-
-          //console.log("the med names is :",this.MedNames);
-        })
+      
     } else if (type == "test-reminder") {
       // this.setIntervals();
-      this._authService._getPathologicalTests()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.TestNames = data;
-
-          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
-          this.checkTypes[i] = type;
-          //console.log("the med names is :",this.TestNames);
-        })
+       this.checkTypes[i] = type;
+      
     } else if (type == "consult-reminder") {
       this.checkTypes[i] = type;
       // this.setIntervals();

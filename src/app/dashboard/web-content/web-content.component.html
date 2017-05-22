@@ -1,5 +1,6 @@
 <div class="main-content" >
     <div class="container-fluid">
+        <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
         <div class="row">
           <h3> Objective</h3>
           <!-- first card -->
@@ -48,7 +49,7 @@
     <div class="row">
       <h3> Select Template</h3>
       <div class="col-md-4">  
-        <a [routerLink]="['/webform/' +routeparam]" style="cursor: pointer;">
+        <a [routerLink]="['/webform/' +routeparam]" [queryParams]="{onboarding: 'yes'}"style="cursor: pointer;">
                     <div class="card" >
                         <div class="card-header card-chart" data-background-color="cureyo">
                             <img src="https://firebasestorage.googleapis.com/v0/b/cureyo-your-personal-hospital.appspot.com/o/Screen%20Shot%202017-05-05%20at%2011.40.06%20AM.png?alt=media&token=ea023d42-9f13-41a6-ab29-cba3d4d3eec2">

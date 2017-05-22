@@ -33,8 +33,6 @@ export class CarePathsComponent implements OnInit {
   public dateInterval: any = [];
   private findCarePaths: FormGroup;
   private carePathsAvlbl: any;
-  private MedNames: any;
-  private TestNames: any;
   private doctorId: any;
   private consultant: any = [];
   private consultantSelected: any = [];

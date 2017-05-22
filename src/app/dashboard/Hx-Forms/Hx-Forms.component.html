@@ -1,6 +1,10 @@
 
+<div class="main-content" id="carePathContent">
+<div class="container-fluid">
+    <!--Existing Consultants-->
+    <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
 
-<form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:10%; margin-bottom:0%"
+<form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:20px; margin-bottom:0%"
   novalidate>
   <div class="row">
   
@@ -10,7 +14,7 @@
     
     <div class="card-stats">
       <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">
-        <i class="fa fa-history" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
+        <i class="fa fa-wpforms" aria-hidden="true" style="color: #ffffff;  font-size: -webkit-xxx-large;"></i>
       </div>
       <div class="card-content" style="float: left; text-align: left;">
 
@@ -147,4 +151,5 @@
    </div>
 </form>
 
-
+</div>
+</div>

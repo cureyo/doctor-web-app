@@ -73,6 +73,8 @@ export class MedicationReminderCareComponent implements OnInit {
   }//end of ngOnInIt
 
   initMedicinesData(i) {
+      console.log("initmedicineData test:",this.medData[i].MedName);
+
       return this._fb.group({
       name: [this.medData[i].MedName, Validators.required],
       frequency: [this.medData[i].MedFreq, Validators.required],
@@ -136,7 +138,6 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   saveMed = (model) => {
-  alert("this is medication model"+model);
     let job = model['value'];
     console.log("this is medication job",Object.keys(job));
    // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
@@ -157,15 +158,15 @@ export class MedicationReminderCareComponent implements OnInit {
 
       reminders.Job_Medicines.push({
         "Job_Frequency": medicines[i].frequency,
-        "Medicine_Name": [medicines[i].name.name],
+        "Medicine_Name": [medicines[i].name],
         "Job_Time": medicines[i].timing,
         "Job_Day": medicines[i].day,
         "Job_Date": medicines[i].date
       });
       reviewData.push({
         "MedFreq": medicines[i].frequency,
-        "MedName": medicines[i].name.name,
-        "name": medicines[i].name.name,
+        "MedName": medicines[i].name,
+        "name": medicines[i].name,
         "MedTiming": medicines[i].timing,
         "MedDay": medicines[i].day,
         "MedDate": medicines[i].date,
@@ -218,6 +219,6 @@ export class MedicationReminderCareComponent implements OnInit {
         //console.log("response of onboarding save is",d);
       });
   }//save
-
+  
 
 }

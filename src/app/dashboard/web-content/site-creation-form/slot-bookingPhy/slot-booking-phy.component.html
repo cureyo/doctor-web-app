@@ -1,0 +1,97 @@
+ <div class="col-md-12">
+                <div class="card">
+                  <form *ngIf="formReady" [formGroup]="slotBookingTile" class="formGroup" novalidate (ngSubmit)="save_slotBookingTile(slotBookingTile)">
+                    <!-- card header portion-->
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">{{typePhy}} Consultation Availability </h4>
+
+                        <p class="category">Indicate your availability for {{typePhy}} Consultations</p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                    
+                      <div class="row">
+                       <!-- title-->
+                    <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">Time Duration </label>
+                                  <select formControlName="duration" class="form-control">
+                                    <option value="10">10 Min</option>
+                                    <option value="15">15 Min</option>
+                                    <option value="30">30 Min</option>
+                                    <option value="30">45 Min</option>
+                                    <option value="60">1 Hr</option>
+                                    <option value="90">1.5 HR</option>
+                                    <option value="120">2 Hr</option>
+                                
+                                  </select>
+                             </div>
+                    </div>
+                            </div> <!-- end of 1st row-->
+                           
+                     
+                       <!-- interface implementation to repeat the div's -->
+                    <div class="medicines" formArrayName="avails">
+                        <div class="clearfix medicine" *ngFor="let avail of slotBookingTile.controls.avails.controls; let i=index">
+                             <div [formGroupName]="i">
+                    <!--  end of interface implementation -->  
+                     <!-- second row-->
+                        <div class="row">
+
+                            <!-- time slot-->
+                            <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">From </label>
+                                  <select formControlName="fromTime" class="form-control">
+                                     <option value="{{timeValue[i]}}" *ngFor="let i of timeInterval; let i=index">{{timeInterval[i]}}</option>
+                                
+                                  </select>
+                             </div>
+                    </div>
+                        <!-- to time-->
+                        <div class="col-sm-4">  
+                            <div class="form-group">
+                                 <label for="title">To </label>
+                                  <select formControlName="toTime" class="form-control">
+                                   <option value="{{timeValue[i]}}" *ngFor="let i of timeInterval; let i=index">{{timeInterval[i]}}</option>
+                                
+                                  </select>
+                             </div>
+                    </div>
+                        <!--end of to time-->
+                        <div class="col-sm-4"> 
+                        <div class="form-group">
+                                 <label for="mode">Available at Location </label>
+                                 <input type="text" class="form-control" formControlName="mode"/>
+                             </div>
+                        </div>
+                            <!--end of time slot -->
+
+
+              </div> <!-- end of second row-->
+               <!-- closing tags of interface implementation-->
+                       
+                      </div>
+                    </div> 
+                  </div>
+                    <!-- closing tags of interface implementation-->
+                            <!-- add more lab tests-->
+              <div class="pull-left">
+                    <button  [ngClass]="{'hide': slotAdded}" type="button" (click)="addSlot()" class="btn btn-round btn-primary">+ add more</button>
+              </div>
+              <!-- end of add more test--> 
+              <!-- submit buttons--> 
+              <div class="pull-right" >
+                  <button [ngClass]="{'hide': slotAdded}" type="submit" [disabled]="!slotBookingTile.valid" class="btn btn-round btn-warning">Save</button>
+              </div>
+              
+                <div [ngClass]="{'hide': !slotAdded}" class="bareP">
+                    <p>Thanks! These slots have been added.</p>
+                </div>
+                <!-- end of submit button-->
+
+                    </div>
+                  </form>
+                </div>
+            </div> 

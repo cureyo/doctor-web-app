@@ -34,6 +34,7 @@ import { OutPatientsFormComponent } from './dashboard/OutPatients/OutPatientsFor
 import { OPDComponent } from './dashboard/OPD/OPD.component';
 import { FbAdsFormComponent } from './fb-ads-form/fb-ads-form.component';
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
+import {JsonpModule} from '@angular/http';
 
 // Must export the config
 export const firebaseConfig = {
@@ -62,7 +63,8 @@ export const firebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     HttpModule,
     Ng2AutoCompleteModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    JsonpModule
   ],
 
 

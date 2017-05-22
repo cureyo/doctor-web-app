@@ -58,16 +58,19 @@ export class OutPatientsFormComponent implements OnInit {
   private activitySummaryDate:any;
   private activitySummaryTrimedtitle:any;
   private activitySummaryAverage:any;
+  private activityTotal: any = 0;
 //for Hr summary
   private hrSummarytitle:any;
   private hrSummaryDate:any;
   private hrSummaryTrimedtitle:any;
   private hrSummaryAverage:any;
+  private hrSummaryTotal: any = 0;
   //for SleepSummary
   private sleepSummarytitle:any;
   private sleepSummaryDate:any;
   private sleepSummaryTrimedtitle:any;
   private sleepSummaryAverage:any;
+  private sleepTotal: any = 0;
   //for height
   private height:any; 
   private heightUnit:any;
@@ -209,16 +212,17 @@ export class OutPatientsFormComponent implements OnInit {
              var series;
              var labels;
             //  temp=activitySummaryObj;
-             this.activitySummaryTrimedtitle="ActivitySummary";
+             this.activitySummaryTrimedtitle="Activity Summary" ;
              this.activitySummaryTrimedtitle=this.activitySummaryTrimedtitle.slice(0,-7);
-    
-       for (var i=0;i<activitySummaryObj.length;i++){
-
-                minValue=activitySummaryObj[0].calories;
+                             minValue=activitySummaryObj[0].calories;
                 maxValue=activitySummaryObj[0].calories;
                 startDate=activitySummaryObj[0].date;
                 endDate=activitySummaryObj[activitySummaryObj.length-1].date;
-                this.activitySummaryDate="from Date:"+" "+startDate+" "+"to Date:"+" "+endDate;
+                this.activitySummaryDate="from "+startDate+" to "+endDate;
+       for (var i=0;i<activitySummaryObj.length;i++){
+
+                this.activityTotal = this.activityTotal + activitySummaryObj[i].calories;
+                
                 series=activitySummaryObj[i].calories;
                 labels=activitySummaryObj[i].date;
                 //now trim the date 
@@ -251,7 +255,7 @@ export class OutPatientsFormComponent implements OnInit {
                 }
               
           }
-            this.activitySummaryAverage=Math.round(parseInt(minValue+maxValue)/activitySummaryObj.length);
+            this.activitySummaryAverage=Math.round(parseInt(this.activityTotal)/activitySummaryObj.length);
             var t=LineChart(labelArr,seriesArr,minValue,maxValue,"patientsomething");
             console.log("patientsomething id is", t)
             this.activitySummarytitle=t;
@@ -275,16 +279,17 @@ HRSummarychart(hrSummaryObj){
              this.hrSummaryTrimedtitle="hrSummary";
              this.hrSummaryTrimedtitle=this.hrSummaryTrimedtitle.slice(0,-7);
 
+                hrminValue=hrSummaryObj[0].value;
+                hrmaxValue=hrSummaryObj[0].value;
+
     
        for (var i=0;i<hrSummaryObj.length;i++){
-                
+                this.hrSummaryTotal = this.hrSummaryTotal + hrSummaryObj[i].value;
                   //now trim the date
                 var temp = new Date(hrSummaryObj[i].timestamp);
                 Datearray[i]= temp.getFullYear()+'-' + (temp.getMonth()+1) + '-'+temp.getDate(); 
                 //end of date trim 
 
-                hrminValue=hrSummaryObj[0].value;
-                hrmaxValue=hrSummaryObj[0].value;
                 hrseries=hrSummaryObj[i].value;
                 hrlabels=Datearray[i];
                 //now trim the date 
@@ -319,10 +324,11 @@ HRSummarychart(hrSummaryObj){
           }
                 hrstartDate=Datearray[0];
                 hrendDate=Datearray[Datearray.length-1];
-                this.hrSummaryDate="from Date:"+" "+hrstartDate+" "+"to Date:"+" "+hrendDate;
+                this.hrSummaryDate="from "+ hrstartDate +" to "+hrendDate;
                 // console.log(".hrSummaryDate",this.hrSummaryDate);
 
-                this.hrSummaryAverage=Math.round(parseInt(hrminValue+hrmaxValue)/hrSummaryObj.length);
+                this.hrSummaryAverage=Math.round(parseInt(this.hrSummaryTotal)/hrSummaryObj.length);
+              
                 var t=LineChart(hrlabelArr,hrseriesArr,hrminValue,hrmaxValue,"HrSummary");
                 console.log("id is", t)
                 this.hrSummarytitle=t;
@@ -345,14 +351,15 @@ SleepSummaryChart(sleepSummaryObj){
             //  temp=activitySummaryObj;
              this.sleepSummaryTrimedtitle="sleepSummary";
              this.sleepSummaryTrimedtitle=this.sleepSummaryTrimedtitle.slice(0,-7);
-    
-       for (var i=0;i<sleepSummaryObj.length;i++){
-
-                sleepminValue=sleepSummaryObj[0].timeAsleep;
+                             sleepminValue=sleepSummaryObj[0].timeAsleep;
                 sleepmaxValue=sleepSummaryObj[0].timeAsleep;
                 sleepstartDate=sleepSummaryObj[0].date;
                 sleependDate=sleepSummaryObj[sleepSummaryObj.length-1].date;
-                this.sleepSummaryDate="from Date:"+" "+sleepstartDate+" "+"to Date:"+" "+sleependDate;
+                this.sleepSummaryDate="from "+sleepstartDate+" to  "+sleependDate;
+    
+       for (var i=0;i<sleepSummaryObj.length;i++){
+
+                this.sleepTotal = this.sleepTotal + sleepSummaryObj[i].timeAsleep;
                 sleepseries=sleepSummaryObj[i].timeAsleep;
                 sleeplabels=sleepSummaryObj[i].date;
                 //now trim the date 
@@ -385,7 +392,9 @@ SleepSummaryChart(sleepSummaryObj){
                 }
               
           }
-            this.sleepSummaryAverage=Math.round(parseInt(sleepminValue+sleepmaxValue)/sleepSummaryObj.length);
+            this.sleepSummaryAverage=Math.round(parseInt(this.sleepTotal)/sleepSummaryObj.length);
+            this.sleepSummaryAverage = this.sleepSummaryAverage / 60;
+            this.sleepSummaryAverage = this.sleepSummaryAverage.toFixed(2);
             var t=LineChart(sleeplabelArr,sleepseriesArr,sleepminValue,sleepmaxValue,"sleepSummary");
             console.log("id is", t)
             this.sleepSummarytitle=t;

@@ -111,15 +111,15 @@ export class LabTestCareComponent implements OnInit {
     for(let i=0; i < labtests.length; i++) {
       reminders.Job_Tests.push({
         "Job_Frequency" : labtests[i].frequency,
-        "Test_Name" : [labtests[i].name.name],
+        "Test_Name" : [labtests[i].name],
         "Job_Time" : labtests[i].timing,
          "Job_Day" : labtests[i].day,
         "Job_Date" : labtests[i].date,
       });
        reviewData.push({
         "TestFreq" : labtests[i].frequency,
-        "name" : labtests[i].name.name,
-        "TestName" : labtests[i].name.name,
+        "name" : labtests[i].name,
+        "TestName" : labtests[i].name,
         "TestTime" : labtests[i].timing,
          "TestDay" : labtests[i].day,
         "TestDate" : labtests[i].date,

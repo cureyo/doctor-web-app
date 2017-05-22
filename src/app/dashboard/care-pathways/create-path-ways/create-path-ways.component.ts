@@ -50,6 +50,20 @@ export class CreatePathWaysComponent implements OnInit {
         this.setIntervals();
         this.updateDays();
         this.updateTimes();
+        this._authService._getMedicineNames()
+        .subscribe(data => {
+          //console.log("patholodical test details data :",data);
+          this.MedNames = data;
+          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
+          //console.log("the med names is :",this.MedNames);
+        })
+        this._authService._getPathologicalTests()
+        .subscribe(data => {
+          //console.log("patholodical test details data :",data);
+          this.TestNames = data;
+          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+          //console.log("the med names is :",this.TestNames);
+        })
 
         this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
 
@@ -128,28 +142,15 @@ export class CreatePathWaysComponent implements OnInit {
      //console.log("checkTypeSelect called");
 
     if (type == "med-reminder") {
-      // this.setIntervals();
-      this._authService._getMedicineNames()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.MedNames = data;
-          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
-
+      // this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
           this.checkTypes[i] = type;
-
-          //console.log("the med names is :",this.MedNames);
-        })
+      // this.setIntervals();
+      
     } else if (type == "test-reminder") {
-      // this.setIntervals();
-      this._authService._getPathologicalTests()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.TestNames = data;
-
-          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+          // this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
           this.checkTypes[i] = type;
-          //console.log("the med names is :",this.TestNames);
-        })
+      // this.setIntervals();
+      
     } else if (type == "consult-reminder") {
       this.checkTypes[i] = type;
       // this.setIntervals();
@@ -164,6 +165,11 @@ export class CreatePathWaysComponent implements OnInit {
     //   this.checkTypes[i] = true;
     // else this.checkTypes[i] = false;
   }
+
+
+
+
+
 
   
   //set time interval for medicine timings
@@ -193,16 +199,17 @@ export class CreatePathWaysComponent implements OnInit {
 
   }//setTimeInterval
   createPathways() {
-     this.newPath=true;
-    this.carePathwayForm.reset();
-    this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
-    this.carePathwayForm = this._fb.group({
-      name: ['', Validators.required],
-      objectId: [this.objectIdVal, Validators.required],
-      checkPoints: this._fb.array([
-        this.initCheckPoints()
-      ])
-    });
+    
+        this.newPath=true;
+        this.carePathwayForm.reset();
+        this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
+        this.carePathwayForm = this._fb.group({
+          name: ['', Validators.required],
+          objectId: [this.objectIdVal, Validators.required],
+          checkPoints: this._fb.array([
+            this.initCheckPoints()
+          ])
+        });
     this.selectDrDomain = true;
     setTimeout(
       () => {
