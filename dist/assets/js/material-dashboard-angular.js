@@ -60,7 +60,7 @@ function animationSidebar($this, animate){
         $('#social').css({color: '#3C4858'});
         $('#out-patients').css({color: '#3C4858'});
         $('#care-paths').css({color: '#3C4858'});
-        $('#patient-hx').css({color: '#3C4858'});
+        $('#patient-hx-forms').css({color: '#3C4858'});
         $('#partners-bar').css({color: '#3C4858'});
     if ($this.parent('li').position()) {
         $current_li_distance = $this.parent('li').position().top - 10;
