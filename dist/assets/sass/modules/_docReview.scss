@@ -1,0 +1,66 @@
+.patients-summary{
+
+  .header{
+    h3{
+      margin-bottom: 10px;
+    }
+    .icon{
+      width: 50px;
+      max-width: 75px;
+
+      img{
+        height: 50px;
+      }
+    }
+  }
+
+  .title-summary{
+    color: #555;
+    margin-left: 65px;
+    p{
+      font-size: 14px;
+    }
+  }
+}
+.risk
+{
+  padding-left: 60px;
+   font-size: 14px;
+}
+
+#doc-master{
+  article.docreview{
+
+    width: auto;
+    height: auto;
+  }
+  .doc-patient-name {
+    display: block;
+    text-align: left;
+    overflow:hidden;
+    white-space: nowrap;
+  }
+
+  .doc-patient-name > span {
+    font-size: 20px;
+    color: #137a9c;
+    position: relative;
+    display: inline-block;
+  }
+
+
+  .doc-patient-name > span:after {
+    content: "";
+    position: absolute;
+    top: 90%;
+    width:auto;
+    height: 1px;
+    background: #137a9c;
+  }
+
+  .doc-patient-name > span:after {
+    left: 100%;
+    margin-left: 5px;
+  }
+
+}
