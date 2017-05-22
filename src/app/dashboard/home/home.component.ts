@@ -449,15 +449,22 @@ getClinicSummary(clinicIdFull, pageId, pagePresent) {
       console.log(this.checkInsTblDates);
       console.log(this.checkInsTblCount);
       console.log(this.totalCheckIns);
-      if (pagePresent) {
+      //if (pagePresent) {
         this._authService._getMessengerIds(pageId)
         .subscribe(
           msngrData => {
+             if (msngrData.length)
             this.totalMsngrConnects = msngrData.length;
+            else 
+            this.totalMsngrConnects = 0;
+            console.log(this.totalMsngrConnects);
             this._authService._getCareSchedules(pageId)
             .subscribe(
               csData => {
+                if (csData.length)
                 this.totalCaresScheduled = csData.length;
+                else
+                this.totalCaresScheduled = 0;
                 console.log(this.totalCaresScheduled);
                 console.log(this.totalMsngrConnects);
                  this.checkInChrtReady = true;
@@ -483,7 +490,7 @@ getClinicSummary(clinicIdFull, pageId, pagePresent) {
             )
           }
         )
-      }
+      
 
     }
   )

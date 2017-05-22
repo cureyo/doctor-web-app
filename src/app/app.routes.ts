@@ -45,6 +45,7 @@ import {PhysicalconsultationCareComponent}  from "./dashboard/care-pathways/phys
 import {WebContentComponent} from "./dashboard/web-content/web-content.component";
 import {SiteCreationFormComponent} from "./dashboard/web-content/site-creation-form/site-creation-form.component";
 import {HerotilesComponent} from "./dashboard/web-content/site-creation-form/herotiles/herotiles.component";
+import {SocialCalendarComponent} from "./dashboard/web-content/site-creation-form/social-calendar/social-calendar.component";
 import {FooterComponent}  from "./dashboard/web-content/site-creation-form/footer/footer.component";
 import { BookingtileComponent} from "./dashboard/web-content/site-creation-form/bookingtile/bookingtile.component";
 import {SlotBookingComponent} from "./dashboard/web-content/site-creation-form/slot-booking/slot-booking.component";
@@ -99,6 +100,7 @@ export const MODULE_COMPONENTS = [
     NavbarComponent,
     LogoutComponent,
     ClinicPageComponent,
+    SocialCalendarComponent,
     MedicationReminderComponent,
     ExerciseTrackerComponent,
     BloodSugarTrackerComponent,

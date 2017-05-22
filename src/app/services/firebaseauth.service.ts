@@ -166,6 +166,12 @@ export class AuthService {
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/footerTile')
     return webcontentdata.set(data);
   }
+    public _saveSocialCalendar(data, uid) {
+    //console.log("the sitenmae for Footer tiles",sitename);
+    const webcontentdata = this.af.database.object(this.db.doctorPages + uid )
+    return webcontentdata.set(data);
+  }
+
 
   public _getCheckInDetails(clinicID, date, q) {
     //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
