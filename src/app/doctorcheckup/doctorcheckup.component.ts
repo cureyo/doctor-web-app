@@ -29,6 +29,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private showErrorFlag: boolean = false;
   private OTPAsked: boolean = false;
   private OTPValue: any;
+  private phoneNumber
   isAuth: boolean;
   buttonClicked: boolean;
   buttonClicked1: boolean;
@@ -200,18 +201,35 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     if (item.phone) {
        console.log(this.OTPValue);
       this._authService._RequestOTP(item.phone, this.OTPValue)
+      this.phoneNumber = item.phone;
       this.OTPAsked = true;
+       console.log(item);
+    this.showErrorFlag = true;
     } else {
+      this.OTPAsked = false;
       alert("Please enter phone number")
+       console.log(item);
+    this.showErrorFlag = false;
     }
     
-    console.log(item);
-    this.showErrorFlag = true;
+   
   }
 confirmOTP(otp) {
   if (otp == this.OTPValue) {
     this.OTPConfirmed = true;
-  }
+    this._authService._searchPartner(this.phoneNumber)
+    .subscribe(
+      data => {
+        console.log(data)
+        for (let partner in data) {
+          if (partner !='$key' && partner !='$exists' && partner !='$value')
+          this._authService._savePartnerId(this.phoneNumber, this.currentUserID, partner, data[partner].category )
+        }
+      }
+    )
+  } else {
+      alert("Please enter the correct OTP")
+    }
 }
   // getSRCurl() {
   //   this.fbMessURL = "https://www.facebook.com/v2.3/plugins/send_to_messenger.php?messenger_app_id=" + this.appID + "&page_id=" + this.pageID + "&ref=" + this.passThrough;

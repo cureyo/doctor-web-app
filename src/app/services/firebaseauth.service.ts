@@ -740,18 +740,39 @@ export class AuthService {
     return this.af.database.object(this.db.caretakers + caredoneId + '/' + caretakerFbId)
       .set(data);
   }
-  public _addPartner(data, userId, route) {
+  public _addPartner(data, userId, route, key) {
 
     //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
 
-    return this.af.database.list(this.db.Partners + userId + '/' + route)
-      .push(data);
+    return this.af.database.object(this.db.Partners + userId + '/' + route + '/' + key)
+      .set(data);
   }
   public _getPartner(userId) {
 
     //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
 
     return this.af.database.object(this.db.Partners + userId)
+
+  }
+    public _savePartnerName(key, userId, data) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+
+    return this.af.database.object(this.db.PartnerIndex + key + '/' + userId)
+      .set(data);
+  }
+      public _savePartnerId(key, userId, doctorId, route) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+
+    return this.af.database.object(this.db.Partners + doctorId + '/'+ route + '/' + key + '/uid')
+      .set(userId);
+  }
+  public _searchPartner(phone) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+
+    return this.af.database.object(this.db.PartnerIndex + phone)
 
   }
   public _getCaredOneJobs(caredoneId) {

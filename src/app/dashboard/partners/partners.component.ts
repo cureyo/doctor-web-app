@@ -124,7 +124,14 @@ export class PartnerComponent implements OnInit {
         let type = this.types[model['type']].type;
         model['icon'] = this.types[model['type']].icon;
         model['type'] = this.types[model['type']].name;
-        this._authService._addPartner(model, this.userId, type)
+        model['category'] = type;
+        this._authService._addPartner(model, this.userId, type, model.phone).then(
+            data => {
+                console.log(data);
+                this._authService._savePartnerName(model.phone, this.userId, model);
+                this.partnerForm.reset();
+            }
+        )
     }
     changeAddType(partnerForm) {
         console.log(partnerForm)
