@@ -168,7 +168,7 @@ export class FbAdsFormComponent implements OnInit {
                 console.log(adsData);
                 this.currentAdsList = adsData;
                 console.log("******",this.currentAdsList[0])
-                let city = this.currentAdsList[0].targetCitySearch;
+                
                 // for (let each of adsData) {
                 //   if (each != '$key' && each !='$exists')
                 //   {this.currentAdsList[ctr] = adsData[each];
@@ -181,7 +181,7 @@ export class FbAdsFormComponent implements OnInit {
                 }
                 console.log("this is usertable response:", userTable);
                 this.clinicID = userTable.clinicWebsite;
-                this.initFB(userTable.fbPageId, city);
+                this.initFB(userTable.fbPageId);
                 this.clinicID = userTable.clinicWebsite.indexOf(".");
                 if (this.clinicID == -1) {
                   this.clinicID = userTable.clinicWebsite.length;
@@ -364,7 +364,7 @@ export class FbAdsFormComponent implements OnInit {
     this.formReady = true;
     this.imgReady = true;
   }
-  initFB(pageId, city) {
+  initFB(pageId) {
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
@@ -379,7 +379,7 @@ export class FbAdsFormComponent implements OnInit {
           this.fbAccessToken = response.authResponse.accessToken;
 
           this.fetchPages();
-
+            let city = this.currentAdsList[0].targetCitySearch;
           this.searchCity(city);
 
         } else {
@@ -554,19 +554,19 @@ export class FbAdsFormComponent implements OnInit {
                       })
                   }).catch(
         error => {
-          alert(error);
+          alert(typeof error);
           this.waiting = false;
         }
       )
               }).catch(
         error => {
-          alert(error);
+          alert(typeof error);
            this.waiting = false;
         }
       )
           }).catch(
         error => {
-          alert(error);
+          alert(typeof error);
            this.waiting = false;
         }
       )
@@ -716,7 +716,7 @@ export class FbAdsFormComponent implements OnInit {
       }
       ).catch(
         error => {
-          alert(error);
+          alert(typeof error);
            
         }
       )
@@ -795,7 +795,7 @@ export class FbAdsFormComponent implements OnInit {
               this.previewReady = true;
             }).catch(
         error => {
-          alert(error);
+          alert(typeof error);
         }
       );
         }
