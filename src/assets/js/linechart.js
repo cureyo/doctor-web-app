@@ -39,7 +39,7 @@ module.exports=function LineChart(Title,Values,MinValue,MaxValue,ChartNameID){
        } 
     //Main IF
        else {
-             alert("parameter is invalid or undefined in line chart");
+             //alert("parameter is invalid or undefined in line chart");
        }
     return (ChartNameID);
 } //end of bar chart;

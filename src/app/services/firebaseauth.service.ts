@@ -61,7 +61,14 @@ export class AuthService {
       }).then(
         data => {
           console.log(data);
-        })
+        }).catch(
+          error => {
+            console.log(error);
+            if (error['code'] == "auth/web-storage-unsupported")
+            alert('Oops! Seems like 3rd party cookies are disabled. You can change it to just allow us, if you want. Trust us! We are good people For Chrome, MORE (icon with 3 dots) > SETTINGS > ADVANCED (Section) > CONTENT SETTINGS > COOKIES > MANAGE EXCEPTIONS & Set your preference');
+          else 
+        alert(error.message);}
+        )
     )
 
   }
