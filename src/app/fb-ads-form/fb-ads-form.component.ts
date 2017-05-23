@@ -207,7 +207,10 @@ export class FbAdsFormComponent implements OnInit {
 
       })
 
-
+window.scrollTo(0, 0);
+          var elmnt = document.getElementById("fbPageTop");
+    // console.log(elmnt);
+    elmnt.scrollIntoView();
   }
   // reForm(pageID, adAccountID, clinicID) {
 
@@ -386,7 +389,12 @@ export class FbAdsFormComponent implements OnInit {
           this.fbAccessToken = null;
         }
       },
-      (error: any) => console.error(error)
+      (error: any) => {console.error(error);
+        if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+      }
     );
   }// initFB()
 
@@ -554,20 +562,32 @@ export class FbAdsFormComponent implements OnInit {
                       })
                   }).catch(
         error => {
-          alert(error);
+           if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+          console.log(error);
           this.waiting = false;
         }
       )
               }).catch(
         error => {
-          alert(error);
-           this.waiting = false;
+           if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+          console.log(error);
+          this.waiting = false;
         }
       )
           }).catch(
         error => {
-          alert(error);
-           this.waiting = false;
+            if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+          console.log(error);
+          this.waiting = false;
         }
       )
       });
@@ -716,7 +736,12 @@ export class FbAdsFormComponent implements OnInit {
       }
       ).catch(
         error => {
-          alert(error);
+            if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+          console.log(error);
+          this.waiting = false;
            
         }
       )
@@ -795,7 +820,12 @@ export class FbAdsFormComponent implements OnInit {
               this.previewReady = true;
             }).catch(
         error => {
-          alert(error);
+           if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+          console.log(error);
+          this.waiting = false;
         }
       );
         }

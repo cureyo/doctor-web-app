@@ -28,7 +28,11 @@ export class WebContentComponent implements OnInit {
             //console.log("param value test:",this.routeparam);
             //end of param
           });
-          
+          window.scrollTo(0, 0);
+          var elmnt = document.getElementById("webContentSec");
+    // console.log(elmnt);
+    elmnt.scrollIntoView();
+
   }
 
 }
