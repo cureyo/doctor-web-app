@@ -241,7 +241,7 @@ export class AuthService {
   }//save webcontentProfileTile data
   public _saveSlotBookingDetails(data, sitename, type) {
     //console.log("the route is :",sitename);
-    return this.af.database.object(this.db.doctorPages + '/' + sitename + '/' + type + '/availability')
+    return this.af.database.object(this.db.doctorPages + '/' + sitename + '/availability/' + type )
       .set(data);
   }//save slot booking details data
   public _saveSpecializationDetails(data, sitename) {

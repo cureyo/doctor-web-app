@@ -1,14 +1,14 @@
  <div class="main-content" id="fbContent">
     <div class="container-fluid">
           <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
-        <h3> Facebook Advertising </h3>
+        <h3 id="fbPageTop"> Facebook Advertising </h3>
   
                 
                   <form *ngIf="formReady" [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
                         <div class="row">
                         <div class="col-md-5">
                         <div class="card">
-                              <div class="card-content table-responsive">
+                              <div id="adPreviewSec" class="card-content table-responsive">
                               <h5 style="margin-bottom: 0;"><b>Ad Preview</b></h5>
                               <br>
                               <label for="adName">Select Campaign</label>

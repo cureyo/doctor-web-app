@@ -56,6 +56,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private diseaseList: any = [];
   private listReady: any = [];
   private fullHList: any = [];
+  private clinicAddress:any;
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -213,6 +214,10 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     }
     
    
+  }
+  getAddress(place:Event){
+    this.clinicAddress=place;
+    console.log("this is the places",this.clinicAddress);
   }
 confirmOTP(otp) {
   if (otp == this.OTPValue) {

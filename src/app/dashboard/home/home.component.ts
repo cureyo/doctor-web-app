@@ -409,12 +409,13 @@ getClinicSummary(clinicIdFull, pageId, pagePresent) {
      
       console.log(checkIns)
       for (let item in checkIns) {
-        if (item != '$exists' && item != '$key' && item != 'length' ) {
+        if (item != '$exists' && item != '$key' && item != 'length'  && item != '$value') {
         
         
         
-        
-          this.checkInsTblDates[ctr] = item.substring(0,5)
+          console.log(item);
+          this.checkInsTblDates[ctr] = item.substring(0,5);
+          console.log(checkIns[item]);
           if (checkIns[item].length)
           this.checkInsTblCount[ctr] = checkIns[item].length;
           else 

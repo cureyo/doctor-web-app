@@ -149,7 +149,10 @@ export class PhySlotBookingComponent implements OnInit {
         //  //console.log("total slot in this range and selected duration for:",slot);
 
         for (let j = 0; j < slot; j++) {
-          if (d == 30 && j > 0) {
+          if (d == 15 && j > 0) {
+            t = 25 + Number(slots[i].fromTime);
+          }
+          else if (d == 30 && j > 0) {
             t = 50 + Number(slots[i].fromTime);
           }
           else if (d == 60 && j > 0) {
@@ -170,12 +173,15 @@ export class PhySlotBookingComponent implements OnInit {
           let hr, hrs, min, span, t1, t2;
           hr = Number(t / 100);
 
-          hrs = Math.round(hr - 0.1);
+          hrs = Math.floor(hr);
           // //console.log("round hr value",hr);
           min = hr - hrs;
           // //console.log("min value:",min);
           min = Math.round(min * 60);
-
+          if (min < 0) {
+            min = 60 + min;
+            //hrs = hrs - 1;
+          }
           if (Number(t) < 1200) {
             span = "AM";
           }
@@ -212,6 +218,7 @@ export class PhySlotBookingComponent implements OnInit {
     this.sitename = this.routeparam.substring(0, n);
     //end of url trimming part
     //save data into the db
+    console.log(reminders)
     this._authService._saveSlotBookingDetails(reminders, this.sitename, this.typePhy)
       .then(
       data => {

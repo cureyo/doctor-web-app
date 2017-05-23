@@ -129,7 +129,11 @@
  </div>
             <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['address'].valid && signupForm.controls['address'].touched}">
                 <label class="control-label" >Clinic Address</label>
-                <input type="text" class="form-control" [formControl]="signupForm.controls['address']" />
+                <input type="text" [formControl]="signupForm.controls['address']" class="form-control"  (setAddress)="getAddress($event)" [options]="{
+                      types: [],
+                      componentRestrictions: { country: 'IN' }
+                    }"  ng2-google-place-autocomplete />
+                <!--<input type="text" class="form-control" [formControl]="signupForm.controls['address']" />-->
               </div>
                </div>  
 <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;">

@@ -58,7 +58,10 @@ export class SiteCreationFormComponent implements OnInit {
           })
       });
     //end of param
-
+window.scrollTo(0, 0);
+          var elmnt = document.getElementById("webPreviewSec");
+    // console.log(elmnt);
+    elmnt.scrollIntoView();
 
 
   }
