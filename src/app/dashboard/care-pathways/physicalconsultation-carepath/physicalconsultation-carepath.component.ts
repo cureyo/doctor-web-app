@@ -69,11 +69,13 @@ export class PhysicalconsultationCareComponent implements OnInit {
 
   savePCT = (model) => {
     let reminder = {}, reviewData = {},
-      job = model['value']
-      ;
+      job = model['value'];
+      console.log("job values test:",job);
+      var self=this;
     this._authService._getPartner(this.doctorId)
       .subscribe(
       partnerData => {
+        console.log("this is the fee test",this.physicalData,this.physicalData.ConsultDrName);
         
         reminder['Job_By'] = this.doctorId;
         reminder['Job_For'] = "#patientId";
@@ -82,19 +84,20 @@ export class PhysicalconsultationCareComponent implements OnInit {
         reminder['Job_Date'] = job['date'];
         reminder['Job_Type'] = "Physical_Consultation";
         reminder['ConsultantId'] = this.consultantId;
-        reminder['ConsultDrName'] = partnerData['consultant'][this.consultantId].name;
-        reminder['ConsultFee'] = partnerData['consultant'][this.consultantId].fee;
-        //console.log("reminder value test :",reminder);
+        reminder['ConsultDrName'] = self.physicalData.ConsultDrName;
+        reminder['ConsultDrName'] =job['consultant'] ;
+        reminder['ConsultFee'] = this.physicalData.ConsultFee;
+        console.log("reminder value test :",reminder);
         //save data in scheduled job
 
         
 
-        this._authService._saveTransactionData(reminder, this.objectId, this.consultantId).then(
-          res => {
-            this.itemAdded7 = true;
-            let d = res;
-            //console.log("response of onboarding save is",d);
-          })
+      //   this._authService._saveTransactionData(reminder, this.objectId, this.consultantId).then(
+      //     res => {
+      //       this.itemAdded7 = true;
+      //       let d = res;
+      //       //console.log("response of onboarding save is",d);
+      //     })
       }
       )
 

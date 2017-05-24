@@ -11,6 +11,8 @@ declare var $: any
   styleUrls: ['./existing-path-ways.component.css']
 })
 export class ExistingPathWaysComponent implements OnInit {
+  @Input() partnerList:any;
+  @Input() doctorId:any;
   private caredone: any;
   private existingPathWays: FormGroup;
   private carePathwayForm: FormGroup;
@@ -23,7 +25,6 @@ export class ExistingPathWaysComponent implements OnInit {
   private checkTypes: any = [];
   private objectIdVal: any = [];
   public days: any = [];
-  private partnerList: any = [];
   private times: any = [];
   public timeInterval: any = [];
   public dateInterval: any = [];
@@ -31,7 +32,6 @@ export class ExistingPathWaysComponent implements OnInit {
   private carePathsAvlbl: any;
   private MedNames: any;
   private TestNames: any;
-  private doctorId: any;
   private consultant: any = [];
   private consultantSelected: any = [];
   private DATA:any;
@@ -52,6 +52,7 @@ export class ExistingPathWaysComponent implements OnInit {
   
 
   ngOnInit() {
+     console.log("partner list in existing carepath:",this.partnerList);
         this.setIntervals();
         this.updateDays();
         this.updateTimes();
@@ -143,11 +144,12 @@ export class ExistingPathWaysComponent implements OnInit {
 
 
   loadCarePath(data) {
-          //console.log.log("loadCarePath called:",data);
+         console.log("loadCarePath called:",data);
           this.objectIdVal = data.objectId;
           this.existingPathWays = this._fb.group({
             name: [data.name, Validators.required],
             objectId: [data.objectId, Validators.required],
+
             checkPoints: this._fb.array([
               this.initializeCheckPoints(data.checkPoints[0], 0)
             ])
@@ -195,7 +197,7 @@ export class ExistingPathWaysComponent implements OnInit {
       .subscribe(
       data => {
         this.DATA=data;
-        //console.log.log("shoe care path data is",data);
+        console.log("show care path data is",data);
         if (data){
                 this.dataloaded=true;    
                 this.loadCarePath(data);
@@ -214,7 +216,7 @@ export class ExistingPathWaysComponent implements OnInit {
 
 
    initializeCheckPoints(data, check) {
-     //console.log.log("intitializecheckPoints",data,check);
+    console.log("intitializecheckPoints",data);
       let control = this._fb.group({
       day: [data.day, Validators.required],
       time: [data.time, Validators.required],

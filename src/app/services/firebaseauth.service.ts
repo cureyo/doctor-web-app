@@ -374,6 +374,10 @@ export class AuthService {
     return this.af.database.object(this.db.HxPaths + pathName);
 
   }//_getCarePathways
+
+  public _getConsultant(uid){
+    return this.af.database.object(this.db.Partners + uid);
+  }
   public _getHealthLineData(id) {
     console.log("calling search for Id: ", id, this.db.hlDatabase + id)
     return this.af.database.object(this.db.hlDatabase + id);

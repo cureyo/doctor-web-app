@@ -75,6 +75,7 @@ export class CarePathsComponent implements OnInit {
     this._authService._getUser()
       .subscribe(
       userData => {
+         console.log("userData test:",userData);
         this.doctorId = userData.user.uid;
         this._authService._getPartner(userData.user.uid)
           .subscribe(
@@ -83,7 +84,7 @@ export class CarePathsComponent implements OnInit {
             if (partnerData['consultant']) {
               let ctr = 0, partnersC = [];
               let consultants = partnerData['consultant'];
-              console.log(partnerData['consultant']);
+             // console.log(partnerData['consultant']);
               for (let item in consultants) {
                 if (item != 'length' && item != '$exists' && item != '$key') {
                   partnersC[ctr] = consultants[item];
@@ -93,6 +94,8 @@ export class CarePathsComponent implements OnInit {
 
               }
               this.partnerList = partnersC;
+            //  console.log("partners data:",this.partnerList);
+
             }
            }
           )
