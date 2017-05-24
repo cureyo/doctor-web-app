@@ -44,7 +44,7 @@ module.exports=function BarChart(Title,Values,MaxValue,ChartNameID){
                 } 
             } 
             else{
-                alert("parameter is invalid in bar chart:")    ;
+                //alert("parameter is invalid in bar chart:")    ;
             }
  
      return ChartNameID;
