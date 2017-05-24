@@ -23,7 +23,7 @@ export class SiteCreationFormComponent implements OnInit {
   private online: any = "Online";
   private physical: any = "Physical";
   private websiteLink: any;
-
+  private nextButtonFlag:boolean=false;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -38,6 +38,13 @@ export class SiteCreationFormComponent implements OnInit {
     this.route.params.subscribe(
       params => {
         this.routeparam = params['id'];
+        this.route.queryParams.subscribe(
+             qParam=> {
+               if (qParam['onboarding']=="yes") {
+                 this.nextButtonFlag=true;
+               }
+             }
+            )
 
         //console.log("param value test in site creation form :", this.routeparam);
         var n = this.routeparam.indexOf('.')

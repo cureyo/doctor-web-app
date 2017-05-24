@@ -36,6 +36,7 @@ export class CarePathsComponent implements OnInit {
   private doctorId: any;
   private consultant: any = [];
   private consultantSelected: any = [];
+  private nextButtonFlag:boolean=false;
 
 
   constructor(
@@ -43,12 +44,23 @@ export class CarePathsComponent implements OnInit {
     private _authService: AuthService,
     private router: Router,
     private http: Http,
-    private _cacheService: CacheService) {
+    private _cacheService: CacheService,
+    private route: ActivatedRoute) {
        
 
   }
   
   ngOnInit() {
+      // this.route.params.subscribe(
+      //       params => {
+      //       this.route.queryParams.subscribe(
+      //        qParam=> {
+      //          if (qParam['onboarding']=="yes") {
+      //            this.nextButtonFlag=true;
+      //          }
+      //        }
+      //       )
+      //     });
     
     this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
 

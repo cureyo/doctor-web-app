@@ -35,14 +35,35 @@ export class PartnerComponent implements OnInit {
     private currentConsultants: any = [];
     private currentVendors: any = [];
     private userId: any;
+    private nextButtonFlag:boolean=false;
 
 
-    constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
+    constructor(
+                private _fb: FormBuilder,
+                private _authService: AuthService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private http: Http)
+            {
 
 
     }
 
     ngOnInit() {
+
+          
+            this.route.params.subscribe(
+            params => {
+            this.route.queryParams.subscribe(
+             qParam=> {
+               if (qParam['onboarding']=="yes") {
+                 this.nextButtonFlag=true;
+               }
+             }
+            )
+            //console.log("param value test:",this.routeparam);
+            //end of param
+          });
 
         this._authService._getUser()
             .subscribe(

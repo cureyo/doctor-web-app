@@ -1,7 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
           <!--hero tiles-->
-          <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
+          <onboarding-header-cmp [section]="section" #onboardingID></onboarding-header-cmp>
         <div class="row">
                         <div class="col-md-12" id="webPreviewSec">
                         <div class="card">
@@ -40,5 +40,14 @@
            [routeparam]="routeparam"></app-footer>
          <!-- end of footer tile -->
        
+        <div class="row">
+              <div class="pull-right">
+                    <a *ngIf="nextButtonFlag" id="nextButton" class="btn btn-warning btn-round" (click)="onboardingID.nextPage()" >Next</a>
+              </div>
+       </div>
+
+
+
+
     </div>
 </div>

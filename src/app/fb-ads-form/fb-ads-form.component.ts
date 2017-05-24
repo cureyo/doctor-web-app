@@ -68,6 +68,7 @@ export class FbAdsFormComponent implements OnInit {
   private previewURL: any;
   private fullModel: any;
   private previewReady: boolean = false;
+  private nextButtonFlag:boolean=false;
   private doneModal: boolean = false;
   storage: any;
   uploader: FileUploader = new FileUploader({ url: '' });
@@ -86,6 +87,20 @@ export class FbAdsFormComponent implements OnInit {
   }
 
   ngOnInit() {
+     this.route.params.subscribe(
+            params => {
+            
+            this.route.queryParams.subscribe(
+             qParam=> {
+               if (qParam['onboarding']=="yes") {
+                 this.nextButtonFlag=true;
+               }
+             }
+            )
+            //console.log("param value test:",this.routeparam);
+            //end of param
+          });
+     
     let mS2, ddS2;
     var sDate = new Date();
     var mS = sDate.getMonth() + 1;

@@ -10,6 +10,7 @@ export class WebContentComponent implements OnInit {
              private routeparam:any;
              private section: any = "website";
              private onboaridng: boolean =false;
+             private nextButtonFlag:boolean=false;
   constructor(private route: ActivatedRoute,
               private router: Router) { }
 
@@ -22,6 +23,7 @@ export class WebContentComponent implements OnInit {
              qParam=> {
                if (qParam['onboarding']=="yes") {
                  this.onboaridng = true;
+                 this.nextButtonFlag=true;
                }
              }
             )

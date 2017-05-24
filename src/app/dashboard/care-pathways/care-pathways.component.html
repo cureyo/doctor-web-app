@@ -72,11 +72,11 @@
         <app-existing-path-ways #existingCarePathWaysID [doctorId]="doctorId" [partnerList]="partnerList"></app-existing-path-ways>
 
 
-       <div class="row">
+       <!--<div class="row">
               <div class="pull-right">
-                    <a  id="nextButton" class="btn btn-warning btn-round" (click)="onboardingID.nextPage()" >Next</a>
+                    <a *ngIf="nextButtonFlag" id="nextButton" class="btn btn-warning btn-round" (click)="onboardingID.nextPage()" >Next</a>
               </div>
-       </div>
+       </div>-->
 
         
 </div>
