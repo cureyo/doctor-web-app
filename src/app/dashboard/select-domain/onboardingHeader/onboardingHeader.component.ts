@@ -132,9 +132,9 @@ export class OnboardingHeaderComponent implements OnInit {
       )
       }
     )
-
-
-  }
+  
+  
+}
   nextPage(){
     console.log("Routing to Next:", this.nextURL, {queryParams: {onboarding: 'yes'}} )
     this.router.navigate([this.nextURL], {queryParams: {onboarding: 'yes'}})
