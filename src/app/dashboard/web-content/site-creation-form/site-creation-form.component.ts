@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../../../services/firebaseauth.service";
@@ -6,7 +6,7 @@ import { FbService } from "../../../services/facebook.service";
 import { HerotilesComponent } from "./herotiles/herotiles.component";
 import { BookingtileComponent } from "./bookingtile/bookingtile.component";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
+import { ImageSearchComponent } from 'fb-ads-form/image-search/image-search.component'
 
 @Component({
   selector: 'app-site-creation-form',
@@ -14,6 +14,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
  // styleUrls: ['./site-creation-form.component.css']
 })
 export class SiteCreationFormComponent implements OnInit {
+  @ViewChild(ImageSearchComponent) imgSearchCmp: ImageSearchComponent;
   private routeparam: any;
   private site_PrefilledData: any;
   private herotiles: any;

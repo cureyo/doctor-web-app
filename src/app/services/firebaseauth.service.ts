@@ -175,7 +175,7 @@ export class AuthService {
   }
     public _saveSocialCalendar(data, uid) {
     //console.log("the sitenmae for Footer tiles",sitename);
-    const webcontentdata = this.af.database.object(this.db.doctorPages + uid )
+    const webcontentdata = this.af.database.object(this.db.socialCalendar + uid )
     return webcontentdata.set(data);
   }
 

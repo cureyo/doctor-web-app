@@ -81,6 +81,7 @@ return this.http.get(url).map(res=> res.json());
        this._authService._saveSocialCalendar(reminder, user.authUID)
       .then(res =>{
           let d=res;
+          console.log(res);
           //console.log("response of footer tile data",d);
       })
           }

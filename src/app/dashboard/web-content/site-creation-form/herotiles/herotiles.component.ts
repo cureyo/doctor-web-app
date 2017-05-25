@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../../../../services/firebaseauth.service";
 import { FbService } from "../../../../services/facebook.service";
 import { Http, Response, Headers } from '@angular/http';
+import { ImageSearchComponent } from '../../../../fb-ads-form/image-search/image-search.component'
 declare var $: any;
 @Component({
   selector: 'app-herotiles',
@@ -11,6 +12,7 @@ declare var $: any;
   //styleUrls: ['./herotiles.component.css']
 })
 export class HerotilesComponent implements OnInit {
+  @ViewChild(ImageSearchComponent) imgSearchCmp: ImageSearchComponent;
   @Input() herotiles: any;
   @Input() routeparam: any;
   private heroTile: FormGroup;
@@ -18,7 +20,9 @@ export class HerotilesComponent implements OnInit {
   private temp: any;
   private sitename: any;
   private backgrounds: any;
+  private imgSearchType: any = "google";
   private preview: any;
+  private defaultImgSearch: any;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -32,12 +36,16 @@ export class HerotilesComponent implements OnInit {
     this._authService._getBackgroundImages()
       .subscribe(data => {
         this.backgrounds = data;
-      })
+      });
+     
     if (this.herotiles) {
       // //console.log("herotiles data in herotiles component",this.herotiles);
+       this.defaultImgSearch = this.herotiles.card.qual;
       this._authService._getUser()
       .subscribe(
+       
         data => {
+           console.log("this.imgSearchCmp.imgSelected", this.imgSearchCmp.imgSelected)
           this.heroTile = this._fb.group({
         title: [this.herotiles.title, Validators.required],
         expo: [this.herotiles.card.experience, Validators.required],
@@ -46,7 +54,7 @@ export class HerotilesComponent implements OnInit {
         card_title: [this.herotiles.card.title, Validators.required],
         site_text: [this.herotiles.text, Validators.required],
         fb_Profile: ['https://graph.facebook.com/' + data.user.uid + '/picture?type=large', Validators.required],
-        bg_Pic: [this.herotiles.bgImage, Validators.required]
+        bg_Pic: [this.imgSearchCmp.imgSelected, Validators.required]
       });
         }
       )

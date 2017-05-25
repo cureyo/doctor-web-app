@@ -223,7 +223,8 @@ confirmOTP(otp) {
         console.log(data)
         for (let partner in data) {
           if (partner !='$key' && partner !='$exists' && partner !='$value')
-          this._authService._savePartnerId(this.phoneNumber, this.currentUserID, partner, data[partner].category )
+          this._authService._savePartnerId(this.phoneNumber, this.currentUserID, partner, data[partner].category );
+          
         }
       }
     )

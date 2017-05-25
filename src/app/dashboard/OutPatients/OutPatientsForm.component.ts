@@ -611,10 +611,19 @@ SleepSummaryChart(sleepSummaryObj){
 
   checkOutPatient() {
     var date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth();
+    var ddS = date.getDate();
+    var mmS = date.getMonth() + 1;
     var yyyy = date.getFullYear();
-    var today = dd + '-' + mm + '-' + yyyy;
+    var dd, mm;
+    if (ddS < 10)
+    dd = "0" + ddS;
+    else 
+    dd = ddS;
+    if (mmS < 10)
+    mm = "0" + mmS;
+    else 
+    mm = mmS;
+    var today = mm + '-' + dd + '-' + yyyy;
     var next = parseInt(this.currentQ) + 1;
     //console.log(today)
     //console.log(this.currentQ)

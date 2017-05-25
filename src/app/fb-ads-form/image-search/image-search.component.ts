@@ -48,6 +48,7 @@ export class ImageSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("image search loading");
     this.searchImageForm = this._fb.group({
       searchType: [this.searchType, Validators.required],
       searchTerm: [this.defaultKeyWord],

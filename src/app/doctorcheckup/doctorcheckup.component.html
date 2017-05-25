@@ -48,7 +48,7 @@
                 <input type="text" class="form-control" id="user_fullName" [formControl]="signupForm.controls['fullName']" />
               </div>
                <div class="form-group" style="width: 72%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['qualification'].valid && signupForm.controls['qualification'].touched}">
-                <label class="control-label" for="user_qualification">Qualifications</label>
+                <label class="control-label" for="user_qualification">Qualifications (e.g., MBBS, MD)</label>
                 <input type="text" class="form-control" id="user_qualification" [formControl]="signupForm.controls['qualification']" />
               </div>
               <div class="form-group" style="width: 24%; margin-left:4%;float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;">
@@ -68,6 +68,7 @@
   </div>
 <div class="card card-content">
   <h4>Add your Specialization Areas</h4>
+  <p>For example, 'Infertility', 'Hypothyroidism', etc. We use these areas to customize content for your webpage and facebook posts. Click on 'Add More' to add more than one area of specialization.</p>
    <div class="medicines" formArrayName="specializations">
                         <div class="clearfix medicine" *ngFor="let item of signupForm.controls.specializations.controls; let i=index">
                          <div [formGroupName]="i">
@@ -124,7 +125,7 @@
                 <input type="text" class="form-control" [formControl]="signupForm.controls['clinic']" />
               </div>
                <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['clinicLocation'].valid && signupForm.controls['clinicLocation'].touched}">
-                <label class="control-label" for="user_clinicLocation">Clinic Location</label>
+                <label class="control-label" for="user_clinicLocation">Clinic City</label>
                 <input type="text" class="form-control" id="user_clinicLocation" [formControl]="signupForm.controls['clinicLocation']" />
  </div>
             <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['address'].valid && signupForm.controls['address'].touched}">
@@ -133,7 +134,7 @@
               </div>
                </div>  
 <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;">
-    <label class="control-label" for="co_page">Select FB Page</label>
+    <label class="control-label" for="co_page">Select Facebook Page (optional)</label>
     <select formControlName="fbPageId" class="form-control">
       <option value="{{i.id}}" *ngFor="let i of pageNameList;">{{i.name}}</option>
     </select>
@@ -187,8 +188,9 @@
                  <div *ngIf="OTPAsked" class="form-group" style="margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['numberConfirmed'].valid && signupForm.controls['numberConfirmed'].touched}">
                 <label class="control-label" >Confirm your number</label>
                 <input type="text" class="form-control" [formControl]="signupForm.controls['numberConfirmed']" placeholder="Enter the OTP sent" />
-                <a class="btn btn-round" (click)="confirmOTP(signupForm.controls['numberConfirmed'].value)">Confirm</a>
-                
+                <a *ngIf="!OTPConfirmed" class="btn btn-round btn-warning" (click)="confirmOTP(signupForm.controls['numberConfirmed'].value)">Confirm</a>
+                <a *ngIf="!OTPConfirmed" class="btn btn-round" (click)="showError(signupForm.value)">Resend OTP</a>
+              <p *ngIf="OTPConfirmed">Please click on Submit to Proceed</p>
               </div>
                 <!--<button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Submit</button>-->
                 <button *ngIf="showErrorFlag || signupForm.valid" type="submit" (click)="submitForm3(signupForm.value)"  class="btn btn-primary" [disabled]="!signupForm.valid || !OTPConfirmed" style="float: left;" >Submit</button>
