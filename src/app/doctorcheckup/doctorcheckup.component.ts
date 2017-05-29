@@ -57,6 +57,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private listReady: any = [];
   private fullHList: any = [];
   private clinicAddress:any;
+  public  hasUserData:any;
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -74,6 +75,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   ) {
 
     this.initFB();
+    console.log("its called");
     this.updateYears();
   }
   updateYears() {
@@ -85,33 +87,17 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit() {
+     
+
 
     let method: FacebookApiMethod = 'post';
     console.log("In DoctorCheckup facebook method is :", method);
     //console.log("In DoctorCheckup fbparam data:",fbParams);
     this.getAllMedicalData();
 
-    // this._authService.doclogin()
-    //   .then(data => {
-    //     this._fbs.getLoginStatus().then((response: FacebookLoginResponse) => {
-    //       console.log("In DoctorCheckup reponse for access token:", response);
-    //       this._fbs.api('/me?fields=adaccounts')
-    //         .then(response => {
-    //           //  console.log("user response data is :",response);
-    //           this.userID = response.id; //user ID
-    //           this.adAccountID = response.adaccounts.data[0].id; //AdAccoundId
-    //           // this.fbAdsObject.adAccountID=this.adAccountID;
-    //           console.log("In DoctorCheckup this is the userId", this.userID);
-    //           console.log("In DoctorCheckup fb ad account details is :", this.adAccountID);
-
-    //         })
-    //     })
-    // });
-    //end of ads code
+   
 
     this.specialityList = ['Gynaecology', 'Medical Specialist', 'Orthopedics', 'Dental', 'Dermatology', 'Cardiology',]
-
-    // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
     this._authService._getUser()
       .subscribe(
       data => {
@@ -122,19 +108,48 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
         $('#myIframe').attr('src', this.fbMessURL);
         this.passThrough = "FacbkId_" + data.user.uid;
 
-        //console.log("User Data received")
-        //console.log(data.user);
-
         this._authService._fetchUser(data.user.uid)
           .subscribe(res => {
-            //console.log("from fetchuser");
-            //console.log(res);
+            this.hasUserData=res;
+            console.log("response from the fetchuser:", this.hasUserData);
+            
             if (res) {
+             // this.hasUserData=res;
               this.currentUser = this._authService._getCurrentUser();
+              console.log("this.hasUserData",this.hasUserData);
+               
+               this.signupForm = this.fb.group({
+
+
+          // We can set default values by passing in the corresponding value or leave blank if we wish to not set the value. For our example, we’ll default the gender to male.
+          'firstName': [ this.hasUserData.firstName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
+          'lastName': [ this.hasUserData.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
+          'email': [ this.hasUserData.email, Validators.required],
+          'avatar':  this.hasUserData.avatar,
+          'experience': [ this.hasUserData.experience, Validators.required],
+          'page': null,
+          'phone': [this.hasUserData.phone, Validators.required],
+          'clinicLocation': [ this.hasUserData.clinicLocation, Validators.required],
+          'authProvider':  this.hasUserData.provider,
+          'authUID':  this.hasUserData.uid,
+          'address': [this.hasUserData.address],
+          'mci_number': [this.hasUserData.mci_number, Validators.required],
+          'speciality': [ this.hasUserData.speciality, Validators.required],
+          'specializations': this.fb.array([
+            this.initSpecializations()
+          ]),
+          'fbPageId': [''],
+          'clinic': [ this.hasUserData.clinic, Validators.required],
+          'qualification': [ this.hasUserData.qualification, Validators.required],
+          'numberConfirmed': [, Validators.required],
+          'fullName': [ this.hasUserData.fullName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
+        });
             }
           });
-
+          
+         
         this.signupForm = this.fb.group({
+
 
           // We can set default values by passing in the corresponding value or leave blank if we wish to not set the value. For our example, we’ll default the gender to male.
           'firstName': [data.user.firstName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
@@ -159,8 +174,17 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'numberConfirmed': [, Validators.required],
           'fullName': ['Dr. ' + data.user.firstName + ' ' + data.user.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
         });
-        //console.log("this.signupForm");
-        //console.log(this.signupForm);
+       
+
+      console.log("this.hasUserData",this.hasUserData);
+          if (this.hasUserData){
+            
+
+          }
+
+
+
+
         this.formReady = true;
         //this._fs.initFbMessenger()
 
