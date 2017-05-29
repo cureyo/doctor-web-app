@@ -48,8 +48,9 @@ export class PatientHxFormComponent implements OnInit {
   }
    updateAskIfs(control) {
     let ctr = 0, asks = 0;
+    console.log(control);
     for (let item of control) {
-      ctr++
+      ctr++;
       console.log(control[item]);
       console.log(item);
       console.log(item.controls['checkType']);
@@ -217,9 +218,12 @@ export class PatientHxFormComponent implements OnInit {
     }
 
     console.log(this.carePathwayForm);
+   
+    console.log(control.controls);
+    this.updateAskIfs(control.controls);
     var self = this;
     setTimeout(function () {
-      self.updateAskIfs(self.carePathwayForm.controls);
+      
       self.newPath = true;
       console.log("showing form now")
     }, 2000)

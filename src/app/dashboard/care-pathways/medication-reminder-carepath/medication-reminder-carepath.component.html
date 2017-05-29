@@ -21,7 +21,7 @@
     <!-- Medicine Name formcontrol-->
                     <div class="col-md-3">
                             <div class="form-group">
-                                 <label for="cp_medicineName">Medicine Name</label>
+                                 <label for="cp_medicineName">Medicine</label>
                                   <input auto-complete
                                           display-property-name="value"
                                           value-property-name="name"
@@ -118,7 +118,7 @@
               <!-- end of add more test-->
               
               <div class="pull-right" >
-                  <button [ngClass]="{'hide': itemAdded2}" type="submit" [disabled]="!MedForm.valid" class="btn btn-warning">Add Reminder</button>
+                  <button [ngClass]="{'hide': itemAdded2}" [disabled]="!MedForm.valid" (click)="saveMed(MedForm)" class="btn btn-warning">Add Reminder</button>
               </div>
               
                 <div [ngClass]="{'hide': !itemAdded2}" class="bareP">

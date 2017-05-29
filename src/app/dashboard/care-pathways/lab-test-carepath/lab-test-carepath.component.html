@@ -93,7 +93,7 @@
               <!-- end of add more test-->
               
               <div class="pull-right" >
-                  <button [ngClass]="{'hide': itemAdded3}" type="submit" [disabled]="!stForm.valid" class="btn btn-warning">Add Test</button>
+                  <button [ngClass]="{'hide': itemAdded3}" (click)="save_stForm(stForm)" [disabled]="!stForm.valid" class="btn btn-warning">Add Test</button>
               </div>
               
                 <div [ngClass]="{'hide': !itemAdded3}" class="bareP">

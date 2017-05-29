@@ -11,6 +11,8 @@ declare var $: any
   styleUrls: ['./create-path-ways.component.css']
 })
 export class CreatePathWaysComponent implements OnInit {
+  @Input() partnerList:any;
+  @Input() doctorId:any;
   private caredone: any;
   private drDomain: FormGroup;
   private carePathwayForm: FormGroup;
@@ -23,7 +25,7 @@ export class CreatePathWaysComponent implements OnInit {
   private checkTypes: any = [];
   private objectIdVal: any = [];
   public days: any = [];
-  private partnerList: any = [];
+  //private partnerList: any = [];
   private times: any = [];
   public timeInterval: any = [];
   public dateInterval: any = [];
@@ -31,7 +33,7 @@ export class CreatePathWaysComponent implements OnInit {
   private carePathsAvlbl: any;
   private MedNames: any;
   private TestNames: any;
-  private doctorId: any;
+  
   private consultant: any = [];
   private consultantSelected: any = [];
 
@@ -72,28 +74,34 @@ export class CreatePathWaysComponent implements OnInit {
               objectId: [this.objectIdVal, Validators.required],
               checkPoints: this._fb.array([
               this.initCheckPoints()
-              ])
+              ]),
+              queries: this._fb.array([
+              this.initQueries()
+              ]),
         });
   } //ng OninIt
    
       updateDays() {
-            let i = 0;
+            this.days[0] = "Repeat";
+            var i = 1;
             //console.log("day pushed")
-            for (let i = 0; i < 200; i++) {
+            for (let i = 1; i < 200; i++) {
             this.days[i] = i;
             // console.log("days pushed", i)
       }
       }
       updateTimes() {
+        this.times[0] = "Repeat";
+           
             let i = 0;
             //console.log("time pushed", i)
             for (let i = 0; i < 24; i++) {
                   if (i < 10) {
-                  this.times[i] = '0' + i + '00 hrs';
+                  this.times[i + 1] = '0' + i + '00 hrs';
                   ////console.log("times pushed", i)
                   }
                   else {
-                  this.times[i] = i + '00 hrs';
+                  this.times[i + 1] = i + '00 hrs';
                   }
 
             }
@@ -118,11 +126,22 @@ export class CreatePathWaysComponent implements OnInit {
       ])
     });
   }
-    
+       initQueries() {
+    return this._fb.group({
+      query: ['', Validators.required],
+      response: ['', Validators.required]
+      
+    });
+  }
     
      addCheckPoints() {
     const control = <FormArray>this.carePathwayForm.controls['checkPoints'];
     control.push(this.initCheckPoints());
+
+    }
+    addQueries() {
+      const control = <FormArray>this.carePathwayForm.controls['queries'];
+    control.push(this.initQueries());
 
     }
      
@@ -208,7 +227,10 @@ export class CreatePathWaysComponent implements OnInit {
           objectId: [this.objectIdVal, Validators.required],
           checkPoints: this._fb.array([
             this.initCheckPoints()
-          ])
+          ]),
+          queries: this._fb.array([
+              this.initQueries()
+              ])
         });
     this.selectDrDomain = true;
     setTimeout(
@@ -260,7 +282,12 @@ export class CreatePathWaysComponent implements OnInit {
 
   }
     
+  consultantSelect(value, i) {
+    console.log(value, i);
+    this.consultant[i] = value;
+    this.consultantSelected[i] = true;
 
+  }
 
 
    

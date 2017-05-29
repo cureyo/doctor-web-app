@@ -8,13 +8,17 @@
                             <div class="pull-left" >
                             <button type="button" id="addcheck" (click)="addCheckPoints()"  class="btn btn-round btn-primary">+ add checkpoint</button>
                             </div>
-
+                            <div class="pull-left" >
+                            <button type="button" id="addquery" (click)="addQueries()"  class="btn btn-round btn-primary">+ add query</button>
+                            </div>
                             <div class="pull-left" >
                             <button [disabled]="!carePathwayForm.valid" type="submit" class="btn btn-round">Save</button>
                             </div>
                             </div>
 
                 <!-- form array name checkPoints-->
+                <div class="col-sm-8">
+                        <h4><b>Outgoing Patient Queries</b></h4>
                 <div formArrayName="checkPoints">
                             <div class="card card-stats" *ngFor="let check of carePathwayForm.controls.checkPoints.controls; let i=index">
                                     <div [formGroupName]="i">
@@ -109,6 +113,31 @@
                                             </div>
                                     </div>
                              </div>
+                </div>
+                   <div class="col-sm-4">
+                           <h4><b>Incoming Patient Queries</b></h4>
+                <div formArrayName="queries">
+                            <div class="card card-stats" *ngFor="let query of carePathwayForm.controls.queries.controls; let i=index">
+                                    <div [formGroupName]="i">
+                                            <div class="card-header" data-background-color="cureyo" style="margin-left: 2em;">   
+                                                      Query {{i}}                             
+                                            </div>
+
+                                            <div class="card-footer"> <!-- card footer-->
+
+                                                            <div class="form-group" style="width: 100%;">  
+                                                                    <label class="control-label" for="query">Query</label>
+                                                                    <input type="text" class="form-control" id="query" formControlName="query" placeholder="Incoming Query" />
+                                                            </div>
+                                                            <div class="form-group" style="width: 100%;">  
+                                                                    <label class="control-label" for="response">Response</label>
+                                                                    <input type="text" class="form-control" id="response" formControlName="response" placeholder="Response to be provided" />
+                                                            </div>
+                                            </div>
+                                    </div>
+                            </div>
+                </div>
+                   </div>
                     </div>
            </div>
 </form>

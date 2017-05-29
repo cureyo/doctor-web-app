@@ -92,9 +92,10 @@ export class ExistingPathWaysComponent implements OnInit {
 
   }
    updateDays() {
-            var i = 0;
+            this.days[0] = "Repeat";
+            var i = 1;
             //console.log("day pushed")
-            for (i = 0; i < 200; i++) {
+            for (i = 1; i < 200; i++) {
             this.days[i] = i;
            
            }
@@ -102,14 +103,15 @@ export class ExistingPathWaysComponent implements OnInit {
             //.log("Days is:",this.days);
       }
       updateTimes() {
+        this.times[0] = "Repeat";
             var  i = 0;
             //console.log("time pushed", i)
             for ( i = 0; i < 24; i++) {
                   if (i < 10) {
-                  this.times[i] = '0' + i + '00 hrs';
+                  this.times[i + 1] = '0' + i + '00 hrs';
                   }
                   else {
-                  this.times[i] = i + '00 hrs';
+                  this.times[i + 1] = i + '00 hrs';
                   }
 
             }
@@ -276,5 +278,10 @@ export class ExistingPathWaysComponent implements OnInit {
     // else this.checkTypes[i] = false;
   }
 
+  consultantSelect(value, i) {
+    console.log(value, i);
+    this.consultant[i] = value;
+    this.consultantSelected[i] = true;
 
+  }
 }

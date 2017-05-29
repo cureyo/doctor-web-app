@@ -101,7 +101,7 @@
 <!-- submit button code    -->
                 <div class="actions clearfix">
                       <div class="pull-right" >
-                          <button [ngClass]="{'hide': itemAdded7}" type="submit" [disabled]="!pctForm.valid" class="btn btn-warning">Add</button>
+                          <button [ngClass]="{'hide': itemAdded7}" (click)="savePCT(pctForm)" [disabled]="!pctForm.valid" class="btn btn-warning">Add</button>
                       </div>
 
                         <div [ngClass]="{'hide': !itemAdded7}" class="bareP">

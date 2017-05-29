@@ -16,6 +16,7 @@
                             </div>
 
                 <!-- form array name checkPoints-->
+                <div class="col-sm-9">
                 <div formArrayName="checkPoints">
                             <div class="card card-stats" *ngFor="let check of existingPathWays.controls.checkPoints.controls; let i=index">
                                     <div [formGroupName]="i">
@@ -61,7 +62,7 @@
 
                                                             <div *ngIf="checkTypes[i] == 'consult-reminder' && partnerList"  class="form-group" style="margin: 10px; width: 100%;">  
                                                                         <label class="control-label" for="consultant">Consultation with</label>
-                                                                        <select formControlName="consultant" class="form-control">
+                                                                        <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
                                   
                                                                         <option value="{{partner.$key}}" *ngFor="let partner of partnerList;">{{partner.name}}</option>
                                                                          
@@ -114,6 +115,7 @@
                                             </div>
                                     </div>
                              </div>
+                </div>
                     </div>
            </div>
 </form>

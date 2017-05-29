@@ -3,35 +3,43 @@
   <div *ngIf="onboarding" class="row">
     <div class="card">
       <div class="col-md-3">
+        <a style="cursor: not-allowed;">
         <div class="card-header" [attr.data-background-color]="(allLinks[finalPath].website == true)?'cureyo':'grey'" stye="color: #fff; z-index:10000">
            <i class="fa fa-window-maximize" style="color: #ffffff; "></i>
           <b style="font-size: 14px;">Build</b>
        <br> <small> your Website</small>
         </div>
+        </a>
       </div>
   
       <div class="col-md-3">
+        <a (click)="nextPage('partners')" style="cursor: pointer;">
         <div class="card-header" [attr.data-background-color]="(allLinks[finalPath].partners == true)?'cureyo':'grey'" stye="color: #fff;">
           <i class="fa fa-handshake-o" style="color: #ffffff; "></i>
           <b style="font-size: 14px;">Partner</b>
         <br><small> & build your team</small>
         </div>
+        </a>
       </div>
     
       <div class="col-md-3">
+        <a (click)="nextPage('patient-hx-forms')" style="cursor: pointer;">
         <div class="card-header"  [attr.data-background-color]="(allLinks[finalPath].care == true)?'cureyo':'grey'" stye="color: #fff;">
           <i class="fa fa-heartbeat" style="color: #ffffff; "></i>
           <b style="font-size: 14px;">Care</b>
        <br> <small> for your patients</small>
         </div>
+        </a>
       </div>
             <div class="col-md-3">
+              <a (click)="nextPage('Ads')" style="cursor: pointer;">
         <div class="card-header" [attr.data-background-color]="(allLinks[finalPath].facebook == true)?'cureyo':'grey'" stye="color: #fff;">
            <i class="fa fa-facebook" style="color: #ffffff; "></i>
            <b style="font-size: 14px;">Promote</b>
       <br>  <small> on Facebook</small>
          
         </div>
+              </a>
       </div>
       <hr/>
       <div class="card-footer">

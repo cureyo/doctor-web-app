@@ -20,7 +20,7 @@ export class MedicationReminderCareComponent implements OnInit {
   public showDate: boolean = false;
   public MedForm: FormGroup;
   private itemAdded2: boolean = false;
-  private medData:any;
+  private medData: any;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -32,50 +32,51 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   ngOnInit() {
-      console.log("MedName as input is",this.MedNames);
-       if(this.objectId){
-          this.MedForm = this._fb.group({
+    console.log(this.objectId);
+    console.log("MedName as input is", this.MedNames);
+    if (this.objectId) {
+      this.MedForm = this._fb.group({
+        medicines: this._fb.array([
+          this.initMedicines()
+        ])
+      });
+
+      //here is the code to get the transaction data
+      this._authService._getTransactionData(this.objectId)
+        .subscribe(response => {
+          this.medData = response.MedicationReminder;
+          console.log("response data based one the object Id:", response);
+
+          if (this.medData) {
+            console.log("its called wid", this.medData)
+            var index = 0;
+            this.MedForm = this._fb.group({
               medicines: this._fb.array([
-              this.initMedicines()
-                              ])
-                            });
-          
-     //here is the code to get the transaction data
-    this._authService._getTransactionData(this.objectId)
-    .subscribe(response=>{
-            this.medData=response.MedicationReminder;
-         console.log("response data based one the object Id:",response);
-              
-             if (this.medData){
-               console.log("its called wid",this.medData)
-               var index=0;
-              this.MedForm = this._fb.group({
-              medicines:this._fb.array([ 
-              this.initMedicinesData(index)
-                              ])
-                            });
-              for (var i=1;i<this.medData.length;i++){
-                console.log("loop",i);
-                 this.addMedicineData(i);
-              }
-             }  
-    })
-     
-     }
-     else{   
-              this.MedForm = this._fb.group({
-              medicines: this._fb.array([
-              this.initMedicines()
-                              ])
-                            });
-            }    
-       
+                this.initMedicinesData(index)
+              ])
+            });
+            for (var i = 1; i < this.medData.length; i++) {
+              console.log("loop", i);
+              this.addMedicineData(i);
+            }
+          }
+        })
+
+    }
+    else {
+      this.MedForm = this._fb.group({
+        medicines: this._fb.array([
+          this.initMedicines()
+        ])
+      });
+    }
+
   }//end of ngOnInIt
 
   initMedicinesData(i) {
-      console.log("initmedicineData test:",this.medData[i].MedName);
+    console.log("initmedicineData test:", this.medData[i].MedName);
 
-      return this._fb.group({
+    return this._fb.group({
       name: [this.medData[i].MedName, Validators.required],
       frequency: [this.medData[i].MedFreq, Validators.required],
       day: [this.medData[i].MedDay],
@@ -105,7 +106,7 @@ export class MedicationReminderCareComponent implements OnInit {
 
   }//addMedicine
 
-   switchDay = (event) => {
+  switchDay = (event) => {
     let target = event.target || event.srcElement || event.currentTarget,
       mode = $(target).val(),
       medDays = $(target).parent().nextAll('.med_days'),
@@ -137,10 +138,10 @@ export class MedicationReminderCareComponent implements OnInit {
   }//switchDay()
 
 
-  saveMed = (model) => {
+  saveMed(model) {
     let job = model['value'];
-    console.log("this is medication job",Object.keys(job));
-   // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
+    console.log("this is medication job", Object.keys(job));
+    // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
     let medicines = job['medicines'],
       ctr = 0,
       flag;
@@ -155,6 +156,8 @@ export class MedicationReminderCareComponent implements OnInit {
     let reviewData = [];
 
     for (let i = 0; i < medicines.length; i++) {
+      console.log(medicines[i].name);
+      console.log(medicines[i])
 
       reminders.Job_Medicines.push({
         "Job_Frequency": medicines[i].frequency,
@@ -165,8 +168,8 @@ export class MedicationReminderCareComponent implements OnInit {
       });
       reviewData.push({
         "MedFreq": medicines[i].frequency,
-        "MedName": medicines[i].name,
-        "name": medicines[i].name,
+        "MedName": medicines[i].name.name,
+        "name": medicines[i].name.id,
         "MedTiming": medicines[i].timing,
         "MedDay": medicines[i].day,
         "MedDate": medicines[i].date,
@@ -199,26 +202,34 @@ export class MedicationReminderCareComponent implements OnInit {
       }//loop j
       ctr++;
     }//loop i
-    console.log("reminder value  test:",reminders);
-    console.log("review data is :",reviewData);
-    this._authService._saveReminders(reminders)
-      .then(
+    console.log("reminder value  test:", reminders);
+    console.log("review data is :", reviewData);
+    // this._authService._saveReminders(reminders)
+    //   .then(
 
-      data => {
-        this.itemAdded2 = true;
-        //console.log("Medication Reminder  data saved :",data);
-      }
-      );
-    console.log("the reminders value ",reminders);
+    //   data => {
+    //     this.itemAdded2 = true;
+    //     //console.log("Medication Reminder  data saved :",data);
+    //   }
+    //   );
+    console.log("the objectID value ", this.objectId);
+    console.log(reviewData[0]['MedName']);
+    console.log(reviewData[0]['name']);
     //  save data in onboarding Review
     var transTime = new Date();
-    this._authService._saveTransactionData(reviewData, this.objectId, 'MedicationReminder/').then(
-      res => {
-        let d = res;
-        this.itemAdded2 = true;
-        //console.log("response of onboarding save is",d);
-      });
+    var self = this;
+    setTimeout(
+      function () {
+        self._authService._saveTransactionData(reviewData, self.objectId, 'MedicationReminder/').then(
+          res => {
+            let d = res;
+            self.itemAdded2 = true;
+            //console.log("response of onboarding save is",d);
+          });
+      }, 200
+    )
+
   }//save
-  
+
 
 }

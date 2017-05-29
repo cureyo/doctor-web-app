@@ -777,6 +777,13 @@ export class AuthService {
     return this.af.database.object(this.db.Partners + userId)
 
   }
+   public _getOnePartner(userId, consultantId) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+
+    return this.af.database.object(this.db.Partners + userId + '/consultant/' + consultantId)
+
+  }
     public _savePartnerName(key, userId, data) {
 
     //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);

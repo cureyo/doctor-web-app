@@ -68,7 +68,9 @@
               </div> <!-- end of col-md-10-->
         </div>  <!-- end of row-->
         <!-- this is the component used for to create path ways-->
-        <app-create-path-ways  #createCarePathWaysID ></app-create-path-ways>
+     
+      
+        <app-create-path-ways  #createCarePathWaysID [doctorId]="doctorId" [partnerList]="partnerList" ></app-create-path-ways>
         <app-existing-path-ways #existingCarePathWaysID [doctorId]="doctorId" [partnerList]="partnerList"></app-existing-path-ways>
 
 

@@ -118,8 +118,8 @@ export class LabTestCareComponent implements OnInit {
       });
        reviewData.push({
         "TestFreq" : labtests[i].frequency,
-        "name" : labtests[i].name,
-        "TestName" : labtests[i].name,
+        "name" : labtests[i].name.id,
+        "TestName" : labtests[i].name.name,
         "TestTime" : labtests[i].timing,
          "TestDay" : labtests[i].day,
         "TestDate" : labtests[i].date,
@@ -153,22 +153,28 @@ export class LabTestCareComponent implements OnInit {
     }//loop i
     //console.log("the reminders value ",reminders);
 
-    this._authService._saveReminders(reminders)
-      .then(
-        data => {
-          this.itemAdded3 = true;
-            //console.log("lab test data saved :",data);
-        }
-      );
+    // this._authService._saveReminders(reminders)
+    //   .then(
+    //     data => {
+    //       this.itemAdded3 = true;
+    //         //console.log("lab test data saved :",data);
+    //     }
+    //   );
       //console.log("the reminders value ",labtests);
     // //  save data in onboarding Review
     var transTime = new Date();
-      this._authService._saveTransactionData(reviewData,this.objectId,  'LabTest/').then(
+    var self = this;
+    setTimeout(
+      function() {
+        self._authService._saveTransactionData(reviewData,self.objectId,  'LabTest/').then(
         res =>{
           let d=res;
-          this.itemAdded3 = true;
+          self.itemAdded3 = true;
           //console.log("response of onboarding save is",d);
       })
+      }, 200
+    )
+      
       
   }//save
 

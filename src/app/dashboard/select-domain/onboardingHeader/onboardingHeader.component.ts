@@ -78,27 +78,7 @@ export class OnboardingHeaderComponent implements OnInit {
             if (qParams['onboarding'] == "yes") {
               this.onboarding = true;
             }
-            // if (this.section == "website") {
-            //   this.website = true;
-            //   this.facebook = false;
-            //   this.partners = false;
-            //   this.care = false;
-            // } else if (this.section == "facebook") {
-            //   this.website = false;
-            //   this.facebook = true;
-            //   this.partners = false;
-            //   this.care = false;
-            // } else if (this.section == "partners") {
-            //   this.website = false;
-            //   this.facebook = false;
-            //   this.partners = true;
-            //   this.care = false;
-            // } else if (this.section == "care") {
-            //   this.website = false;
-            //   this.facebook = false;
-            //   this.partners = false;
-            //   this.care = true;
-            // }
+          
             console.log(this.router.url);
             //console.log(this.router.);
             console.log(window.location.pathname);
