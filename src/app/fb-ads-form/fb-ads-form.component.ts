@@ -68,6 +68,7 @@ export class FbAdsFormComponent implements OnInit {
   private previewURL: any;
   private fullModel: any;
   private previewReady: boolean = false;
+  //private nextButtonFlag:boolean=false;
   private doneModal: boolean = false;
   storage: any;
   uploader: FileUploader = new FileUploader({ url: '' });
@@ -86,6 +87,20 @@ export class FbAdsFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    //  this.route.params.subscribe(
+    //         params => {
+            
+    //         this.route.queryParams.subscribe(
+    //          qParam=> {
+    //            if (qParam['onboarding']=="yes") {
+    //              this.nextButtonFlag=true;
+    //            }
+    //          }
+    //         )
+    //         //console.log("param value test:",this.routeparam);
+    //         //end of param
+    //       });
+     
     let mS2, ddS2;
     var sDate = new Date();
     var mS = sDate.getMonth() + 1;
@@ -168,7 +183,7 @@ export class FbAdsFormComponent implements OnInit {
                 console.log(adsData);
                 this.currentAdsList = adsData;
                 console.log("******",this.currentAdsList[0])
-                let city = this.currentAdsList[0].targetCitySearch;
+                
                 // for (let each of adsData) {
                 //   if (each != '$key' && each !='$exists')
                 //   {this.currentAdsList[ctr] = adsData[each];
@@ -181,7 +196,7 @@ export class FbAdsFormComponent implements OnInit {
                 }
                 console.log("this is usertable response:", userTable);
                 this.clinicID = userTable.clinicWebsite;
-                this.initFB(userTable.fbPageId, city);
+                this.initFB(userTable.fbPageId);
                 this.clinicID = userTable.clinicWebsite.indexOf(".");
                 if (this.clinicID == -1) {
                   this.clinicID = userTable.clinicWebsite.length;
@@ -367,7 +382,7 @@ window.scrollTo(0, 0);
     this.formReady = true;
     this.imgReady = true;
   }
-  initFB(pageId, city) {
+  initFB(pageId) {
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
@@ -382,7 +397,7 @@ window.scrollTo(0, 0);
           this.fbAccessToken = response.authResponse.accessToken;
 
           this.fetchPages();
-
+            let city = this.currentAdsList[0].targetCitySearch;
           this.searchCity(city);
 
         } else {
@@ -562,32 +577,37 @@ window.scrollTo(0, 0);
                       })
                   }).catch(
         error => {
-           if (error.error_user_msg)
-        alert(error.error_user_msg);
-        else if (error.message)
-        alert(error.message);
-          console.log(error);
-          this.waiting = false;
+
+            if (error.error_user_msg)
+            alert(error.error_user_msg);
+            else if (error.message)
+            alert(error.message);
+            console.log(error);
+            this.waiting = false;
         }
       )
               }).catch(
         error => {
+
            if (error.error_user_msg)
         alert(error.error_user_msg);
         else if (error.message)
         alert(error.message);
           console.log(error);
           this.waiting = false;
+
         }
       )
           }).catch(
         error => {
-            if (error.error_user_msg)
+
+        if (error.error_user_msg)
         alert(error.error_user_msg);
         else if (error.message)
         alert(error.message);
           console.log(error);
           this.waiting = false;
+
         }
       )
       });
@@ -736,12 +756,14 @@ window.scrollTo(0, 0);
       }
       ).catch(
         error => {
-            if (error.error_user_msg)
-        alert(error.error_user_msg);
-        else if (error.message)
-        alert(error.message);
-          console.log(error);
-          this.waiting = false;
+
+      if (error.error_user_msg)
+      alert(error.error_user_msg);
+      else if (error.message)
+      alert(error.message);
+      console.log(error);
+      this.waiting = false;
+
            
         }
       )
@@ -820,6 +842,7 @@ window.scrollTo(0, 0);
               this.previewReady = true;
             }).catch(
         error => {
+
            if (error.error_user_msg)
         alert(error.error_user_msg);
         else if (error.message)

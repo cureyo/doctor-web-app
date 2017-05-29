@@ -32,6 +32,7 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   ngOnInit() {
+      console.log("MedName as input is",this.MedNames);
        if(this.objectId){
           this.MedForm = this._fb.group({
               medicines: this._fb.array([
@@ -46,6 +47,7 @@ export class MedicationReminderCareComponent implements OnInit {
          console.log("response data based one the object Id:",response);
               
              if (this.medData){
+               console.log("its called wid",this.medData)
                var index=0;
               this.MedForm = this._fb.group({
               medicines:this._fb.array([ 
@@ -71,6 +73,8 @@ export class MedicationReminderCareComponent implements OnInit {
   }//end of ngOnInIt
 
   initMedicinesData(i) {
+      console.log("initmedicineData test:",this.medData[i].MedName);
+
       return this._fb.group({
       name: [this.medData[i].MedName, Validators.required],
       frequency: [this.medData[i].MedFreq, Validators.required],
@@ -134,8 +138,9 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   saveMed = (model) => {
-
     let job = model['value'];
+    console.log("this is medication job",Object.keys(job));
+   // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
     let medicines = job['medicines'],
       ctr = 0,
       flag;
@@ -153,15 +158,15 @@ export class MedicationReminderCareComponent implements OnInit {
 
       reminders.Job_Medicines.push({
         "Job_Frequency": medicines[i].frequency,
-        "Medicine_Name": [medicines[i].name.name],
+        "Medicine_Name": [medicines[i].name],
         "Job_Time": medicines[i].timing,
         "Job_Day": medicines[i].day,
         "Job_Date": medicines[i].date
       });
       reviewData.push({
         "MedFreq": medicines[i].frequency,
-        "MedName": medicines[i].name.name,
-        "name": medicines[i].name.name,
+        "MedName": medicines[i].name,
+        "name": medicines[i].name,
         "MedTiming": medicines[i].timing,
         "MedDay": medicines[i].day,
         "MedDate": medicines[i].date,
@@ -194,7 +199,8 @@ export class MedicationReminderCareComponent implements OnInit {
       }//loop j
       ctr++;
     }//loop i
-
+    console.log("reminder value  test:",reminders);
+    console.log("review data is :",reviewData);
     this._authService._saveReminders(reminders)
       .then(
 
@@ -203,7 +209,7 @@ export class MedicationReminderCareComponent implements OnInit {
         //console.log("Medication Reminder  data saved :",data);
       }
       );
-    //console.log("the reminders value ",reminders);
+    console.log("the reminders value ",reminders);
     //  save data in onboarding Review
     var transTime = new Date();
     this._authService._saveTransactionData(reviewData, this.objectId, 'MedicationReminder/').then(
@@ -213,6 +219,6 @@ export class MedicationReminderCareComponent implements OnInit {
         //console.log("response of onboarding save is",d);
       });
   }//save
-
+  
 
 }

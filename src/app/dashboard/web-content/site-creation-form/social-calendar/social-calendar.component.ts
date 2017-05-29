@@ -16,6 +16,7 @@ export class SocialCalendarComponent implements OnInit {
    private sitename:any;
    private articleArray: any = [];
    private articlesReady: boolean = true;
+   private temp:any[];
   constructor(
               private _fb: FormBuilder,
               private _fs: FbService,
@@ -26,6 +27,7 @@ export class SocialCalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
        this.socialForm=this._fb.group({
       newsArticlesFreq:['Daily',Validators.required],
       didUKnowFreq:['Weekly',Validators.required],
@@ -37,12 +39,7 @@ export class SocialCalendarComponent implements OnInit {
         this._authService._fetchUser(data.user.uid)
         .subscribe(
           user => {
-            // this.getArticles(user.specializations)
-            // .subscribe(
-            //   articleData => {
-            //     console.log(articleData);
-            //     this.articleArray = articleData.posts
-            //     this.articlesReady = true;
+
             //   }
             // )
           }
@@ -51,17 +48,23 @@ export class SocialCalendarComponent implements OnInit {
     )
   }//end of ngoninit
 getArticles(terms) {
-  let query = "", or = "";
-  for (let item of terms) {
-    query = query + or;
-    query =  query + '"'+ item.details.name+ '"'
-    or = " OR "
-  }
-  query = query + ""
-  let url ="http://webhose.io/filterWebContent?token=214a3179-152d-4ccb-aca8-8c213c019df2&format=json&ts=1492800168017&sort=relevancy&q=" + query + "%20site_category%3Ahealth%20language%3Aenglish%20site_category%3Ahealth%20site%3A(webmd.com%20OR%20healthline.com%20OR%20nhs.co.uk)"
-//let url = "http://webhose.io/filterWebContent?token=214a3179-152d-4ccb-aca8-8c213c019df2&format=json&ts=1492800168017&sort=relevancy&site_category%3Ahealth%20language%3Aenglish%20site_category%3Ahealth%20site%3A(webmd.com%20OR%20healthline.com%20OR%20nhs.co.uk)&q=" + query;
-console.log(url);
-return this.http.get(url).map(res=> res.json());
+//   let query = "", or = "";
+//   for (let item of terms) {
+//     query = query + or;
+//     query =  query + '"'+ item.details.name+ '"'
+//     or = " OR "
+//   }
+//   query = query + ""
+//   let url ="http://webhose.io/filterWebContent?token=214a3179-152d-4ccb-aca8-8c213c019df2&format=json&ts=1492800168017&sort=relevancy&q=" + query + "%20site_category%3Ahealth%20language%3Aenglish%20site_category%3Ahealth%20site%3A(webmd.com%20OR%20healthline.com%20OR%20nhs.co.uk)"
+// //let url = "http://webhose.io/filterWebContent?token=214a3179-152d-4ccb-aca8-8c213c019df2&format=json&ts=1492800168017&sort=relevancy&site_category%3Ahealth%20language%3Aenglish%20site_category%3Ahealth%20site%3A(webmd.com%20OR%20healthline.com%20OR%20nhs.co.uk)&q=" + query;
+// console.log(url);
+// return this.http.get(url).map(res=> res.json());
+// console.log("terms values",terms);
+
+
+// this.temp.push(terms);
+return terms;
+
 }
    save_socialForm=(model)=>{
     this._authService._getUser()

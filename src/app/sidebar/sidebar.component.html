@@ -52,6 +52,17 @@
                  </ul>
                 </div>
             </li>
+                       <!-- web site button -->
+              <li routerLinkActive="active">
+                <a [routerLink]="['out-patient-dept']" id="out-patients"  style="z-index: 100000;">
+                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                    
+                    <p>Out-patients</p>
+                </a>
+
+            
+
+            </li>
             <!--<li routerLinkActive="active">
                 <a  id="profileButton" style="z-index: 100000;"  (click)="coProfileMenu()">
                     <i class="material-icons">person</i>
@@ -210,29 +221,25 @@
                     </a>
 
             </li>
+  <li routerLinkActive="active">
+                <a [routerLink]="['partners']" id="partners-bar"  style="z-index: 100000;">
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                    <p>Partners</p>
+                </a>
 
+            </li>
              <!-- end of Jobs-->
                         <!-- web site button -->
-              <li routerLinkActive="active">
-                <a  [routerLink]="['Ads']" id="social"  style="z-index: 100000;">
-                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                    <p>Social</p>
+             <li routerLinkActive="active">
+                <a [routerLink]="['patient-hx-forms']" id="patient-hx"  style="z-index: 100000;">
+                    <i class="fa fa-wpforms" aria-hidden="true"></i>
+                    <p>Patient History Forms</p>
                 </a>
 
             </li>
              <!-- end of Jobs-->
                           <!-- end of Jobs-->
-                        <!-- web site button -->
-              <li routerLinkActive="active">
-                <a [routerLink]="['out-patient-dept']" id="out-patients"  style="z-index: 100000;">
-                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
-                    
-                    <p>Out-patients</p>
-                </a>
-
-            
-
-            </li>
+             
               <li routerLinkActive="active">
                 <a [routerLink]="['care-paths']" id="care-paths"  style="z-index: 100000;">
                     <i class="fa fa-heartbeat" aria-hidden="true"></i>
@@ -240,20 +247,14 @@
                 </a>
 
             </li>
-            <li routerLinkActive="active">
-                <a [routerLink]="['patient-hx-forms']" id="patient-hx"  style="z-index: 100000;">
-                    <i class="fa fa-wpforms" aria-hidden="true"></i>
-                    <p>Patient History Forms</p>
+           
+                      <li routerLinkActive="active">
+                <a  [routerLink]="['Ads']" id="social"  style="z-index: 100000;">
+                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                    <p>Social</p>
                 </a>
 
-            </li>
-                        <li routerLinkActive="active">
-                <a [routerLink]="['partners']" id="partners-bar"  style="z-index: 100000;">
-                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
-                    <p>Partners</p>
-                </a>
-
-            </li>
+            </li>  
              <!-- end of Jobs-->
             
         </ul>

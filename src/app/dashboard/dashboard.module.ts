@@ -17,7 +17,9 @@ import { HerotilesComponent } from './web-content/site-creation-form/herotiles/h
 import { BookingtileComponent } from './web-content/site-creation-form/bookingtile/bookingtile.component';
 import { SlotBookingComponent } from './web-content/site-creation-form/slot-booking/slot-booking.component';
 import { SelectDomainComponent } from './select-domain/select-domain.component';
-import { FooterComponent } from './web-content/site-creation-form/footer/footer.component'
+import { FooterComponent } from './web-content/site-creation-form/footer/footer.component';
+import { CreatePathWaysComponent } from './care-pathways/create-path-ways/create-path-ways.component';
+import { ExistingPathWaysComponent } from './care-pathways/existing-path-ways/existing-path-ways.component'
 @NgModule({
     imports: [ RouterModule, CommonModule ],
     declarations:[
@@ -37,7 +39,9 @@ import { FooterComponent } from './web-content/site-creation-form/footer/footer.
                     BookingtileComponent,
                     SlotBookingComponent,
                     SelectDomainComponent,
-                    FooterComponent 
+                    FooterComponent,
+                    CreatePathWaysComponent,
+                    ExistingPathWaysComponent 
                        ],
     exports: [ DashboardComponent ]
 

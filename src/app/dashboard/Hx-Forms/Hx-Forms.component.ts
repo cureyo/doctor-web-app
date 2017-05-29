@@ -34,9 +34,15 @@ export class PatientHxFormComponent implements OnInit {
   private askIfs: any = [];
   private findCarePaths: FormGroup;
   private carePathsAvlbl: any;
+  //private nextButtonFlag:boolean=false;
 
 
-  constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
+  constructor(
+    private _fb: FormBuilder,
+     private _authService: AuthService,
+      private router: Router,
+       private route: ActivatedRoute,
+       private http: Http) {
 
 
   }
@@ -77,6 +83,24 @@ export class PatientHxFormComponent implements OnInit {
     }
   }
   ngOnInit() {
+      
+        // this.route.params.subscribe(
+        //     params => {
+            
+        //     this.route.queryParams.subscribe(
+        //      qParam=> {
+        //        if (qParam['onboarding']=="yes") {
+
+        //          this.nextButtonFlag=true;
+        //        }
+        //      }
+        //     )
+        //     //console.log("param value test:",this.routeparam);
+        //     //end of param
+        //   });
+
+
+
     this.updateDays();
     this.updateTimes();
     this.drDomain = this._fb.group({

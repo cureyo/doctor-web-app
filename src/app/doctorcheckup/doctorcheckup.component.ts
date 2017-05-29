@@ -56,6 +56,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private diseaseList: any = [];
   private listReady: any = [];
   private fullHList: any = [];
+  private clinicAddress:any;
+  private medSpecialities: any = [];
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -89,7 +91,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     console.log("In DoctorCheckup facebook method is :", method);
     //console.log("In DoctorCheckup fbparam data:",fbParams);
     this.getAllMedicalData();
-
+    this.getMedicalSpecialities();
     // this._authService.doclogin()
     //   .then(data => {
     //     this._fbs.getLoginStatus().then((response: FacebookLoginResponse) => {
@@ -153,6 +155,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
             this.initSpecializations()
           ]),
           'fbPageId': [''],
+          'fee':['', Validators.required],
           'clinic': ['', Validators.required],
           'qualification': ['', Validators.required],
           'numberConfirmed': [, Validators.required],
@@ -214,6 +217,10 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     
    
   }
+  getAddress(place:Event){
+    this.clinicAddress=place;
+    console.log("this is the places",this.clinicAddress);
+  }
 confirmOTP(otp) {
   if (otp == this.OTPValue) {
     this.OTPConfirmed = true;
@@ -237,7 +244,14 @@ confirmOTP(otp) {
 
   //   return this.sanitizer.bypassSecurityTrustResourceUrl(this.fbMessURL);
   // }
-
+getMedicalSpecialities() {
+this._authService._getMedicalSpecialities()
+.subscribe(
+  medData => {
+    this.medSpecialities = medData;
+  }
+)
+}
   submitForm3(form: any): void {
     console.log(form['specializations']);
     if (form.fbPageId) {
@@ -252,7 +266,21 @@ confirmOTP(otp) {
      
       form.specializations[spe]['details']['toString'] = null;
       console.log(form.specializations[spe]);
+    };
+    let partnerModel = {
+
+                    name: form.fullName,
+                    type: 'consultant',
+                    email: form.email,
+                    phone: form.phone,
+                    speciality: form.speciality,
+                    fee: form.fee,
+                    icon: "local_hospital",
+                    img: form.avatar,
+                    message: 'Hi! You can ignore this message. You are added as a default partner for your clinic.'
+                
     }
+    this._authService._addPartner(partnerModel, form.authUID, partnerModel.type, form.phone);
     if (form.fbPageAdded) {
       this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(
@@ -328,6 +356,7 @@ confirmOTP(otp) {
       .map((res: Response) => res.json());
 
   }
+  
   fetchPages(): void {
     //////console.log("this does not execute 2")
     if (this.fbAccessToken === null) {
@@ -412,4 +441,5 @@ confirmOTP(otp) {
     control.push(this.initSpecializations());
 
   }
+  
 }

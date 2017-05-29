@@ -247,6 +247,12 @@ export class AuthService {
      var scrollTo =  this.af.database.object(this.db.scrollTo  + clinicId + '/scrollTo')
      return scrollTo.set(section);
    }
+  public _getMedicalSpecialities() {
+    return this.af.database.object(this.db.MedicalSpecialities);
+  }
+  public _getMedicalVendors() {
+    return this.af.database.object(this.db.MedicalVendors);
+  }
   public _saveWebContentProfiletile(data, sitename) {
     //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/profileTile')
@@ -380,6 +386,10 @@ export class AuthService {
     return this.af.database.object(this.db.HxPaths + pathName);
 
   }//_getCarePathways
+
+  public _getConsultant(uid){
+    return this.af.database.object(this.db.Partners + uid);
+  }
   public _getHealthLineData(id) {
     console.log("calling search for Id: ", id, this.db.hlDatabase + id)
     return this.af.database.object(this.db.hlDatabase + id);

@@ -2,7 +2,7 @@
 <div class="main-content" id="carePathContent">
 <div class="container-fluid">
     <!--Existing Consultants-->
-    <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
+    <onboarding-header-cmp [section]="section" #onboardingID></onboarding-header-cmp>
 
 <form *ngIf="selectDrDomain" [formGroup]="drDomain" (keydown.enter)="$event.preventDefault()" class="form" style="margin-top:20px; margin-bottom:0%"
   novalidate>
@@ -150,6 +150,13 @@
    </div>
    </div>
 </form>
+             
 
+
+              <!--<div class="row">
+              <div class="pull-right">
+                    <a *ngIf="nextButtonFlag" id="nextButton" class="btn btn-warning btn-round" (click)="onboardingID.nextPage()" >Next</a>
+              </div>
+       </div>-->
 </div>
 </div>

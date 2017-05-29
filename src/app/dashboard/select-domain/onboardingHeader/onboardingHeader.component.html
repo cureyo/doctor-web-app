@@ -35,9 +35,11 @@
       </div>
       <hr/>
       <div class="card-footer">
+
       <p  style="margin-top: 20px;"><b>{{allLinks[finalPath].headingToShow}}</b></p>
       <p>{{allLinks[finalPath].textToShow}}</p>
       <a *ngIf="allLinks[finalPath].takeNext" class="pull-right btn btn-warning btn-round" (click)="nextPage(allLinks[finalPath].nextURL)" >Done</a>
+
     </div>
     </div>
   </div>

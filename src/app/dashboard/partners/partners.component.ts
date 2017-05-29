@@ -30,37 +30,55 @@ export class PartnerComponent implements OnInit {
     private consultantsPresent: boolean = false;
     private vendorsPresent: boolean = false;
     private addingConsultant: boolean = false;
+    private addingVendor: boolean = false;
     private sitename: any;
     private types: any = [];
     private currentConsultants: any = [];
     private currentVendors: any = [];
     private userId: any;
+    private medSpecialities: any = [];
+    private medVendors: any = [];
+    //private nextButtonFlag:boolean=false;
 
 
-    constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http) {
+    constructor(
+        private _fb: FormBuilder,
+        private _authService: AuthService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private http: Http) {
 
 
     }
 
     ngOnInit() {
 
+
+        //     this.route.params.subscribe(
+        //     params => {
+        //     this.route.queryParams.subscribe(
+        //      qParam=> {
+        //        if (qParam['onboarding']=="yes") {
+        //          this.nextButtonFlag=true;
+        //        }
+        //      }
+        //     )
+        //     //console.log("param value test:",this.routeparam);
+        //     //end of param
+        //   });
+        this.getMedicalSpecialities();
+        this.getMedicalVendors();
         this._authService._getUser()
             .subscribe(
             data => {
                 this.formReady = true;
-                this.types = [
-                    { name: "Dietician", type: "consultant", icon: "restaurant_menu" },
-                    { name: "Doctor", type: "consultant", icon: "local_hospital" },
-                    { name: "Physiotherapist", type: "consultant", icon: "accessibility" },
-                    { name: "Fitness Instructor", type: "consultant", icon: "directions_run" },
-                    { name: "Pharmacy", type: "vendor", icon: "toll" },
-                    { name: "Pathological Lab", type: "vendor", icon: "invert_colors" }
-                ]
+
                 this.partnerForm = this._fb.group({
                     name: ['', Validators.required],
                     type: ['', Validators.required],
                     email: ['', Validators.required],
                     phone: ['', Validators.required],
+                    speciality: ['', Validators.required],
                     fee: [''],
                     icon: [''],
                     img: [''],
@@ -72,7 +90,7 @@ export class PartnerComponent implements OnInit {
                     .subscribe(
                     partnerList => {
                         console.log(partnerList);
-                        let partnersC = [],partnersV = [];
+                        let partnersC = [], partnersV = [];
                         if (partnerList['consultant']) {
                             let ctr = 0;
                             let consultants = partnerList['consultant'];
@@ -80,12 +98,11 @@ export class PartnerComponent implements OnInit {
                             for (let item in consultants) {
 
                                 console.log(item)
-                                if (item != 'length' && item != '$exists' && item != '$key') 
-                                {
+                                if (item != 'length' && item != '$exists' && item != '$key' && consultants[item].name != 'self') {
                                     partnersC[ctr] = consultants[item];
                                     ctr++
                                 }
-                                    
+
                             }
                             this.currentConsultants = partnersC;
                             this.consultantsPresent = true;
@@ -97,21 +114,20 @@ export class PartnerComponent implements OnInit {
                             let ctr = 0;
                             let vendor = partnerList['vendor'];
                             for (let item in vendor) {
-                                
+
                                 console.log(item)
-                                if (item != 'length' && item != '$exists' && item != '$key')
-                                   {
+                                if (item != 'length' && item != '$exists' && item != '$key') {
                                     partnersV[ctr] = vendor[item];
                                     ctr++
                                 }
                             }
-                             console.log(partnersV);
+                            console.log(partnersV);
                             this.currentVendors = partnersV;
                             this.vendorsPresent = true;
-                            
+
                         }
 
-                       
+
 
                     }
                     )
@@ -121,25 +137,72 @@ export class PartnerComponent implements OnInit {
     addPartner(form) {
         let model = form.value;
         console.log(model);
-        let type = this.types[model['type']].type;
-        model['icon'] = this.types[model['type']].icon;
-        model['type'] = this.types[model['type']].name;
-        model['category'] = type;
+        let type = model['type'];
+        // model['icon'] = this.types[model['type']].icon;
+        // model['type'] = this.types[model['type']].name;
+        // model['category'] = type;
+        let types = {
+            "Dietician" : "restaurant_menu",
+            "Physiotherapist": "accessibility",
+            "Physical Medicine & Rehabilitation": "directions_run",
+            "Physical Therapist": "directions_run",
+            "Pharmacy": "toll",
+            "Pathological Lab": "invert_colors",
+            "Radiological Lab":"settings_overscan",
+            "Ultrasound Center": "settings_overscan",
+            "X-ray Center": "settings_overscan"
+        };
+             if (types[model['type']]) {
+                 model['icon'] = types[model['type']].icon;
+             } else {
+                 model['icon'] = "local_hospital"
+             }
+                
+                
         this._authService._addPartner(model, this.userId, type, model.phone).then(
             data => {
                 console.log(data);
                 this._authService._savePartnerName(model.phone, this.userId, model);
-                this.partnerForm.reset();
-            }
+                this.partnerForm = this._fb.group({
+                    name: ['', Validators.required],
+                    type: ['', Validators.required],
+                    email: ['', Validators.required],
+                    phone: ['', Validators.required],
+                    speciality: ['', Validators.required],
+                    fee: [''],
+                    icon: [''],
+                    img: [''],
+                    message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
+                });          }
         )
     }
     changeAddType(partnerForm) {
         console.log(partnerForm)
-        if (this.types[partnerForm.value].type == "vendor") {
+        if (partnerForm.value == "vendor") {
             this.addingConsultant = false;
-        } else {
+            this.addingVendor = true;
+            this.partnerForm.controls['speciality'].reset();
+        } else if (partnerForm.value == "consultant") {
             this.addingConsultant = true;
+            this.addingVendor = false;
+            this.partnerForm.controls['speciality'].reset();
         }
+    }
+    getMedicalSpecialities() {
+        this._authService._getMedicalSpecialities()
+            .subscribe(
+            medData => {
+                this.medSpecialities = medData;
+            }
+            )
+    }
+    getMedicalVendors() {
+        this._authService._getMedicalVendors()
+            .subscribe(
+            vendorData => {
+                this.medVendors = vendorData;
+            }
+            )
     }
 }
 

@@ -64,7 +64,17 @@
               </div>
                  <div class="form-group" style="width: 48%; margin-left:4%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['speciality'].valid && signupForm.controls['speciality'].touched}">
     <label class="control-label" for="co_speciality">Specialization (e.g., Gynaecologist)</label>
-    <input type="text" class="form-control" [formControl]="signupForm.controls['speciality']" />
+    <!--<input type="text" class="form-control" [formControl]="signupForm.controls['speciality']" />-->
+     <input auto-complete
+                                  
+                                  display-property-name="name"
+                                  value-property-name="name"
+                                  [list-formatter]="autocompleListFormatter"
+                                  class="form-control"
+                                  formControlName="speciality"
+                                  [source]="medSpecialities"
+                                  min-chars="3"
+                                  id="details"/>
   </div>
 <div class="card card-content">
   <h4>Add your Specialization Areas</h4>
@@ -125,12 +135,26 @@
                 <input type="text" class="form-control" [formControl]="signupForm.controls['clinic']" />
               </div>
                <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['clinicLocation'].valid && signupForm.controls['clinicLocation'].touched}">
+
                 <label class="control-label" for="user_clinicLocation">Clinic City</label>
-                <input type="text" class="form-control" id="user_clinicLocation" [formControl]="signupForm.controls['clinicLocation']" />
+
+                <input type="text" id="user_clinicLocation" [formControl]="signupForm.controls['clinicLocation']" class="form-control"  (setAddress)="getAddress($event)" [options]="{      
+                      types: ['(cities)'],
+                      componentRestrictions: { country: 'IN' }
+                    }"  ng2-google-place-autocomplete />
+
+                <!--<input type="text" class="form-control" id="user_clinicLocation" [formControl]="signupForm.controls['clinicLocation']" />-->
+
  </div>
-            <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['address'].valid && signupForm.controls['address'].touched}">
+            <div class="form-group" style="width: 85%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['address'].valid && signupForm.controls['address'].touched}">
                 <label class="control-label" >Clinic Address</label>
-                <input type="text" class="form-control" [formControl]="signupForm.controls['address']" />
+                <input type="text" [formControl]="signupForm.controls['address']" class="form-control">
+                <!--<input type="text" class="form-control" [formControl]="signupForm.controls['address']" />-->
+              </div>
+              <div class="form-group" style="width: 11%; float: left; z-index: 10000; margin-top: 0px; margin-left: 4%;margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['address'].valid && signupForm.controls['address'].touched}">
+                <label class="control-label" >Fee</label>
+                <input type="text" [formControl]="signupForm.controls['fee']" class="form-control">
+                
               </div>
                </div>  
 <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;">
@@ -204,7 +228,7 @@
            
 </div>
 
-           <div class="alert alert-danger" *ngIf="!signupForm.controls['phone'].valid && (showErrorFlag || signupForm.controls['phone'].touched)">You must provide a phone number</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['phone'].valid && (showErrorFlag || signupForm.controls['phone'].touched)">You must provide a phone number</div>
     <div class="alert alert-danger" *ngIf="!signupForm.controls['email'].valid &&  (showErrorFlag || signupForm.controls['email'].touched)">You must provide a valid email</div>
     <div class="alert alert-danger" *ngIf="!signupForm.controls['experience'].valid &&  (showErrorFlag || signupForm.controls['experience'].touched)">Please indicate your experience</div>
     <div class="alert alert-danger" *ngIf="!signupForm.controls['firstName'].valid &&  (showErrorFlag || signupForm.controls['firstName'].touched)">Please indicate your first name</div>

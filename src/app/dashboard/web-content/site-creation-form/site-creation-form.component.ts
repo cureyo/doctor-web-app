@@ -25,9 +25,13 @@ export class SiteCreationFormComponent implements OnInit {
   private online: any = "Online";
   private physical: any = "Physical";
   private websiteLink: any;
+
   private sectionList: any = [];
   private showingSection: any;
   private clinicId: any;
+
+
+  //private nextButtonFlag:boolean=false;
 
   constructor(
     private _fb: FormBuilder,

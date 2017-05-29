@@ -1,7 +1,7 @@
 <div class="main-content" id="partnerContent">
 <div class="container-fluid">
     <!--Existing Consultants-->
-    <onboarding-header-cmp [section]="section"></onboarding-header-cmp>
+    <onboarding-header-cmp [section]="section" #onboardingID></onboarding-header-cmp>
     <div *ngIf="consultantsPresent" class="row">
         <h4>Consultant Partners</h4>
         <br>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="content">
-                    <h6 class="category text-gray">{{partner.type}}</h6>
+                    <h6 class="category text-gray">{{partner.speciality}}</h6>
                     <h4 class="card-title">{{partner.name}}</h4>
                     <p class="card-content">
                         {{partner.email}} | 
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="content">
-                    <h6 class="category text-gray">{{partner.type}}</h6>
+                    <h6 class="category text-gray">{{partner.speciality}}</h6>
                     <h4 class="card-title">{{partner.name}}</h4>
                     <p class="card-content">
                         {{partner.email}} | 
@@ -57,7 +57,7 @@
     <div class="card-content">
  <form *ngIf="formReady" [formGroup]="partnerForm" class="form">
     <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-2">
                                 <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <label class="control-label">Name</label>
@@ -70,11 +70,41 @@
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <label class="control-label">Type</label>
                                       <select formControlName="type" class="form-control" (change)="changeAddType(partnerForm.controls['type'])">
-      <option value="{{i}}" *ngFor="let item of types; let i = index;" >{{item.name}}</option>
+      <option value="consultant" >Consultant (Doctor)</option>
+      <option value="consultant" >Consultant (Others)</option>
+      <option value="vendor" >Service Provider</option>
     </select>
                                     </div>
                                 </div>
               </div>    
+               <div *ngIf="addingConsultant" class="col-sm-2">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Speciality</label>
+                                        <input auto-complete
+                                  
+                                  display-property-name="name"
+                                  value-property-name="name"
+                                  [list-formatter]="autocompleListFormatter"
+                                  class="form-control"
+                                  formControlName="speciality"
+                                  [source]="medSpecialities"
+                                  min-chars="3"
+                                  id="details"/>
+                                    </div>
+                                </div>
+              </div>   
+              <div *ngIf="addingVendor" class="col-sm-2">
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Provider for</label>
+                                       <select formControlName="speciality" class="form-control">
+      <option value="{{vendor}}" *ngFor="let vendor of medVendors">{{vendor}}</option>
+
+    </select>
+                                    </div>
+                                </div>
+              </div>  
                <div class="col-sm-3">
                                 <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
@@ -115,8 +145,20 @@
                <button (click)="addPartner(partnerForm)"class="btn btn-warning btn-round pull-right">Add Partner</button>
               </div>
     </div>
+
+
+
  </form>
     </div>
+
+
 </div>
+   
+    <!--<div class="row">
+              <div class="pull-right">
+                    <a *ngIf="nextButtonFlag" id="nextButton" class="btn btn-warning btn-round" (click)="onboardingID.nextPage()" >Next</a>
+              </div>
+       </div>-->
+
 </div>
 </div>
