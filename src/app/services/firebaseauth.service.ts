@@ -241,6 +241,12 @@ export class AuthService {
     return webcontentdata.set(data);
 
   }//save webcontentHeroTile data
+    public _putScrollToSection(clinicId, section){
+     console.log(this.db.scrollTo  + clinicId + '/scrollTo', section);
+      //console.log("insight get function called ",this.db.PatientsInsights +'/'+doctorID+'/'+ userID);
+     var scrollTo =  this.af.database.object(this.db.scrollTo  + clinicId + '/scrollTo')
+     return scrollTo.set(section);
+   }
   public _saveWebContentProfiletile(data, sitename) {
     //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/profileTile')

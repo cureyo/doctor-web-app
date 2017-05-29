@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../../../services/firebaseauth.service";
@@ -11,10 +11,11 @@ import { ImageSearchComponent } from 'fb-ads-form/image-search/image-search.comp
 @Component({
   selector: 'app-site-creation-form',
   templateUrl: './site-creation-form.component.html',
- // styleUrls: ['./site-creation-form.component.css']
+  // styleUrls: ['./site-creation-form.component.css']
 })
 export class SiteCreationFormComponent implements OnInit {
   @ViewChild(ImageSearchComponent) imgSearchCmp: ImageSearchComponent;
+
   private routeparam: any;
   private site_PrefilledData: any;
   private herotiles: any;
@@ -24,6 +25,9 @@ export class SiteCreationFormComponent implements OnInit {
   private online: any = "Online";
   private physical: any = "Physical";
   private websiteLink: any;
+  private sectionList: any = [];
+  private showingSection: any;
+  private clinicId: any;
 
   constructor(
     private _fb: FormBuilder,
@@ -35,37 +39,49 @@ export class SiteCreationFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //get the param
+ 
     this.route.params.subscribe(
       params => {
         this.routeparam = params['id'];
 
         //console.log("param value test in site creation form :", this.routeparam);
         var n = this.routeparam.indexOf('.')
-        var pathRoute = this.routeparam.substring(0,n);
-         let tempURL2 = "http://"+ pathRoute + ".cureyo.com";
+        var pathRoute = this.routeparam.substring(0, n);
+        this.clinicId = pathRoute;
+        let tempURL2 = "http://" + pathRoute + ".cureyo.com/?scrollToSec=" + this.showingSection;
         this.websiteLink = this.sanitizer.bypassSecurityTrustResourceUrl(tempURL2);
         //console.log(pathRoute)
+        this.showSection("heroSection")
         this._authService._getSiteData(pathRoute).
           subscribe(res => {
             this.site_PrefilledData = res;
             this.herotiles = this.site_PrefilledData.heroTile;
             this.bookingtiles = this.site_PrefilledData.bookingTile;
             this.profileTile = this.site_PrefilledData.profileTile;
-            
-            //console.log("prefilled data res",this.site_PrefilledData);
-            // //console.log("hero tiles data",this.herotiles);
-            // //console.log("booking tiles data",this.bookingtiles);
+
           })
       });
     //end of param
-window.scrollTo(0, 0);
-          var elmnt = document.getElementById("webPreviewSec");
-    // console.log(elmnt);
-    elmnt.scrollIntoView();
+
 
 
   }
-
+  showSection(section) {
+    console.log(section);
+    console.log(this.herotiles);
+    console.log(this.bookingtiles);
+    var d = document.getElementById('iFrameWeb')
+    console.log(d);
+    console.log(d.innerHTML);
+    var n = this.routeparam.indexOf('.')
+    var pathRoute = this.routeparam.substring(0, n);
+    this.showingSection = section;
+    
+    this._authService._putScrollToSection(pathRoute, section)
+    .then(
+      data=> console.log(data)
+    )
+  
+  }
 
 }

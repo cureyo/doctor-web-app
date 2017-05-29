@@ -54,7 +54,7 @@ export class HerotilesComponent implements OnInit {
         card_title: [this.herotiles.card.title, Validators.required],
         site_text: [this.herotiles.text, Validators.required],
         fb_Profile: ['https://graph.facebook.com/' + data.user.uid + '/picture?type=large', Validators.required],
-        bg_Pic: [this.imgSearchCmp.imgSelected, Validators.required]
+        bg_Pic: [this.imgSearchCmp.imgSelected]
       });
         }
       )
@@ -75,8 +75,10 @@ export class HerotilesComponent implements OnInit {
 
   }
   save_heroTile = (model) => {
-    ////console.log(job);
+    console.log(model);
+    
     let job = model['value'];
+    job['bg_Pic'] = this.imgSearchCmp.imgSelected;
     //console.log(job);
     let reminder = {
       title: job['title'],

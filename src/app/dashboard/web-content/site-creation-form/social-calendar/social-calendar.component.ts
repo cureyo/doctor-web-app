@@ -37,14 +37,14 @@ export class SocialCalendarComponent implements OnInit {
         this._authService._fetchUser(data.user.uid)
         .subscribe(
           user => {
-            this.getArticles(user.specializations)
-            .subscribe(
-              articleData => {
-                console.log(articleData);
-                this.articleArray = articleData.posts
-                this.articlesReady = true;
-              }
-            )
+            // this.getArticles(user.specializations)
+            // .subscribe(
+            //   articleData => {
+            //     console.log(articleData);
+            //     this.articleArray = articleData.posts
+            //     this.articlesReady = true;
+            //   }
+            // )
           }
         )
       }
