@@ -26,6 +26,7 @@ export class FbAdsFormComponent implements OnInit {
   private waiting: boolean = false;
   private pageIdSelected: any;
   private pageImagesUrl: any;
+  private currentItem: any = "Show";
   private imgReady: boolean = true;
   private endDateReady: boolean = true;
   public userID: any;
@@ -63,6 +64,7 @@ export class FbAdsFormComponent implements OnInit {
   private cityList: any = [];
   private tgtSpecList: any = [];
   private ageGroup: any = [];
+  private itemArray: any = [];
   private citySearched: boolean = false;
   private adPreview: any;
   private previewURL: any;
@@ -100,7 +102,7 @@ export class FbAdsFormComponent implements OnInit {
     //         //console.log("param value test:",this.routeparam);
     //         //end of param
     //       });
-     
+     this.itemArray = ["Show", "Target", "Spend"]
     let mS2, ddS2;
     var sDate = new Date();
     var mS = sDate.getMonth() + 1;
@@ -222,10 +224,10 @@ export class FbAdsFormComponent implements OnInit {
 
       })
 
-window.scrollTo(0, 0);
-          var elmnt = document.getElementById("fbPageTop");
-    // console.log(elmnt);
-    elmnt.scrollIntoView();
+// window.scrollTo(0, 0);
+//           var elmnt = document.getElementById("fbPageTop");
+//     // console.log(elmnt);
+//     elmnt.scrollIntoView();
   }
   // reForm(pageID, adAccountID, clinicID) {
 
@@ -689,7 +691,7 @@ window.scrollTo(0, 0);
     AdsData['userId'] = this.userID;
     AdsData['campaignID'] = this.campaignID;
     AdsData['adAccount'] = AdsJob['adAccount'];
-    AdsData['pageID'] = this.pageID;
+    AdsData['pageID'] = AdsJob['pageID'];
     AdsData['BID'] = AdsJob['BID'];
     AdsData['budget'] = AdsJob['budget'];
     AdsData['name'] = AdsJob['name'] ;
@@ -815,8 +817,8 @@ window.scrollTo(0, 0);
         console.log(this.fbAccessToken)
         if (response.status === 'connected') {
           console.log(this.fileUrl)
-          console.log('/' + model['adAccount'] + '/generatepreviews?ad_format=MOBILE_FEED_STANDARD&creative[object_story_spec][link_data][call_to_action][type]=' + this.objectives[model['callToAction']].cta + '&creative[object_story_spec][link_data][call_to_action][value][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][description]=' + model['subtext'] + '&creative[object_story_spec][link_data][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][message]=' + model['msg'] + '&creative[object_story_spec][link_data][name]=' + model['caption'] + '&creative[object_story_spec][link_data][picture]=' + this.fileUrl + '&creative[object_story_spec][page_id]=' + this.pageID);
-          this._fs.api('/' + model['adAccount'] + '/generatepreviews?ad_format=MOBILE_FEED_STANDARD&creative[object_story_spec][link_data][call_to_action][type]=' + this.objectives[model['callToAction']].cta + '&creative[object_story_spec][link_data][call_to_action][value][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][description]=' + model['subtext'] + '&creative[object_story_spec][link_data][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][message]=' + model['msg'] + '&creative[object_story_spec][link_data][name]=' + model['caption'] + '&creative[object_story_spec][link_data][picture]=' + this.fileUrl + '&creative[object_story_spec][page_id]=' + this.pageID)
+          console.log('/' + model['adAccount'] + '/generatepreviews?ad_format=MOBILE_FEED_STANDARD&creative[object_story_spec][link_data][call_to_action][type]=' + this.objectives[model['callToAction']].cta + '&creative[object_story_spec][link_data][call_to_action][value][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][description]=' + model['subtext'] + '&creative[object_story_spec][link_data][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][message]=' + model['msg'] + '&creative[object_story_spec][link_data][name]=' + model['caption'] + '&creative[object_story_spec][link_data][picture]=' + this.fileUrl + '&creative[object_story_spec][page_id]=' + model['pageID']);
+          this._fs.api('/' + model['adAccount'] + '/generatepreviews?ad_format=MOBILE_FEED_STANDARD&creative[object_story_spec][link_data][call_to_action][type]=' + this.objectives[model['callToAction']].cta + '&creative[object_story_spec][link_data][call_to_action][value][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][description]=' + model['subtext'] + '&creative[object_story_spec][link_data][link]=' + model['siteLink'] + '&creative[object_story_spec][link_data][message]=' + model['msg'] + '&creative[object_story_spec][link_data][name]=' + model['caption'] + '&creative[object_story_spec][link_data][picture]=' + this.fileUrl + '&creative[object_story_spec][page_id]=' + model['pageID'])
             .then(
             data => {
               console.log(data);
@@ -923,6 +925,12 @@ $('#fbDoneModal').modal('hide');
         }
       }
     )
+  }
+  nextItem(count) {
+    this.currentItem = this.itemArray[parseInt(count) + 1];
+  }
+   prevItem(count) {
+    this.currentItem = this.itemArray[parseInt(count) - 1];
   }
 }
 

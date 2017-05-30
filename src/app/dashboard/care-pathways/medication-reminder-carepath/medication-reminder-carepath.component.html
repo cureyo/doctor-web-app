@@ -1,17 +1,17 @@
 <!-- Medication Reminder  Jobs--> 
   <div class="col-md-12">
                 <div class="card">
-                  <form [formGroup]="MedForm" *ngIf="MedNames" class="formGroup" novalidate (ngSubmit)="saveMed(MedForm)">
+                 
                     
                     <!-- card header portion-->
-                    <div class="card-header" data-background-color="blue">
+                    <div class="card-header" data-background-color="cureyo">
                         <h4 class="title">Medication</h4>
 
                         <!--<p class="category">Medication Reminder for {{patient.nickName}} </p>-->
 
                     </div> <!-- card header portion end-->
-                    
-              <div class="card-content table-responsive">
+                     <form [formGroup]="MedForm" *ngIf="MedNames" class="formGroup" novalidate (ngSubmit)="saveMed(MedForm)">
+              <div class="card-footer">
                    <!-- interface implementation to repeat the div's -->
                     <div formArrayName="medicines">
                         <div class="clearfix medicine" *ngFor="let medicine of MedForm.controls.medicines.controls; let i=index">
@@ -19,7 +19,7 @@
                     <!--  end of interface implementation -->  
               <div class="row">
     <!-- Medicine Name formcontrol-->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                             <div class="form-group">
                                  <label for="cp_medicineName">Medicine</label>
                                   <input auto-complete
@@ -54,7 +54,7 @@
                           </div>
                   </div>
 <!--Day formcontrol its hide by defaulf -->    
-                 <div class="col-md-3 med_days" *ngIf="showDay">
+                 <div class="col-md-2 med_days" *ngIf="showDay">
                       <div class="form-group">
                           <label for="cp_medicineDay">Day</label>
                           <select formControlName="day" id="cp_medicineDay" class="form-control">
@@ -71,7 +71,7 @@
  <!-- end of Day formControl-->
 <!-- End Test Frequency formcontrol-->  
 <!-- date formcontrol-->
-                  <div class="col-md-3 med_dates" *ngIf="showDate">
+                  <div class="col-md-2 med_dates" *ngIf="showDate">
                         <div class="form-group">
                             <label for="cp_medicineDate">Date</label>
 
@@ -110,27 +110,29 @@
                   </div>
                     <!-- closing tags of interface implementation-->
   <!-- submit button code    -->
-        <div class="actions clearfix">
+        <div class="row">
               <!-- add more lab tests-->
-              <div class="pull-left">
+              <div class="col-md-4">
                     <button  [ngClass]="{'hide': itemAdded2}" type="button" (click)="addMedicine()" id="addcp" class="btn btn-round btn-primary">+ add more</button>
               </div>
               <!-- end of add more test-->
-              
-              <div class="pull-right" >
-                  <button [ngClass]="{'hide': itemAdded2}" [disabled]="!MedForm.valid" (click)="saveMed(MedForm)" class="btn btn-warning">Add Reminder</button>
+               <div class="col-md-4">
+               </div>
+              <div class="col-md-4" >
+                  <button [ngClass]="{'hide': itemAdded2}" [disabled]="!MedForm.valid" (click)="saveMed(MedForm)" class="btn btn-warning">Save Reminder</button>
               </div>
               
                 <div [ngClass]="{'hide': !itemAdded2}" class="bareP">
                     <p>Thanks! This Care Item has been scheduled!</p>
                 </div>
         </div>
+              </div>
 <!-- end of submit button-->
+ </form>
       </div> <!-- end of card-content-->
 
                      
                     
                     
-                  </form>
-                </div> <!-- cards-->
+               
             </div><!--  end of medication reminder-->

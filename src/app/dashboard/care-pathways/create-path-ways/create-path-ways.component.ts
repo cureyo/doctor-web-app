@@ -13,6 +13,8 @@ declare var $: any
 export class CreatePathWaysComponent implements OnInit {
   @Input() partnerList:any;
   @Input() doctorId:any;
+  @Input() TestNames: any;
+  @Input() MedNames: any;
   private caredone: any;
   private drDomain: FormGroup;
   private carePathwayForm: FormGroup;
@@ -31,8 +33,8 @@ export class CreatePathWaysComponent implements OnInit {
   public dateInterval: any = [];
   private findCarePaths: FormGroup;
   private carePathsAvlbl: any;
-  private MedNames: any;
-  private TestNames: any;
+  // private MedNames: any;
+  // private TestNames: any;
   
   private consultant: any = [];
   private consultantSelected: any = [];
@@ -52,20 +54,7 @@ export class CreatePathWaysComponent implements OnInit {
         this.setIntervals();
         this.updateDays();
         this.updateTimes();
-        this._authService._getMedicineNames()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.MedNames = data;
-          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
-          //console.log("the med names is :",this.MedNames);
-        })
-        this._authService._getPathologicalTests()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.TestNames = data;
-          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
-          //console.log("the med names is :",this.TestNames);
-        })
+        
 
         this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
 
@@ -220,7 +209,7 @@ export class CreatePathWaysComponent implements OnInit {
   createPathways() {
     
         this.newPath=true;
-        this.carePathwayForm.reset();
+        // this.carePathwayForm.reset();
         this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
         this.carePathwayForm = this._fb.group({
           name: ['', Validators.required],
@@ -233,10 +222,7 @@ export class CreatePathWaysComponent implements OnInit {
               ])
         });
     this.selectDrDomain = true;
-    setTimeout(
-      () => {
-      }, 2000
-    )
+    
 
 
   }

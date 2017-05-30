@@ -13,6 +13,9 @@ declare var $: any
 export class ExistingPathWaysComponent implements OnInit {
   @Input() partnerList:any;
   @Input() doctorId:any;
+    @Input() TestNames: any;
+  @Input() MedNames: any;
+  @Input() pathData: any;
   private caredone: any;
   private existingPathWays: FormGroup;
   private carePathwayForm: FormGroup;
@@ -20,6 +23,7 @@ export class ExistingPathWaysComponent implements OnInit {
   private newPath: boolean = false;
   private caredOneId: any;
   private displayDrDomain: boolean = false;
+  private partnerUpdated: boolean = false;
   private array: any;
   private routeparam: any;
   private checkTypes: any = [];
@@ -30,8 +34,8 @@ export class ExistingPathWaysComponent implements OnInit {
   public dateInterval: any = [];
   private findCarePaths: FormGroup;
   private carePathsAvlbl: any;
-  private MedNames: any;
-  private TestNames: any;
+  // private MedNames: any;
+  // private TestNames: any;
   private consultant: any = [];
   private consultantSelected: any = [];
   private DATA:any;
@@ -56,36 +60,37 @@ export class ExistingPathWaysComponent implements OnInit {
         this.setIntervals();
         this.updateDays();
         this.updateTimes();
-        this._authService._getMedicineNames()
-        .subscribe(data => {
-          ////console.log.log("patholodical test details data :",data);
-          this.MedNames = data;
-          this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
+        console.log(this.pathData)
+        // this._authService._getMedicineNames()
+        // .subscribe(data => {
+        //   ////console.log.log("patholodical test details data :",data);
+        //   this.MedNames = data;
+        //   this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
 
          
 
-          //console.log("the med names is :",this.MedNames);
-        });
-        this._authService._getPathologicalTests()
-        .subscribe(data => {
-          //console.log("patholodical test details data :",data);
-          this.TestNames = data;
+        //   //console.log("the med names is :",this.MedNames);
+        // });
+        // this._authService._getPathologicalTests()
+        // .subscribe(data => {
+        //   //console.log("patholodical test details data :",data);
+        //   this.TestNames = data;
 
-          this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+        //   this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
          
-          //console.log("the med names is :",this.TestNames);
-        })
+        //   //console.log("the med names is :",this.TestNames);
+        // })
 
         this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
-
-        this.existingPathWays = this._fb.group({
-              name: ['', Validators.required],
-              objectId: [this.objectIdVal, Validators.required],
-              consultant:[],
-              checkPoints: this._fb.array([
-                    //  this.initializeCheckPoints(this.DATA,0)
-              ])
-        });
+        this.loadCarePath(this.pathData)
+        // this.existingPathWays = this._fb.group({
+        //       name: ['', Validators.required],
+        //       objectId: [this.objectIdVal, Validators.required],
+        //       consultant:[],
+        //       checkPoints: this._fb.array([
+        //             //  this.initializeCheckPoints(this.DATA,0)
+        //       ])
+        // });
 
    
 
@@ -147,6 +152,7 @@ export class ExistingPathWaysComponent implements OnInit {
 
   loadCarePath(data) {
          console.log("loadCarePath called:",data);
+         this.dataloaded=false;
           this.objectIdVal = data.objectId;
           this.existingPathWays = this._fb.group({
             name: [data.name, Validators.required],
@@ -154,6 +160,9 @@ export class ExistingPathWaysComponent implements OnInit {
 
             checkPoints: this._fb.array([
               this.initializeCheckPoints(data.checkPoints[0], 0)
+            ]),
+            queries: this._fb.array([
+              this.initializeQueries(data.queries[0], 0)
             ])
           });
         const control = <FormArray>this.existingPathWays.controls['checkPoints'];
@@ -164,12 +173,22 @@ export class ExistingPathWaysComponent implements OnInit {
             ctr++;
           }
         }
-
-    //console.log.log(this.existingPathWays);
+        const control4 = <FormArray>this.existingPathWays.controls['queries'];
+        let ctr2 = 1;
+        for (let each in data.queries) {
+          if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
+            control4.push(this.initializeQueries(data.queries[each], ctr2));
+            ctr2++;
+          }
+        }
+    console.log(this.existingPathWays);
     var self = this;
-    setTimeout(function () {
-      //console.log.log("showing form now")
-    }, 2000)
+ setTimeout(
+   function() {
+     self.dataloaded=true;
+   }, 2000
+
+ )
   }
   
    initCheckPoints() {
@@ -180,20 +199,20 @@ export class ExistingPathWaysComponent implements OnInit {
       checkType: ['', Validators.required],
       consultant: [],
       options: this._fb.array([
-        this.initializeOptions(this.DATA)
+        this.initOptions()
       ])
     });
   }
 
- addCheckPoints() {
+  addCheckPoints() {
     const control = <FormArray>this.existingPathWays.controls['checkPoints'];
     control.push(this.initCheckPoints());
 
-  }
+    }
   
 
   showCarePath(model) {
-    //console.log.log("showing model",model) 
+    console.log("showing model",model) 
    // this.newPath = false;
     this._authService._getCarePath(model.carePath)
       .subscribe(
@@ -201,8 +220,9 @@ export class ExistingPathWaysComponent implements OnInit {
         this.DATA=data;
         console.log("show care path data is",data);
         if (data){
-                this.dataloaded=true;    
+                  
                 this.loadCarePath(data);
+                //this.dataloaded = true;
         }
       }
       )
@@ -215,10 +235,18 @@ export class ExistingPathWaysComponent implements OnInit {
       value: [data.value, Validators.required]
     });
   }
-
+initOptions() {
+     //console.log.log("initializeOptions click wid data",data);
+    return this._fb.group({
+      value: ['option', Validators.required]
+    });
+  }
 
    initializeCheckPoints(data, check) {
+     this.partnerUpdated = false;
     console.log("intitializecheckPoints",data);
+    console.log(this.partnerList);
+    console.log(data.consultant);
       let control = this._fb.group({
       day: [data.day, Validators.required],
       time: [data.time, Validators.required],
@@ -233,9 +261,11 @@ export class ExistingPathWaysComponent implements OnInit {
     const control2 = <FormArray>control.controls['options'];
 
     this.checkTypes[check] = data.checkType;
+    console.log(control);
     if (data.consultant) {
       this.consultant[check] = data.consultant;
       this.consultantSelected[check] = true;
+
     }
 
     //console.log.log("this.checkTypes",this.checkTypes)
@@ -247,7 +277,23 @@ export class ExistingPathWaysComponent implements OnInit {
 
       }
     }
-    //console.log.log("control 2 data:",control2);
+  console.log("control 2 data:",this.consultant, this.consultantSelected);
+  this.partnerUpdated = true;
+    return control;
+
+  }
+
+   initializeQueries(data, check) {
+     //this.partnerUpdated = false;
+    console.log("intitializequeries",data);
+      let control = this._fb.group({
+      query: [data.query, Validators.required],
+      response: [data.response, Validators.required],
+    });
+      //console.log.log("find out the control value:",control);
+    
+
+
     return control;
 
   }
@@ -282,6 +328,64 @@ export class ExistingPathWaysComponent implements OnInit {
     console.log(value, i);
     this.consultant[i] = value;
     this.consultantSelected[i] = true;
+
+  }
+    addQueries() {
+      const control = <FormArray>this.existingPathWays.controls['queries'];
+    control.push(this.initQueries());
+
+    }
+         initQueries() {
+    return this._fb.group({
+      query: ['', Validators.required],
+      response: ['', Validators.required]
+      
+    });
+  }
+  onSubmit(model) {
+            console.log(model);
+            this._authService._getCarePathNames(model['name'])
+            .subscribe(
+                      data => {
+                            //console.log(data);
+                            if (data[0]) {
+                                 alert("This Care Path already exisits. Please save using another name");
+                             }
+                            else {
+                                  this._authService._saveCarePathway(model, model['name'])
+                                  .then(data => {
+                                        //console.log(data.path['o'][2]);
+                                        this._authService._saveCarePathName(model['name'], data.path['o'][2]);
+                                              this.existingPathWays.reset();
+                                              this.existingPathWays = this._fb.group({
+                                                    name: ['', Validators.required],
+                                                    checkPoints: this._fb.array([
+                                                    this.initCheckPoints()
+                                                    ]),
+
+                                                    queries: this._fb.array([
+                                                    this.initQueries()
+                                                    ])
+                                              });
+                                              this.dataloaded = false;
+                                              $.notify({
+                                                  icon: "notifications",
+                                                  message: "Care Plan " + model['name'] + " has been saved."
+
+                                              }, {
+                                                  type: 'cureyo',
+                                                  timer: 4000,
+                                                  placement: {
+                                                  from: 'top',
+                                                  align: 'right'
+                                              }
+                                        });
+
+                                  });
+                            }
+
+                      }
+            )
 
   }
 }

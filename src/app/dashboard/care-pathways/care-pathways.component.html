@@ -30,7 +30,7 @@
                                             <div class="form-group">
 
                                                     <label class="control-label">Select a Care Plan</label>
-                                                    <select formControlName="carePath" class="form-control" (change)="existingCarePathWaysID.showCarePath(findCarePaths.value)">
+                                                    <select formControlName="carePath" class="form-control" (change)="showCarePath(findCarePaths.value)">
                                                     <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>            
                                                     </select>
 
@@ -55,7 +55,7 @@
                       <div>
                             <div class="form-group">
                                   <button class="btn btn-primary btn-round" 
-                                  (click)="createCarePathWaysID.createPathways()">Create Pathway</button>
+                                  (click)="createPathways()">Create Pathway</button>
                             </div>
                       </div>
                 </div> 
@@ -70,8 +70,8 @@
         <!-- this is the component used for to create path ways-->
      
       
-        <app-create-path-ways  #createCarePathWaysID [doctorId]="doctorId" [partnerList]="partnerList" ></app-create-path-ways>
-        <app-existing-path-ways #existingCarePathWaysID [doctorId]="doctorId" [partnerList]="partnerList"></app-existing-path-ways>
+        <app-create-path-ways  *ngIf="createPathFlag" [doctorId]="doctorId" [partnerList]="partnerList" [TestNames]="TestNames" [MedNames]="MedNames"></app-create-path-ways>
+        <app-existing-path-ways *ngIf="showCarePathFlag" [doctorId]="doctorId" [partnerList]="partnerList" [TestNames]="TestNames" [MedNames]="MedNames" [pathData]="pathData"></app-existing-path-ways>
 
 
        <!--<div class="row">

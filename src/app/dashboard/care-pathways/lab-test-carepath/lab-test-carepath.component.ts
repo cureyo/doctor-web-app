@@ -28,6 +28,13 @@ export class LabTestCareComponent implements OnInit {
    ) {}
 
   ngOnInit() {
+     this._authService._getPathologicalTests()
+      .subscribe(data => {
+        //console.log("patholodical test details data :",data);
+        this.MedNames = data;
+        //this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
+        //console.log("the med names is :",this.TestNames);
+      })
    if(this.objectId){
           this.stForm = this._fb.group({
               labtests: this._fb.array([

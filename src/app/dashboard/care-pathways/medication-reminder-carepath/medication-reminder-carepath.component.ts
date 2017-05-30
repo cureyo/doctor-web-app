@@ -34,6 +34,13 @@ export class MedicationReminderCareComponent implements OnInit {
   ngOnInit() {
     console.log(this.objectId);
     console.log("MedName as input is", this.MedNames);
+    this._authService._getMedicineNames()
+      .subscribe(data => {
+        //console.log("patholodical test details data :", data);
+        this.MedNames = data;
+        //this._cacheService.set('medNames', { 'data': this.MedNames }, { expires: Date.now() + 1000 * 60 * 60 });
+        console.log("the med names is :", this.MedNames);
+      })
     if (this.objectId) {
       this.MedForm = this._fb.group({
         medicines: this._fb.array([
@@ -158,7 +165,16 @@ export class MedicationReminderCareComponent implements OnInit {
     for (let i = 0; i < medicines.length; i++) {
       console.log(medicines[i].name);
       console.log(medicines[i])
-
+      let medNam, medId
+      if (medicines[i].name.name) {
+medNam = medicines[i].name.name;
+medId = medicines[i].name.id;
+      }
+      else {
+        medNam = medicines[i].name;
+        medId = medicines[i].name;
+      }
+      
       reminders.Job_Medicines.push({
         "Job_Frequency": medicines[i].frequency,
         "Medicine_Name": [medicines[i].name],
@@ -168,8 +184,8 @@ export class MedicationReminderCareComponent implements OnInit {
       });
       reviewData.push({
         "MedFreq": medicines[i].frequency,
-        "MedName": medicines[i].name.name,
-        "name": medicines[i].name.id,
+        "MedName": medNam,
+        "name": medId,
         "MedTiming": medicines[i].timing,
         "MedDay": medicines[i].day,
         "MedDate": medicines[i].date,
@@ -203,7 +219,7 @@ export class MedicationReminderCareComponent implements OnInit {
       ctr++;
     }//loop i
     console.log("reminder value  test:", reminders);
-    console.log("review data is :", reviewData);
+    console.log("review data is :", reviewData[0]);
     // this._authService._saveReminders(reminders)
     //   .then(
 

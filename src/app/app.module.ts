@@ -35,7 +35,8 @@ import { OPDComponent } from './dashboard/OPD/OPD.component';
 import { FbAdsFormComponent } from './fb-ads-form/fb-ads-form.component';
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
 import {JsonpModule} from '@angular/http';
-
+import {ExistingPathWaysComponent} from './dashboard/care-pathways/existing-path-ways/existing-path-ways.component'
+import {CreatePathWaysComponent} from './dashboard/care-pathways/create-path-ways/create-path-ways.component';
 // Must export the config
 export const firebaseConfig = {
   apiKey: CONFIG.apiKey,
@@ -70,7 +71,7 @@ export const firebaseAuthConfig = {
 
   declarations: [ MODULE_COMPONENTS, FbAdsFormComponent],
 
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent, ExistingPathWaysComponent, CreatePathWaysComponent],
 
   bootstrap: [AppComponent]
 })

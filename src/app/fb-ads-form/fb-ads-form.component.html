@@ -1,51 +1,57 @@
  <div class="main-content" id="fbContent">
     <div class="container-fluid">
           <onboarding-header-cmp [section]="section" #onboardingID></onboarding-header-cmp>
-        <h3 id="fbPageTop"> Facebook Advertising </h3>
+           <form *ngIf="formReady" [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
+          <h3 id="fbPageTop"> Connect your Facebook Page </h3>   
+                   <div class="card">
+                             <div class="card-header" data-background-color="cureyo">
+                        <h4 class="title">Social Page</h4>
+
+                        <p class="category">Select the page to anchor Patient Communication</p>
+
+                    </div> <!-- card header portion end-->
+                    
+              <div class="card-content table-responsive">
+                         <div class="col-md-4">
+                          <div class="form-group">
+                             
+                                <select  id="pageID" class="form-control" formControlName="pageID"  *ngIf="tempAdaccountId">
+                                    <option *ngFor="let page of pageNameList;" value="{{page.id}}">{{page.name}}</option>
+                                  </select>
+                                
+                          </div>
+                          <a class="btn btn-warning btn-round" (click)="connectPage(fbAdsForm.controls['pageID'].value)">Connect Page</a>
+                         </div>
+              </div>
+                  </div>
+                     
+        <h3 id="SelectPageTop"> Update Social Calendar </h3>
+        <app-social-calendar></app-social-calendar>
+  <h3 id="SocialCalendarPageTop"> Facebook Advertising </h3>
+  
   
                 
-                  <form *ngIf="formReady" [formGroup]="fbAdsForm" class="formGroup" novalidate (ngSubmit)="save_fbAdsForm(fbAdsForm)">
                         <div class="row">
-                        <div class="col-md-5">
+                        
                         <div class="card">
-                              <div id="adPreviewSec" class="card-content table-responsive">
-                              <h5 style="margin-bottom: 0;"><b>Ad Preview</b></h5>
-                              <br>
+<div id="adPreviewSec" class="card-content table-responsive">
+                              <div class="col-md-5">
+                              
+                              <div class="form-group">
+                             
                               <label for="adName">Select Campaign</label>
                                <p>View your pre-created/ existing Campaigns</p>
                                 <select  id="showForm" class="form-control" (change)="changeShownAd(fbAdsForm.controls['showForm']._value);" formControlName="showForm">
                                     <option *ngFor="let ad of currentAdsList; let i = index;" value="{{i}}">{{ad.refname}}</option>
                                   </select>
 
-                              <div id="adPreviewDiv">
-                                    </div>
+                              
                           
-                              <a class="btn btn-round btn-warning" (click)="generateAdPreview(fbAdsForm)">Show Preview</a>
+                              <a class="btn btn-round btn-warning" (click)="generateAdPreview(fbAdsForm)">Load Ad</a>
+                              </div>
                         </div>
-                        </div>
-                        </div>
-                  </div>
-                  <div class="row">
-                        <div class="col-md-12">
-                        <div class="card">
-              <div class="card-content table-responsive">
-               <!-- Account details row-->   
-              <div class="row">
-                    <div class="col-md-12" >
-                              <div class="row">
-                       <div class="col-md-4">
-                            <div class="form-group">
-                                 <label for="name">Reference Name</label>
-                                 <p>Provide a name for this Ad Campaign</p>
-                                  <input type="text"  id="refname" class="form-control" formControlName="name"/>
-                            </div>
-                    </div>
-               </div>
-                    <h5 style="margin-bottom: 0;"><b>Account Details</b></h5>
-                    </div>
-
-                    
-                    <div class="col-md-4" >
+                        
+                           <div class="col-md-4" >
                             <div class="form-group">
                                  <label for="adAccount">Ad Account </label>
                                  <p>Select your account that will be charged</p>
@@ -55,47 +61,69 @@
                                    
                             </div>
                     </div>
-        
-                  <div class="col-md-4">
-                          <div class="form-group">
-                               <label for="PageID">Page ID</label>
-                               <p>Select the page to link to the ad</p>
-                                <select  id="pageID" class="form-control" formControlName="pageID"  *ngIf="tempAdaccountId">
-                                    <option *ngFor="let page of pageNameList;" value="{{page.id}}">{{page.name}}</option>
-                                  </select>
-                                
-                          </div>
+                    </div>
+                        </div>
                   </div>
-                 
-              </div>
+                  <div class="row">
+                        <div  *ngIf="currentItem == 'Show'"  class="col-md-12">
+                        <div class="card">
+                                <div class="card-header" data-background-color="cureyo">
+                                       <a class="btn btn-primary pull-right" (click)="nextItem('0')">Next</a>
+                        <h4 class="title">What should the Ad look like?</h4>
+
+                        <p class="category">Provide the content and creatives for your ad</p>
+                        
+                    </div> <!-- card header portion end-->
+                    
+              
+              <div class="card-content table-responsive">
+               <!-- Account details row-->   
+              <div class="row">
+                    <div class="col-md-12" >
+                          <div class="col-md-6">
+                                <div id="adPreviewDiv">
+                              
+                                    </div>
+                                    <a class="btn btn-round btn-warning" (click)="generateAdPreview(fbAdsForm)">Show Preview</a>
+                          </div>
+                          <div class="col-md-6">
+                               <div class="row">
+                       <div class="col-md-6">
+                            <div class="form-group">
+                                 <label for="name">Reference Name</label>
+                                 <p>Provide a name for this Ad Campaign</p>
+                                  <input type="text"  id="refname" class="form-control" formControlName="name"/>
+                            </div>
+                    </div>
+               
+                   
+                    
                   <!-- End of Account details row-->
                   <!-- Campaign details row-->      
-                  <div class="row">
-                        <div class="col-md-12">
-                              <h5><b>Campaign Details</b></h5>
-                        </div>
-                                     <div class="col-md-4">
+                 
+                      
+                                     <div class="col-md-6">
                             <div class="form-group">
                                  <label for="name">Campaign Name</label>
                                  <p>Provide a name for this Ad Campaign</p>
                                   <input type="text"  id="name" class="form-control" formControlName="name"/>
                             </div>
                     </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                           <div class="form-group">
                                <label for="message">Message</label>
                                <p>Provide a Message Text for the Ad Campaign</p>
                                 <input type="text"  id="msg" class="form-control" formControlName="msg"/>
                           </div>
                   </div>
-                         <div class="col-md-4">
+                         <div class="col-md-12">
                             <div class="form-group">
                                  <label for="caption">Headline </label>
                                  <p>Provide a Caption for this Ad Campaign</p>
                                   <input type="text"  id="caption" class="form-control" formControlName="caption"/>
                             </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                             <div class="form-group">
                                  <label for="caption">Sub-text </label>
                                  <p>Provide a Sub-text for this Ad Campaign</p>
@@ -103,7 +131,7 @@
                             </div>
                     </div>
                       
-                          <div class="col-md-4">
+                          <div class="col-md-6">
                         <div class="form-group">
                               <label for="siteLink">Site Link</label>
                               <p>Provide the website link you want to promote</p>
@@ -111,7 +139,7 @@
                         </div>
                   </div>
                                   
-                              <div class="col-md-4">
+                              <div class="col-md-6">
                         <div class="form-group">
                               <label for="callToAction">Call to Action Type</label>
                               <p>Provide the objective you want to drive</p>
@@ -123,12 +151,37 @@
                   </div>
 
                   </div>
+                  </div>
+
+         
+              </div>
+              </div>
                      <div class="row">
                                    
                     <app-image-search *ngIf="pageIdSelected && imgSearchType && imgReady" [savePath]="savePath" [searchType]="imgSearchType" [fbPageId]="pageIdSelected" [defaultKeyWord]="defaultImgSearch"></app-image-search>
                         
                      </div>
-                  
+                        </div>
+                        </div>
+                        </div>
+                
+                   <div  *ngIf="currentItem == 'Target'"  class="col-md-12">
+                        <div class="card">
+                                <div class="card-header" data-background-color="cureyo">
+                        <h4 class="title">Whom should we target?</h4>
+<p class="category">Give an outline of your typical patients</p>
+
+<a class="btn btn-primary pull-right" (click)="nextItem('1')">Next</a>
+<a class="btn btn-primary " (click)="prevItem('1')">Previous</a>
+
+
+                        
+
+                    </div> <!-- card header portion end-->
+                    
+              
+              <div class="card-content table-responsive">
+               <!-- Account details row-->   
                   <!-- Targeting details row-->      
                   <div class="row">
                         <div class="col-md-12">
@@ -197,6 +250,22 @@
                           </div>
                   </div>
                   </div>
+              </div>
+                        </div>
+                   </div>
+                   <div  *ngIf="currentItem == 'Spend'" class="col-md-12">
+                        <div class="card">
+                                <div class="card-header" data-background-color="cureyo">
+                                      <a class="btn btn-primary pull-right" (click)="prevItem('2')">Previous</a>
+                        <h4 class="title">How much should we spend on this Ad?</h4>
+
+                        <p class="category">Provide budget and daily spend for the ad</p>
+
+                    </div> <!-- card header portion end-->
+                    
+              
+              <div class="card-content table-responsive">
+               <!-- Account details row-->   
                   <!-- End of Targeting details row-->   
                    <!-- Budget details row-->      
                   <div class="row">
@@ -388,7 +457,7 @@
   </div>
   
 </div>
-<app-social-calendar></app-social-calendar>
+
 
 <!--<div class="row">
               <div class="pull-right">
