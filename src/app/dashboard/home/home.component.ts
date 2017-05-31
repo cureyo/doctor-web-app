@@ -6,8 +6,9 @@ import { AppConfig } from '../../config/app.config';
 import initDemo = require('../../../assets/js/charts.js');
 import { CaredoneFormComponent } from "../caredone-form/caredone-form.component";
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
-import LineChart=require('../../../assets/js/linechart.js');
-import BarChart=require('../../../assets/js/barchart.js');
+import LineChart = require('../../../assets/js/linechart.js');
+import BarChart = require('../../../assets/js/barchart.js');
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $: any
 
@@ -22,7 +23,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   private currentUser: any;
   private user: any;
+  private userFBId: any;
   private isAuth: boolean;
+    private appId: any = "1133564906671009";
+  private fbURLSanit: any;
   private noCaredOnes: boolean = false;
   private fbAccessToken: string;
   private totalCheckIns: any = 0;
@@ -40,10 +44,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private caredonesToAdd: any;
   private scheduledJobs: any;
   private defaultData: any;
-  private caredOnesFamily: any =[];
+  private caredOnesFamily: any = [];
   private caredOneId: any;
   private noFacebook: boolean = true;
-  private tempCurrentUserID:any;
+  private tempCurrentUserID: any;
   private totalMsngrConnects: any;
   private totalCaresScheduled: any;
   private checkInChartId: any = "checkInChart";
@@ -59,7 +63,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
     $('#myModal').modal('hide');
-     $('#mainContent').css({ position: "" });
+    $('#mainContent').css({ position: "" });
 
   }
 
@@ -71,7 +75,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private _cacheService: CacheService
+    private _cacheService: CacheService,
+    private sanitizer: DomSanitizer,
   ) {
 
 
@@ -88,6 +93,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     $('#mainContent').css({ position: 'fixed' });
   }
 
+  public showOnboardingModal() {
+    //console.log("show modal for: ", modalId)
+   
+
+    $('#onboardingModal').modal('show');
+
+    window.scroll(0, -100);
+    //console.log($('#mainContent'));
+    $('#mainContent').css({ position: 'fixed' });
+  }
   addDetails(id) {
 
     $('#myModal').modal('hide');
@@ -109,6 +124,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     $('#mainContent').css({ position: "" });
 
   }
+    closeOnboardingModal() {
+
+    $('#onboardingModal').modal('hide');
+    $('#mainContent').css({ position: "" });
+
+  }
 
   getcurrentUser(uid) {
     this._authService._fetchUser(uid)
@@ -120,7 +141,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
           this.getCaredones();
           this.getClinicSummary(this.currentUser.clinicWebsite, this.currentUser.fbPageId, this.currentUser.fbPageAdded)
+          this.route.queryParams.subscribe(
+            qParams => {
+              if (qParams['onboarding'] == 'yes') {
+                this.userFBId = "AdminMn_" + res.uid;
 
+                let fburl = "https://www.facebook.com/v2.3/plugins/send_to_messenger.php?messenger_app_id=" + this.appId + "&page_id=" + res.fbPageId + "&ref=" + this.userFBId;
+                console.log(fburl);
+                this.fbURLSanit = this.sanitizer.bypassSecurityTrustResourceUrl(fburl)
+                console.log(this.fbURLSanit);
+                this.showOnboardingModal();
+
+              }
+            }
+          )
 
         } else {
           this.router.navigate(['doctor-checkup']);
@@ -131,20 +165,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     $('#myModal').modal('hide');
-   
+
     this._authService._getUser()
       .subscribe(
       data => {
-       
+
         if (!data.isAuth) {
-         //window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
+          //window.location.href = window.location.origin + '/login?next=' + window.location.pathname;
         }
         else {
           this.isAuth = data.isAuth;
           //console.log("We are home now");
           this.getcurrentUser(data.user.uid);
 
-           
+
 
         }
 
@@ -152,7 +186,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       error => console.log(error)
       );
 
-     
+
   }
 
 
@@ -393,107 +427,107 @@ export class HomeComponent implements OnInit, AfterViewInit {
       footer.removeClass('hide');
     });
   }
-getClinicSummary(clinicIdFull, pageId, pagePresent) {
-  let n = clinicIdFull.indexOf('.'), minValue1, maxValue1;
-  if (n == -1) {
-    n = clinicIdFull.length;
-  }
-  let clinicId = clinicIdFull.substring(0, n);
-  this._authService._getAllCheckIns(clinicId)
-  .subscribe(
-    checkIns => {
-      console.log(checkIns);
-      let ctr = 0, cnt = 0, strt = 0, tempArr = [];
-      
-      
-     
-      console.log(checkIns)
-      for (let item in checkIns) {
-        if (item != '$exists' && item != '$key' && item != 'length'  && item != '$value') {
-        
-        
-        
-          console.log(item);
-          this.checkInsTblDates[ctr] = item.substring(0,5);
-          console.log(checkIns[item]);
-          if (checkIns[item].length)
-          this.checkInsTblCount[ctr] = checkIns[item].length;
-          else 
-          this.checkInsTblCount[ctr] = 0;
-          this.totalCheckIns = parseInt(this.totalCheckIns) + this.checkInsTblCount[ctr];
-          ctr++;
-          if ( this.checkInsTblCount[ctr] > maxValue1) {
-            maxValue1 = this.checkInsTblCount[ctr]
-          } 
-          if (this.checkInsTblCount[ctr] < minValue1) {
-            minValue1 = this.checkInsTblCount[ctr]
+  getClinicSummary(clinicIdFull, pageId, pagePresent) {
+    let n = clinicIdFull.indexOf('.'), minValue1, maxValue1;
+    if (n == -1) {
+      n = clinicIdFull.length;
+    }
+    let clinicId = clinicIdFull.substring(0, n);
+    this._authService._getAllCheckIns(clinicId)
+      .subscribe(
+      checkIns => {
+        console.log(checkIns);
+        let ctr = 0, cnt = 0, strt = 0, tempArr = [];
+
+
+
+        console.log(checkIns)
+        for (let item in checkIns) {
+          if (item != '$exists' && item != '$key' && item != 'length' && item != '$value') {
+
+
+
+            console.log(item);
+            this.checkInsTblDates[ctr] = item.substring(0, 5);
+            console.log(checkIns[item]);
+            if (checkIns[item].length)
+              this.checkInsTblCount[ctr] = checkIns[item].length;
+            else
+              this.checkInsTblCount[ctr] = 0;
+            this.totalCheckIns = parseInt(this.totalCheckIns) + this.checkInsTblCount[ctr];
+            ctr++;
+            if (this.checkInsTblCount[ctr] > maxValue1) {
+              maxValue1 = this.checkInsTblCount[ctr]
+            }
+            if (this.checkInsTblCount[ctr] < minValue1) {
+              minValue1 = this.checkInsTblCount[ctr]
+            }
+            cnt++;
+
           }
-        cnt++;
-          
         }
-      }
-       console.log(this.checkInsTblDates);
-      console.log(this.checkInsTblCount);
-      //Keep only information for last week
-      if (cnt > 7) {
-        this.checkInsTblCount.splice(0, cnt -7);
-        this.checkInsTblDates.splice(0, cnt -7)
-      }
-      var sum = this.checkInsTblCount.reduce(function(a, b) { return a + b; }, 0);
-      if (cnt > 7)
-      this.averageCheckIns = sum/7;
-      else 
-      this.averageCheckIns = sum/cnt;
+        console.log(this.checkInsTblDates);
+        console.log(this.checkInsTblCount);
+        //Keep only information for last week
+        if (cnt > 7) {
+          this.checkInsTblCount.splice(0, cnt - 7);
+          this.checkInsTblDates.splice(0, cnt - 7)
+        }
+        var sum = this.checkInsTblCount.reduce(function (a, b) { return a + b; }, 0);
+        if (cnt > 7)
+          this.averageCheckIns = sum / 7;
+        else
+          this.averageCheckIns = sum / cnt;
 
-      this.averageCheckIns = this.averageCheckIns.toFixed(1);
+        this.averageCheckIns = this.averageCheckIns.toFixed(1);
 
-      console.log(this.checkInsTblDates);
-      console.log(this.checkInsTblCount);
-      console.log(this.totalCheckIns);
-      //if (pagePresent) {
+        console.log(this.checkInsTblDates);
+        console.log(this.checkInsTblCount);
+        console.log(this.totalCheckIns);
+        //if (pagePresent) {
         this._authService._getMessengerIds(pageId)
-        .subscribe(
+          .subscribe(
           msngrData => {
-             if (msngrData.length)
-            this.totalMsngrConnects = msngrData.length;
-            else 
-            this.totalMsngrConnects = 0;
+            if (msngrData.length)
+              this.totalMsngrConnects = msngrData.length;
+            else
+              this.totalMsngrConnects = 0;
             console.log(this.totalMsngrConnects);
             this._authService._getCareSchedules(pageId)
-            .subscribe(
+              .subscribe(
               csData => {
                 if (csData.length)
-                this.totalCaresScheduled = csData.length;
+                  this.totalCaresScheduled = csData.length;
                 else
-                this.totalCaresScheduled = 0;
+                  this.totalCaresScheduled = 0;
                 console.log(this.totalCaresScheduled);
                 console.log(this.totalMsngrConnects);
-                 this.checkInChrtReady = true;
-                 this.ovlSummaryChrtReady = true;
-                  var self = this;
-                  setTimeout(
-                    function() {
-                      
-                      var t = LineChart(self.checkInsTblDates,self.checkInsTblCount,minValue1,maxValue1,self.checkInChartId);
-                  console.log("checkInChartId :", t);
-                  setTimeout(
-                    function() {
-                      var ctLabels = ["Total Check-Ins", "Messenger Connects", "Care Plans Scheduled"]
-                      var ctSeries = [self.totalCheckIns, self.totalMsngrConnects, self.totalCaresScheduled]
-                      var t = BarChart(ctLabels,ctSeries,self.totalCheckIns,self.ovlSummaryChartId);
-                  console.log("checkInChartId :", t);
-                    }, 2000
-                  )
-                       
-                    }, 2000
-                  )
-              }
-            )
-          }
-        )
-      
+                this.checkInChrtReady = true;
+                this.ovlSummaryChrtReady = true;
+                var self = this;
+                setTimeout(
+                  function () {
 
-    }
-  )
-}
+                    var t = LineChart(self.checkInsTblDates, self.checkInsTblCount, minValue1, maxValue1, self.checkInChartId);
+                    console.log("checkInChartId :", t);
+                    setTimeout(
+                      function () {
+                        var ctLabels = ["Total Check-Ins", "Messenger Connects", "Care Plans Scheduled"]
+                        var ctSeries = [self.totalCheckIns, self.totalMsngrConnects, self.totalCaresScheduled]
+                        var t = BarChart(ctLabels, ctSeries, self.totalCheckIns, self.ovlSummaryChartId);
+                        console.log("checkInChartId :", t);
+                      }, 2000
+                    )
+
+                  }, 2000
+                )
+              }
+              )
+          }
+          )
+
+
+      }
+      )
+  }
 }// DashboardComponent
