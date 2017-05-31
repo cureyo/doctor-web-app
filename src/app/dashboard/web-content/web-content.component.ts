@@ -16,20 +16,20 @@ export class WebContentComponent implements OnInit {
 
   ngOnInit() {
     //get the param
-        //  this.route.params.subscribe(
-        //     params => {
-        //     this.routeparam= params['id'];
-        //     this.route.queryParams.subscribe(
-        //      qParam=> {
-        //        if (qParam['onboarding']=="yes") {
-        //          this.onboaridng = true;
-        //          this.nextButtonFlag=true;
-        //        }
-        //      }
-        //     )
-        //     //console.log("param value test:",this.routeparam);
-        //     //end of param
-        //   });
+         this.route.params.subscribe(
+            params => {
+            this.routeparam= params['id'];
+            // this.route.queryParams.subscribe(
+            //  qParam=> {
+            //    if (qParam['onboarding']=="yes") {
+            //      this.onboaridng = true;
+            //      //this.nextButtonFlag=true;
+            //    }
+            //  }
+            // )
+            //console.log("param value test:",this.routeparam);
+            //end of param
+          });
           window.scrollTo(0, 0);
           var elmnt = document.getElementById("webContentSec");
     // console.log(elmnt);

@@ -60,6 +60,7 @@ export class CreatePathWaysComponent implements OnInit {
 
         this.carePathwayForm = this._fb.group({
               name: ['', Validators.required],
+              description: ['', Validators.required],
               objectId: [this.objectIdVal, Validators.required],
               checkPoints: this._fb.array([
               this.initCheckPoints()
@@ -213,6 +214,7 @@ export class CreatePathWaysComponent implements OnInit {
         this.objectIdVal = Math.floor((Math.random() * 1000000000) + 1);
         this.carePathwayForm = this._fb.group({
           name: ['', Validators.required],
+          description: ['', Validators.required],
           objectId: [this.objectIdVal, Validators.required],
           checkPoints: this._fb.array([
             this.initCheckPoints()
@@ -243,6 +245,7 @@ export class CreatePathWaysComponent implements OnInit {
                                               this.carePathwayForm.reset();
                                               this.carePathwayForm = this._fb.group({
                                                     name: ['', Validators.required],
+                                                    description: ['', Validators.required],
                                                     checkPoints: this._fb.array([
                                                     this.initCheckPoints()
                                                     ])

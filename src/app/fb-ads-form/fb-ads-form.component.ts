@@ -942,13 +942,60 @@ $('#fbDoneModal').modal('hide');
           dat3 => {
             this._authService._updateWebsitePage(this.clinicID, pageId).
             then(dat4=> {
-              console.log("items have been updated", dat2, dat3)
+              this._fs.api('/' + pageId + '?fields=access_token')
+        .then(
+        response => {
+          console.log("response", response);
+          this.getAccessTokenData(response.access_token)
+            .subscribe(
+            data => {
+              console.log("page access token data: ", data);
+              this.getFinalAccessToken(this.userID, data.access_token)
+                .subscribe(
+                data2 => {
+                  console.log(data2.data);
+                  let accesToken;
+                  for (let page in data2.data) {
+                    console.log(data2.data[page]);
+                    if (data2.data[page].id == this.pageID) {
+                      accesToken = data2.data[page].access_token;
+                    }
+                  }
+                  this._authService._savePageAccessToken(this.pageID, accesToken, this.fbAccessToken)
+                    .then(
+                    resp => {
+                      console.log("items have been updated", dat2, dat3)
               alert("Your communication channel has been updated.")
+                 });
+                }
+                )
+
+            }
+            )
+
+        });
+              
             })
           }
         )
       }
     )
+  }
+    getAccessTokenData(tempToken) {
+
+    const domainURL = "https://graph.facebook.com/oauth/access_token?client_id=1133564906671009&client_secret=c8806fa86f03040c405eb65196ac3ed9&grant_type=fb_exchange_token&fb_exchange_token=" + tempToken;
+
+    return this.http.get(domainURL)
+      .map((res: Response) => res.json());
+
+  }
+  getFinalAccessToken(userID, tempToken2) {
+
+    const domainURL = "https://graph.facebook.com/" + userID + "/accounts?access_token=" + tempToken2;
+
+    return this.http.get(domainURL)
+      .map((res: Response) => res.json());
+
   }
 }
 

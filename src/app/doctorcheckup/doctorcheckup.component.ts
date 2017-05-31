@@ -58,6 +58,8 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   private fullHList: any = [];
   private clinicAddress:any;
   private medSpecialities: any = [];
+  public  hasUserData:any;
+
   @ViewChild('fbCheck') fbCheckbox: ElementRef;
 
   private reminderKey: string = 'TestJbK_';
@@ -75,6 +77,7 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
   ) {
 
     this.initFB();
+    console.log("its called");
     this.updateYears();
   }
   updateYears() {
@@ -86,33 +89,18 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit() {
+     
+
 
     let method: FacebookApiMethod = 'post';
     console.log("In DoctorCheckup facebook method is :", method);
     //console.log("In DoctorCheckup fbparam data:",fbParams);
     this.getAllMedicalData();
-    this.getMedicalSpecialities();
-    // this._authService.doclogin()
-    //   .then(data => {
-    //     this._fbs.getLoginStatus().then((response: FacebookLoginResponse) => {
-    //       console.log("In DoctorCheckup reponse for access token:", response);
-    //       this._fbs.api('/me?fields=adaccounts')
-    //         .then(response => {
-    //           //  console.log("user response data is :",response);
-    //           this.userID = response.id; //user ID
-    //           this.adAccountID = response.adaccounts.data[0].id; //AdAccoundId
-    //           // this.fbAdsObject.adAccountID=this.adAccountID;
-    //           console.log("In DoctorCheckup this is the userId", this.userID);
-    //           console.log("In DoctorCheckup fb ad account details is :", this.adAccountID);
 
-    //         })
-    //     })
-    // });
-    //end of ads code
+    this.getMedicalSpecialities();
+
 
     this.specialityList = ['Gynaecology', 'Medical Specialist', 'Orthopedics', 'Dental', 'Dermatology', 'Cardiology',]
-
-    // $('html,body').animate({ scrollTop: $("#header").offset().top - 200 }, 500);
     this._authService._getUser()
       .subscribe(
       data => {
@@ -123,19 +111,56 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
         $('#myIframe').attr('src', this.fbMessURL);
         this.passThrough = "FacbkId_" + data.user.uid;
 
-        //console.log("User Data received")
-        //console.log(data.user);
-
         this._authService._fetchUser(data.user.uid)
           .subscribe(res => {
-            //console.log("from fetchuser");
-            //console.log(res);
+            this.hasUserData=res;
+            console.log("response from the fetchuser:", this.hasUserData);
+            
             if (res) {
+             // this.hasUserData=res;
               this.currentUser = this._authService._getCurrentUser();
+              console.log("this.hasUserData",this.hasUserData);
+               
+               this.signupForm = this.fb.group({
+
+
+          // We can set default values by passing in the corresponding value or leave blank if we wish to not set the value. For our example, we’ll default the gender to male.
+          'firstName': [ this.hasUserData.firstName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
+          'lastName': [ this.hasUserData.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
+          'email': [ this.hasUserData.email, Validators.required],
+          'avatar':  this.hasUserData.avatar,
+          'experience': [ this.hasUserData.experience, Validators.required],
+          'page': null,
+          'phone': [this.hasUserData.phone, Validators.required],
+          'clinicLocation': [ this.hasUserData.clinicLocation, Validators.required],
+          'authProvider':  this.hasUserData.provider,
+          'authUID':  this.hasUserData.uid,
+          'address': [this.hasUserData.address],
+          'mci_number': [this.hasUserData.mci_number, Validators.required],
+          'speciality': [ this.hasUserData.speciality, Validators.required],
+          'specializations': this.fb.array([
+            this.initializeSpecializations(this.hasUserData.specializations[0])
+          ]),
+          'fbPageId': [''],
+          'clinic': [ this.hasUserData.clinic, Validators.required],
+          'qualification': [ this.hasUserData.qualification, Validators.required],
+          'numberConfirmed': [, Validators.required],
+          'fullName': [ this.hasUserData.fullName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
+          'fee': [ this.hasUserData.fee, Validators.required]
+        });
+        const control2 = <FormArray>this.signupForm.controls['specializations'];
+        for (let each in this.hasUserData.specializations) {
+          if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
+        control2.push(this.initializeSpecializations(this.hasUserData.specializations[each]));
+
+      }
+        }
             }
           });
-
+          
+         
         this.signupForm = this.fb.group({
+
 
           // We can set default values by passing in the corresponding value or leave blank if we wish to not set the value. For our example, we’ll default the gender to male.
           'firstName': [data.user.firstName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
@@ -161,8 +186,17 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
           'numberConfirmed': [, Validators.required],
           'fullName': ['Dr. ' + data.user.firstName + ' ' + data.user.lastName, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
         });
-        //console.log("this.signupForm");
-        //console.log(this.signupForm);
+       
+
+      console.log("this.hasUserData",this.hasUserData);
+          if (this.hasUserData){
+            
+
+          }
+
+
+
+
         this.formReady = true;
         //this._fs.initFbMessenger()
 
@@ -175,6 +209,13 @@ export class DoctorCheckupComponent implements OnInit, AfterViewInit {
     return this.fb.group({
      // name: ['', Validators.required],
       details: ['', Validators.required]
+    });
+  }
+  initializeSpecializations(specializations) {
+    console.log(specializations);
+    return this.fb.group({
+     // name: ['', Validators.required],
+      details: [specializations.details, Validators.required]
     });
   }
   ngAfterViewInit() {
@@ -269,7 +310,7 @@ this._authService._getMedicalSpecialities()
     };
     console.log(form);
     for (let spe in form.specializations) {
-     
+      if (form.specializations[spe]['details'].toString != null)
       form.specializations[spe]['details']['toString'] = null;
       console.log(form.specializations[spe]);
     };
@@ -315,6 +356,7 @@ this._authService._getMedicalSpecialities()
                         response2 => {
 
                           form['adaccounts'] = response2.data;
+                          console.log(form);
                           this._authService._saveDoctor(form);
                           this._authService._saveUser(form).then(
                             data => {
@@ -333,7 +375,9 @@ this._authService._getMedicalSpecialities()
 
         });
     } else {
-      this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)
+        console.log(form);
+        console.log(form.specializations);
+      //this._authService._savePageAccessToken(form.fbPageId, "EAAQGZBKWXi6EBAKYHhIq7A63aZCC87OQKE62SZAeZBxywgHwQXSzDKRfp8Gvz5tOhScnfZCC5mhvDDmlgQEzprKzIVqZCu0z2aq0546JVUZCRpBgPoBSfjgwzl1U2gOG0B3piwPd7kipGPmgBZCjUgkit2KZBBVdc796dS3iIPVcmOQZDZD", this.fbAccessToken)
       this._authService._saveDoctor(form);
       this._authService._saveUser(form).then(
         data => {

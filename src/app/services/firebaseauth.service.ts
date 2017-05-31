@@ -89,8 +89,9 @@ export class AuthService {
   }//logout
 
   public _saveUser(formData) {
-    //console.log("formdata");
-    //console.log(formData);
+    console.log("formdata");
+    console.log(formData);
+    console.log(formData.specializations);
     const db = this.af.database.object(this.db.users + formData.authUID);
     return db.set(formData)
 
@@ -395,9 +396,18 @@ export class AuthService {
     return this.af.database.object(this.db.hlDatabase + id);
 
   }//_saveCaredOne
+   public _saveHealthLineData(id, data) {
+    console.log("calling addition for Id: ", id, this.db.hlDatabase + id, data)
+    var hlAdd = this.af.database.object(this.db.hlDatabase + id);
+    return hlAdd.set(data);
+  }//_saveCaredOne
   public _saveWebsite(siteName, docId) {
     const clinicSite = this.af.database.object(this.db.users + docId + '/clinicWebsite');
     return clinicSite.set(siteName);
+  }//_saveCaredOne
+    public _saveClinicId(clinicId, docId) {
+    const clinicSite = this.af.database.object(this.db.users + docId + '/clinicId');
+    return clinicSite.set(clinicId);
   }//_saveCaredOne
   public _saveSpecializationsData(siteName, data) {
     const clinicSite = this.af.database.list(this.db.doctorPages + '/' + siteName + '/specializations');

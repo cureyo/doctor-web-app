@@ -156,6 +156,7 @@ export class ExistingPathWaysComponent implements OnInit {
           this.objectIdVal = data.objectId;
           this.existingPathWays = this._fb.group({
             name: [data.name, Validators.required],
+            description: [data.description, Validators.required],
             objectId: [data.objectId, Validators.required],
 
             checkPoints: this._fb.array([
@@ -359,6 +360,7 @@ initOptions() {
                                               this.existingPathWays.reset();
                                               this.existingPathWays = this._fb.group({
                                                     name: ['', Validators.required],
+                                                    description: ['', Validators.required],
                                                     checkPoints: this._fb.array([
                                                     this.initCheckPoints()
                                                     ]),

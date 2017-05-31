@@ -97,14 +97,16 @@ export class SelectDomainComponent implements OnInit {
     this._authService._getUser()
       .subscribe(
       data => {
+        var len = domainName.indexOf('.');
+
+        var domainNameShort = domainName.substring(0, len);
+        this.sitename = domainNameShort;
         this._authService._saveWebsite(domainName, data.user.uid);
+        this._authService._saveClinicId(domainNameShort,data.user.uid )
         this._authService._getSitePrefilledData()
           .subscribe(data => {
 
-            var len = domainName.indexOf('.');
 
-            var domainNameShort = domainName.substring(0, len);
-            this.sitename = domainNameShort;
             this._authService._getUser()
               .subscribe(
               res => {
@@ -179,7 +181,7 @@ export class SelectDomainComponent implements OnInit {
                               "targetingSpecs": "NA",
                               "imgSearch": hlData['_title'],
                               "showForm": [],
-                              "refname":hlData['_title']+ "[AD]",
+                              "refname": hlData['_title'] + "[AD]",
                             };
                             this._authService._saveWebsiteSpeciaizations(domainNameShort, dataWeb, ctr[item])
                               .then(
