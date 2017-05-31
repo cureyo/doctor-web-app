@@ -229,9 +229,15 @@ confirmOTP(otp) {
       data => {
         console.log(data)
         for (let partner in data) {
-          if (partner !='$key' && partner !='$exists' && partner !='$value')
+          console.log(partner);
+          if (partner !='$key' && partner !='$exists' && partner !='$value') {
+            console.log(partner);
+          console.log(this.phoneNumber, this.currentUserID, partner, data[partner].category, data[partner].type);
           this._authService._savePartnerId(this.phoneNumber, this.currentUserID, partner, data[partner].category );
-          
+          this._authService._savePartnerImage(this.phoneNumber, this.currentUserID, partner, data[partner].category );
+        
+          }
+            
         }
       }
     )

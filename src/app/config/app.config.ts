@@ -75,6 +75,7 @@ export const AppConfig = {
     HumanAPIData:       environment.envName + '/PatientFitnessData/',
     ActivitySummary:    environment.envName + '/ActivitySummary/',
     Partners:           environment.envName + '/Partners/',
+    PageAdmins:         environment.envName + '/PageAdmins/',
     PartnerIndex:       environment.envName + '/PartnersIndex/',
     messagingIds:       environment.envName + '/MessagingIds/',
     careSchedule:       environment.envName + '/CareSchedule/',

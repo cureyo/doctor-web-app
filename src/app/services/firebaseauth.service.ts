@@ -777,6 +777,21 @@ export class AuthService {
     return this.af.database.object(this.db.Partners + userId)
 
   }
+    public _savePageAdmin(pageId, data) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+    var pageDet = this.af.database.object(this.db.PageAdmins + pageId)
+    return pageDet.set(data);
+
+  }
+  public _updatePageDetails(userID, pageId) {
+    var pageDet = this.af.database.object(this.db.users + userID + '/fbPageId')
+    return pageDet.set(pageId);
+  }
+  public _updateWebsitePage(clinicID, pageId) {
+    var pageDet = this.af.database.object(this.db.doctorPages + clinicID + '/fbPageId')
+    return pageDet.set(pageId);
+  }
    public _getOnePartner(userId, consultantId) {
 
     //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
@@ -797,6 +812,13 @@ export class AuthService {
 
     return this.af.database.object(this.db.Partners + doctorId + '/'+ route + '/' + key + '/uid')
       .set(userId);
+  }
+  public _savePartnerImage(key, userId, doctorId, route) {
+
+    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+
+    return this.af.database.object(this.db.Partners + doctorId + '/'+ route + '/' + key + '/img')
+      .set("https://graph.facebook.com/" + userId + "/picture?type=large");
   }
   public _searchPartner(phone) {
 

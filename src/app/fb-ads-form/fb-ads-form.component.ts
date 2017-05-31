@@ -22,6 +22,7 @@ export class FbAdsFormComponent implements OnInit {
   private fbAdsAdded: boolean = false;
   private section: any = "facebook";
   public adAccountID: any;
+  private clinicWebsite: any;
   private citiesReady: boolean = false;
   private waiting: boolean = false;
   private pageIdSelected: any;
@@ -197,16 +198,17 @@ export class FbAdsFormComponent implements OnInit {
                     this.tempAdaccountId[i] = this.adAccountID[i].id;
                 }
                 console.log("this is usertable response:", userTable);
-                this.clinicID = userTable.clinicWebsite;
+                this.clinicID = userTable.clinicWebsite.substring(0,userTable.clinicWebsite.indexOf("."));
                 this.initFB(userTable.fbPageId);
-                this.clinicID = userTable.clinicWebsite.indexOf(".");
-                if (this.clinicID == -1) {
-                  this.clinicID = userTable.clinicWebsite.length;
-                };
+                
+                this.clinicWebsite = userTable.clinicWebsite;
+                // if (this.clinicID == -1) {
+                //   this.clinicID = userTable.clinicWebsite.length;
+                // };
 
-                this.clinicID = userTable.clinicWebsite.substring(0, this.clinicID);
-                this.clinicID = "http://" + this.clinicID + ".cureyo.com";
-                console.log("Clinic ID", this.clinicID);
+                // this.clinicID = userTable.clinicWebsite.substring(0, this.clinicID);
+                // //this.clinicID = "http://" + this.clinicID + ".cureyo.com";
+                // console.log("Clinic ID", this.clinicID);
                 this.pageID = userTable.fbPageId;
 
 
@@ -931,6 +933,22 @@ $('#fbDoneModal').modal('hide');
   }
    prevItem(count) {
     this.currentItem = this.itemArray[parseInt(count) - 1];
+  }
+  connectPage(pageId) {
+    var data = {adminID: this.userID, clinicId: this.clinicID, website: this.clinicWebsite};
+    this._authService._savePageAdmin(pageId, data).then(
+      dat2 => {
+        this._authService._updatePageDetails(this.userID, pageId).then(
+          dat3 => {
+            this._authService._updateWebsitePage(this.clinicID, pageId).
+            then(dat4=> {
+              console.log("items have been updated", dat2, dat3)
+              alert("Your communication channel has been updated.")
+            })
+          }
+        )
+      }
+    )
   }
 }
 
