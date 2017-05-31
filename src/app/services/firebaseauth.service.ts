@@ -254,6 +254,9 @@ export class AuthService {
   public _getMedicalVendors() {
     return this.af.database.object(this.db.MedicalVendors);
   }
+    public _getMedicalSupport() {
+    return this.af.database.object(this.db.MedicalSupport);
+  }
   public _saveWebContentProfiletile(data, sitename) {
     //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/profileTile')

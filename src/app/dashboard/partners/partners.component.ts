@@ -31,6 +31,7 @@ export class PartnerComponent implements OnInit {
     private vendorsPresent: boolean = false;
     private addingConsultant: boolean = false;
     private addingVendor: boolean = false;
+    private addingSupport: boolean = false;
     private sitename: any;
     private types: any = [];
     private currentConsultants: any = [];
@@ -38,6 +39,7 @@ export class PartnerComponent implements OnInit {
     private userId: any;
     private medSpecialities: any = [];
     private medVendors: any = [];
+    private medSupport: any = [];
     //private nextButtonFlag:boolean=false;
 
 
@@ -68,6 +70,7 @@ export class PartnerComponent implements OnInit {
         //   });
         this.getMedicalSpecialities();
         this.getMedicalVendors();
+        this.getMedicalSupport();
         this._authService._getUser()
             .subscribe(
             data => {
@@ -138,27 +141,36 @@ export class PartnerComponent implements OnInit {
         let model = form.value;
         console.log(model);
         let type = model['type'];
+        if (type == "support") {
+            type = "consultant";
+            model['type'] = "consultant";
+        }
         // model['icon'] = this.types[model['type']].icon;
         // model['type'] = this.types[model['type']].name;
         // model['category'] = type;
         let types = {
-            "Dietician" : "restaurant_menu",
+            "Dietician": "restaurant_menu",
             "Physiotherapist": "accessibility",
             "Physical Medicine & Rehabilitation": "directions_run",
             "Physical Therapist": "directions_run",
+            "Fitness Instructor": "directions_run",
             "Pharmacy": "toll",
+            "Psychologist": "local_library",
+            "Counsellor": "local_library",
             "Pathological Lab": "invert_colors",
-            "Radiological Lab":"settings_overscan",
+            "Radiological Lab": "settings_overscan",
             "Ultrasound Center": "settings_overscan",
             "X-ray Center": "settings_overscan"
         };
-             if (types[model['type']]) {
-                 model['icon'] = types[model['type']].icon;
-             } else {
-                 model['icon'] = "local_hospital"
-             }
-                
-                
+        console.log(types[model['speciality']]);
+        console.log(model['speciality']);
+        if (types[model['speciality']]) {
+            model['icon'] = types[model['speciality']];
+        } else {
+            model['icon'] = "local_hospital"
+        }
+
+
         this._authService._addPartner(model, this.userId, type, model.phone).then(
             data => {
                 console.log(data);
@@ -173,7 +185,8 @@ export class PartnerComponent implements OnInit {
                     icon: [''],
                     img: [''],
                     message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
-                });          }
+                });
+            }
         )
     }
     changeAddType(partnerForm) {
@@ -181,10 +194,17 @@ export class PartnerComponent implements OnInit {
         if (partnerForm.value == "vendor") {
             this.addingConsultant = false;
             this.addingVendor = true;
+            this.addingSupport = false;
             this.partnerForm.controls['speciality'].reset();
         } else if (partnerForm.value == "consultant") {
             this.addingConsultant = true;
             this.addingVendor = false;
+            this.addingSupport = false;
+            this.partnerForm.controls['speciality'].reset();
+        } else if (partnerForm.value == "support") {
+            this.addingConsultant = false;
+            this.addingVendor = false;
+            this.addingSupport = true;
             this.partnerForm.controls['speciality'].reset();
         }
     }
@@ -201,6 +221,14 @@ export class PartnerComponent implements OnInit {
             .subscribe(
             vendorData => {
                 this.medVendors = vendorData;
+            }
+            )
+    }
+    getMedicalSupport() {
+        this._authService._getMedicalSupport()
+            .subscribe(
+            supportData => {
+                this.medSupport = supportData;
             }
             )
     }

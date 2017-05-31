@@ -82,6 +82,7 @@ export const AppConfig = {
     OTPRequests:        environment.envName + '/OTPRequests/',
     scrollTo:           environment.envName + '/DoctorPages/ScrollToSection/',
     MedicalSpecialities: '/MedicalSpecialities/',
-    MedicalVendors: '/MedVendors/'
+    MedicalVendors: '/MedVendors/',
+    MedicalSupport: '/MedSupports/', 
   }
 }
