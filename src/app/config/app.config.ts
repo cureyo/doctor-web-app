@@ -55,7 +55,7 @@ export const AppConfig = {
     doctorPages:        environment.envName + '/DoctorPages/',
     socialCalendar:     environment.envName + '/socialCalendar/',
     pathologicalTestDetails:  environment.envName + '/PathologicalTests',
-    website:            environment.envName + '/DoctorPages/localhost/',
+    website:            '/SampleDocPage/',
     carePaths:          environment.envName + '/CarePathways/',
     HxPaths:            environment.envName + '/PatientHxForms/',
     carePathNames:      environment.envName + '/CarePathNames/',

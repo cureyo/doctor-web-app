@@ -115,7 +115,7 @@ export class SelectDomainComponent implements OnInit {
                   userData => {
                     console.log(userData);
                     var data1 = JSON.stringify(data);
-
+                    console.log(data1)
 
                     var websiteData = data1.replace(/#DrfullName/g, userData.fullName);
                     websiteData = websiteData.replace(/#DrQualification/g, userData.qualification);
@@ -128,11 +128,13 @@ export class SelectDomainComponent implements OnInit {
                     websiteData = websiteData.replace(/#DrEmail/g, userData.email);
                     websiteData = websiteData.replace(/#DrClnicId/g, domainNameShort);
                     websiteData = websiteData.replace(/#DrClinic/g, userData.clinic);
+                    websiteData = websiteData.replace(/#DrFee/g, userData.fee);
+                    websiteData = websiteData.replace(/#DrPageId/g, userData.fbPageId);
                     var websiteData2 = JSON.parse(websiteData);
                     var websiteData3 = { availability: { SLots: [''] }, content: websiteData2.content, docDetails: websiteData2.docDetails, doctorId: websiteData2.doctorId, fbPageId: userData.fbPageId, metaData: websiteData2.metaData }
                     //var websiteData = {doctorId: res.user.uid , bookingTile: data.bookingTile, footer: data.footer, heroTile: data.heroTile, map: data.map, profileTile: data.profileTile};
 
-
+                    console.log(websiteData3);
                     this._authService._saveDummyData(websiteData3, domainNameShort);
                     this.addDomain(domainNameShort);
                     if (userData.specializations) {
@@ -146,7 +148,13 @@ export class SelectDomainComponent implements OnInit {
                           hlData => {
                             console.log(hlData);
                             console.log(userData.specializations[item]);
-                            let dataWeb = { title: hlData['_title'], brief: hlData['_meta-desc'], description: hlData['full-summary'] };
+                            let webTitle = hlData['_title'].replace(' ', '-');
+                            webTitle = webTitle.replace(':', '-');
+                            webTitle = webTitle.replace('.', '-');
+                            webTitle = webTitle.replace(':', '-');
+                            webTitle = webTitle.replace('!', '-');
+                            webTitle = webTitle.replace('?', '-');
+                            let dataWeb = { title: hlData['_title'], brief: hlData['_meta-desc'], description: hlData['full-summary'], webTitle: webTitle };
                             let dataDetails = { givenName: userData.specializations[item].details.name, id: userData.specializations[item].details.id, meta: hlData['_meta-desc'], summary: hlData['full-summary'] };
                             let pageIDtemp, adIDtemp;
                             if (userData.fbPageAdded)
