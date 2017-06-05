@@ -41,7 +41,7 @@ export class PaymentsComponent implements OnInit {
     private medSpecialities: any = [];
     private medVendors: any = [];
     private medSupport: any = [];
-    private partnerConsultants: any =[];
+    private partnerConsultants: any = [];
     //private nextButtonFlag:boolean=false;
 
 
@@ -115,7 +115,8 @@ export class PaymentsComponent implements OnInit {
                             paymentsData => {
                                 if (paymentsData.plans) {
                                     this.paymentsForm = this._fb.group({
-                                        plans: this._fb.array([]) }
+                                        plans: this._fb.array([])
+                                    }
                                     );
                                     let control = <FormArray>this.paymentsForm.controls['plans'];
                                     for (let each in paymentsData.plans) {
@@ -156,7 +157,7 @@ export class PaymentsComponent implements OnInit {
         }
 
     }
-        loadPlanGroup(data) {
+    loadPlanGroup(data) {
         let control = this._fb.group(
             {
                 description: [data.description, Validators.required],
@@ -195,10 +196,35 @@ export class PaymentsComponent implements OnInit {
             let consName = this.currentConsultants[consultant].name;
             let onLine1 = 'reminder';
             let physical1 = 'reminder';
-            if (consList[consId])
-            onLine1 = consList[consId].online;
-            if (consList[consId])
-            physical1 = consList[consId].physical;
+            if (consList[consId]) {
+                onLine1 = consList[consId].online;
+                physical1 = consList[consId].physical;
+            }
+            else if (this.currentConsultants[consultant].uid && this.currentConsultants[consultant].uid == this.userId) {
+                if (data.title == "Basic Plan") {
+                    onLine1 = "payment";
+                    physical1 = "payment";
+                } else if (data.title == "Health Reviews Plan") {
+                    onLine1 = "payment";
+                    physical1 = "payment";
+                } else if (data.title == "Comprehensive Plan") {
+                    onLine1 = "payment";
+                    physical1 = "payment";
+                }
+            } else {
+                if (data.title == "Basic Plan") {
+                    onLine1 = "reminder";
+                    physical1 = "reminder";
+                } else if (data.title == "Health Reviews Plan") {
+                    onLine1 = "payment";
+                    physical1 = "reminder";
+                } else if (data.title == "Comprehensive Plan") {
+                    onLine1 = "payment";
+                    physical1 = "payment";
+                }
+            }
+
+
             control2.push(this._fb.group({
                 id: [consId],
                 name: [consName],

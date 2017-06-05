@@ -1,0 +1,74 @@
+
+#medReminder{
+
+  h2{
+    color: #555;
+    margin-top: 10px;
+  }
+
+  label{
+    color: #555;
+  }
+
+  .formGroup{
+    margin-left: 30px;
+  }
+  //.form{
+    .form-control{
+      border-bottom: 2px solid $blue;
+      border-right: none;
+      border-top: none;
+      border-left: none;
+
+      @include border-radius(0);
+      @include box-shadow(none);
+      color: #777777;
+      font-size: $fontXX;
+
+      @include input-placeholder{
+        color: #999;
+        opacity: 0.7;
+      }
+    }
+  //}//formGroup
+
+  #caredPlan{
+
+    //border: 2px solid $blue;
+
+
+    .medicines{
+      .medicine{
+        margin-bottom: 20px;
+      }
+      .actions{
+        margin-top: 30px;
+
+        #addcp{
+          @include border-radius(20px);
+        }
+        button{
+          @include box-shadow(1px 2px 1px #999);
+          font-weight: $bold;
+        }
+      }
+    }//medicines
+
+  }//caredplan
+
+
+
+
+}
+
+#caretaker{
+  form{
+    margin-left: 30px;
+  }
+  .checkboxes{
+    margin: 20px 0;
+    .form-group{
+      margin-bottom: 5px;
+    }
+  }
+}
