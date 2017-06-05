@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PatientDetailFormComponent } from '../PatientDetailForm/PatientDetailForm.component';
 import { PatientPreviewComponent } from "../PatientPreview/PatientPreview.component"
 import LineChart=require('../../../assets/js/linechart.js');
+
 declare var $: any
 
 @Component({
@@ -52,7 +53,7 @@ export class OutPatientsFormComponent implements OnInit {
   private dataReady: boolean = false;
   private fitnessArray: any = [];
   private tempCurrentUserID:any;
-
+  private carePlanForm: FormGroup;
   //for activity
   private activitySummarytitle:any;
   private activitySummaryDate:any;
@@ -71,6 +72,7 @@ export class OutPatientsFormComponent implements OnInit {
   private sleepSummaryTrimedtitle:any;
   private sleepSummaryAverage:any;
   private sleepTotal: any = 0;
+  private patientId: any;
   //for height
   private height:any; 
   private heightUnit:any;
@@ -79,20 +81,24 @@ export class OutPatientsFormComponent implements OnInit {
   private weightUnit:any;
 
   private hasHx: boolean = false;
-  constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http) {
+  constructor(private _fb: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private http: Http, public pform: PatientDetailFormComponent) {
 
 
   }
 
   ngOnInit() {
-      
+      this.carePlanForm = this._fb.group({
+        formname: [, Validators.required]
+      })
      this.route.params.subscribe(
       params => {
         let param = params['id'];
-        
+        this.patientId = params['id']
+        console.log(params);
         /*************************************************************************************************** */
           //preparing  the data from the firebase for chart 
       this.tempCurrentUserID=param;
+      this.pform.ngOnInit();
       console.log("user and caredone ID:",this.tempCurrentUserID)
         this._authService._getPatientFitnessData(this.tempCurrentUserID)
         .subscribe(response=>{
@@ -608,8 +614,20 @@ SleepSummaryChart(sleepSummaryObj){
         }
       });
   }
-
   checkOutPatient() {
+   console.log($('#carePlansModal3'));
+       console.log("showing careplan modal")
+    $('#carePlansModal3').modal('show');
+
+   
+    $('#profileContent').css({ position: 'fixed' });
+
+  }
+
+  closeCarePlanModal() {
+    console.log($('#carePlansModal3'));
+     $('#carePlansModal3').modal('hide');
+    $('#profileContent').css({ position: "" });
     var date = new Date();
     var ddS = date.getDate();
     var mmS = date.getMonth() + 1;
@@ -635,6 +653,7 @@ SleepSummaryChart(sleepSummaryObj){
         if (data.$value && data.$value != null) {
           console.log(this.clinicIDNew, today, next);
           this._authService._setClinicQueue(this.clinicIDNew, today, next);
+   
           this.router.navigate(['out-patients/' + data.$key + '/' + data.$value])
 
         }

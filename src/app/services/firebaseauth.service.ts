@@ -398,6 +398,8 @@ export class AuthService {
   }//_saveCaredOne
   public _saveCareSchedule(pageId, patientId, activationDate, pathName) {
     //console.log({path: pathName, activatedOn: activationDate});
+    console.log(this.db.careSched + pageId + '/' + patientId + '/Paths/' + pathName);
+    
     const carePaths = this.af.database.object(this.db.careSched + pageId + '/' + patientId + '/Paths/' + pathName);
     return carePaths.set({ path: pathName, activatedOn: activationDate });
   }//_saveCaredOne
@@ -892,6 +894,7 @@ export class AuthService {
     }).first();
   }
   public _getHealthReports(uid) {
+    console.log(this.db.healthReports + uid);
     //console.log("uid data:", uid);
     //console.log("url", this.db.healthReports + uid);
     return this.af.database.object(this.db.healthReports + uid);

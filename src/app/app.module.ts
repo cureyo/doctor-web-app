@@ -38,6 +38,7 @@ import {JsonpModule} from '@angular/http';
 import {ExistingPathWaysComponent} from './dashboard/care-pathways/existing-path-ways/existing-path-ways.component'
 import {CreatePathWaysComponent} from './dashboard/care-pathways/create-path-ways/create-path-ways.component';
 import {VideoCallComponent} from "./dashboard/video-call/video-call.component";
+import {PatientDetailFormComponent} from "./dashboard/PatientDetailForm/PatientDetailForm.component"
 // Must export the config
 export const firebaseConfig = {
   apiKey: CONFIG.apiKey,
@@ -72,7 +73,7 @@ export const firebaseAuthConfig = {
 
   declarations: [ MODULE_COMPONENTS, FbAdsFormComponent],
 
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent, ExistingPathWaysComponent, CreatePathWaysComponent],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent, ExistingPathWaysComponent, PatientDetailFormComponent, CreatePathWaysComponent],
 
   bootstrap: [AppComponent]
 })

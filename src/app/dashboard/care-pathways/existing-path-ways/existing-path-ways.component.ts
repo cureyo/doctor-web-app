@@ -173,6 +173,7 @@ export class ExistingPathWaysComponent implements OnInit {
         const control = <FormArray>this.existingPathWays.controls['checkPoints'];
         let ctr = 1;
         for (let each in data.checkPoints) {
+          console.log(data.checkPoints[each]);
           if (each != '$key' && each != '$value' && each != '$exists' && each != '0') {
             control.push(this.initializeCheckPoints(data.checkPoints[each], ctr));
             ctr++;
@@ -258,11 +259,12 @@ initOptions() {
       messageText: [data.messageText, Validators.required],
       checkType: [data.checkType, Validators.required],
       consultant: [data.consultant],
-      duration: [data.duration, Validators.required],
+      
       options: this._fb.array([
         this.initializeOptions(data.options[0])
       ])
     });
+    console.log(control);
       //console.log.log("find out the control value:",control);
     const control2 = <FormArray>control.controls['options'];
 

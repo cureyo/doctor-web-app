@@ -1,4 +1,4 @@
- <div class="main-content">
+ <div class="main-content" id="profileContent">
     <div class="container-fluid">
  <div class="col-md-12">
                 <div *ngIf="dataReady" class="card" style="margin-top: 30px;">
@@ -20,8 +20,13 @@
                   <h4 *ngIf="caredone.videoConsultId" style="color: #137a9c"><b>Video Consultation Window</b></h4>
                   
                   <video-call-cmp *ngIf="caredone.videoConsultId" [videoCon]="caredone.videoConsultId"></video-call-cmp>
+                  <br>
+                  <a class="btn btn-round btn-warning pull-left" (click)="pform.showReportModal2(caredone.uid)">View All Reports</a>
+                  <br>
+                  <hr/>
                   <h4 style="color: #137a9c"><b>Patient Medical History</b>
                   <br>
+                  
                   <small *ngIf="hasHx" >For: {{primeSymptom}}</small>
                   <small *ngIf="!hasHx" >No Medical History recorded</small></h4>
                      <div *ngIf="hasHx" class="row">
@@ -323,7 +328,7 @@
 </div>
 </div>
               </div>
-              <a class="btn btn-round pull-right" (click)="checkOutPatient()">Check-out Patient</a>
+              <a class="btn btn-round pull-right" (click)="checkOutPatient();">Check-out Patient</a>
               </div>
              
               
@@ -335,7 +340,73 @@
  </div>
  
 
-<app-PatientDetailsFormComponent></app-PatientDetailsFormComponent>
+<!--<app-PatientDetailsFormComponent></app-PatientDetailsFormComponent>-->
 </div>
  </div>
+    <div class="modal fade" id="reportsModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" id="reportsModal2">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="pform.closeReportModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Please find the reports below</b></h4>
+      </div>
+        <div *ngFor="let report of pform.healthReports" class="modal-body" >
+            <hr>
+        <p  style="text-align: left;">
+     
+         <b> {{report.Description}}</b>
+  
+         </p>
+        
+
+        <p style="text-align: left;">Uploaded by {{report.addedFName}} on {{report.updatedDate}}</p>
+       <img src="{{report.fileUrl}}" style="width: 100%;">
     
+        
+      </div>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="preview.prescriptionButton()">Add a Note</button>
+        <button type="button" class="btn btn-default" (click)="pform.closeReportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+    </div>
+  <div class="modal fade" id="carePlansModal3" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="height: 100%; z-index:10000; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document"  style="position: relative; margin-top: 20px;">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeCarePlanModal()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Assign a Care Plan</b></h4>
+      </div>
+      <br>
+      <hr>
+      <div class="modal-body">
+      <form [formGroup]="carePlanForm" class="form">
+                          <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-sm-8">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Assign a Care Plan</label>
+                                      <select formControlName="formname" class="form-control" >
+      <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of pform.carePathsAvlbl">{{j.path}}</option>
+    </select>
+                                    </div>
+                                </div>
+                                </div>
+                               
+                            </div>
+                          </div>
+                          <a (click)="pform.saveCarePlan(carePlanForm.controls['formname'].value, patientId)" class="btn btn-round btn-warning">Assign Path</a>
+      </form>
+      
+      <care-paths-cmp></care-paths-cmp>
+      <div class="modal-footer" style="padding-bottom: 20px;">
+       
+        <button type="button" class="btn btn-default" (click)="closeCarePlanModal()">Close</button>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

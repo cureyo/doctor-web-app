@@ -95,11 +95,11 @@
                                                                         <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
                                                             </div>
 
-                                                            <div *ngIf="checkTypes[i] == 'consult-reminder' && partnerList && partnerUpdated"  class="form-group" style="margin: 10px; width: 100%;">  
+                                                            <div *ngIf="(checkTypes[i] == 'consult-reminder' || checkTypes[i] == 'online-review') && partnerList && partnerUpdated"  class="form-group" style="margin: 10px; width: 100%;">  
                                                                         <label class="control-label" for="consultant">Consultation with</label>
                                                                         <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
                                   
-                                                                        <option [attr.selected]="check.controls['consultant']._value" value="{{partner.$key}}" *ngFor="let partner of partnerList;" >{{partner.name}}</option>
+                                                                        <option value="{{partner.key}}" *ngFor="let partner of partnerList;" >{{partner.name}}</option>
                                                                          
                                                                         </select>
                                                            </div>

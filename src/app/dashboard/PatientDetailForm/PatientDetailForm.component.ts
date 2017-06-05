@@ -61,7 +61,11 @@ export class PatientDetailFormComponent implements OnInit {
       Ob_Phone: ['', [Validators.required]]
     });
 
-    this._authService._getUser()
+
+  } //constructor
+
+  ngOnInit() {
+        this._authService._getUser()
       .subscribe(
       data => {
         //console.log("checking if user logged in");
@@ -78,6 +82,7 @@ export class PatientDetailFormComponent implements OnInit {
                 this.currentUserPageId = this.currentUser.fbPageId;
                 this.route.params.subscribe(
                   params => {
+                    console.log(params);
                     let param = params['id'];
                     this.caredoneId = param;
                     this.getCaredOne(param);
@@ -94,10 +99,6 @@ export class PatientDetailFormComponent implements OnInit {
             });
         }
       });
-  } //constructor
-
-  ngOnInit() {
-
   }
   gotDashboard() {
     $('#profileModal').modal('hide');
@@ -137,10 +138,21 @@ export class PatientDetailFormComponent implements OnInit {
     window.scroll(0, -100);
     $('#profileContent').css({ position: 'fixed' });
   }
+  
+
+ showReportModal2(uid) {
+
+   this.getReports(uid);
+    console.log("showing reports modal")
+    $('#reportsModal').modal('show');
+
+    window.scroll(0, -100);
+    $('#profileContent').css({ position: 'fixed' });
+  }
   showReportModal() {
 
 
-
+    console.log("showing reports modal")
     $('#reportsModal').modal('show');
 
     window.scroll(0, -100);
@@ -149,13 +161,13 @@ export class PatientDetailFormComponent implements OnInit {
 showCarePlanModal() {
 
 
-
+console.log("showing careplan modal")
     $('#carePlansModal').modal('show');
 
    
     $('#profileContent').css({ position: 'fixed' });
-     var elmnt = document.getElementById('#carePlansModal2');
-    elmnt.scrollIntoView(true);
+    //  var elmnt = document.getElementById('#carePlansModal2');
+    // elmnt.scrollIntoView(true);
   }
 
 
@@ -335,7 +347,16 @@ showCarePlanModal() {
 
   }
   // save observers data:
-
+saveCarePlan(patientID, carePathId) {
+   var today = new Date();
+      var todate = today.toString();
+  this._authService._saveCareSchedule(this.currentUserPageId, patientID, todate , carePathId)
+      .then(
+        data => {
+          console.log(data);
+        }
+      )
+}
   highlightSection(outerSection, sectionId) {
     var sectionName = "#" + sectionId;
     var elmnt = document.getElementById(outerSection);

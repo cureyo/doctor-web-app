@@ -414,6 +414,25 @@
         <button type="button" class="close" aria-label="Close" (click)="closeCarePlanModal()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Select a Care Plan below to view</b></h4>
       </div>
+      <form [formGroup]="CaredonesForm" class="form">
+                          <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-sm-8">
+                                <div class="form-group form-black label-floating is-not-empty">
+                                    <div class="form-group">
+                                    <label class="control-label">Assign a Care Plan</label>
+                                      <select formControlName="carePath" class="form-control" >
+      <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of carePathsAvlbl">{{j.path}}</option>
+    </select>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-sm-4">
+                                <a (click)="showCarePlanModal()" style="cursor: pointer;">View Plans</a>
+                                </div>
+                            </div>
+                          </div>
+      </form>
       <care-paths-cmp></care-paths-cmp>
       <div class="modal-footer" style="padding-bottom: 20px;">
        
