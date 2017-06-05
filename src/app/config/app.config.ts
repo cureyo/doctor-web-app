@@ -86,5 +86,6 @@ export const AppConfig = {
     MedicalVendors: '/MedVendors/',
     MedicalSupport: '/MedSupports/', 
     PaymentPlans:        environment.envName + '/PaymentPlans/',
+    SamplePaymentPlans:  environment.envName + '/SamplePaymentPlan/'
   }
 }

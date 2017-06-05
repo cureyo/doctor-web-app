@@ -263,6 +263,11 @@ export class AuthService {
      var payments = this.af.database.object(this.db.PaymentPlans + userId);
      return payments.set(form)
   }
+  _getSamplePaymentPlans() {
+    console.log(this.db.PaymentPlans);
+   return this.af.database.object(this.db.SamplePaymentPlans);
+     
+  }
   _getPaymentPlans(userId) {
     console.log(this.db.PaymentPlans + userId);
      return this.af.database.object(this.db.PaymentPlans + userId);
