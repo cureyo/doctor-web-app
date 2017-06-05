@@ -1,20 +1,22 @@
 <!--Blood Sugar & Pressure Job-->
   <div class="col-md-12">
                 <div class="card">
+                      
                   <form [formGroup]="tbsForm" class="formGroup" novalidate (ngSubmit)="save_TbsData(tbsForm)">
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="blue">
                         <h4 class="title">Blood Sugar Tracker </h4>
 
-                        <p class="category">Blood Sugar Tracker for {{patient.nickName}} </p>
+                       
 
                     </div> <!-- card header portion end-->
-                    
+                    <br>
+                    <hr/>
               <div class="card-content table-responsive">
                   
-              <div class="row" *ngIf="patient && user">
+              <div class="row">
     <!-- health matric formcontrol-->
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                             <div class="form-group">
                                 <label for="tbs_health_matric">Health Metric to track</label>
 
@@ -26,7 +28,7 @@
                     </div>
      <!-- End of health matric formcontrol-->
      <!-- Tracking Frequency formcontrol-->
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tbs_track_freq">Tracking Frequency</label>
 
@@ -46,7 +48,7 @@
                     </div>
   <!-- End of Tracking Frequency formcontrol-->   
   <!-- Timing formcontrol-->         
-                  <div class="col-md-3">
+                  <div class="col-md-6">
                           <div class="form-group">
                                <label for="tbs_medicineTiming">Timing</label>
 
@@ -65,7 +67,7 @@
                   </div>
 <!-- End of timing formcontrol-->  
 <!-- Report Frequency formcontrol-->
-                  <div class="col-md-3">
+                  <!--<div class="col-md-4">
                         <div class="form-group">
                              <label for="cp_reportFrequency">Report Frequency</label>
 
@@ -74,7 +76,7 @@
                                     <option value="monthly">Monthly</option>
                               </select>
                         </div>
-                  </div>
+                  </div>-->
             <!-- End of Report Frequency formcontrol--> 
 
                             </div> <!-- end of row-->
@@ -89,7 +91,8 @@
                         </div>
                 </div>
 <!-- end of submit button-->
-                    </div>
+                   </div>
                   </form>
+                   
                 </div>
             </div><!--  end of medication reminder-->

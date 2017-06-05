@@ -52,7 +52,7 @@ export class SiteCreationFormComponent implements OnInit {
         var n = this.routeparam.indexOf('.')
         var pathRoute = this.routeparam.substring(0, n);
         this.clinicId = pathRoute;
-        let tempURL2 = "http://" + pathRoute + ".cureyo.com/?scrollToSec=" + this.showingSection;
+        let tempURL2 = "https://" + pathRoute + ".cureyo.com/?scrollToSec=" + this.showingSection;
         this.websiteLink = this.sanitizer.bypassSecurityTrustResourceUrl(tempURL2);
         //console.log(pathRoute)
         this.showSection("heroSection")

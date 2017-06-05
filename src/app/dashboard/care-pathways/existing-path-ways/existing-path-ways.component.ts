@@ -17,6 +17,10 @@ export class ExistingPathWaysComponent implements OnInit {
   @Input() MedNames: any;
   @Input() pathData: any;
   private caredone: any;
+  private online: any = "Online";
+  private physical: any = "Physical";
+  private pathological: any = "Pathological";
+  private radiological: any = "Radiological";
   private existingPathWays: FormGroup;
   private carePathwayForm: FormGroup;
   private selectDrDomain: boolean = false;
@@ -158,7 +162,7 @@ export class ExistingPathWaysComponent implements OnInit {
             name: [data.name, Validators.required],
             description: [data.description, Validators.required],
             objectId: [data.objectId, Validators.required],
-
+             duration: [data.duration, Validators.required],
             checkPoints: this._fb.array([
               this.initializeCheckPoints(data.checkPoints[0], 0)
             ]),
@@ -254,6 +258,7 @@ initOptions() {
       messageText: [data.messageText, Validators.required],
       checkType: [data.checkType, Validators.required],
       consultant: [data.consultant],
+      duration: [data.duration, Validators.required],
       options: this._fb.array([
         this.initializeOptions(data.options[0])
       ])
@@ -361,6 +366,7 @@ initOptions() {
                                               this.existingPathWays = this._fb.group({
                                                     name: ['', Validators.required],
                                                     description: ['', Validators.required],
+                                                    duration: ['', Validators.required],
                                                     checkPoints: this._fb.array([
                                                     this.initCheckPoints()
                                                     ]),

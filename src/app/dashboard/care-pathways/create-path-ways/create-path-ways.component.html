@@ -2,14 +2,39 @@
         <div class="row">
                 <div class="col-sm-10 col-md-offset-1">
                             <div class="card card-stats">
-                            <div class="form-group" style="margin: 10px;">  
+                            <div class="form-group" style="width: 75%; margin: 10px;">  
                               <label class="control-label" for="name">Disease/ Condition</label>
                             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name this Care Path" />
                             </div>
+
+                             <div class="form-group" style="margin: 10px; width: 15%;">  
+                                     <label class="control-label" for="duration">Treatment duration</label>
+                                                                    <select formControlName="duration" class="form-control" >
+                                                                    <option value="0.25" >1 week</option>
+                                                                    <option value="0.5" >2 weeks</option>
+                                                                    <option value="0.75" >3 weeks</option>
+                                                                    <option value="1" >1 month</option>
+                                                                    <option value="1.5" >1.5 months</option>
+                                                                    <option value="2" >2 months</option>
+                                                                    <option value="3" >3 months</option>
+                                                                    <option value="4" >4 months</option>
+                                                                    <option value="5" >5 months</option>
+                                                                    <option value="6" >6 months</option>
+                                                                    <option value="7" >7 months</option>
+                                                                    <option value="8" >8 months</option>
+                                                                    <option value="9" >9 months</option>
+                                                                    <option value="10" >10 months</option>
+                                                                    <option value="11" >11 months</option>
+                                                                    <option value="1yr" >1 year</option>
+                                                                    <option value="Cr" >Chronic</option>
+                                                                    </select>
+                                                                      </div>
                             <div class="form-group" style="margin: 10px;">  
                                      <label class="control-label" for="description">Description</label>
                             <textarea type="text" class="form-control" id="description" formControlName="description" placeholder="Provide a brief description, risks, etc."> </textarea>
                             </div>
+                            
+                          
                             <div class="pull-left" >
                             <button type="button" id="addcheck" (click)="addCheckPoints()"  class="btn btn-round btn-primary">+ add checkpoint</button>
                             </div>
@@ -23,7 +48,7 @@
 
                 <!-- form array name checkPoints-->
                 <div class="col-sm-8">
-                        <h4><b>Outgoing Patient Queries</b></h4>
+                        <h4><b>Outgoing Reminders</b></h4>
                 <div formArrayName="checkPoints">
                             <div class="card card-stats" *ngFor="let check of carePathwayForm.controls.checkPoints.controls; let i=index">
                                     <div [formGroupName]="i">
@@ -56,8 +81,11 @@
                                                                         <option value="mcq">Multiple Choice Question</option>
                                                                         <option value="value">Value/ Metric check</option>
                                                                         <option value="consult-reminder">Consultation Reminder</option>
+                                                                        <option value="online-review">Online Review/ Consult</option>
                                                                         <option value="med-reminder">Medication Reminder</option>
-                                                                        <option value="test-reminder">Lab Test Reminder</option>
+                                                                        <option value="test-reminder">Pathological Tests</option>
+                                                                        <option value="scan-reminder">Radiological Scans</option>
+                                                                        <option value="blood-test-reminder">Sugar/ BP Check</option>
                                                                         </select>
                                                             </div>
 
@@ -67,7 +95,7 @@
                                                                         <input type="text" class="form-control" id="messageText" formControlName="messageText" placeholder="Message/ Question text" />
                                                             </div>
 
-                                                            <div *ngIf="checkTypes[i] == 'consult-reminder'"  class="form-group" style="margin: 10px; width: 100%;">  
+                                                            <div *ngIf="checkTypes[i] == 'consult-reminder' || checkTypes[i] == 'online-review'"  class="form-group" style="margin: 10px; width: 100%;">  
                                                                         <label class="control-label" for="consultant">Consultation with</label>
                                                                         <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
 
@@ -105,14 +133,36 @@
                                                 <app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
                                                         [objectId]="objectIdVal" 
                                                         [timeInterval]="timeInterval" 
+                                                        [testType]="pathological"
                                                         [dateInterval]="dateInterval"
                                                         [MedNames]="TestNames">
                                                 </app-lab-test-carepath>
-                                                <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected[i]"
+                                                <app-lab-test-carepath *ngIf="checkTypes[i] == 'scan-reminder'"
+                                                        [objectId]="objectIdVal" 
+                                                        [timeInterval]="timeInterval" 
+                                                        [dateInterval]="dateInterval"
+                                                        [testType]="radiological"
+                                                        [MedNames]="TestNames">
+                                                </app-lab-test-carepath>
+                                                
+                                                 <app-bloodsugar-carepath *ngIf="checkTypes[i] == 'blood-test-reminder'"
+                                                        [objectId]="objectIdVal">
+                                                </app-bloodsugar-carepath>
+                                                
+                                                 <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected[i]"
                                                         [objectId]="objectIdVal" 
                                                         [doctorId] = "doctorId"
                                                         [timeInterval]="timeInterval" 
                                                         [dateInterval]="dateInterval"
+                                                        [consultType]="physical"
+                                                        [consultantId]="consultant[i]">
+                                                </app-physicalconsultation-carepath>
+                                                <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'online-review'  && consultantSelected[i]"
+                                                        [objectId]="objectIdVal" 
+                                                        [doctorId] = "doctorId"
+                                                        [timeInterval]="timeInterval" 
+                                                        [dateInterval]="dateInterval"
+                                                        [consultType]="online"
                                                         [consultantId]="consultant[i]">
                                                 </app-physicalconsultation-carepath>
                                             </div>
@@ -120,7 +170,7 @@
                              </div>
                 </div>
                    <div class="col-sm-4">
-                           <h4><b>Incoming Patient Queries</b></h4>
+                           <h4><b>Incoming Queries</b></h4>
                 <div formArrayName="queries">
                             <div class="card card-stats" *ngFor="let query of carePathwayForm.controls.queries.controls; let i=index">
                                     <div [formGroupName]="i">

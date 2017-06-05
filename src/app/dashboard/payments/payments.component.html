@@ -1,0 +1,212 @@
+<div class="main-content" id="partnerContent">
+<div class="container-fluid">
+    <!--Existing Consultants-->
+    <onboarding-header-cmp [section]="section" #onboardingID></onboarding-header-cmp>
+
+<!--Add a partner-->
+
+ <form *ngIf="formReady" [formGroup]="paymentsForm" class="form">
+      <div class="row">
+              <div class="col-md-12">
+     <div class="medicines" formArrayName="plans">
+         <div class="col-md-4" *ngFor="let plan of paymentsForm.controls.plans.controls; let i=index">
+                             <div [formGroupName]="i">
+    
+                 
+                      <div class="card">
+    <div class="card-content">
+                          <h4>Basics</h4>
+                          <hr/>
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" [formControl]="plan.controls['title']"  class="form-control" >
+                                    </div>
+                                </div>
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Description</label>
+                                    <textarea type="text" [formControl]="plan.controls['description']"  class="form-control" ></textarea>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <h4>Consultations</h4>
+                          <hr/>
+                          <div class="medicines" formArrayName="consultations">
+                          <div class="clearfix medicine" *ngFor="let consult of plan.controls['consultations'].controls; let k=index">
+                             <div [formGroupName]="k">
+                                
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Consultant</label>
+                                    <p><b>{{consult.value['name']}}</b></p>
+                                    </div>
+                                
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Online Reviews</label>
+                                    <select formControlName="online" id="online" class="form-control" >
+                                <option value="reminder">Only Reminder</option>
+                                <option value="payment">Collect Payment</option>
+                                
+                              </select>
+                                    </div>
+                                </div>
+                                <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; margin-left: 4%;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Physical Reviews</label>
+                                    <select formControlName="physical" id="physical" class="form-control" >
+                                <option value="reminder">Only Reminder</option>
+                                <option value="payment">Collect Payment</option>
+                                
+                              </select>
+                                    </div>
+                                </div>
+                             </div>
+                          </div>
+                          </div>
+
+                                <hr/>
+                                 <h4>Services</h4>
+                          <hr/>
+                          <div formGroupName="services">
+                              <div formGroupName="Pharmacy">
+                                   <p><b>Pharmacy/ Medicines</b></p>
+                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Assistance</label>
+                                    <select formControlName="transaction" id="partner" class="form-control" >
+                                <option value="reminder">Adherence Reminders</option>
+                                 <option value="purchase-reminder">Purchase Reminder</option>
+                                <option value="payment">Collect Payment</option>
+                                
+                              </select>
+                                    </div>
+                                </div>
+                           <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; margin-left: 4%;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Partner</label>
+                                    <select formControlName="partner" id="partner" class="form-control" >
+                                <option value="{{vendor.phone}}" *ngFor="let vendor of currentVendors">{{vendor.name}}</option>
+                                
+                                
+                              </select>
+                                    </div>
+                                </div>
+                              </div>
+                              <div formGroupName="Pathological">
+                                   <p><b>Pathological Tests</b></p>
+                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Assistance</label>
+                                    <select formControlName="transaction" id="partner" class="form-control" >
+                               
+                                 <option value="purchase-reminder">Purchase Reminder</option>
+                                <option value="payment">Collect Payment</option>
+                                
+                              </select>
+                                    </div>
+                                </div>
+                           <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; margin-left: 4%;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Partner</label>
+                                    <select formControlName="partner" id="partner" class="form-control" >
+                                <option value="{{vendor.phone}}" *ngFor="let vendor of currentVendors">{{vendor.name}}</option>
+                                
+                                
+                              </select>
+                                    </div>
+                                </div>
+                              </div>
+                               <div formGroupName="Radiological">
+                                   <p><b>Radiological Tests</b></p>
+                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Assistance</label>
+                                    <select formControlName="transaction" id="partner" class="form-control" >
+                               
+                                 <option value="purchase-reminder">Purchase Reminder</option>
+                                <option value="payment">Collect Payment</option>
+                                
+                              </select>
+                                    </div>
+                                </div>
+                           <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; margin-left: 4%;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Partner</label>
+                                    <select formControlName="partner" id="partner" class="form-control" >
+                                <option value="{{vendor.phone}}" *ngFor="let vendor of currentVendors">{{vendor.name}}</option>
+                                
+                                
+                              </select>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                                
+                               
+                                <hr/>
+                                      <hr/>
+                                 <h4>Add-Ons</h4>
+                          <hr/>
+                          <div formGroupName="addOns">
+                              
+                                   
+                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:100%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Cab Booking</label>
+                                    <select formControlName="uberBooking" id="partner" class="form-control" >
+                                <option value="reminder">Assist Booking</option>
+                                <option value="payment">Collect Payment</option>
+                                
+                              </select>
+                                    </div>
+                                </div>
+                           <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Markup (in %) over Total</label>
+                                   <input type="text"  formControlName="markup" class="form-control" >
+                                    </div>
+                              
+                              </div>
+                              <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; margin-left: 4%;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Service Charge (in INR)</label>
+                                   <input type="text"  formControlName="service_charge" class="form-control" >
+                                    </div>
+                              
+                              </div>
+                          </div>
+                         
+                              
+                                   <p><b>Cureyo Fee</b></p>
+                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:100%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Cureyo Processing Fee (per month)</label>
+                                    <input type="text"  formControlName="cureyoFee" class="form-control">
+                                    </div>
+                                </div>
+                           
+                         
+              </div>  
+                  </div>
+                  
+              </div>
+    </div>
+                             </div>
+                        </div>
+     </div>
+     
+               <a (click)="addPlanGroup()" class="btn btn-round pull-right">Add a Plan</a>
+               <a (click)="savePaymentPlans(paymentsForm.value)" class="btn btn-warning btn-round pull-right">Save Plans</a>
+ </form>
+    </div>
+
+
+</div>
+   
+    <!--<div class="row">
+              <div class="pull-right">
+                    <a *ngIf="nextButtonFlag" id="nextButton" class="btn btn-warning btn-round" (click)="onboardingID.nextPage()" >Next</a>
+              </div>
+       </div>-->
+

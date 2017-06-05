@@ -144,6 +144,7 @@ export class AuthService {
 
   }//save onboardingReviewreview data
   public _saveTransactionData(data, objectId, route) {
+    console.log(this.db.transactionTable + '/' + objectId + '/' + route);
     const onboardingdata = this.af.database.object(this.db.transactionTable + '/' + objectId + '/' + route)
     return onboardingdata.set(data);
 
@@ -257,6 +258,16 @@ export class AuthService {
     public _getMedicalSupport() {
     return this.af.database.object(this.db.MedicalSupport);
   }
+  _savePaymentPlans(userId, form) {
+    console.log(this.db.PaymentPlans + userId);
+     var payments = this.af.database.object(this.db.PaymentPlans + userId);
+     return payments.set(form)
+  }
+  _getPaymentPlans(userId) {
+    console.log(this.db.PaymentPlans + userId);
+     return this.af.database.object(this.db.PaymentPlans + userId);
+     
+  }
   public _saveWebContentProfiletile(data, sitename) {
     //console.log("the sitenmae for hero booking tiles",sitename);
     const webcontentdata = this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/profileTile')
@@ -312,6 +323,17 @@ export class AuthService {
   public _getBackgroundImages() {
 
     return this.af.database.object(this.db.doctorPages + 'BackgroundImages');
+  }
+      public _UpdatePeerVideo(transId, status, peerId, role) {
+    var update = this.af.database.object(this.db.clinicConsults + transId + '/' + role);
+    update.set({
+      status: status,
+      peerId: peerId
+    });
+  }
+  public _GetPeerVideo(transId, peer) {
+    console.log(this.db.clinicConsults + transId + '/' + peer);
+    return this.af.database.object(this.db.clinicConsults + transId + '/' + peer);
   }
   public _saveDummyData(data, domainNameShort) {
     const webData = this.af.database.object(this.db.doctorPages + domainNameShort);

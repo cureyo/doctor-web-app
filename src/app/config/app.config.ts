@@ -55,6 +55,7 @@ export const AppConfig = {
     doctorPages:        environment.envName + '/DoctorPages/',
     socialCalendar:     environment.envName + '/socialCalendar/',
     pathologicalTestDetails:  environment.envName + '/PathologicalTests',
+    clinicConsults:     environment.envName + '/ClinicConsultations/Calls/',
     website:            '/SampleDocPage/',
     carePaths:          environment.envName + '/CarePathways/',
     HxPaths:            environment.envName + '/PatientHxForms/',
@@ -84,5 +85,6 @@ export const AppConfig = {
     MedicalSpecialities: '/MedicalSpecialities/',
     MedicalVendors: '/MedVendors/',
     MedicalSupport: '/MedSupports/', 
+    PaymentPlans:        environment.envName + '/PaymentPlans/',
   }
 }

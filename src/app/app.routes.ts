@@ -62,7 +62,8 @@ import { PatientPreviewComponent } from './dashboard/PatientPreview/PatientPrevi
 import {FbAdsFormComponent} from './fb-ads-form/fb-ads-form.component';
 import {OnboardingHeaderComponent} from "./dashboard/select-domain/onboardingHeader/onboardingHeader.component";
 import {ImageSearchComponent} from './fb-ads-form/image-search/image-search.component';
-
+import {VideoCallComponent} from "./dashboard/video-call/video-call.component";
+import {PaymentsComponent} from "./dashboard/payments/payments.component";
 export const MODULE_ROUTES: Route[] =[
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
@@ -81,7 +82,7 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'caredoneprofiles/:id', component: PatientDetailFormComponent },
     { path: 'patient-preview/:id', component: PatientPreviewComponent },
     { path: 'care-paths', component: CarePathsComponent },
-
+    { path: 'payments', component: PaymentsComponent },
     { path: 'Ads', component :FbAdsFormComponent},
     { path: 'out-patients/:count/:id', component: OutPatientsFormComponent},
     { path: 'out-patient-dept', component: OPDComponent},
@@ -97,6 +98,7 @@ export const MODULE_COMPONENTS = [
     HomeComponent,
     PatientPreviewComponent,
     TableComponent,
+    VideoCallComponent,
     FileUploadComponent,
     SidebarComponent,
     CaredoneFormComponent,
@@ -130,7 +132,7 @@ export const MODULE_COMPONENTS = [
     LabTestCareComponent,
     MedicationReminderCareComponent,
     PhysicalconsultationCareComponent,
-    //DocReviewCareComponent,
+    PaymentsComponent,
     ImageSearchComponent,
     PartnerComponent,
     WebContentComponent,

@@ -1,0 +1,121 @@
+
+   
+            <div class="row">
+            
+                  <div>
+                
+                        
+
+       
+    
+        
+<div style="text-align: center;">
+<!--<h2>My id - {{mypeerid}}</h2>
+<input type="text" [(ngModel)]="anotherid">
+<button (click)="connect()">Connect</button>-->
+
+
+<!--<button (click)="videoconnect()">VideoChat</button>-->
+<!--<video #myvideo></video>-->
+    <div *ngIf="!peerReady" class="card card-stats">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;" data-background-color="orange">
+<i class="material-icons">access_time</i>
+
+</div>
+<h3>Waiting for participant to join</h3>
+        </div>
+        <div *ngIf="peerReady && !onCall" class="card card-stats">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;" data-background-color="cureyo">
+<i class="material-icons">video_call</i>
+
+</div>
+<h3>Participant has joined. Start Call when ready</h3>
+        </div>
+<video #peerVideo style="width: 100%; height: 100%;"></video>
+<button *ngIf="peerReady" class="btn btn-primary btn-round" (click)="connect()" [disabled]="onCall">Start Call</button>
+<button *ngIf="peerReady" class="btn btn-danger btn-round" (click)="closevideo()" [disabled]="!onCall">End Call</button>
+   </div>
+
+
+
+                  </div>
+                
+            </div>
+       
+    
+  
+<!--<div class="section">
+        <div class="container">
+            <div class="row">
+            
+                  <div class="col-sm-10 col-sm-offset-1">
+                        <div class="card card-stats">
+                              <div class="card-header" style="width: 60px; height: 60px; padding: 0px;" data-background-color="cureyo">
+<i class="material-icons">local_hospital</i>
+
+</div>
+<h2>Send a note</h2>
+                              <div class="card card-stats" style="margin: 5%; width: 90%;">
+          
+
+<div class="card-content">
+     <div>
+         <form [formGroup]="sendNote" (ngSubmit)="onSubmit(sendNote.value, $event)" class="form" novalidate>
+     <div class="form-group" style="width: 100%; float: left; z-index: 100; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!sendNote.controls['description'].valid && (sendNote.controls['description'].touched || showErrorFlag)}">
+
+    <!--<label class="control-label" for="co_description">Send a Message</label>-->
+    <!--<textarea style=" height: 90px;" class="form-control" name="co_description" id="co_description"
+           [formControl]="sendNote.controls['description']"
+    ></textarea>-->
+    <!--<textarea class="span6 form-control" rows="3" placeholder="Enter your advice here" name="co_description" id="co_description"
+           [formControl]="sendNote.controls['description']"></textarea>
+      </div>
+      
+       <button type="submit" class="btn btn-primary btn-round" style="float: left; z-index: 100; ; margin-top: 0px;">Send</button>-->
+      
+         <!--</form>-->
+         <!--<div style="width: 100%;">
+<!--<app-file-upload 
+[clinicId]="clinicId"
+[transId]="transId"></app-file-upload>-->
+         <!--</div>-->
+<!--</div>
+</div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+        </div>
+    </div>-->
+
+    <!--<div class="section">
+        <div class="container">
+            <div class="row">
+            
+                  <div class="col-sm-10 col-sm-offset-1">
+                        <div class="card card-stats">
+                              <div class="card-header" style="width: 60px; height: 60px; padding: 0px;" data-background-color="cureyo">
+<i class="material-icons">attach_file</i>
+
+</div>
+<h2>Files shared</h2>
+                              <div *ngIf="hasReports" class="card card-stats" style="margin: 5%; width: 90%;">
+          
+
+<div class="card-content" *ngFor="let report of reports">
+    <div class="card card-stats">
+            <div class="card-header" style="width: 60px; height: 60px; padding: 0px;" data-background-color="orange">
+<i class="material-icons">{{report.type}}</i>
+
+</div>
+<img src="{{report.fileUrl}}">
+        </div>
+</div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    -->
+

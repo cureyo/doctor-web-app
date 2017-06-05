@@ -177,7 +177,7 @@ export class SpecializationsTileComponent implements OnInit {
                           "msg": hlData['_meta-desc'],
                           "name": hlData['_title'],
                           "pageID": userData.fbPageId,
-                          "siteLink": "http://" + userData.clinicId + ".cureyo.com",
+                          "siteLink": "https://" + userData.clinicId + ".cureyo.com",
                           "startdate": "NA",
                           "subtext": userData.fullName + " is an expert " + userData.speciality,
                           "targetCity": userData.clinicLocation,

@@ -179,7 +179,7 @@ export class SelectDomainComponent implements OnInit {
                               "msg": hlData['_meta-desc'],
                               "name": hlData['_title'],
                               "pageID": userData.fbPageId,
-                              "siteLink": "http://" + domainNameShort + ".cureyo.com",
+                              "siteLink": "https://" + domainNameShort + ".cureyo.com",
                               "startdate": "NA",
                               "subtext": userData.fullName + " is an expert " + userData.speciality,
                               "targetCity": "NA",
@@ -243,7 +243,7 @@ export class SelectDomainComponent implements OnInit {
       $.notify({
         icon: "notifications",
         message: "Website " + domainName + ".cureyo.com has been created. You can check in 30-45 minutes, or open this URL in another browser to review.",
-        url: 'http://' + domainName + '.cureyo.com',
+        url: 'https://' + domainName + '.cureyo.com',
         target: '_blank'
       }, {
           type: 'cureyo',

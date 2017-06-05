@@ -18,6 +18,7 @@ export class PhysicalconsultationCareComponent implements OnInit {
   @Input() timeInterval: any;
   @Input() dateInterval: any;
   @Input() consultantId: any;
+  @Input() consultType: any;
   public pctForm: FormGroup;
   private itemAdded7: boolean = false;
   private address: Object = null;
@@ -35,6 +36,7 @@ export class PhysicalconsultationCareComponent implements OnInit {
 
   ngOnInit() {
     var ConstID = this.consultantId;
+    console.log(this.consultType);
     if (this.objectId) {
       console.log("if called", this.objectId)
       this.pctForm = this._fb.group({
@@ -46,7 +48,8 @@ export class PhysicalconsultationCareComponent implements OnInit {
       this._authService._getTransactionData(this.objectId)
         .subscribe(response => {
           var id = this.consultantId;
-          this.physicalData = response[ConstID];
+          if (response[ConstID] && response[ConstID][this.consultType])
+          this.physicalData = response[ConstID][this.consultType];
           if (this.physicalData) {
             console.log("this.physiclData", this.physicalData);
             this.pctForm = this._fb.group({
@@ -86,15 +89,17 @@ export class PhysicalconsultationCareComponent implements OnInit {
         reminder['Job_Type'] = "Physical_Consultation";
         reminder['ConsultantId'] = this.consultantId;
         reminder['ConsultDrName'] = partnerData.name;
+        reminder['ConsultType'] = this.consultType;
         //reminder['ConsultDrName'] = job['consultant'];
         reminder['ConsultFee'] = partnerData.fee;
         console.log("reminder value test :", reminder);
         //save data in scheduled job
+        console.log(reminder, this.objectId, this.consultantId + '/' + this.consultType)
 
         var self = this;
         setTimeout(
           function() {
-            self._authService._saveTransactionData(reminder, self.objectId, self.consultantId).then(
+            self._authService._saveTransactionData(reminder, self.objectId, self.consultantId + '/' + self.consultType).then(
             res => {
               self.itemAdded7 = true;
               let d = res;

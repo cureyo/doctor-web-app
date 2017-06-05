@@ -14,7 +14,7 @@ export class LabTestCareComponent implements OnInit {
       @Input() timeInterval: any;
       @Input() dateInterval: any;
       @Input () MedNames: any;
-       
+       @Input () testType: any;
    public stForm: FormGroup;
    private itemAdded3: boolean = false;
    private labData:any;
@@ -45,7 +45,7 @@ export class LabTestCareComponent implements OnInit {
      //here is the code to get the transaction data
     this._authService._getTransactionData(this.objectId)
     .subscribe(response=>{
-            this.labData=response.LabTest;
+            this.labData=response[this.testType + 'LabTest'];
          console.log("response data based one the object Id:",response);
               
              if (this.labData){
@@ -173,7 +173,7 @@ export class LabTestCareComponent implements OnInit {
     var self = this;
     setTimeout(
       function() {
-        self._authService._saveTransactionData(reviewData,self.objectId,  'LabTest/').then(
+        self._authService._saveTransactionData(reviewData,self.objectId,  this.testType + 'LabTest/').then(
         res =>{
           let d=res;
           self.itemAdded3 = true;

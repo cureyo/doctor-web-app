@@ -3,7 +3,7 @@
  <div class="col-md-12">
                 <div *ngIf="dataReady" class="card" style="margin-top: 30px;">
                   
-                    <div *ngIf="caredone.avatar" class="card-header" data-background-color="blue">
+                    <div *ngIf="caredone.avatar" class="card-header" data-background-color="cureyo">
                          <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;">
 
 <img tyle="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;" src="{{caredone.avatar}}" >
@@ -17,6 +17,9 @@
                     </div> <!-- card header portion end-->
                     
               <div class="card-content table-responsive">
+                  <h4 *ngIf="caredone.videoConsultId" style="color: #137a9c"><b>Video Consultation Window</b></h4>
+                  
+                  <video-call-cmp *ngIf="caredone.videoConsultId" [videoCon]="caredone.videoConsultId"></video-call-cmp>
                   <h4 style="color: #137a9c"><b>Patient Medical History</b>
                   <br>
                   <small *ngIf="hasHx" >For: {{primeSymptom}}</small>

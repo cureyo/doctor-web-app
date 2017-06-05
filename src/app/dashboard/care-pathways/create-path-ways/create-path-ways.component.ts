@@ -16,6 +16,10 @@ export class CreatePathWaysComponent implements OnInit {
   @Input() TestNames: any;
   @Input() MedNames: any;
   private caredone: any;
+  private online: any = "Online";
+  private physical: any = "Physical";
+  private pathological: any = "Pathological";
+  private radiological: any = "Radiological";
   private drDomain: FormGroup;
   private carePathwayForm: FormGroup;
   private selectDrDomain: boolean = false;
@@ -61,6 +65,7 @@ export class CreatePathWaysComponent implements OnInit {
         this.carePathwayForm = this._fb.group({
               name: ['', Validators.required],
               description: ['', Validators.required],
+              duration: ['', Validators.required],
               objectId: [this.objectIdVal, Validators.required],
               checkPoints: this._fb.array([
               this.initCheckPoints()
@@ -215,6 +220,7 @@ export class CreatePathWaysComponent implements OnInit {
         this.carePathwayForm = this._fb.group({
           name: ['', Validators.required],
           description: ['', Validators.required],
+          duration: ['', Validators.required],
           objectId: [this.objectIdVal, Validators.required],
           checkPoints: this._fb.array([
             this.initCheckPoints()
@@ -246,6 +252,7 @@ export class CreatePathWaysComponent implements OnInit {
                                               this.carePathwayForm = this._fb.group({
                                                     name: ['', Validators.required],
                                                     description: ['', Validators.required],
+                                                    duration: ['', Validators.required],
                                                     checkPoints: this._fb.array([
                                                     this.initCheckPoints()
                                                     ])

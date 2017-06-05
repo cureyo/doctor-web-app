@@ -13,7 +13,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'http://care.cureyo.com/',
+  baseUrl: 'https://care.cureyo.com/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,

@@ -37,6 +37,7 @@ import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
 import {JsonpModule} from '@angular/http';
 import {ExistingPathWaysComponent} from './dashboard/care-pathways/existing-path-ways/existing-path-ways.component'
 import {CreatePathWaysComponent} from './dashboard/care-pathways/create-path-ways/create-path-ways.component';
+import {VideoCallComponent} from "./dashboard/video-call/video-call.component";
 // Must export the config
 export const firebaseConfig = {
   apiKey: CONFIG.apiKey,

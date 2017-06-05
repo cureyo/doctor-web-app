@@ -67,11 +67,11 @@ export class OPDComponent implements OnInit {
             var clinicDomain = res.clinicWebsite;
             var n = clinicDomain.indexOf('.');
             var clinicID = clinicDomain.substring(0, n);
-            //console.log("my clinic id is ", clinicID)
-            //console.log(clinicID)
+            console.log("my clinic id is ", clinicID)
+            console.log(clinicID)
             this._authService._getClinicQueue(clinicID, today)
               .subscribe(queue => {
-                //console.log(queue)
+                console.log(queue)
                 let q = 0;
                 if (queue.$value == null) {
                   this._authService._getCheckInDetails(clinicID, today, 0)

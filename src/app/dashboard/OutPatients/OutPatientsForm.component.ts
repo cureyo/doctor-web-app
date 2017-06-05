@@ -633,6 +633,7 @@ SleepSummaryChart(sleepSummaryObj){
       .subscribe(data => {
         console.log(data);
         if (data.$value && data.$value != null) {
+          console.log(this.clinicIDNew, today, next);
           this._authService._setClinicQueue(this.clinicIDNew, today, next);
           this.router.navigate(['out-patients/' + data.$key + '/' + data.$value])
 
