@@ -397,7 +397,7 @@
                                
                             </div>
                           </div>
-                          <a (click)="pform.saveCarePlan(carePlanForm.controls['formname'].value, patientId)" class="btn btn-round btn-warning">Assign Path</a>
+                          <a (click)="pform.saveCarePlan(patientId, carePlanForm.controls['formname'].value)" class="btn btn-round btn-warning">Assign Path</a>
       </form>
       
       <care-paths-cmp></care-paths-cmp>
