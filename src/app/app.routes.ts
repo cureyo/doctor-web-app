@@ -26,6 +26,8 @@ import {AuthGuard} from "./auth.guard";
 import {CaredOnesFormMobileViewComponent} from "./dashboard/cared-ones-form-mobile-view/cared-ones-form-mobile-view.component";
 import {DoctorLoginComponent} from "./doctor-login/doctor-login.component";
 import {DoctorCheckupComponent }  from "./doctorcheckup/doctorcheckup.component";
+import {VendorLoginComponent} from "./vendor-login/vendor-login.component";
+import {VendorCheckupComponent }  from "./vendorcheckup/vendorcheckup.component";
 import {JobsMasterComponent} from "./dashboard/jobs-master/jobs-master.component";
 import {BloodsugarJobsComponent } from "./dashboard/jobs-master/bloodsugar-jobs/bloodsugar-jobs.component";
 import {PartnerComponent } from "./dashboard/partners/partners.component";
@@ -74,6 +76,8 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'sendmessage/:id',component:CaredOnesFormMobileViewComponent},
     { path: 'doctor-login',component:DoctorLoginComponent},
     { path: 'doctor-checkup',component:DoctorCheckupComponent },
+    { path: 'vendor-login',component:VendorLoginComponent},
+    { path: 'vendor-checkup',component:VendorCheckupComponent },
     { path: 'doctorJob/:id',component:JobsMasterComponent },
     { path: 'clinicpage/:page', component: ClinicPageComponent },
     { path: 'web/:id', component :WebContentComponent},
@@ -110,6 +114,8 @@ export const MODULE_COMPONENTS = [
     ExerciseTrackerComponent,
     BloodSugarTrackerComponent,
     SuggestedMedReminderComponent,
+    VendorLoginComponent,
+    VendorCheckupComponent,
     OnlineConsultationComponent,
     PhysicalConsultationComponent,
     DocReviewComponent,

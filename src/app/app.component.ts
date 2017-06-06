@@ -105,7 +105,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     
       console.log(this.router.url);  // to print only path eg:"/login"
       console.log(window.location.pathname);
-      if (window.location.pathname == '/doctor-login' || window.location.pathname == '/logout' || window.location.pathname == '/doctor-checkup' ) {
+      if (window.location.pathname == '/doctor-login' || window.location.pathname == '/vendor-login' || window.location.pathname == '/vendor-checkup' || window.location.pathname == '/logout' || window.location.pathname == '/doctor-checkup' ) {
       this.showSideBar = false;
        console.log(window.location.pathname, this.showSideBar);
     }
@@ -136,7 +136,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 ////console.log("redirecting to dashboard");
                 //console.log(res);
                 console.log(window.location.pathname);
-                if (window.location.pathname != '/doctor-checkup')
+                if (window.location.pathname != '/doctor-checkup' && window.location.pathname != '/vendor-checkup')
                 this.showSideBar = true; 
                 else this.showSideBar = false; 
                 //this.router.navigate(['dashboard']);

@@ -1,0 +1,183 @@
+
+
+
+<!--reusing from login component-->
+		<div class="header header-filter" style="background-image: url('img/backgrounds/testimonials-background.jpg'); background-size: cover;background-position: top center; min-height: 600px;">
+			<div class="container" style="background: rgba(0, 0, 0, 0.5); padding-top:10%; padding-bottom: 10%; margin-left:0px; margin-right:0px; width: 100%; height: 100%; min-height: 600px;">
+				<div class="row" >
+					<div *ngIf="formReady" class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+            <form [formGroup]="signupForm" (ngSubmit)="submitForm(signupForm.value)" class="form">
+                  <div class="card card-stats">
+         	  <div class="card-header" style="border-radius: 8px; width: 90px; height: 90px; padding: 1px; background-color: #fff">
+
+<img [src]="currentUser.avatar || '../../assets/images/avatar.png'" style="border-radius: 8px; width: 88px; height: 88px;">
+</div>
+<div class="card-content">
+    <h3 class="title">Quick Signup
+        <br>
+        <small style="text-overflow:ellipsis; line-height: 10px; white-space: nowrap; overflow: hidden;">Basic information to get started</small>
+</h3>
+
+<div class="card-content2">
+     <div class="form-group" style="width: 48%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['firstName'].valid && signupForm.controls['firstName'].touched}">
+                <label class="control-label" for="user_firstName">First Name</label>
+                <input type="text" class="form-control" name="user_firstName" id="user_firstName" [formControl]="signupForm.controls['firstName']"
+                />
+              </div>
+
+              <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['lastName'].valid && signupForm.controls['lastName'].touched}">
+                <label class="control-label" for="user_lastName">Last Name</label>
+                <input type="text" class="form-control" name="user_lastName" id="user_lastName" [formControl]="signupForm.controls['lastName']"
+                />
+              </div>
+
+              <div class="form-group" style="width: 48%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['email'].valid && signupForm.controls['email'].touched}">
+                <label class="control-label" for="user_email">Email</label>
+                <input type="text" class="form-control" name="user_email" id="user_email" [formControl]="signupForm.controls['email']" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$"
+                />
+              </div>
+
+
+              <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['phone'].valid && signupForm.controls['phone'].touched}">
+                <label class="control-label" for="user_phone">10 Digit Mobile Number</label>
+                <input type="text" class="form-control" id="user_phone" [formControl]="signupForm.controls['phone']" pattern="(7|8|9)\d{9}"
+                />
+              </div>
+               <div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['fullName'].valid && signupForm.controls['fullName'].touched}">
+                <label class="control-label" for="user_fullName">Establishment Display Name</label>
+                <input type="text" class="form-control" id="user_fullName" [formControl]="signupForm.controls['fullName']" />
+              </div>
+              
+              
+ 
+               <div class="form-group" style="width: 48%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['mci_number'].valid && signupForm.controls['mci_number'].touched}">
+                <label class="control-label" >Registration Number</label>
+                <input type="text" class="form-control" [formControl]="signupForm.controls['mci_number']" />
+              </div>
+
+              <div class="form-group" style="width: 48%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['clinic'].valid && signupForm.controls['clinic'].touched}">
+                <label class="control-label" >Establishment Name</label>
+                <input type="text" class="form-control" [formControl]="signupForm.controls['clinic']" />
+              </div>
+               <div class="form-group" style="width: 48%; float: left; margin-left: 4%; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['clinicLocation'].valid && signupForm.controls['clinicLocation'].touched}">
+
+                <label class="control-label" for="user_clinicLocation">City</label>
+
+                <input type="text" id="user_clinicLocation" [formControl]="signupForm.controls['clinicLocation']" class="form-control"  (setAddress)="getAddress($event)" [options]="{      
+                      types: ['(cities)'],
+                      componentRestrictions: { country: 'IN' }
+                    }"  ng2-google-place-autocomplete />
+
+                <!--<input type="text" class="form-control" id="user_clinicLocation" [formControl]="signupForm.controls['clinicLocation']" />-->
+
+ </div>
+            <div class="form-group" style="width: 85%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['address'].valid && signupForm.controls['address'].touched}">
+                <label class="control-label" >Address</label>
+                <input type="text" [formControl]="signupForm.controls['address']" class="form-control">
+                <!--<input type="text" class="form-control" [formControl]="signupForm.controls['address']" />-->
+              </div>
+           
+               </div>  
+<div class="form-group" style="width: 100%; float: left; z-index: 10000; margin-top: 0px; margin-bottom: 0px;">
+    <label class="control-label" for="co_page">Select Facebook Page (optional)</label>
+    <select formControlName="fbPageId" class="form-control">
+      <option value="{{i.id}}" *ngFor="let i of pageNameList;">{{i.name}}</option>
+    </select>
+  </div>
+          
+
+             
+
+              
+
+
+             
+              
+           
+              <!--<script>
+
+                FB.Event.subscribe('send_to_messenger', function (e) {
+                  // callback for events triggered by the plugin
+                  //console.log("something something");
+                });
+
+              </script>-->
+              
+              <div class="form-group">
+                
+                
+                  <hr/>
+                  <script>
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: "appID",
+        xfbml: true,
+        version: "v2.6"
+      });
+
+    };
+    
+    (function(d, s, id){
+       var js, fjs = d.getElementsById('fb-messenger_checkbox')[0];
+       if (d.getElementById(id)) { return; }
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+  </script>
+                 <div id="fb-messenger_checkbox" class="fb-send-to-messenger" [attr.data-messenger_app_id]="appID" [attr.data-page_id]="pageID" [attr.data-ref]="passThrough" color="blue" size="xlarge"> </div>
+                   <!--<iframe width="1000px" height="1000px" [src]="getSRCurl()" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:send_to_messenger Facebook Social Plugin" style="border: none; visibility: visible; width: 256px; height: 68px;" class=""></iframe>-->
+                <hr/>
+                 <div *ngIf="OTPAsked" class="form-group" style="margin-top: 0px; margin-bottom: 0px;" [ngClass]="{'has-error':!signupForm.controls['numberConfirmed'].valid && signupForm.controls['numberConfirmed'].touched}">
+                <label class="control-label" >Confirm your number</label>
+                <input type="text" class="form-control" [formControl]="signupForm.controls['numberConfirmed']" placeholder="Enter the OTP sent" />
+                <a *ngIf="!OTPConfirmed" class="btn btn-round btn-warning" (click)="confirmOTP(signupForm.controls['numberConfirmed'].value)">Confirm</a>
+                <a *ngIf="!OTPConfirmed" class="btn btn-round" (click)="showError(signupForm.value)">Resend OTP</a>
+              <p *ngIf="OTPConfirmed">Please Submit your pricing</p>
+             
+              </div>
+              <div class="row">
+                <!--<button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Submit</button>-->
+                <button *ngIf="showErrorFlag || signupForm.valid" type="submit" (click)="submitForm3(signupForm.value)"  class="btn btn-primary" [disabled]="!signupForm.valid || !OTPConfirmed" style="float: left;" >Submit</button>
+                <button *ngIf="!showErrorFlag && !signupForm.valid" class="btn btn-primary" (click)="showError(signupForm.value)" style="float: left;">Submit</button>
+              </div>
+    
+                <!--<label *ngIf="buttonClicked">Make sure to click on the "Send to Messenger" button above.</label>
+                <a *ngIf="buttonClicked1"  (click)="submitForm3(signupForm.value)"  class="btn btn-warning btn-block btn-lg">Proceed</a>-->
+              </div>
+    
+            <div *ngIf="OTPConfirmed" class="row" style="text-align: left;">
+      Select Pathological Tests as CSV:
+      <input type="file" (change)="changeListener($event, 'Pathological')">
+      Select Radiological Tests as CSV:
+      <input  type="file" (change)="changeListener($event, 'Radiological')">
+    </div>
+</div>
+
+
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['phone'].valid && (showErrorFlag || signupForm.controls['phone'].touched)">You must provide a phone number</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['email'].valid &&  (showErrorFlag || signupForm.controls['email'].touched)">You must provide a valid email</div>
+    
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['firstName'].valid &&  (showErrorFlag || signupForm.controls['firstName'].touched)">Please indicate your first name</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['lastName'].valid &&  (showErrorFlag || signupForm.controls['lastName'].touched)">Please indicate your last name</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['clinicLocation'].valid &&  (showErrorFlag || signupForm.controls['clinicLocation'].touched)">Please indicate your Clinic's Location/ Area</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['address'].valid &&  (showErrorFlag || signupForm.controls['address'].touched)">Please indicate your clinic address</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['mci_number'].valid &&  (showErrorFlag || signupForm.controls['mci_number'].touched)">Please indicate your Medical Regn. number</div>
+     
+ <div class="alert alert-danger" *ngIf="!signupForm.controls['address'].valid &&  (showErrorFlag || signupForm.controls['address'].touched)">Please indicate your Clinic's Address</div>
+ 
+   <div class="alert alert-danger" *ngIf="!signupForm.controls['fullName'].valid &&  (showErrorFlag || signupForm.controls['fullName'].touched)">Please indicate your Full Name</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls['clinic'].valid &&  (showErrorFlag || signupForm.controls['clinic'].touched)">Please provide a Name for your Clinic</div>
+   
+
+ </div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		
+
+		</div>

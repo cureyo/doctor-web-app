@@ -31,7 +31,7 @@ export class LabTestCareComponent implements OnInit {
     console.log(this.testType);
     this._authService._getPathologicalTests()
       .subscribe(data => {
-        //console.log("patholodical test details data :",data);
+        console.log("patholodical test details data :",data);
         this.MedNames = data;
         //this._cacheService.set('testNames', { 'data': this.TestNames }, { expires: Date.now() + 1000 * 60 * 60 });
         //console.log("the med names is :",this.TestNames);

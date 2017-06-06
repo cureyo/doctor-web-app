@@ -20,8 +20,8 @@ export class AuthService {
     this.users = af.database.list(this.db.users);
     this.doctorsList = af.database.list(this.db.doctors);
     this.jobsList = af.database.list(this.db.scheduledJobs);
-    this.pathologicalList = af.database.list(this.db.pathologicalTestDetails + "/TestNames");
-    this.medicineList = af.database.list(this.db.pathologicalTestDetails + "/MedNames");
+    this.pathologicalList = af.database.list(this.db.pathologicalTestDetails + "/Pathological");
+    this.medicineList = af.database.list(this.db.pathologicalTestDetails + "/Pharmacy");
   }//constructor
 
   _findDoctor(doctorId) {
@@ -411,6 +411,9 @@ export class AuthService {
     return this.af.database.list(this.db.HxPathNames);
 
   }//_getCarePathways
+  _setTestPrice(item, partner, TestName, data) {
+return this.af.database.object(this.db.pricing + item + '/' + TestName + '/' + partner).set(data)
+  }
   public _getCarePath(pathName) {
     return this.af.database.object(this.db.carePaths + pathName);
 
