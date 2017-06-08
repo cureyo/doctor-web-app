@@ -1,7 +1,7 @@
 <form  [formGroup]="carePathwayForm" (keydown.enter)="$event.preventDefault()" (ngSubmit)="onSubmit(carePathwayForm.value)" class="form">
         <div class="row">
-                <div class="col-sm-10 col-md-offset-1">
-                            <div class="card card-stats">
+                <div class="col-sm-12">
+                            <div class="card card-stats" style=" padding: 10px;">
                             <div class="form-group" style="width: 75%; margin: 10px;">  
                               <label class="control-label" for="name">Disease/ Condition</label>
                             <input type="text" class="form-control" id="name" formControlName="name" placeholder="Name this Care Path" />

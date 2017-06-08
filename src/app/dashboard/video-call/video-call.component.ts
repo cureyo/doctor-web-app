@@ -56,6 +56,7 @@ export class VideoCallComponent implements OnInit {
     )
     let video = this.peerVideo.nativeElement;
     //let myVideo = this.myVideo.nativeElement;
+     console.log("this.peer");
    this.peer = new Peer({host: 'cureyo.in', path: '/peerjs'});
     console.log(this.peer);
     setTimeout(() => {

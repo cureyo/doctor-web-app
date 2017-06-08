@@ -179,6 +179,7 @@ export class PaymentsComponent implements OnInit {
                 }),
                 addOns: this._fb.group({
                     markup: [data.addOns.markup],
+                    markupName: [data.addOns.markupName],
                     service_charge: [data.addOns.service_charge],
                     uberBooking: [data.addOns.uberBooking],
                 }),
@@ -257,6 +258,7 @@ export class PaymentsComponent implements OnInit {
                 }),
                 addOns: this._fb.group({
                     markup: [],
+                    markupName: [],
                     service_charge: [],
                     uberBooking: [],
                 }),

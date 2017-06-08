@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from "@ang
 import { Http, Response, Headers } from '@angular/http';
 import { AuthService } from "../../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
-
-
+//import * as Material from ".../../../assets/js/material-dashboard-angular.js"
+import Material = require('.../../../assets/js/material-dashboard-angular.js');
 declare var $: any
 
 
@@ -77,8 +77,13 @@ export class OnboardingHeaderComponent implements OnInit {
         takeNext: true, nextURL: "care-paths"
       },
       "care-paths": {
-        website: false, facebook: false, partners: false, care: true, textToShow: "Finally, let's create a few Care Pathways. Care Pathways are treatment regimens that will be enforced to your patients through Facebook Messenger, based on your selection. Items include 'Check Points' which may be reminders for consultations/ tests or simple checks on the patient's health. Some samples are provided. You can view samples from the drop down or create your own forms. Click on 'Done' when completed.",
+        website: false, facebook: false, partners: false, care: true, textToShow: "Great! Now, let's create a few Care Pathways. Care Pathways are treatment regimens that will be enforced to your patients through Facebook Messenger, based on your selection. Items include 'Check Points' which may be reminders for consultations/ tests or simple checks on the patient's health. Some samples are provided. You can view samples from the drop down or create your own forms. Click on 'Done' when completed.",
         headingToShow: "Care Pathways",
+        takeNext: true, nextURL: "payments"
+      },
+       "payments": {
+        website: false, facebook: false, partners: false, care: true, textToShow: "Now that we have the Care Plans in place, let us configure the Payment Plans for your patients. Default forms have been pre-created for you.",
+        headingToShow: "Payment Plans",
         takeNext: true, nextURL: "Ads"
       },
     }
@@ -129,9 +134,13 @@ export class OnboardingHeaderComponent implements OnInit {
               console.log(data.plans);
               let data2 = {plans: data.plans};
               this._authService._savePaymentPlans(user.user.uid, data2).then(
-                data2 => this.router.navigate([nextURL], { queryParams: { onboarding: 'yes' } })
+                data2 => {
+                  var d = document.getElementById('patient-hx');
+                  
+                  Material.animationSidebar(d, true);
+                this.router.navigate([nextURL], { queryParams: { onboarding: 'yes' } })
 
-              )
+                })
             }
             )
 

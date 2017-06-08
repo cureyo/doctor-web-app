@@ -88,7 +88,7 @@
         </div>
         <br>
         <div style="text-align:left;">
-            <span class="label label-info">{{item.response}}</span>
+            <span style="white-space: pre-line;" class="label label-info">{{item.response}}</span>
         </div>
          <hr>
        </div>
@@ -383,8 +383,8 @@
       <div class="modal-body">
       <form [formGroup]="carePlanForm" class="form">
                           <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-sm-8">
+                            <div class="card">
+                                <div class="card-content">
                                 <div class="form-group form-black label-floating is-not-empty">
                                     <div class="form-group">
                                     <label class="control-label">Assign a Care Plan</label>
@@ -393,17 +393,19 @@
     </select>
                                     </div>
                                 </div>
-                                </div>
+                               
+                          <a (click)="pform.saveCarePlan(patientId, carePlanForm.controls['formname'].value, caredone.firstName)" class="btn btn-round btn-warning">Assign Care Path</a>
+  </div>
                                
                             </div>
+                            <a (click)="showCarePathsAdd()" style="cursor: pointer;" >Show / Add Care Paths</a>
                           </div>
-                          <a (click)="pform.saveCarePlan(patientId, carePlanForm.controls['formname'].value)" class="btn btn-round btn-warning">Assign Path</a>
-      </form>
+ </form>
       
-      <care-paths-cmp></care-paths-cmp>
+      <care-paths-cmp *ngIf="showPaths"></care-paths-cmp>
       <div class="modal-footer" style="padding-bottom: 20px;">
        
-        <button type="button" class="btn btn-default" (click)="closeCarePlanModal()">Close</button>
+        <button type="button" class="btn btn-default" (click)="closeCarePlanModal()">Done</button>
       </div>
       </div>
     </div>

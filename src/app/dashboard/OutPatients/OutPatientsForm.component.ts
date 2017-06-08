@@ -23,6 +23,7 @@ export class OutPatientsFormComponent implements OnInit {
   private primeSymptom: any;
   private selectOutPatient: boolean = false;
   private details: any;
+  private showPaths: boolean = false;
   private currentUser: any;
   private Name: any;
   private currentUserID: any;
@@ -746,5 +747,7 @@ SleepSummaryChart(sleepSummaryObj){
         }
       });
   }
-
+showCarePathsAdd() {
+  this.showPaths = !this.showPaths;
+}
 }

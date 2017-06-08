@@ -183,7 +183,7 @@ export class AuthService {
 
 
   public _getCheckInDetails(clinicID, date, q) {
-    //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+    console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
     return this.af.database.object(this.db.checkIns + clinicID + '/' + date + '/' + q);
 
   }//fetch the checkin data
@@ -310,8 +310,8 @@ export class AuthService {
         method: AuthMethods.Password,
       });
   }//email login 
-  public _getPathologicalTests() {
-    return this.pathologicalList;
+  public _getPathologicalTests(item) {
+    return this.af.database.list(this.db.pathologicalTestDetails + item);
   }
 
   public _getMedicineNames() {

@@ -79,7 +79,7 @@ private noOfCaredOnes: number = 0;
       });
   }// ngoninti
    getPathologicalTests(){
-         this._authService._getPathologicalTests()
+         this._authService._getPathologicalTests('Pathological')
         .subscribe( data=>{
            //console.log("patholodical test details data :",data);
                this.TestNames=data;

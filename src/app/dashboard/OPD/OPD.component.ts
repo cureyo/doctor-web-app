@@ -98,8 +98,8 @@ export class OPDComponent implements OnInit {
                             console.log("response data ", data);
                             //console.log('redirecting to ', 'out-patients/' + data.$value);
 
-                            window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
-
+                            //window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
+                            this.router.navigate(['/out-patients/' + q + '/' + data.$value])
                           })
                       }
                     }
@@ -112,8 +112,8 @@ export class OPDComponent implements OnInit {
 
                       //console.log("response data ", data);
                       //console.log('redirecting to ', 'out-patients/' + data.$value);
-
-                      window.location.href = window.location.origin + '/out-patients/' + q + '/' + data.$value
+                       this.router.navigate(['/out-patients/' + q + '/' + data.$value])
+                      
 
                     })
                 }

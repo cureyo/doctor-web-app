@@ -499,16 +499,16 @@ export class VendorCheckupComponent implements OnInit, AfterViewInit {
       for (let each of jsonFile) {
           let data = {price: each['Cost']}
           console.log(data);
-          // let data2 = each['Test'];
+          let data2 = each['Test'];
           // let data4 = each['Test'].replace(' ', '');
           // data4 = data4.replace(';', '');
           // data4 = data4.replace('/', '');
           // data4 = data4.substring(0,3);
           // data4 = data4.toUpperCase();
           // data4 = ctr + data4;
-          // ctr++;
+          ctr++;
           self._authService._setTestPrice(type, self.signupForm.controls['phone'].value, each['Test'], data)
-          // self._authService._setTestPrice(type, 'value', each['Test'], data2);
+          // self._authService._setTestPrice(type, 'name', each['Test'], data2);
           // self._authService._setTestPrice(type, 'id', each['Test'], data4)
         }
     }

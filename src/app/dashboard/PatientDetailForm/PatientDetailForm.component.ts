@@ -347,13 +347,27 @@ console.log("showing careplan modal")
 
   }
   // save observers data:
-saveCarePlan(patientID, carePathId) {
+saveCarePlan(patientID, carePathId, userName) {
    var today = new Date();
+   console.log(this.carePathsAvlbl);
+   var name = this.carePathsAvlbl.filter(item => item.$key === carePathId)[0];
       var todate = today.toString();
   this._authService._saveCareSchedule(this.currentUserPageId, patientID, todate , carePathId)
       .then(
         data => {
           console.log(data);
+             $.notify({
+                                                  icon: "notifications",
+                                                  message: "Care Plan '" + name.path  + "' has been attached to " + userName
+
+                                              }, {
+                                                  type: 'cureyo',
+                                                  timer: 4000,
+                                                  placement: {
+                                                  from: 'top',
+                                                  align: 'right'
+                                              }
+                                        });
         }
       )
 }

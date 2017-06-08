@@ -29,7 +29,7 @@ export class LabTestCareComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.testType);
-    this._authService._getPathologicalTests()
+    this._authService._getPathologicalTests(this.testType)
       .subscribe(data => {
         console.log("patholodical test details data :",data);
         this.MedNames = data;

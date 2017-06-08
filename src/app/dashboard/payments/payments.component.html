@@ -167,11 +167,36 @@
                            <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <label class="control-label">Markup (in %) over Total</label>
-                                   <input type="text"  formControlName="markup" class="form-control" >
+                                   
+                                   <select formControlName="markup" id="markup" class="form-control" >
+                                <option value="Dynamic">Dynamic</option>
+                                <option value="-5">-5%</option>
+                                <option value="-10">-10%</option>
+                                <option value="-15">-15%</option>
+                                <option value="-20">-20%</option>
+                                <option value="-25">-25%</option>
+                                <option value="-30">-30%</option>
+                                <option value="5">+5%</option>
+                                <option value="10">+10%</option>
+                                <option value="15">+15%</option>
+                                <option value="20">+20%</option>
+                                <option value="25">+25%</option>
+                                <option value="30">+30%</option>
+                                
+                                
+                              </select>
                                     </div>
                               
                               </div>
-                              <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; margin-left: 4%;">
+                              <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-left: 4%; margin-bottom: 0px; width:48%; float: left; z-index: 10000;">
+                                    <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
+                                    <label class="control-label">Markup Title</label>
+                                   <input type="text"  formControlName="markupName" class="form-control" >
+                                    </div>
+                              
+                              </div>
+                               <p><b>Cureyo Fee</b></p>
+                              <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; z-index: 10000; ">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
                                     <label class="control-label">Service Charge (in INR)</label>
                                    <input type="text"  formControlName="service_charge" class="form-control" >
@@ -181,10 +206,10 @@
                           </div>
                          
                               
-                                   <p><b>Cureyo Fee</b></p>
-                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:100%; float: left; z-index: 10000;">
+                                  
+                                   <div class="form-group form-black label-floating is-not-empty"  style="margin-top: 0px; margin-bottom: 0px; width:48%; float: left; margin-left: 4%; z-index: 10000;">
                                     <div class="form-group"  style="margin-top: 0px; margin-bottom: 0px;">
-                                    <label class="control-label">Cureyo Processing Fee (per month)</label>
+                                    <label class="control-label">Processing Fee (monthly)</label>
                                     <input type="text"  formControlName="cureyoFee" class="form-control">
                                     </div>
                                 </div>
