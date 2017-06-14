@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/firebaseauth.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import {FormGroup, FormBuilder,Validators} from "@angular/forms";
-
+import { MetadataService } from "../services/metadata.service";
 @Component({
   templateUrl: 'doctor-login.component.html',
   selector: 'doctor-login-cmp',
@@ -13,12 +13,20 @@ export class DoctorLoginComponent implements OnInit {
   private user: {};
   private isAuth: boolean;
   private showVid: boolean = false;
+  private currentSite: any;
 
-  constructor(private _fb: FormBuilder,private _authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private _fb: FormBuilder,private _authService: AuthService, private metadataService: MetadataService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // this._authService.logout();
-
+      console.log(window.location.origin)
+       if (window.location.origin == "http://care.cureyo.com" || window.location.origin == "https://care.cureyo.com" ) {
+           this.currentSite = "cureyo";
+       } else if (window.location.origin == "http://healthamin.com" || window.location.origin == "https://healthamin.com" || window.location.origin == "http://localhost:4200" ) {
+this.currentSite = "healthamin";
+this.metadataService.setTitle("Healthamin - hollistic care for your patients");
+this.metadataService.setMetaDescription("Better Hollistic Care");
+       }
     this._authService._getUser()
       .subscribe(
       data => {

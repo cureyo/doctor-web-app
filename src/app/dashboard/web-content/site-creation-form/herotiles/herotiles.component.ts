@@ -3,8 +3,10 @@ import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../../../../services/firebaseauth.service";
 import { FbService } from "../../../../services/facebook.service";
+import { FacebookService, FacebookLoginResponse, FacebookInitParams, FacebookApiMethod } from 'ng2-facebook-sdk';
 import { Http, Response, Headers } from '@angular/http';
-import { ImageSearchComponent } from '../../../../fb-ads-form/image-search/image-search.component'
+import { ImageSearchComponent } from '../../../../fb-ads-form/image-search/image-search.component';
+import { AppConfig } from '.../../config/app.config';
 declare var $: any;
 @Component({
   selector: 'app-herotiles',
@@ -19,13 +21,17 @@ export class HerotilesComponent implements OnInit {
   private heroTileAdded: boolean = false;
   private temp: any;
   private sitename: any;
+  private pageIdSelected: any;
   private backgrounds: any;
+  private fbAccessToken: any;
+  private pageNameList: any = [];
   private imgSearchType: any = "google";
   private preview: any;
   private defaultImgSearch: any;
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
+    private _fbs: FacebookService,
     private route: ActivatedRoute,
     private _authService: AuthService,
     private router: Router,
@@ -33,6 +39,7 @@ export class HerotilesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.initFB();
     this._authService._getBackgroundImages()
       .subscribe(data => {
         this.backgrounds = data;
@@ -132,4 +139,58 @@ export class HerotilesComponent implements OnInit {
     this.preview = url;
     //console.log(this.preview)
   }
+    initFB() {
+    let fbParams: FacebookInitParams = {
+      appId: AppConfig.web.appID,
+      xfbml: true,
+      version: 'v2.9'
+    };
+    console.log("this is fbparam:", fbParams);
+    this._fbs.init(fbParams);
+    this._fbs.getLoginStatus().then(
+      (response: FacebookLoginResponse) => {
+        if (response.status === 'connected') {
+
+         
+
+          this.fetchPages();
+           
+         
+
+        } else {
+          this.fbAccessToken = null;
+        }
+      },
+      (error: any) => {console.error(error);
+        if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+      }
+    );
+  }// initFB()
+
+  fetchPages(): void {
+    //////console.log("this does not execute 2")
+    if (this.fbAccessToken === null) {
+      alert('Disconnected from Facebook. Kindly login again.');
+    } else {
+      let family, friends;
+      this._fbs.api('/me/accounts').then(
+        response => {
+          //console.log(response);
+          let ctr = 0;
+          this.pageNameList = response.data;
+          console.log("this.pageNameList", this.pageNameList);
+          if (this.pageNameList[0])
+          this.pageIdSelected = this.pageNameList[0].id;
+          console.log("this.pageIdSelected", this.pageIdSelected)
+         
+
+
+        })
+
+
+    }// else
+  }// fetchPages
 }

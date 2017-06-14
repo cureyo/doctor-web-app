@@ -35,10 +35,17 @@ import { OPDComponent } from './dashboard/OPD/OPD.component';
 import { FbAdsFormComponent } from './fb-ads-form/fb-ads-form.component';
 import { CacheService, CacheStoragesEnum } from 'ng2-cache/ng2-cache';
 import {JsonpModule} from '@angular/http';
+import {CareTimelinesComponent} from "./dashboard/care-timeline/care-timeline.component"
+//import { Ng2SliderComponent } from 'ng2-slider-component/ng2-slider.component';
+import { SlideAbleDirective } from 'ng2-slideable-directive/slideable.directive';
+import { Ng2StyledDirective } from 'ng2-styled-directive/ng2-styled.directive';
 import {ExistingPathWaysComponent} from './dashboard/care-pathways/existing-path-ways/existing-path-ways.component'
 import {CreatePathWaysComponent} from './dashboard/care-pathways/create-path-ways/create-path-ways.component';
 import {VideoCallComponent} from "./dashboard/video-call/video-call.component";
 import {PatientDetailFormComponent} from "./dashboard/PatientDetailForm/PatientDetailForm.component"
+import { NouisliderModule } from 'ng2-nouislider';
+import {NgPipesModule} from 'ngx-pipes';
+
 // Must export the config
 export const firebaseConfig = {
   apiKey: CONFIG.apiKey,
@@ -67,14 +74,22 @@ export const firebaseAuthConfig = {
     HttpModule,
     Ng2AutoCompleteModule,
     GooglePlaceModule,
-    JsonpModule
+    JsonpModule,
+   NouisliderModule,
+   NgPipesModule
   ],
 
 
-  declarations: [ MODULE_COMPONENTS, FbAdsFormComponent],
+  declarations: [ MODULE_COMPONENTS, FbAdsFormComponent,  
+SlideAbleDirective, 
+Ng2StyledDirective],
 
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent, ExistingPathWaysComponent, PatientDetailFormComponent, CreatePathWaysComponent],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, AuthService, AngularFire, FacebookService, FbService,MetadataService, SelectDomainComponent, OutPatientsFormComponent, CacheService, PatientPreviewComponent, ExistingPathWaysComponent, PatientDetailFormComponent,  NouisliderModule, CreatePathWaysComponent],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+   exports: [
+    //Ng2SliderComponent,
+    Ng2StyledDirective
+  ]
 })
 export class AppModule { }

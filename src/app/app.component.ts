@@ -103,6 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     $.getScript('../assets/js/initMenu.js');
     
     
+    
       console.log(this.router.url);  // to print only path eg:"/login"
       console.log(window.location.pathname);
       if (window.location.pathname == '/doctor-login' || window.location.pathname == '/vendor-login' || window.location.pathname == '/vendor-checkup' || window.location.pathname == '/logout' || window.location.pathname == '/doctor-checkup' ) {

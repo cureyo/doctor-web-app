@@ -1,19 +1,24 @@
  <div class="main-content" id="profileContent">
     <div class="container-fluid">
  <div class="col-md-12">
+         
                 <div *ngIf="dataReady" class="card" style="margin-top: 30px;">
                   
                     <div *ngIf="caredone.avatar" class="card-header" data-background-color="cureyo">
                          <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;">
 
-<img tyle="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;" src="{{caredone.avatar}}" >
+<img style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;" src="{{caredone.avatar}}" >
           
 
         </div>
+    
+
                         <h4 class="title">{{caredone.firstName}} {{caredone.lastName}}
-                            <br>
+                            
+                        
+                        <a class="btn btn-round pull-right" (click)="checkOutPatient();">Check-out Patient</a>
+                        <br>
                         <small style="font-weight: 300; color: #fff;">Patient # {{this.currentQ}}</small></h4>
-                       
                     </div> <!-- card header portion end-->
                     
               <div class="card-content table-responsive">
@@ -24,9 +29,11 @@
                   <a class="btn btn-round btn-warning pull-left" (click)="pform.showReportModal2(caredone.uid)">View All Reports</a>
                   <br>
                   <hr/>
+                  
+                  <care-timeline-cmp [caredoneId]="caredone.uid" [doctorId]="currentUserID"></care-timeline-cmp>
+                  <hr/>
                   <h4 style="color: #137a9c"><b>Patient Medical History</b>
                   <br>
-                  
                   <small *ngIf="hasHx" >For: {{primeSymptom}}</small>
                   <small *ngIf="!hasHx" >No Medical History recorded</small></h4>
                      <div *ngIf="hasHx" class="row">
@@ -385,6 +392,15 @@
                           <div class="row">
                             <div class="card">
                                 <div class="card-content">
+                                    <div *ngIf="patientPathsExist">
+                                         <p ><b>Assigned Plans</b></p>
+                                    <div *ngFor="let care of patientExistingPaths" class="card" style="margin-top: 10px;">
+                                        <div class="card-content">
+                                        <label class="label-round label-warning" style="color: white;">{{care.name.path}}</label> assigned on <label class="label-round label-info" style="color: white;">{{care.activatedOn}}</label>
+                                    </div>
+                                    </div>
+                                    </div>
+                                   <hr>
                                 <div class="form-group form-black label-floating is-not-empty">
                                     <div class="form-group">
                                     <label class="control-label">Assign a Care Plan</label>

@@ -7,7 +7,7 @@ import { AppConfig } from '../../config/app.config';
 import { FileUploader, FileUploadModule, FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 import { FirebaseApp, FirebaseRef } from 'angularfire2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 declare var jquery;
 declare var $: any
 @Component({
@@ -20,8 +20,10 @@ export class ImageSearchComponent implements OnInit {
   @Input() searchType: any;
   @Input() defaultKeyWord: any;
   @Input() fbPageId: any;
+  @Input() fbPageList: any;
   public searchImageForm: FormGroup;
   private showBorder: any = [];
+  private showfbPages: boolean = false;
   private fbAccessToken: any;
   imgSelected: any;
   private formReady: boolean = false;
@@ -48,11 +50,17 @@ export class ImageSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+   
+
+   
+    console.log(this.fbPageList);
+    console.log(this.fbPageId);
     console.log("image search loading");
     this.searchImageForm = this._fb.group({
       searchType: [this.searchType, Validators.required],
       searchTerm: [this.defaultKeyWord],
-      finalURL: [,Validators.required]
+      finalURL: [,Validators.required],
+      pageName:[]
     });
     this.changeSearchType(this.searchType);
     //console.log(this.defaultKeyWord);
@@ -62,7 +70,7 @@ export class ImageSearchComponent implements OnInit {
      
     }
     if (this.fbPageId) {
-      this.initFB();
+      this.initFB(this.fbPageId);
     }
 
     this.formReady = true;
@@ -71,14 +79,23 @@ export class ImageSearchComponent implements OnInit {
   searchForGImages(searchQuery) {
     console.log(searchQuery);
     let searchQueryEdit = searchQuery + " Images";
-    let searchURL = "https://www.googleapis.com/customsearch/v1?q=" + searchQueryEdit + "&key=AIzaSyCbRKrQajn5-XpRZ-DcLC4doBeCZ_xOG_A&num=10&cx=017396431536091938880:snzyldd9qac&imgSize=huge"
+    let searchURL = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=" +searchQuery + "&mkt=en-us&Subscription-Key=8ce6113423a849299fce3c2f2e1393fb"
     this.httpSGet(searchURL)
     .subscribe( data => {
       let ctr = 0;
-      //console.log(data);
-      for (let item of data.items) {
-        if (item.pagemap.cse_image) {
-          this.searchArray[ctr] = item.pagemap.cse_image[0].src;
+      console.log(data);
+      for (let item of data.value) {
+        if (item.contentUrl) {
+          let n = item.contentUrl.indexOf('&r=');
+          let tempURL = item.contentUrl.substring(n + 3,item.contentUrl.length );
+          console.log(tempURL, n +3);
+          
+          let m = tempURL.indexOf("&");
+          let tempURL2 = tempURL.substring(0, m);
+          console.log(tempURL2, m)
+          // tempURL2 = tempURL2.replace('%3a', ':');
+          // tempURL2 = tempURL2.replace('%2f/g', '/');
+          this.searchArray[ctr] = decodeURIComponent(tempURL2);
           this.showBorder[ctr] = false;
           //console.log("this.searchArray2", this.searchArray)
           ctr++;
@@ -92,34 +109,46 @@ export class ImageSearchComponent implements OnInit {
     
   }
   httpSGet(url) {
+    // let headers2 = new Headers();
+    // headers2.append("Ocp-Apim-Subscription-Key", "62325b43-53ef-4d53-adc3-5444719b1d22");
+
     return this.http.get(url)
     .map((res: Response) => res.json());
   }
   changeSearchType(form) {
-    //console.log(form);
-    if (form == 'google') {
+    console.log(form);
+    if (form.searchType == 'google') {
       //console.log(this.searchArray)
       this.showSearchTerm = true;
+      this.showfbPages = false;
       this.showScroll = false;
       this.displayArray = this.searchArray;
-    } else if (form == 'fbPage') {
+    } else if (form.searchType == 'fbPage') {
+      this.initFB(form.pageName)
        this.showSearchTerm = false;
        //console.log(this.fbArray)
+       
+       this.showfbPages = true;
        this.displayArray = this.fbArray;
        this.showScroll = true;
     }
 
   }
   selectImage(i) {
-   //console.log(this.searchArray)
+   console.log(this.searchArray)
+   console.log(i);
     for (let each in this.showBorder) {
       this.showBorder[each] = false;
     }
-    this.imgSelected = this.searchArray[i];
-    //console.log(this.imgSelected);
+    this.imgSelected = this.displayArray[i];
+    console.log(this.imgSelected);
+    // this.httpSGet(this.imgSelected)
+    // .subscribe(data=> console.log(data));
+    
     this.showBorder[i] = true;
   }
-    initFB() {
+    initFB(pageId2) {
+      console.log(pageId2)
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
@@ -132,7 +161,7 @@ export class ImageSearchComponent implements OnInit {
         if (response.status === 'connected') {
 
           this.fbAccessToken = response.authResponse.accessToken;         
-          this.getPagePhotos(this.fbPageId)
+          this.getPagePhotos(pageId2)
         } else {
           this.fbAccessToken = null;
         }
@@ -141,10 +170,11 @@ export class ImageSearchComponent implements OnInit {
     );
   }// initFB()
     getPagePhotos(pageId) {
+      console.log(pageId)
     this._fs.api('/' + pageId + '/photos?type=uploaded&fields=link,id,picture,images')
       .then(
       data => {
-        //console.log(data);
+      console.log(data);
        let tempArray = data.data;
         this._fs.api('/' + pageId + '/photos?type=tagged&fields=link,id,picture,images')
           .then(
@@ -162,6 +192,11 @@ export class ImageSearchComponent implements OnInit {
           });
       }
       )
+  }
+  changePageList(value) {
+    console.log(value)
+    console.log(value.pageName)
+    this.initFB(value.pageName);
   }
 }
 

@@ -23,6 +23,9 @@ export class OutPatientsFormComponent implements OnInit {
   private primeSymptom: any;
   private selectOutPatient: boolean = false;
   private details: any;
+  private patientExistingPaths: any = [];
+  private patientPathsExist: boolean = false;
+  private pageId: any;
   private showPaths: boolean = false;
   private currentUser: any;
   private Name: any;
@@ -104,21 +107,37 @@ export class OutPatientsFormComponent implements OnInit {
         this._authService._getPatientFitnessData(this.tempCurrentUserID)
         .subscribe(response=>{
            console.log("response is :",response);
-            var activitySummaryObj=response.ActivitySummary;
-            var hrSummaryObj=response.HRSummary;
-            var sleepSummaryObj=response.SleepSummary;
+           var activitySummaryObj, hrSummaryObj, sleepSummaryObj;
+           if (response.ActivitySummary){
+            activitySummaryObj = response.ActivitySummary;
+             this.activitySummaryChart(activitySummaryObj);
+        }
+            if (response.HRSummary)
+            hrSummaryObj=response.HRSummary;
+
+            if (response.SleepSummary)
+            sleepSummaryObj=response.SleepSummary;
+
+            if (response.Height) {
             this.height=response.Height.value;
             this.heightUnit=response.Height.unit;
-            this.weight=response.Weight.value;
+            }
+            
+            if (response.Weight) {
+              this.weight=response.Weight.value;
             this.weightUnit=response.Weight.unit;
+            }
+            
             this.activitySummaryChart(activitySummaryObj);
             var self = this;
             setTimeout(
               function() {
+                if (response.HRSummary)
                 self.HRSummarychart(hrSummaryObj);
 
                       setTimeout(
                     function() {
+                      if (response.SleepSummary)
                       self.SleepSummaryChart(sleepSummaryObj);
                     }, 3000
                   )
@@ -157,6 +176,7 @@ export class OutPatientsFormComponent implements OnInit {
             if (res) {
               this.currentUser = this._authService._getCurrentUser();
               this.currentUserID = this.currentUser.authUID
+              this.pageId = this.currentUser.fbPageId;
               //console.log("the current user id:", this.currentUserID);
               //get the param id:
               this.route.params.subscribe(
@@ -618,6 +638,22 @@ SleepSummaryChart(sleepSummaryObj){
   checkOutPatient() {
    console.log($('#carePlansModal3'));
        console.log("showing careplan modal")
+       console.log(this.pform.carePathsAvlbl)
+       this._authService._getPatientCareSchedules(this.pageId, this.patientId)
+       .subscribe(
+         data => {
+           this.patientExistingPaths = data;
+           console.log(this.patientExistingPaths);
+           if (this.patientExistingPaths[0]) {
+             this.patientPathsExist = true
+             for (let each in this.patientExistingPaths) {
+               this.patientExistingPaths[each]['name'] = this.pform.carePathsAvlbl.filter(item => item.$key === this.patientExistingPaths[each].path)[0];
+             }
+           } else {
+             this.patientPathsExist = false;
+           }
+         }
+       )
     $('#carePlansModal3').modal('show');
 
    
@@ -677,10 +713,19 @@ SleepSummaryChart(sleepSummaryObj){
   }
   nextPatient() {
     var date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth();
+    var ddS = date.getDate();
+    var mmS = date.getMonth() + 1;
     var yyyy = date.getFullYear();
-    var today = dd + '-' + mm + '-' + yyyy;
+    var dd, mm;
+    if (ddS < 10)
+    dd = "0" + ddS;
+    else 
+    dd = ddS;
+    if (mmS < 10)
+    mm = "0" + mmS;
+    else 
+    mm = mmS;
+    var today = mm + '-' + dd + '-' + yyyy;
     var next = parseInt(this.currentQ) + 1;
     //console.log(today)
     //console.log(this.currentQ)
@@ -712,11 +757,20 @@ SleepSummaryChart(sleepSummaryObj){
       });
   }
   previousPatient() {
-    var date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth();
+   var date = new Date();
+    var ddS = date.getDate();
+    var mmS = date.getMonth() + 1;
     var yyyy = date.getFullYear();
-    var today = dd + '-' + mm + '-' + yyyy;
+    var dd, mm;
+    if (ddS < 10)
+    dd = "0" + ddS;
+    else 
+    dd = ddS;
+    if (mmS < 10)
+    mm = "0" + mmS;
+    else 
+    mm = mmS;
+    var today = mm + '-' + dd + '-' + yyyy;
     var next = parseInt(this.currentQ) - 1;
     //console.log(today)
     //console.log(this.currentQ)

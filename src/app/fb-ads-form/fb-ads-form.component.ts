@@ -8,26 +8,34 @@ import { FileUploader, FileUploadModule, FileSelectDirective, FileDropDirective 
 import { FirebaseApp, FirebaseRef } from 'angularfire2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Http, Response } from '@angular/http';
-import { ImageSearchComponent } from './image-search/image-search.component'
+import { ImageSearchComponent } from './image-search/image-search.component';
+//import { NouisliderModule } from 'ng2-nouislider';
+
 declare var jquery;
 declare var $: any
 @Component({
   selector: 'app-fb-ads-form',
   templateUrl: './fb-ads-form.component.html',
-  styleUrls: ['./fb-ads-form.component.css']
+  styleUrls: ['./fb-ads-form.component.css'],
+  
 })
 export class FbAdsFormComponent implements OnInit {
+  
   @ViewChild(ImageSearchComponent) imgSearchCmp: ImageSearchComponent;
+ //@ViewChild(NouisliderModule) sliderRef;
   public fbAdsForm: FormGroup;
+  
   private fbAdsAdded: boolean = false;
   private section: any = "facebook";
+  private targetingDisplayArray: any = [];
   public adAccountID: any;
+  private targetingSpecsArray: any = [];
   private clinicWebsite: any;
   private citiesReady: boolean = false;
   private waiting: boolean = false;
   private pageIdSelected: any;
   private pageImagesUrl: any;
-  private currentItem: any = "Show";
+  private currentItem: any = "Target";
   private imgReady: boolean = true;
   private endDateReady: boolean = true;
   public userID: any;
@@ -71,6 +79,19 @@ export class FbAdsFormComponent implements OnInit {
   private previewURL: any;
   private fullModel: any;
   private previewReady: boolean = false;
+  
+  private someRange2config: any = {
+  behaviour: 'snap',
+  connect: true,
+  margin: 1,
+  step: 1,
+  range: {
+    min: 18,
+    max: 65
+  },
+  
+  
+};
   //private nextButtonFlag:boolean=false;
   private doneModal: boolean = false;
   storage: any;
@@ -90,20 +111,10 @@ export class FbAdsFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    //  this.route.params.subscribe(
-    //         params => {
-            
-    //         this.route.queryParams.subscribe(
-    //          qParam=> {
-    //            if (qParam['onboarding']=="yes") {
-    //              this.nextButtonFlag=true;
-    //            }
-    //          }
-    //         )
-    //         //console.log("param value test:",this.routeparam);
-    //         //end of param
-    //       });
-     this.itemArray = ["Show", "Target", "Spend"]
+    
+       
+    
+     this.itemArray = ["Target", "Spend","Show" ]
     let mS2, ddS2;
     var sDate = new Date();
     var mS = sDate.getMonth() + 1;
@@ -231,35 +242,7 @@ export class FbAdsFormComponent implements OnInit {
 //     // console.log(elmnt);
 //     elmnt.scrollIntoView();
   }
-  // reForm(pageID, adAccountID, clinicID) {
 
-  //   console.log("its called::", pageID);
-  //   this.fbAdsForm = this._fb.group({
-  //     adAccount: [, Validators.required],
-  //     pageID: [this.pageID, [Validators.required]],
-  //     BID: ['10', Validators.required],
-  //     budget: ['100', Validators.required],
-  //     name: [, Validators.required],
-  //     targetCountry: ['IN', Validators.required],
-  //     targetCitySearch: [],
-  //     targetCity: [, Validators.required],
-  //     siteLink: [clinicID, Validators.required],
-  //     caption: [, Validators.required],
-  //     msg: [, Validators.required],
-  //     callToAction: [, Validators.required],
-  //     subtext: [, Validators.required],
-  //     startdate: [, Validators.required],
-  //     enddate: [, Validators.required],
-  //     max_age: ['65', Validators.required],
-  //     min_age: ['18', Validators.required],
-  //     targetingSpecs: [],
-  //     targetingSpecSearch: [],
-  //     imageURL: [],
-  //     imgSearch: [],
-  //     showForm: []
-  //   });
-  //   this.formReady = true;
-  // }
   changeShownAd(i) {
     let data = this.currentAdsList[i], imgURL, adAcct, pageIdtemp, startDate, endDate, targetCityA, targetCityArr = [];
     this.formReady = false;
@@ -269,14 +252,6 @@ export class FbAdsFormComponent implements OnInit {
     this.imgReady = false;
     this.defaultImgSearch = data.name;
     
-  //  if (data.imageURL == "NA") {
-  //     //console.log(this.tempAdaccountId[0])
-  //     imgURL = this.imgSearchCmp.imgSelected;
-
-  //   } else {
-  //     //console.log(data.adAccount)
-  //     imgURL = data.imageURL;
-  //   }
 
     if (!data.adAccount || data.adAccount == "NA") {
       console.log(this.tempAdaccountId[0])
@@ -357,6 +332,7 @@ export class FbAdsFormComponent implements OnInit {
       tgtCityVal = data.targetCity;
     }
    // console.log(targetCityArr['key']);
+   let someRange = [data.min_age, data.max_age];
     this.fbAdsForm = this._fb.group({
       adAccount: [adAcct, Validators.required],
       pageID: [pageIdtemp, [Validators.required]],
@@ -375,6 +351,8 @@ export class FbAdsFormComponent implements OnInit {
       enddate: [endDate, Validators.required],
       max_age: [data.max_age, Validators.required],
       min_age: [data.min_age, Validators.required],
+      age_range: [someRange],
+      gender: [someRange],
       targetingSpecs: [],
       targetingSpecSearch: [data.targetingSpecSearch],
       imageURL: [imgURL],
@@ -383,6 +361,7 @@ export class FbAdsFormComponent implements OnInit {
     });
     console.log(this.fbAdsForm.controls['enddate'].value);
     console.log(this.fbAdsForm)
+    
     this.formReady = true;
     this.imgReady = true;
   }
@@ -478,8 +457,15 @@ export class FbAdsFormComponent implements OnInit {
 
     }// else
   }// fetchPages
-
+  save_fbAdsForm1 = (model) => {
+  this.prevItem(1);
+  var self = this;
+setTimeout(
+  function() {self.save_fbAdsForm(model);
+    console.log("executing now")}, 200
+)}
   save_fbAdsForm = (model) => {
+    this.prevItem(1);
     console.log(model.value);
     this.waiting = true;
     let job = model['value'];
@@ -543,7 +529,7 @@ export class FbAdsFormComponent implements OnInit {
                   '&' + 'bid_amount=' + this.bidAmount +
                   '&' + 'daily_budget=' + this.dailybudget +
                   '&' + 'campaign_id=' + this.campaignID +
-                  '&' + 'targeting={"geo_locations":' + tgt + '}' +
+                  '&' + 'targeting={"geo_locations":' + tgt + ', "age_min":' + job['age_range'][0] +',"age_max":' + job['age_range'][1]+',"genders":' + job['gender'] + ',' + this.targetingSpecsArray+ '}' +
                   '&' + 'start_time=' + job['startdate'] +
                   '&' + 'end_time=' + job['enddate'] + '&status=PAUSED', method)
                 this._fs.api('/' + job['adAccount']
@@ -553,7 +539,7 @@ export class FbAdsFormComponent implements OnInit {
                   '&' + 'bid_amount=' + this.bidAmount +
                   '&' + 'daily_budget=' + this.dailybudget +
                   '&' + 'campaign_id=' + this.campaignID +
-                  '&' + 'targeting={"geo_locations":' + tgt + '}' +
+                  '&' + 'targeting={"geo_locations":' + tgt + ', "age_min":' + job['age_range'][0] +',"age_max":' + job['age_range'][1]+',"genders":' + job['gender'] + ',' + this.targetingSpecsArray+ '}' +
                   '&' + 'start_time=' + job['startdate'] +
                   '&' + 'end_time=' + job['enddate'] + '&status=PAUSED', method)
                  
@@ -578,16 +564,26 @@ export class FbAdsFormComponent implements OnInit {
                         console.log(job)
                         console.log(model)
                         this.saveFbAdsFormData(job);
-                      })
-                  }).catch(
+                      }).catch(
         error => {
-
+          this.waiting = false;
             if (error.error_user_msg)
             alert(error.error_user_msg);
             else if (error.message)
             alert(error.message);
             console.log(error);
-            this.waiting = false;
+            
+        }
+      )
+                  }).catch(
+        error => {
+          this.waiting = false;
+            if (error.error_user_msg)
+            alert(error.error_user_msg);
+            else if (error.message)
+            alert(error.message);
+            console.log(error);
+            
         }
       )
               }).catch(
@@ -628,62 +624,7 @@ export class FbAdsFormComponent implements OnInit {
     //console.log("FileOverAnother", e);
     this.hasAnotherDropZoneOver = e;
   }
-  // onUpload(item) {
-  //   console.log("item val:", item);
-  //   const timestamp: number = new Date().getTime();
-  //   this.filename = item.file.name;
-  //   console.log("file name", this.filename);
-  //   console.log("fileref console", `images/${this.filename}`);
-  //   const fileRef: any = this.storage.ref(`images/${this.filename}`);
-  //   console.log("fileref", fileRef);
-  //   console.log("uploadTask url", this.uploader.queue[this.uploader.queue.length - 1]['_file'])
-  //   const uploadTask: any = fileRef.put(this.uploader.queue[this.uploader.queue.length - 1]['_file']);
-  //   console.log("uploadTask", uploadTask);
-
-  //   uploadTask.on('state_changed',
-  //     (snapshot) => console.log(snapshot),
-  //     (error) => console.log(error),
-  //     () => {
-  //       console.log("upload task:")
-  //       const data = {
-  //         src: uploadTask.snapshot.downloadURL,
-  //         raw: this.filename,
-  //         createdFor: timestamp,
-  //         createdBy: this.userID,
-  //         updatedAt: timestamp,
-
-  //       };
-  //       console.log("json data:", data);
-  //       let updates = {};
-  //       this.storedflag = true;
-  //       updates = data;
-  //       this.saveFileUploadData(updates);
-  //     }
-  //   );
-  // }
-  // saveFileUploadData = (model) => {
-  //   let reminder = {},
-  //     job = model['value']
-  //   console.log("jobs data:", job, model)
-  //   reminder['addedBy'] = this.userID;
-  //   reminder['fileName'] = model.raw;
-  //   reminder['fileUrl'] = model.src;
-  //   reminder['updatedAt'] = model.updatedAt;
-  //   this.fileUrl = model.src;
-  //   this.fileUrl = encodeURIComponent(this.fileUrl)
-  //     .replace(/!/g, '%21')
-  //     .replace(/'/g, '%27')
-  //     .replace(/\(/g, '%28')
-  //     .replace(/\)/g, '%29')
-  //     .replace(/\*/g, '%2A')
-  //     .replace(/%20/g, '+');
-  //   console.log("created details reminder", reminder);
-  //   this.urlAdded = true;
-  //   this._authService._saveFileUploadData(this.userID, reminder)
-  //     .then(responseData => {
-  //       console.log("fileUplaodData is saved", responseData)
-  //     })
-  // }
+  
   saveFbAdsFormData = (model) => {
     console.log(model)
     let AdsData = {},
@@ -712,6 +653,8 @@ export class FbAdsFormComponent implements OnInit {
     AdsData['enddate'] = AdsJob['enddate'];
     AdsData['fileUrl'] = this.fileUrl;
     AdsData['imageURL'] = AdsJob['imageURL'];
+    AdsData['age_range'] = AdsJob['age_range'];
+    AdsData['targetingSpecs'] = this.targetingSpecsArray;
     console.log("Ads reminder data:", AdsData);
     this.fbAdsAdded = true;
     //call the service for fbAds form Data
@@ -782,7 +725,17 @@ export class FbAdsFormComponent implements OnInit {
         this.tgtSpecList = data.data;
 
       }
-      )
+      ).catch(
+        error => {
+
+           if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+          console.log(error);
+          this.waiting = false;
+        }
+      );
   }
   generateAdPreview(adform) {
     console.log(adform)
@@ -997,6 +950,17 @@ $('#fbDoneModal').modal('hide');
       .map((res: Response) => res.json());
 
   }
+
+addTargetingSpec(value) {
+  console.log(this.tgtSpecList);
+  console.log(value);
+console.log(this.tgtSpecList[value]);
+if (!this.targetingSpecsArray[this.tgtSpecList[value].type])
+this.targetingSpecsArray[this.tgtSpecList[value].type] = [];
+this.targetingSpecsArray[this.tgtSpecList[value].type].push({"id":this.tgtSpecList[value].id});
+this.targetingDisplayArray.push({"type":this.tgtSpecList[value].type, "name":this.tgtSpecList[value].name })
+console.log(this.targetingSpecsArray)
+}
 }
 
 

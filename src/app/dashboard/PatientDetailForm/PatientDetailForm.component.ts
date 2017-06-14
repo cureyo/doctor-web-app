@@ -41,7 +41,7 @@ export class PatientDetailFormComponent implements OnInit {
   private currentUserID: any;
   private currentUserPageId: any;
   private diagnosis: any;
-  private carePathsAvlbl: any = [];
+  public carePathsAvlbl: any = [];
   private showDiagnosisQuestions: boolean = false;
   constructor(
     private _fb: FormBuilder,

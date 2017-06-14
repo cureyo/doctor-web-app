@@ -61,6 +61,7 @@ export const AppConfig = {
      pricing:            environment.envName + '/Pricing/',
     HxPaths:            environment.envName + '/PatientHxForms/',
     carePathNames:      environment.envName + '/CarePathNames/',
+    patientUpdates:     environment.envName + '/PatientUpdates/',
     HxPathNames:        environment.envName + '/PatientHxFormNames/',
     checkIns:           environment.envName + '/DoctorPages/Check-Ins/',
     queue:              environment.envName + '/DoctorPages/Queue/',

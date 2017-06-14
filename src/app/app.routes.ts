@@ -66,6 +66,8 @@ import {OnboardingHeaderComponent} from "./dashboard/select-domain/onboardingHea
 import {ImageSearchComponent} from './fb-ads-form/image-search/image-search.component';
 import {VideoCallComponent} from "./dashboard/video-call/video-call.component";
 import {PaymentsComponent} from "./dashboard/payments/payments.component";
+import {CareTimelinesComponent} from "./dashboard/care-timeline/care-timeline.component"
+
 export const MODULE_ROUTES: Route[] =[
 
     { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
@@ -112,6 +114,7 @@ export const MODULE_COMPONENTS = [
     SocialCalendarComponent,
     MedicationReminderComponent,
     ExerciseTrackerComponent,
+    CareTimelinesComponent,
     BloodSugarTrackerComponent,
     SuggestedMedReminderComponent,
     VendorLoginComponent,
@@ -158,6 +161,7 @@ export const MODULE_COMPONENTS = [
     FbAdsFormComponent,
     PatientHxFormComponent,
     CreatePathWaysComponent,
-    ExistingPathWaysComponent
+    ExistingPathWaysComponent,
+    
 
 ]

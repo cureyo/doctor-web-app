@@ -1,0 +1,83 @@
+     <h4 *ngIf="carePathExists" style="color: #137a9c"><b>Patient Care Pathway</b></h4>
+                  <br *ngIf="carePathExists">
+     <div *ngIf="carePathExists" class="card card-nav-tabs">
+                  <div class="card-header" data-background-color="cureyo">
+                     <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                           <ul class="nav nav-tabs" data-tabs="tabs">
+                              <li *ngFor="let path of updatesArray">
+                                 <a [href]="'#' + path.$key" data-toggle="tab">
+                                    <i class="material-icons">bug_report</i>
+                                    {{carePathArray[path.$key]}}
+                                    <div class="ripple-container"></div>
+                                 </a>
+                              </li>
+                             
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="card-content">
+                        <div class="tab-content" *ngFor="let path of updatesArray">
+                           <div class="tab-pane" [id]="path.$key">
+                <ul class="timeline timeline-simple">
+                 
+                    <li class="timeline-inverted" *ngFor="let item of path  | reverse; let k = index;">
+                        <div [ngClass]="(item.status == 'completed')?'timeline-badge info':'timeline-badge warning'">
+                            <i class="material-icons">{{item.icon}}</i>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <p><small>{{item.time}}</small>
+                                    <br>
+                                    <b>{{item.title}}</b></p>
+                                <span [ngClass]="(item.status == 'completed')?'label label-info':'label label-warning'">Status: {{item.status}}</span>
+                            </div>
+                            <div class="timeline-body">
+                                <p>{{item.description}}</p>
+                                <hr *ngIf="item.images">
+                                <div class="col-md-12">
+                               <div  *ngFor="let image of item.images" style=" float: left; z-index: 10000;">
+                                <img  [src]="image" style="width: 150px; height: 150px; margin-left: 10px;" data-toggle="dropdown" href="#">
+                                <ul class="dropdown-menu" style="padding: 10px;">
+                                    <img [src]="image" style="width: 100%; height: 100%;">
+                                </ul>
+                               </div>
+                               <div class="col-md-6"  *ngIf="item.chart">
+                               <div class="card">
+                                    <div class="card-header card-chart" data-background-color="cureyo">
+                                            <div class="ct-chart" [id]="'careChart' + k"></div>
+                                            </div>
+                                    <div class="card-content">
+                                            <h5 class="title">{{item.chart.name}}</h5>
+                                            
+                                    </div>
+                                    
+                                </div>
+                               </div>
+                                </div>
+                                <br>
+                                <hr>
+                                <div class="dropdown pull-left">
+                                    <button class="btn btn-round btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+                                        <i class="material-icons">chat</i>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <li *ngFor="let chats of item.actions.chat">
+                                            <a (click)="sendChat(chats)">{{stakeHolderArray[chats]}}</a>
+                                        </li>
+                                       
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+                   </div>
+                           </div>
+                        </div>
+                     </div>
+            

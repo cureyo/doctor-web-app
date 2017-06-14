@@ -11,7 +11,7 @@
                  <div class="col-md-4" >
                             <div class="form-group">
                                  <label for="searchType">Search from? </label>
-                                  <select  id="searchType" class="form-control" (change)="changeSearchType(searchImageForm.controls['searchType'].value)" formControlName="searchType">
+                                  <select  id="searchType" class="form-control" (change)="changeSearchType(searchImageForm.value)" formControlName="searchType">
                                     <option value="google">From Google</option>
                                     <option value="cureyo">From Cureyo</option>
                                     <option value="fbPage">From Facebook Page</option>
@@ -26,13 +26,23 @@
                             </div>
                             <a  *ngIf="showSearchTerm" style="width: 35%; float: left; z-index: 10000; margin-top: 20px;" class="btn btn-round btn-warning" (click)="searchForGImages(searchImageForm.controls['searchTerm'].value)">Search</a>
                     </div>
+                    <div *ngIf="showfbPages && fbPageList && !showSearchTerm" class="col-md-6" >
+                            <div class="form-group" style="width: 60%; float: left; z-index: 10000;">
+                                 <label for="searchTerm">Facebook Page </label>
+                                  <select  id="pageName" class="form-control"  formControlName="pageName" (change)="changePageList(searchImageForm.value)">
+                                    <option *ngFor="let item of fbPageList" value="{{item.id}}">{{item.name}}</option>
+                                    
+                                  </select> 
+                            </div>
+                            <a  *ngIf="showSearchTerm" style="width: 35%; float: left; z-index: 10000; margin-top: 20px;" class="btn btn-round btn-warning" (click)="searchForGImages(searchImageForm.controls['searchTerm'].value)">Search</a>
+                    </div>
                 </div>
                     <div *ngIf="showScroll" class="row">
                     <fieldset>
                     <div class="col-md-12">
                     <div id="v-scrollable" class="scrollable section horizontal" ng2-scrollable (elementVisible)="scrollEvent()">
     <div *ngFor="let img of displayArray; let i = index;"  style="width: 150px; height: 100px;">
-      <a (click)="selectImage( i)"><img [src]="img" style="height: 100px;" [ngClass]="(showBorder[i] == true)?'border':'continer'"></a></div>
+      <a (click)="selectImage(i)"><img [src]="img" style="height: 100px;" [ngClass]="(showBorder[i] == true)?'border':'continer'"></a></div>
     
   </div>
        </div>

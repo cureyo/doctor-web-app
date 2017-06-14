@@ -46,6 +46,8 @@
 
       <p  style="margin-top: 20px;"><b>{{allLinks[finalPath].headingToShow}}</b></p>
       <p>{{allLinks[finalPath].textToShow}}</p>
+      <a (click)="showDemoVideo(allLinks[finalPath].demoURL)" style="cursor: pointer;">Watch Video: {{allLinks[finalPath].demoName}}</a>
+      <iframe [src]="currentVideoURL" *ngIf="showVideo"></iframe>
       <a *ngIf="allLinks[finalPath].takeNext" class="pull-right btn btn-warning btn-round" (click)="nextPage(allLinks[finalPath].nextURL)" >Done</a>
 
     </div>

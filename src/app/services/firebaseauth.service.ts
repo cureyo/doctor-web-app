@@ -203,6 +203,11 @@ export class AuthService {
     return this.af.database.list(this.db.careSchedule + pageID);
 
   }//fetch the messagingIds data
+    public _getPatientCareSchedules(pageID, patientId) {
+    //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+    return this.af.database.list(this.db.careSchedule + pageID + '/' + patientId + '/Paths');
+
+  }//fetch the messagingIds data
   public _getClinicQueue(clinicID, date) {
     //console.log(this.db.queue + clinicID + '/' + date)
     return this.af.database.object(this.db.queue + clinicID + '/' + date + '/q');
@@ -405,6 +410,10 @@ export class AuthService {
   }//_saveCaredOne
   public _getCarePathway() {
     return this.af.database.list(this.db.carePathNames);
+
+  }//_getCarePathways
+   public _getPatientUpdates(uid) {
+    return this.af.database.list(this.db.patientUpdates + uid);
 
   }//_getCarePathways
   public _getHxPathway() {

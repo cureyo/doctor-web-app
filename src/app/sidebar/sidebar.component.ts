@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookService, FacebookLoginResponse, FacebookInitParams } from 'ng2-facebook-sdk';
 import { AppConfig } from '../config/app.config';
 import { SelectDomainComponent } from '../dashboard/select-domain/select-domain.component';
-
+import { MetadataService } from "../services/metadata.service";
 declare var $: any
 
 
@@ -41,9 +41,17 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     private coDoctorJobs:boolean = false;
     private isDoctor: boolean = false;
     private hasWebsite: boolean = false;
+    private currentSite: any;
 
     ngOnInit() {
-        
+       console.log(window.location.origin)
+       if (window.location.origin == "http://care.cureyo.com" || window.location.origin == "https://care.cureyo.com" ) {
+           this.currentSite = "cureyo";
+       } else if (window.location.origin == "http://healthamin.com" || window.location.origin == "https://healthamin.com" || window.location.origin == "http://localhost:4200" ) {
+this.currentSite = "healthamin";
+this.metadataService.setTitle("Healthamin - hollistic care for your patients");
+this.metadataService.setMetaDescription("Better Hollistic Care");
+       }
     $.getScript('../../assets/js/material-dashboard-angular.js');
         // this.menuItems = ROUTES.filter(menuItem => menuItem.menuType !== MenuType.BRAND);
                 //console.log("From sidebar component");
@@ -80,7 +88,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         private route: ActivatedRoute,
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
-        private domain: SelectDomainComponent
+        private domain: SelectDomainComponent,
+        private metadataService: MetadataService
     ) {
  }//  constructor
 

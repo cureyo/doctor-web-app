@@ -13,12 +13,18 @@ export class VendorLoginComponent implements OnInit {
   private user: {};
   private isAuth: boolean;
   private showVid: boolean = false;
+  private currentSite: any;
 
   constructor(private _fb: FormBuilder,private _authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // this._authService.logout();
-
+console.log(window.location.origin)
+       if (window.location.origin == "http://care.cureyo.com" || window.location.origin == "https://care.cureyo.com" ) {
+           this.currentSite = "cureyo";
+       } else if (window.location.origin == "http://healthamin.com" || window.location.origin == "https://healthamin.com" || window.location.origin == "http://localhost:4200" ) {
+this.currentSite = "healthamin";
+       }
     this._authService._getUser()
       .subscribe(
       data => {

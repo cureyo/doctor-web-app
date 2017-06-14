@@ -1,9 +1,9 @@
 <div class="logo">
     <a class="simple-text">
         <div class="logo-img">
-            <img src="/assets/img/AppIcon-01.ico"/>
+            <img [src]="(currentSite == 'cureyo')?'/assets/img/AppIcon-01.ico':'/assets/img/healthaminLogo.png'"/>
         </div>
-        Cureyo
+        {{(currentSite == 'cureyo')?'Cureyo':'Healthamin'}}
     </a>
 </div>
 <div class="sidebar-wrapper">
