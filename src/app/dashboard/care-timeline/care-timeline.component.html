@@ -5,9 +5,9 @@
                      <div class="nav-tabs-navigation">
                         <div class="nav-tabs-wrapper">
                            <ul class="nav nav-tabs" data-tabs="tabs">
-                              <li *ngFor="let path of updatesArray">
+                              <li class="" *ngFor="let path of updatesArray">
                                  <a [href]="'#' + path.$key" data-toggle="tab">
-                                    <i class="material-icons">bug_report</i>
+                                    <i class="material-icons" aria-hidden="true">bug_report</i>
                                     {{carePathArray[path.$key]}}
                                     <div class="ripple-container"></div>
                                  </a>
@@ -19,8 +19,8 @@
                   </div>
                   <div class="row">
                      <div class="card-content">
-                        <div class="tab-content" *ngFor="let path of updatesArray">
-                           <div class="tab-pane" [id]="path.$key">
+                        <div class="tab-content" >
+                           <div class="tab-pane" [id]="path.$key" *ngFor="let path of updatesArray">
                 <ul class="timeline timeline-simple">
                  
                     <li class="timeline-inverted" *ngFor="let item of path  | reverse; let k = index;">
@@ -47,7 +47,7 @@
                                <div class="col-md-6"  *ngIf="item.chart">
                                <div class="card">
                                     <div class="card-header card-chart" data-background-color="cureyo">
-                                            <div class="ct-chart" [id]="'careChart' + k"></div>
+                                            <div class="ct-chart" [id]="'careChart' + path.$key + item.$key"></div>
                                             </div>
                                     <div class="card-content">
                                             <h5 class="title">{{item.chart.name}}</h5>
@@ -66,7 +66,8 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                         <li *ngFor="let chats of item.actions.chat">
-                                            <a (click)="sendChat(chats)">{{stakeHolderArray[chats]}}</a>
+                                            <a data-toggle="dropdown" [href]="'#' + stakeHolderArray[chats]">{{stakeHolderArray[chats]}}</a>
+                                            
                                         </li>
                                        
                                     </ul>

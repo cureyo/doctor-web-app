@@ -52,6 +52,7 @@ export const AppConfig = {
     labDetails:         environment.envName + '/PathologicalTests/LabDetails/',
     orderDetails:       environment.envName +  '/Orders/',
     docUsers:           environment.envName + '/DoctorUsers/',
+    notifications:      environment.envName + '/Notifications/',
     doctorPages:        environment.envName + '/DoctorPages/',
     socialCalendar:     environment.envName + '/socialCalendar/',
     pathologicalTestDetails:  environment.envName + '/Pricing/',
@@ -85,8 +86,8 @@ export const AppConfig = {
     OTPRequests:        environment.envName + '/OTPRequests/',
     scrollTo:           environment.envName + '/DoctorPages/ScrollToSection/',
     MedicalSpecialities: '/MedicalSpecialities/',
-    MedicalVendors: '/MedVendors/',
-    MedicalSupport: '/MedSupports/', 
+    MedicalVendors:      '/MedVendors/',
+    MedicalSupport:      '/MedSupports/', 
     PaymentPlans:        environment.envName + '/PaymentPlans/',
     SamplePaymentPlans:  environment.envName + '/SamplePaymentPlan/'
   }

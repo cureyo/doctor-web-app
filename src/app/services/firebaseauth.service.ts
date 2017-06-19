@@ -261,6 +261,7 @@ export class AuthService {
     return this.af.database.object(this.db.MedicalVendors);
   }
     public _getMedicalSupport() {
+      console.log(this.db.MedicalSupport);
     return this.af.database.object(this.db.MedicalSupport);
   }
   _savePaymentPlans(userId, form) {
@@ -406,7 +407,8 @@ export class AuthService {
     console.log(this.db.careSched + pageId + '/' + patientId + '/Paths/' + pathName);
     
     const carePaths = this.af.database.object(this.db.careSched + pageId + '/' + patientId + '/Paths/' + pathName);
-    return carePaths.set({ path: pathName, activatedOn: activationDate });
+    console.log({ path: pathName, activatedOn: activationDate, plan: "No" });
+    return carePaths.set({ path: pathName, activatedOn: activationDate, plan: "No" });
   }//_saveCaredOne
   public _getCarePathway() {
     return this.af.database.list(this.db.carePathNames);
@@ -665,7 +667,9 @@ return this.af.database.object(this.db.pricing + item + '/' + TestName + '/' + p
   }//_getUser
 
 
-
+public _getNotifications(uid) {
+  return this.af.database.list(this.db.notifications + uid)
+}
   public _getdoctors() {
     return this.doctorsList;
   }//_getdoctors

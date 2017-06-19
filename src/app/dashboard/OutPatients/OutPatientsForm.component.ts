@@ -228,7 +228,8 @@ export class OutPatientsFormComponent implements OnInit {
   } //end of ngOnInIt 
   //function for activity summary
   activitySummaryChart(activitySummaryObj){
-    console.log("Activity summary Obj:",activitySummaryObj);
+    if (activitySummaryObj && activitySummaryObj[0]) {
+      console.log("Activity summary Obj:",activitySummaryObj);
              var labelArr=[];
              var seriesArr=[];
              var minValue;
@@ -286,6 +287,8 @@ export class OutPatientsFormComponent implements OnInit {
             var t=LineChart(labelArr,seriesArr,minValue,maxValue,"patientsomething");
             console.log("patientsomething id is", t)
             this.activitySummarytitle=t;
+    }
+    
   }
 //end of function for activity summary
 //Hr summary chart

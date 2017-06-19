@@ -14,7 +14,8 @@ export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
     private navState: boolean = false;
-
+    private notifications: any = [];
+    private noticationDetail: any = [];
     constructor(location: Location,
         private _authService: AuthService) {
         this.location = location;
@@ -23,6 +24,19 @@ export class NavbarComponent implements OnInit {
         this.listTitles = ROUTES.filter(listTitle => listTitle.menuType !== MenuType.BRAND);
             $.getScript('../assets/js/material-dashboard.js');
     $.getScript('../assets/js/initMenu.js');
+
+    this._authService._getUser()
+    .subscribe(
+        user => {
+            this._authService._getNotifications(user.user.uid)
+            .subscribe(
+                notifData => {
+                    console.log(notifData);
+                    this.notifications = notifData;
+                }
+            )
+        }
+    )
     }
     getTitle() {
         var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -54,6 +68,14 @@ export class NavbarComponent implements OnInit {
 
         
     }
+    
+showNotifDetail(k) {
 
+    console.log(this.noticationDetail, k);
+    for (let i =0; i < this.noticationDetail.length; i++) {
+        this.noticationDetail[i] = false;
+    }
+    this.noticationDetail[k] = true;
+}
     
 }

@@ -72,11 +72,11 @@ export class PaymentsComponent implements OnInit {
                     partnerList => {
                         console.log(partnerList);
                         let partnersC = [], partnersV = [];
-                        if (partnerList['consultant']) {
+                        if (partnerList['consult']) {
                             let ctr = 0;
-                            let consultants = partnerList['consultant'];
-                            this.partnerConsultants = partnerList['consultant'];
-                            console.log(partnerList['consultant']);
+                            let consultants = partnerList['consult'];
+                            this.partnerConsultants = partnerList['consult'];
+                            console.log(partnerList['consult']);
                             for (let item in consultants) {
 
                                 console.log(item)
@@ -92,9 +92,9 @@ export class PaymentsComponent implements OnInit {
 
 
 
-                        if (partnerList['vendor']) {
+                        if (partnerList['vendors']) {
                             let ctr = 0;
-                            let vendor = partnerList['vendor'];
+                            let vendor = partnerList['vendors'];
                             for (let item in vendor) {
 
                                 console.log(item)
@@ -287,8 +287,8 @@ export class PaymentsComponent implements OnInit {
         console.log(model);
         let type = model['type'];
         if (type == "support") {
-            type = "consultant";
-            model['type'] = "consultant";
+            type = "consult";
+            model['type'] = "consult";
         }
         // model['icon'] = this.types[model['type']].icon;
         // model['type'] = this.types[model['type']].name;
@@ -341,7 +341,7 @@ export class PaymentsComponent implements OnInit {
             this.addingVendor = true;
             this.addingSupport = false;
             this.paymentsForm.controls['speciality'].reset();
-        } else if (paymentsForm.value == "consultant") {
+        } else if (paymentsForm.value == "consult") {
             this.addingConsultant = true;
             this.addingVendor = false;
             this.addingSupport = false;

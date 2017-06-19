@@ -3,14 +3,15 @@
  <div class="col-md-12">
          
                 <div *ngIf="dataReady" class="card" style="margin-top: 30px;">
-                  
-                    <div *ngIf="caredone.avatar" class="card-header" data-background-color="cureyo">
-                         <div class="card-header" style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;">
-
-<img style="float: left; width: 50px; height: 50px; padding: 0; border-radius: 10px;" src="{{caredone.avatar}}" >
+                 
+                    
+         <div *ngIf="caredone.avatar" class="card-header" data-background-color="cureyo">               
+ <div class="card-header" style="border-radius: 50%; width: 90px; height: 90px; padding: 1px; background-color:#fff; float:left;">
+                            <img src="{{caredone.avatar}}" style="border-radius: 50%; width: 88px; height: 88px;">
+                        </div>
           
 
-        </div>
+       <div>
     
 
                         <h4 class="title">{{caredone.firstName}} {{caredone.lastName}}
@@ -19,6 +20,7 @@
                         <a class="btn btn-round pull-right" (click)="checkOutPatient();">Check-out Patient</a>
                         <br>
                         <small style="font-weight: 300; color: #fff;">Patient # {{this.currentQ}}</small></h4>
+         </div>
                     </div> <!-- card header portion end-->
                     
               <div class="card-content table-responsive">
@@ -396,7 +398,7 @@
                                          <p ><b>Assigned Plans</b></p>
                                     <div *ngFor="let care of patientExistingPaths" class="card" style="margin-top: 10px;">
                                         <div class="card-content">
-                                        <label class="label-round label-warning" style="color: white;">{{care.name.path}}</label> assigned on <label class="label-round label-info" style="color: white;">{{care.activatedOn}}</label>
+                                        <label class="label-round label-warning" style="color: white;">{{care.name.path}}</label> assigned on <label class="label-round label-info" style="color: white;">{{care.activatedOn}}</label> subscribed on <label class="label-round label-warning" style="color: white;">{{care.plan}} Plan</label>
                                     </div>
                                     </div>
                                     </div>

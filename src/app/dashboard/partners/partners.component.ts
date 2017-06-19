@@ -29,7 +29,7 @@ export class PartnerComponent implements OnInit {
     private formReady: boolean = false;
     private consultantsPresent: boolean = false;
     private vendorsPresent: boolean = false;
-    private addingConsultant: boolean = false;
+    private addingConsultant: boolean = true;
     private addingVendor: boolean = false;
     private addingSupport: boolean = false;
     private sitename: any;
@@ -94,10 +94,10 @@ export class PartnerComponent implements OnInit {
                     partnerList => {
                         console.log(partnerList);
                         let partnersC = [], partnersV = [];
-                        if (partnerList['consultant']) {
+                        if (partnerList['consult']) {
                             let ctr = 0;
-                            let consultants = partnerList['consultant'];
-                            console.log(partnerList['consultant']);
+                            let consultants = partnerList['consult'];
+                            console.log(partnerList['consult']);
                             for (let item in consultants) {
 
                                 console.log(item)
@@ -113,9 +113,9 @@ export class PartnerComponent implements OnInit {
 
 
 
-                        if (partnerList['vendor']) {
+                        if (partnerList['vendors']) {
                             let ctr = 0;
-                            let vendor = partnerList['vendor'];
+                            let vendor = partnerList['vendors'];
                             for (let item in vendor) {
 
                                 console.log(item)
@@ -142,8 +142,8 @@ export class PartnerComponent implements OnInit {
         console.log(model);
         let type = model['type'];
         if (type == "support") {
-            type = "consultant";
-            model['type'] = "consultant";
+            type = "consult";
+            model['type'] = "consult";
         }
         // model['icon'] = this.types[model['type']].icon;
         // model['type'] = this.types[model['type']].name;
@@ -191,12 +191,12 @@ export class PartnerComponent implements OnInit {
     }
     changeAddType(partnerForm) {
         console.log(partnerForm)
-        if (partnerForm.value == "vendor") {
+        if (partnerForm.value == "vendors") {
             this.addingConsultant = false;
             this.addingVendor = true;
             this.addingSupport = false;
             this.partnerForm.controls['speciality'].reset();
-        } else if (partnerForm.value == "consultant") {
+        } else if (partnerForm.value == "consult") {
             this.addingConsultant = true;
             this.addingVendor = false;
             this.addingSupport = false;
