@@ -99,7 +99,7 @@
                                                                         <label class="control-label" for="consultant">Consultation with</label>
                                                                         <select formControlName="consultant" class="form-control" (change)="consultantSelect(check.controls['consultant']._value, i)">
                                   
-                                                                        <option value="{{partner.key}}" *ngFor="let partner of partnerList;" >{{partner.name}}</option>
+                                                                        <option value="{{partner.phone}}" *ngFor="let partner of partnerList;" >{{partner.name}}</option>
                                                                          
                                                                         </select>
                                                            </div>

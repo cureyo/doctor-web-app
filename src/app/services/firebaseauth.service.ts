@@ -144,7 +144,7 @@ export class AuthService {
 
   }//save onboardingReviewreview data
   public _saveTransactionData(data, objectId, route) {
-    console.log(this.db.transactionTable + '/' + objectId + '/' + route);
+    console.log(this.db.transactionTable + '/' + objectId + '/' + route, data);
     const onboardingdata = this.af.database.object(this.db.transactionTable + '/' + objectId + '/' + route)
     return onboardingdata.set(data);
 
@@ -410,6 +410,11 @@ export class AuthService {
     console.log({ path: pathName, activatedOn: activationDate, plan: "No" });
     return carePaths.set({ path: pathName, activatedOn: activationDate, plan: "No" });
   }//_saveCaredOne
+
+public _saveCarePathwayUser(currentUserID, patientID, carePathId) {
+  console.log(this.db.caredOnes + currentUserID + '/' + patientID + '/latestPathway');
+return this.af.database.object(this.db.caredOnes + currentUserID + '/' + patientID + '/latestPathway').set(carePathId);
+}
   public _getCarePathway() {
     return this.af.database.list(this.db.carePathNames);
 
@@ -422,6 +427,14 @@ export class AuthService {
     return this.af.database.list(this.db.HxPathNames);
 
   }//_getCarePathways
+  public _saveActivePathways(userId, clinicId, mode, pathwayId, itemId) {
+return this.af.database.object(this.db.activePathways + userId + '/' + clinicId + '/' + mode)
+.set({pathway: pathwayId, itemId: itemId})
+}
+public _savePatientUpdate(patientID, carePathId, toTime2, updtJSON) {
+  return this.af.database.object(this.db.patientUpdates + patientID + '/' + carePathId + '/' + toTime2)
+.set(updtJSON)
+}
   _setTestPrice(item, partner, TestName, data) {
 return this.af.database.object(this.db.pricing + item + '/' + TestName + '/' + partner).set(data)
   }
@@ -823,7 +836,7 @@ public _getNotifications(uid) {
   }
   public _addPartner(data, userId, route, key) {
 
-    //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
+    console.log(this.db.Partners + userId + '/' + route + '/' + key);
 
     return this.af.database.object(this.db.Partners + userId + '/' + route + '/' + key)
       .set(data);
@@ -854,7 +867,7 @@ public _getNotifications(uid) {
 
     //console.log(this.db.caretakers + caredoneId + '/' + caretakerFbId);
 
-    return this.af.database.object(this.db.Partners + userId + '/consultant/' + consultantId)
+    return this.af.database.object(this.db.Partners + userId + '/consult/' + consultantId)
 
   }
     public _savePartnerName(key, userId, data) {

@@ -53,12 +53,15 @@ export class LabTestCareComponent implements OnInit {
             var index = 0;
             this.stForm = this._fb.group({
               labtests: this._fb.array([
-                this.initLabTestData(index)
+                //this.initLabTestData(index, 0)
               ])
             });
-            for (var i = 1; i < this.labData.length; i++) {
+            for (var i = 0; i < this.labData.length; i++) {
               console.log("loop", i);
-              this.addLabTestData(i);
+              for (var k = 0; k < this.labData[i].TestName.length; k++) {
+              console.log("loop", k);
+              this.addLabTestData(i, k);
+              }
             }
           }
         })
@@ -74,18 +77,19 @@ export class LabTestCareComponent implements OnInit {
 
   }//end of ngOnInIt
 
-  initLabTestData(i) {
+  initLabTestData(i, k) {
     return this._fb.group({
-      name: [this.labData[i].TestName, Validators.required],
+      name: [this.labData[i].TestName[k], Validators.required],
       frequency: [this.labData[i].TestFreq, Validators.required],
       day: [this.labData[i].TestDay],
       date: [this.labData[i].TestDate, Validators.required],
       timing: [this.labData[i].TestTime, Validators.required],
     });
   }//iniMedicine's
-  addLabTestData(i) {
+  addLabTestData(i, k) {
     const control = <FormArray>this.stForm.controls['labtests'];
-    control.push(this.initLabTestData(i));
+    control.push(this.initLabTestData(i, k));
+    console.log(control);
 
   }//addMedicine
   initLabTest() {
@@ -103,7 +107,7 @@ export class LabTestCareComponent implements OnInit {
 
   }//addLabTest
 
-  save_stForm = (model) => {
+  save_stForm(model) {
     let job = model['value'],
       labtests = job['labtests'],
       ctr = 0,
@@ -127,13 +131,36 @@ export class LabTestCareComponent implements OnInit {
       reviewData.push({
         "TestFreq": labtests[i].frequency,
         "name": labtests[i].name.id,
-        "TestName": labtests[i].name.name,
+        "TestName": [labtests[i].name.name],
         "TestTime": labtests[i].timing,
         "TestDay": labtests[i].day,
         "TestDate": labtests[i].date,
 
       });
+      // for (let k = i + 1; k < reviewData.length; k++) {
+      //   flag = false;
+      //   if (reviewData[k].TestFreq == reviewData[i].TestFreq && reviewData[k].TestTime == reviewData[i].TestTime) {
+      //     if (reviewData[k].TestFreq == 'monthly') {
+      //       flag = true;
+      //     } else if (reviewData[k].TestFreq == '2months') {
+      //       if (reviewData[k].TestDay == reviewData[i].TestDay) {
+      //         flag = true;
+      //       }
+      //     } else if (reviewData[k].TestDate == reviewData[i].TestDate) {
+      //       flag = true;
+      //     }//elseif
 
+      //   }//if
+      //   //console.log("labtests is", labtests)
+      //   if (flag) {
+
+      //     reviewData['TestName'][ctr].push(reviewData[k].TestName[0]);// here is the bug
+      //     labtests.splice(k, 1);
+      //    k--;
+      //   }//flag
+
+      // }//loop j
+     
       for (let j = i + 1; j < labtests.length; j++) {
         flag = false;
         if (labtests[i].frequency == labtests[j].frequency && labtests[i].timing == labtests[j].timing) {
@@ -151,7 +178,9 @@ export class LabTestCareComponent implements OnInit {
         //console.log("labtests is", labtests)
         if (flag) {
 
-          reminders['Job_Tests'][ctr].Test_Name.push(labtests[j].name.name);// here is the bug
+          reminders['Job_Tests'][ctr].Test_Name.push(labtests[j].name.name);//
+          reviewData[ctr].TestName.push(labtests[j].name.name);// here is the bug
+          console.log(reviewData);
           labtests.splice(j, 1);
           j--;
         }//flag
@@ -170,6 +199,7 @@ export class LabTestCareComponent implements OnInit {
     //   );
     //console.log("the reminders value ",labtests);
     // //  save data in onboarding Review
+
     var transTime = new Date();
     var self = this;
     setTimeout(

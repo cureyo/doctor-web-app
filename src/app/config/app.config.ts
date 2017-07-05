@@ -58,6 +58,7 @@ export const AppConfig = {
     pathologicalTestDetails:  environment.envName + '/Pricing/',
     clinicConsults:     environment.envName + '/ClinicConsultations/Calls/',
     website:            '/SampleDocPage/',
+    activePathways:      environment.envName + '/ActiveTransactions/',
     carePaths:          environment.envName + '/CarePathways/',
      pricing:            environment.envName + '/Pricing/',
     HxPaths:            environment.envName + '/PatientHxForms/',

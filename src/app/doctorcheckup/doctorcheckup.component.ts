@@ -272,10 +272,10 @@ confirmOTP(otp) {
         for (let partner in data) {
           console.log(partner);
           if (partner !='$key' && partner !='$exists' && partner !='$value') {
-            console.log(partner);
+            console.log("partner@275", partner, data[partner]);
           console.log(this.phoneNumber, this.currentUserID, partner, data[partner].category, data[partner].type);
-          this._authService._savePartnerId(this.phoneNumber, this.currentUserID, partner, data[partner].category );
-          this._authService._savePartnerImage(this.phoneNumber, this.currentUserID, partner, data[partner].category );
+          this._authService._savePartnerId(this.phoneNumber, this.currentUserID, partner, data[partner].type );
+          this._authService._savePartnerImage(this.phoneNumber, this.currentUserID, partner, data[partner].type );
         
           }
             
@@ -317,17 +317,18 @@ this._authService._getMedicalSpecialities()
     let partnerModel = {
 
                     name: form.fullName,
-                    type: 'consultant',
+                    type: 'consult',
                     email: form.email,
                     phone: form.phone,
                     speciality: form.speciality,
                     fee: form.fee,
                     icon: "local_hospital",
                     img: form.avatar,
+                    uid: this.currentUserID,
                     message: 'Hi! You can ignore this message. You are added as a default partner for your clinic.'
                 
     }
-    this._authService._addPartner(partnerModel, form.authUID, partnerModel.type, form.phone);
+    this._authService._addPartner(partnerModel, this.currentUserID, 'consult', form.phone);
     if (form.fbPageAdded) {
       this.fs.api('/' + form.fbPageId + '?fields=access_token')
         .then(

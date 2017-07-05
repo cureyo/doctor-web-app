@@ -76,6 +76,7 @@ export class PhysicalconsultationCareComponent implements OnInit {
       job = model['value'];
     console.log("job values test:", job);
     var self = this;
+    console.log(this.doctorId, this.consultantId);
     this._authService._getOnePartner(this.doctorId, this.consultantId)
       .subscribe(
       partnerData => {

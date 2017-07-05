@@ -22,6 +22,7 @@ export class PatientDetailFormComponent implements OnInit {
 
   public CaredonesForm: FormGroup;
   public ObserversForm: FormGroup;
+  public currentUserPhone: any;
   public currentUser: any;
   public caredone: any;
   public caredoneId: any;
@@ -65,7 +66,7 @@ export class PatientDetailFormComponent implements OnInit {
   } //constructor
 
   ngOnInit() {
-        this._authService._getUser()
+    this._authService._getUser()
       .subscribe(
       data => {
         //console.log("checking if user logged in");
@@ -80,6 +81,7 @@ export class PatientDetailFormComponent implements OnInit {
                 this.currentUser = this._authService._getCurrentUser();
                 this.currentUserID = this.currentUser.authUID;
                 this.currentUserPageId = this.currentUser.fbPageId;
+                this.currentUserPhone = this.currentUser.phone;
                 this.route.params.subscribe(
                   params => {
                     console.log(params);
@@ -138,11 +140,11 @@ export class PatientDetailFormComponent implements OnInit {
     window.scroll(0, -100);
     $('#profileContent').css({ position: 'fixed' });
   }
-  
 
- showReportModal2(uid) {
 
-   this.getReports(uid);
+  showReportModal2(uid) {
+
+    this.getReports(uid);
     console.log("showing reports modal")
     $('#reportsModal').modal('show');
 
@@ -158,13 +160,13 @@ export class PatientDetailFormComponent implements OnInit {
     window.scroll(0, -100);
     $('#profileContent').css({ position: 'fixed' });
   }
-showCarePlanModal() {
+  showCarePlanModal() {
 
 
-console.log("showing careplan modal")
+    console.log("showing careplan modal")
     $('#carePlansModal').modal('show');
 
-   
+
     $('#profileContent').css({ position: 'fixed' });
     //  var elmnt = document.getElementById('#carePlansModal2');
     // elmnt.scrollIntoView(true);
@@ -285,13 +287,13 @@ console.log("showing careplan modal")
 
             this.formReady = true;
             this._authService._getCarePathway()
-            .subscribe(
+              .subscribe(
               data => {
                 //console.log(data);
                 this.carePathsAvlbl = data;
                 //console.log(this.carePathsAvlbl)
               }
-            )
+              )
             ////console.log(this.dataReady);
 
           }, 1000)
@@ -336,41 +338,76 @@ console.log("showing careplan modal")
         // }, 1500);
       }
       );
-      var today = new Date();
-      var todate = today.toString();
-      this._authService._saveCareSchedule(this.currentUserPageId, this.caredoneId, todate , job['carePath'])
+    var today = new Date();
+    var todate = today.toString();
+    this._authService._saveCareSchedule(this.currentUserPageId, this.caredoneId, todate, job['carePath'])
       .then(
-        data => {
-          //console.log(data);
-        }
+      data => {
+        //console.log(data);
+      }
       )
 
   }
   // save observers data:
-saveCarePlan(patientID, carePathId, userName) {
-   var today = new Date();
-   console.log(this.carePathsAvlbl);
-   var name = this.carePathsAvlbl.filter(item => item.$key === carePathId)[0];
-      var todate = today.toString();
-  this._authService._saveCareSchedule(this.currentUserPageId, patientID, todate , carePathId)
+  saveCarePlan(patientID, carePathId, userName, clinicIdNew) {
+    var today = new Date();
+    console.log("saving care plan", patientID, carePathId, userName, clinicIdNew);
+    console.log(this.carePathsAvlbl);
+    var name = this.carePathsAvlbl.filter(item => item.$key === carePathId)[0];
+    var todate = today.toString();
+    this._authService._saveCareSchedule(this.currentUserPageId, patientID, todate, carePathId)
       .then(
-        data => {
-          console.log(data);
-             $.notify({
-                                                  icon: "notifications",
-                                                  message: "Care Plan '" + name.path  + "' has been attached to " + userName
+      data => {
+        console.log(data);
+        this._authService._saveCarePathwayUser(this.currentUserID, patientID, carePathId)
+          .then(
+          data2 => {
+            console.log("data2", data2)
+            let todate2 = new Date();
+            let toTime2 = todate2.getTime();
+            this._authService._saveActivePathways(patientID, clinicIdNew, 'Physical', carePathId, toTime2)
+              .then(
+              data3 => {
+                var updtJSON = {
+                  "actions": {
+                    "chat": ["patient", this.currentUserPhone]
+                  },
+                  "description": "Care Pathway, " + name.path + " has been initiated on " + todate,
+                  "icon": 'local_hospital',
+                  "partnerId": this.currentUserPhone,
+                  "status": "completed",
+                  "time": todate,
+                  "title": "Care Pathway, " + name.path + " initiated"
+                };
+                this._authService._savePatientUpdate(patientID, carePathId, toTime2, updtJSON)
+                  .then(
+                  data4 => {
+                    console.log(data);
+                    $.notify({
+                      icon: "notifications",
+                      message: "Care Plan '" + name.path + "' has been attached to " + userName
 
-                                              }, {
-                                                  type: 'cureyo',
-                                                  timer: 4000,
-                                                  placement: {
-                                                  from: 'top',
-                                                  align: 'right'
-                                              }
-                                        });
-        }
+                    }, {
+                        type: 'cureyo',
+                        timer: 4000,
+                        placement: {
+                          from: 'top',
+                          align: 'right'
+                        }
+                      });
+                  }
+                  )
+
+              }
+              )
+
+          }
+          )
+
+
+      }
       )
-}
+  }
   highlightSection(outerSection, sectionId) {
     var sectionName = "#" + sectionId;
     var elmnt = document.getElementById(outerSection);
@@ -418,10 +455,10 @@ saveCarePlan(patientID, carePathId, userName) {
 
   }
 
-showQuestions() {
-this.showDiagnosisQuestions = true;
-}
-closeQuestions() {
-this.showDiagnosisQuestions = false;
-}
+  showQuestions() {
+    this.showDiagnosisQuestions = true;
+  }
+  closeQuestions() {
+    this.showDiagnosisQuestions = false;
+  }
 }

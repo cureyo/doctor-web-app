@@ -39,9 +39,9 @@
                                 <hr *ngIf="item.images">
                                 <div class="col-md-12">
                                <div  *ngFor="let image of item.images" style=" float: left; z-index: 10000;">
-                                <img  [src]="image" style="width: 150px; height: 150px; margin-left: 10px;" data-toggle="dropdown" href="#">
+                                <img  [src]="image.fileUrl" style="width: 150px; height: 150px; margin-left: 10px;" data-toggle="dropdown" href="#">
                                 <ul class="dropdown-menu" style="padding: 10px;">
-                                    <img [src]="image" style="width: 100%; height: 100%;">
+                                    <img [src]="image.fileUrl" style="width: 100%; height: 100%;">
                                 </ul>
                                </div>
                                <div class="col-md-6"  *ngIf="item.chart">
@@ -66,7 +66,7 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                         <li *ngFor="let chats of item.actions.chat">
-                                            <a data-toggle="dropdown" [href]="'#' + stakeHolderArray[chats]">{{stakeHolderArray[chats]}}</a>
+                                            <a data-toggle="dropdown">{{stakeHolderArray[chats]}}</a>
                                             
                                         </li>
                                        

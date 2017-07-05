@@ -101,10 +101,10 @@ export class CarePathsComponent implements OnInit {
               .subscribe(
               partnerData => {
 
-                if (partnerData['consultant']) {
+                if (partnerData['consult']) {
                   let ctr = 0, partnersC = [];
-                  let consultants = partnerData['consultant'];
-                  console.log(partnerData['consultant']);
+                  let consultants = partnerData['consult'];
+                  console.log(partnerData['consult']);
                   for (let item in consultants) {
                     if (item != 'length' && item != '$exists' && item != '$key') {
                       partnersC[ctr] = consultants[item];

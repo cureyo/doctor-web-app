@@ -1,7 +1,7 @@
 <!-- Lab Test Jobs--> 
   <div class="col-md-12">
                 <div class="card">
-                  <form [formGroup]="stForm" class="formGroup" novalidate (ngSubmit)="save_stForm(stForm)">
+                  <form [formGroup]="stForm" class="formGroup" novalidate>
                     
                     <!-- card header portion-->
                     <div class="card-header" data-background-color="cureyo">
@@ -89,15 +89,15 @@
         <div class="actions clearfix">
               <!-- add more lab tests-->
               <div class="pull-left">
-                    <button  [ngClass]="{'hide': itemAdded3}" type="button" (click)="addLabTest()" id="addcp" class="btn btn-round btn-primary">+ add more</button>
+                    <button  *ngIf="!itemAdded3" type="button" (click)="addLabTest()" id="addcp" class="btn btn-round btn-primary">+ add more</button>
               </div>
               <!-- end of add more test-->
               
               <div class="pull-right" >
-                  <button [ngClass]="{'hide': itemAdded3}" (click)="save_stForm(stForm)" [disabled]="!stForm.valid" class="btn btn-warning">Add Test</button>
+                  <button *ngIf="!itemAdded3" (click)="save_stForm(stForm)" [disabled]="!stForm.valid" class="btn btn-warning">Add Test</button>
               </div>
               
-                <div [ngClass]="{'hide': !itemAdded3}" class="bareP">
+                <div *ngIf="itemAdded3" class="bareP">
                     <p>Thanks! These tests have been added!</p>
                 </div>
         </div>
