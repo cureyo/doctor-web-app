@@ -10,7 +10,7 @@ declare var $: any
 
 @Component({
     selector: 'partner-cmp',
-    templateUrl: 'partners.component.html',
+    templateUrl: 'partners.component.html', 
     moduleId: module.id
 })
 
@@ -85,6 +85,8 @@ export class PartnerComponent implements OnInit {
                     fee: [''],
                     icon: [''],
                     img: [''],
+                    Profile_brief: [''],
+                    Address: [''],
                     message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
                 });
                 this.userId = data.user.uid;
@@ -149,19 +151,6 @@ export class PartnerComponent implements OnInit {
         // model['type'] = this.types[model['type']].name;
         // model['category'] = type;
         let types = {
-            "Dietician": "restaurant_menu",
-            "Physiotherapist": "accessibility",
-            "Physical Medicine & Rehabilitation": "directions_run",
-            "Physical Therapist": "directions_run",
-            "Fitness Instructor": "directions_run",
-            "Pharmacy": "toll",
-            "Psychologist": "local_library",
-            "Counsellor": "local_library",
-            "Pathological Lab": "invert_colors",
-            "Radiological Lab": "settings_overscan",
-            "Ultrasound Center": "settings_overscan",
-            "X-ray Center": "settings_overscan"
-
             };
         console.log(types[model['speciality']]);
         console.log(model['speciality']);
@@ -185,6 +174,8 @@ export class PartnerComponent implements OnInit {
                     fee: [''],
                     icon: [''],
                     img: [''],
+                    Profile_brief: [''],
+                    Address: [''],
                     message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
                 });
             }
