@@ -77,7 +77,7 @@ export class CreatePathWaysComponent implements OnInit {
   } //ng OninIt
    
       updateDays() {
-            this.days[0] = "Repeat";
+         //   this.days[0] = "Repeat";
             var i = 1;
             //console.log("day pushed")
             for (let i = 1; i < 200; i++) {
@@ -86,7 +86,7 @@ export class CreatePathWaysComponent implements OnInit {
       }
       }
       updateTimes() {
-        this.times[0] = "Repeat";
+      //  this.times[0] = "Repeat";
            
             let i = 0;
             //console.log("time pushed", i)
