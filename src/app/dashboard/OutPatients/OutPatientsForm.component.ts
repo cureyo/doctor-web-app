@@ -804,7 +804,5 @@ SleepSummaryChart(sleepSummaryObj){
         }
       });
   }
-showCarePathsAdd() {
-  this.showPaths = !this.showPaths;
-}
+
 }

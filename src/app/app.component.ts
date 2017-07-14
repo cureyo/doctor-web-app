@@ -114,10 +114,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       .subscribe(
       data => {
         if (!data.isAuth) {
-          console.log(window.location.pathname);
+          console.log("window.location.pathname",window.location.pathname);
           //console.log(this.route.url);
           //console.log(this.route);
-        if (window.location.pathname != '/doctor-login' && window.location.pathname != '/logout' && window.location.pathname != '/doctor-checkup' ) {
+        if (window.location.pathname.substring(0,16) != '/carepath-widget' && window.location.pathname != '/doctor-login' && window.location.pathname != '/logout' && window.location.pathname != '/doctor-checkup' ) {
             this.showSideBar = false;
             //console.log(window.location.pathname);
             window.location.href = window.location.origin + '/doctor-login?next=' + window.location.pathname;
@@ -137,7 +137,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 ////console.log("redirecting to dashboard");
                 //console.log(res);
                 console.log(window.location.pathname);
-                if (window.location.pathname != '/doctor-checkup' && window.location.pathname != '/vendor-checkup')
+                if (window.location.pathname != '/doctor-checkup' && window.location.pathname != '/vendor-checkup' && window.location.pathname.substring(0,16) != '/carepath-widget' )
                 this.showSideBar = true; 
                 else this.showSideBar = false; 
                 //this.router.navigate(['dashboard']);

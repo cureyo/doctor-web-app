@@ -66,7 +66,9 @@ import {OnboardingHeaderComponent} from "./dashboard/select-domain/onboardingHea
 import {ImageSearchComponent} from './fb-ads-form/image-search/image-search.component';
 import {VideoCallComponent} from "./dashboard/video-call/video-call.component";
 import {PaymentsComponent} from "./dashboard/payments/payments.component";
-import {CareTimelinesComponent} from "./dashboard/care-timeline/care-timeline.component"
+import {CareTimelinesComponent} from "./dashboard/care-timeline/care-timeline.component";
+import {AssignPathwayComponent} from "./dashboard/OutPatients/assign-pathway/assign-pathway.component";
+import {AssigniFrameComponent} from "./dashboard/OutPatients/assign-iframe/assign-iframe.component";
 
 export const MODULE_ROUTES: Route[] =[
 
@@ -75,6 +77,7 @@ export const MODULE_ROUTES: Route[] =[
     { path: 'careplans/:id', component: TableComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'weeklyreports/:id', component: WeeklyReportComponent },
+    {path: 'carepath-widget/:pageId/:doctorId/:patientId', component: AssigniFrameComponent},
     { path: 'sendmessage/:id',component:CaredOnesFormMobileViewComponent},
     { path: 'doctor-login',component:DoctorLoginComponent},
     { path: 'doctor-checkup',component:DoctorCheckupComponent },
@@ -102,6 +105,7 @@ export const MODULE_ROUTES: Route[] =[
 export const MODULE_COMPONENTS = [
     AppComponent,
     HomeComponent,
+    AssignPathwayComponent,
     PatientPreviewComponent,
     TableComponent,
     VideoCallComponent,
@@ -131,6 +135,7 @@ export const MODULE_COMPONENTS = [
     DoctorCheckupComponent,
     JobsMasterComponent,
     BloodsugarJobsComponent,
+    AssigniFrameComponent,
     ExerciseTrackerJobsComponent,
     LabTestJobsComponent,
     MedicationReminderJobsComponent,

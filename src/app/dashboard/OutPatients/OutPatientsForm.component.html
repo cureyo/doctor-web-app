@@ -390,37 +390,7 @@
       <br>
       <hr>
       <div class="modal-body">
-      <form [formGroup]="carePlanForm" class="form">
-                          <div class="row">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div *ngIf="patientPathsExist">
-                                         <p ><b>Assigned Plans</b></p>
-                                    <div *ngFor="let care of patientExistingPaths" class="card" style="margin-top: 10px;">
-                                        <div class="card-content">
-                                        <label class="label-round label-warning" style="color: white;">{{care.name.path}}</label> assigned on <label class="label-round label-info" style="color: white;">{{care.activatedOn}}</label> subscribed on <label class="label-round label-warning" style="color: white;">{{care.plan}} Plan</label>
-                                    </div>
-                                    </div>
-                                    </div>
-                                   <hr>
-                                <div class="form-group form-black label-floating is-not-empty">
-                                    <div class="form-group">
-                                    <label class="control-label">Assign a Care Plan</label>
-                                      <select formControlName="formname" class="form-control" >
-      <option [attr.selected]="" value="{{j.$key}}" *ngFor="let j of pform.carePathsAvlbl">{{j.path}}</option>
-    </select>
-                                    </div>
-                                </div>
-                               
-                          <a (click)="pform.saveCarePlan(patientId, carePlanForm.controls['formname'].value, caredone.firstName, clinicIDNew)" class="btn btn-round btn-warning">Assign Care Path</a>
-  </div>
-                               
-                            </div>
-                            <a (click)="showCarePathsAdd()" style="cursor: pointer;" >Show / Add Care Paths</a>
-                          </div>
- </form>
-      
-      <care-paths-cmp *ngIf="showPaths"></care-paths-cmp>
+      <assign-pathway-form *ngIf="caredone"  [clinicIDNew]="clinicIDNew" [patientId]="patientId" [firstName]="caredone.firstName" [pageId]="pageId" [doctorId]="currentUserID"></assign-pathway-form>
       <div class="modal-footer" style="padding-bottom: 20px;">
        
         <button type="button" class="btn btn-default" (click)="closeCarePlanModal()">Done</button>

@@ -1,0 +1,30 @@
+ <div class="container">
+ <h4 style="float: left;"><b>Clinical Pathways</b></h4>
+
+ <br>
+ <hr/>
+   <p><small style="float: left;">Powered by</small></p>
+   <hr/>
+
+ <div class="logo" style="text-align: left;">
+     
+    <a class="simple-text" href="https://care.cureyo.com/home.html" style="cursor: pointer;">
+       
+        <div class="logo-img">
+            <img [src]="(currentSite == 'cureyo')?'/assets/img/AppIcon-01.ico':'/assets/img/healthaminLogo.png'" style="width: 30px; height: 30px; float: left;"/>
+        </div>
+        <h4>
+        {{(currentSite == 'cureyo')?'Cureyo':'Healthamin'}}
+        </h4>
+    </a>
+</div>
+
+ 
+      <br>
+      <hr>
+
+      <assign-pathway-form *ngIf="caredone"  [clinicIDNew]="clinicIDNew" [patientId]="patientId" [firstName]="caredone.firstName" [pageId]="pageId" [doctorId]="doctorId"></assign-pathway-form>
+ <br>
+ <hr>
+ <care-timeline-cmp *ngIf="ready" [caredoneId]="patientId" [doctorId]="doctorId"></care-timeline-cmp>
+ </div>

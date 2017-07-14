@@ -204,7 +204,7 @@ export class AuthService {
 
   }//fetch the messagingIds data
     public _getPatientCareSchedules(pageID, patientId) {
-    //console.log(this.db.checkIns + clinicID + '/' + date + '/' + q);
+    console.log(this.db.careSchedule + pageID + '/' + patientId + '/Paths');
     return this.af.database.list(this.db.careSchedule + pageID + '/' + patientId + '/Paths');
 
   }//fetch the messagingIds data
@@ -420,6 +420,7 @@ return this.af.database.object(this.db.caredOnes + currentUserID + '/' + patient
 
   }//_getCarePathways
    public _getPatientUpdates(uid) {
+     console.log(this.db.patientUpdates + uid);
     return this.af.database.list(this.db.patientUpdates + uid);
 
   }//_getCarePathways
@@ -854,6 +855,9 @@ public _getNotifications(uid) {
     var pageDet = this.af.database.object(this.db.PageAdmins + pageId)
     return pageDet.set(data);
 
+  }
+  public _getPageAdmin(pageId) {
+    return this.af.database.object(this.db.PageAdmins + pageId);
   }
   public _updatePageDetails(userID, pageId) {
     var pageDet = this.af.database.object(this.db.users + userID + '/fbPageId')

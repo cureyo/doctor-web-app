@@ -28,10 +28,12 @@ export class CareTimelinesComponent implements OnInit {
 
     constructor(private _authService: AuthService, private route: ActivatedRoute) { }
     ngOnInit() {
+        console.log(this.caredoneId)
         this.route.params.subscribe(
             params => {
-
+                if (params['id'])
                 this.caredoneId = params['id'];
+                
                 this.updatesArray = [];
                 this.carePathExists = false;
                 this._authService._getPatientUpdates(this.caredoneId)
