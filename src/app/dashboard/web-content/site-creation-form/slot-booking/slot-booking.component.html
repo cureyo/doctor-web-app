@@ -2,18 +2,18 @@
                 <div class="card">
                   <form [formGroup]="slotBookingTile" class="formGroup" novalidate (ngSubmit)="save_slotBookingTile(slotBookingTile)">
                     <!-- card header portion-->
-                    <div class="card-header" data-background-color="cureyo">
+                    <div (click)="showDets()" style="cursor: pointer" class="card-header" data-background-color="cureyo">
                         <h4 class="title">{{type}} Consultation Availability </h4>
 
                         <p class="category">Indicate your availability for {{type}} Consultations</p>
 
                     </div> <!-- card header portion end-->
                     
-              <div class="card-content table-responsive">
+              <div *ngIf="showDetails" class="card-content table-responsive">
                     
                       <div class="row">
                        <!-- title-->
-                    <div class="col-sm-4">  
+                    <div class="col-sm-12">  
                             <div class="form-group">
                                  <label for="title">Time Duration </label>
                                   <select formControlName="duration" class="form-control">
@@ -40,7 +40,7 @@
                         <div class="row">
 
                             <!-- time slot-->
-                            <div class="col-sm-4">  
+                            <div class="col-sm-6">  
                             <div class="form-group">
                                  <label for="title">From </label>
                                   <select formControlName="fromTime" class="form-control">
@@ -50,7 +50,7 @@
                              </div>
                     </div>
                         <!-- to time-->
-                        <div class="col-sm-4">  
+                        <div class="col-sm-6">  
                             <div class="form-group">
                                  <label for="title">To </label>
                                   <select formControlName="toTime" class="form-control">
@@ -60,7 +60,7 @@
                              </div>
                     </div>
                         <!--end of to time-->
-                        <div *ngIf="type == 'Online'" class="col-sm-4"> 
+                        <div *ngIf="type == 'Online'" class="col-sm-12"> 
                         <div class="form-group">
                                  <label for="title">Available for Mode </label>
                                   <select formControlName="mode" class="form-control">
@@ -93,8 +93,13 @@
                     <p>Thanks! These slots have been added.</p>
                 </div>
                 <!-- end of submit button-->
-
+                <div class="card">
+                      <div class="card-content">
+                          <a [ngClass]="(daySlots && daySlots[day] && daySlots[day].available == 'Available')?'btn':'btn btn-warning'" *ngFor="let day of dayArray" (click)="updateDay(day)">{{day}}</a>
+                      </div>
+                  </div>
                     </div>
                   </form>
+                  
                 </div>
             </div> 

@@ -14,15 +14,19 @@ import { slotBookingClass } from "../../../../models/slotBooking.interface";
 export class PhySlotBookingComponent implements OnInit {
   @Input() routeparam: any;
   @Input() typePhy: any;
+  @Input() partnerId: any;
   public timeInterval: any;
+  private daySlots: any;
   public timeValue: any;
   public dateInterval: any;
+  private showDetails: boolean = false;
   private slotBookingTile: FormGroup;
   private slotAdded: boolean = false;
   private sitename: any;
   private doctorData: any;
   private select: any;
   private formReady: boolean = false;
+    private dayArray: any = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -56,6 +60,18 @@ export class PhySlotBookingComponent implements OnInit {
 
               ])
             });
+            var n = this.routeparam.indexOf(".")
+            if (n == -1) {
+              n = this.routeparam.length;
+            }
+            this.sitename = this.routeparam.substring(0, n);
+            this._authService._getSlotBookingDetails(this.sitename, this.partnerId + '/' + this.typePhy)
+              .subscribe(
+              slotDetails => {
+                console.log(slotDetails)
+                this.daySlots = slotDetails;
+              }
+              )
             this.formReady = true;
           }
           )
@@ -219,7 +235,7 @@ export class PhySlotBookingComponent implements OnInit {
     //end of url trimming part
     //save data into the db
     console.log(reminders)
-    this._authService._saveSlotBookingDetails(reminders, this.sitename, this.typePhy)
+    this._authService._saveSlotBookingDetails(reminders, this.sitename, this.partnerId + '/' + this.typePhy)
       .then(
       data => {
         this.slotAdded = true;
@@ -233,5 +249,30 @@ export class PhySlotBookingComponent implements OnInit {
 
 
   }//save
+  updateDay(day) {
+    if (!this.daySlots)
+      this.daySlots = [];
+    console.log(day);
+    if (this.daySlots && this.daySlots[day] && this.daySlots[day].available == 'Available') {
+      this.daySlots[day].available = 'Not available'
+    } else {
+      if (!this.daySlots[day])
+      this.daySlots[day] = {};
+
+      this.daySlots[day].available = 'Available';
+    }
+    console.log(this.sitename, this.partnerId + '/' + this.typePhy, day, this.daySlots[day].available);
+
+    this._authService._saveDayAvailability(this.sitename, this.partnerId + '/' + this.typePhy, day, this.daySlots[day].available)
+      .then(
+      data => {
+        console.log(data)
+      }
+      )
+
+  }
+  showDets() {
+  this.showDetails = !this.showDetails;
+}
 
 }

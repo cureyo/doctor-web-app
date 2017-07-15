@@ -8,16 +8,16 @@
                               <div class="card-content table-responsive">
                               <h5 style="margin-bottom: 0;"><b>Your Website Preview</b></h5>
                               <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                   <a [ngClass]="showingSection == 'heroSection'?'btn btn-primary':'btn btn-default'" (click)="showSection('heroSection')" style="width: 100%;">Top Section</a>
                                 </div>
-                                <div class="col-md-3">
+                                <!--<div class="col-md-3">
                                   <a [ngClass]="showingSection == 'bookingSection'?'btn btn-primary':'btn btn-default'" (click)="showSection('bookingSection')" style="width: 100%;">Appointment Section</a>
-                                </div>
-                                <div class="col-md-3">
+                                </div>-->
+                                <div class="col-md-4">
                                   <a [ngClass]="showingSection == 'specializationSection'?'btn btn-primary':'btn btn-default'" (click)="showSection('specializationSection')" style="width: 100%;">Specialization Section</a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                   <a [ngClass]="showingSection == 'profileSection'?'btn btn-primary':'btn btn-default'" (click)="showSection('profileSection')" style="width: 100%;">Profile Section</a>
                                 </div>
                               </div>
@@ -35,17 +35,17 @@
          [herotiles]="herotiles"  [routeparam]="routeparam"></app-herotiles>
          <!--end of hero tiles-->
          <!-- booking tiles-->
-         <app-bookingtile *ngIf="bookingtiles && routeparam  && showingSection == 'bookingSection'"
-         [bookingtiles]="bookingtiles" [routeparam]="routeparam"></app-bookingtile>
+         <!--<app-bookingtile *ngIf="bookingtiles && routeparam  && showingSection == 'bookingSection'"
+         [bookingtiles]="bookingtiles" [routeparam]="routeparam"></app-bookingtile>-->
          <app-specializationsTile *ngIf="routeparam  && showingSection == 'specializationSection'"
            [routeparam]="routeparam"></app-specializationsTile>
          <!-- end of booking tiles-->
          <!--slot booking -->
-         <app-slot-booking *ngIf="routeparam && online && showingSection == 'bookingSection'"
-         [routeparam]="routeparam" [type]="online"></app-slot-booking>
+         <!--<app-slot-booking *ngIf="routeparam && online && showingSection == 'bookingSection'"
+         [routeparam]="routeparam" [type]="online" [partnerId]=""></app-slot-booking>-->
          <!-- end of slot booking-->
-         <app-slot-booking-phy *ngIf="routeparam && physical && showingSection == 'bookingSection'"
-         [routeparam]="routeparam" [typePhy]="physical"></app-slot-booking-phy>
+         <!--<app-slot-booking-phy *ngIf="routeparam && physical && showingSection == 'bookingSection'"
+         [routeparam]="routeparam" [typePhy]="physical"></app-slot-booking-phy>-->
           <!--slot booking -->
          <app-profileTile *ngIf="routeparam && profileTile && showingSection == 'profileSection'"
          [profileTile]="profileTile" [routeparam]="routeparam"></app-profileTile>

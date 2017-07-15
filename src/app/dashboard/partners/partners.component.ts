@@ -10,7 +10,7 @@ declare var $: any
 
 @Component({
     selector: 'partner-cmp',
-    templateUrl: 'partners.component.html', 
+    templateUrl: 'partners.component.html',
     moduleId: module.id
 })
 
@@ -19,6 +19,7 @@ export class PartnerComponent implements OnInit {
 
     private caredone: any;
     private section: any = "partners";
+    private showCal: any = [];
     private partnerForm: FormGroup;
     private selectDrDomain: boolean = false;
     private caredOneId: any;
@@ -40,6 +41,7 @@ export class PartnerComponent implements OnInit {
     private medSpecialities: any = [];
     private medVendors: any = [];
     private medSupport: any = [];
+    private clinicId: any;
     //private nextButtonFlag:boolean=false;
 
 
@@ -75,69 +77,76 @@ export class PartnerComponent implements OnInit {
             .subscribe(
             data => {
                 this.formReady = true;
-
-                this.partnerForm = this._fb.group({
-                    name: ['', Validators.required],
-                    type: ['', Validators.required],
-                    email: ['', Validators.required],
-                    phone: ['', Validators.required],
-                    speciality: ['', Validators.required],
-                    fee: [''],
-                    icon: [''],
-                    img: [''],
-                    Profile_brief: [''],
-                    Address: [''],
-                    message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
-                });
-                this.userId = data.user.uid;
-
-                this._authService._getPartner(data.user.uid)
+                this._authService._fetchUser(data.user.uid)
                     .subscribe(
-                    partnerList => {
-                        console.log(partnerList);
-                        let partnersC = [], partnersV = [];
-                        if (partnerList['consult']) {
-                            let ctr = 0;
-                            let consultants = partnerList['consult'];
-                            console.log(partnerList['consult']);
-                            for (let item in consultants) {
+                    usrData => {
 
-                                console.log(item)
-                                if (item != 'length' && item != '$exists' && item != '$key' && consultants[item].name != 'self') {
-                                    partnersC[ctr] = consultants[item];
-                                    ctr++
+                        this.clinicId = usrData.clinicId;
+                        this.partnerForm = this._fb.group({
+                            name: ['', Validators.required],
+                            type: ['', Validators.required],
+                            email: ['', Validators.required],
+                            phone: ['', Validators.required],
+                            speciality: ['', Validators.required],
+                            fee: [''],
+                            icon: [''],
+                            img: [''],
+                            clinicId: [this.clinicId, Validators.required],
+                            Profile_brief: [''],
+                            Address: [''],
+                            message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
+                        });
+                        this.userId = data.user.uid;
+
+                        this._authService._getPartner(data.user.uid)
+                            .subscribe(
+                            partnerList => {
+                                console.log(partnerList);
+                                let partnersC = [], partnersV = [];
+                                if (partnerList['consult']) {
+                                    let ctr = 0;
+                                    let consultants = partnerList['consult'];
+                                    console.log(partnerList['consult']);
+                                    for (let item in consultants) {
+
+                                        console.log(item)
+                                        if (item != 'length' && item != '$exists' && item != '$key' && consultants[item].name != 'self') {
+                                            partnersC[ctr] = consultants[item];
+                                            ctr++
+                                        }
+
+                                    }
+                                    this.currentConsultants = partnersC;
+                                    this.consultantsPresent = true;
                                 }
 
-                            }
-                            this.currentConsultants = partnersC;
-                            this.consultantsPresent = true;
-                        }
 
 
+                                if (partnerList['vendors']) {
+                                    let ctr = 0;
+                                    let vendor = partnerList['vendors'];
+                                    for (let item in vendor) {
 
-                        if (partnerList['vendors']) {
-                            let ctr = 0;
-                            let vendor = partnerList['vendors'];
-                            for (let item in vendor) {
+                                        console.log(item)
+                                        if (item != 'length' && item != '$exists' && item != '$key') {
+                                            partnersV[ctr] = vendor[item];
+                                            ctr++
+                                        }
+                                    }
+                                    console.log(partnersV);
+                                    this.currentVendors = partnersV;
+                                    this.vendorsPresent = true;
 
-                                console.log(item)
-                                if (item != 'length' && item != '$exists' && item != '$key') {
-                                    partnersV[ctr] = vendor[item];
-                                    ctr++
                                 }
+
+
+
                             }
-                            console.log(partnersV);
-                            this.currentVendors = partnersV;
-                            this.vendorsPresent = true;
-
-                        }
-
-
-
+                            )
                     }
                     )
-
             });
+
     }
     addPartner(form) {
         let model = form.value;
@@ -151,7 +160,7 @@ export class PartnerComponent implements OnInit {
         // model['type'] = this.types[model['type']].name;
         // model['category'] = type;
         let types = {
-            };
+        };
         console.log(types[model['speciality']]);
         console.log(model['speciality']);
         if (types[model['speciality']]) {
@@ -174,6 +183,7 @@ export class PartnerComponent implements OnInit {
                     fee: [''],
                     icon: [''],
                     img: [''],
+                    clinicId: [this.clinicId, Validators.required],
                     Profile_brief: [''],
                     Address: [''],
                     message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
@@ -223,6 +233,12 @@ export class PartnerComponent implements OnInit {
                 this.medSupport = supportData;
             }
             )
+    }
+    showCalendar(k) {
+        if (this.showCal[k])
+        this.showCal[k] = !this.showCal[k];
+        else 
+        this.showCal[k] = true;
     }
 }
 

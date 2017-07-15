@@ -289,6 +289,18 @@ export class AuthService {
     return this.af.database.object(this.db.doctorPages + '/' + sitename + '/availability/' + type )
       .set(data);
   }//save slot booking details data
+    public _getSlotBookingDetails(sitename, type) {
+    //console.log("the route is :",sitename);
+    return this.af.database.object(this.db.doctorPages + '/' + sitename + '/availability/' + type )
+      
+  }//save slot booking details data
+    public _saveDayAvailability(sitename, type, day, daySlots) {
+    //console.log("the route is :",sitename);
+    console.log(this.db.doctorPages + '/' + sitename + '/availability/' + type  + '/' + day, daySlots)
+    return this.af.database.object(this.db.doctorPages + '/' + sitename + '/availability/' + type  + '/' + day)
+    .set({available: daySlots})
+      
+  }//save slot booking details data
   public _saveSpecializationDetails(data, sitename) {
     //console.log("the route is :",sitename);
     return this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/specializations')

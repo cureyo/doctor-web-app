@@ -5,7 +5,7 @@
     <div *ngIf="consultantsPresent" class="row">
         <h4>Consultant Partners</h4>
         <br>
-        <div class="col-md-4" *ngFor="let partner of currentConsultants;">
+        <div class="col-md-4" *ngFor="let partner of currentConsultants;let k=index;">
             <div class="card card-profile">
                 <div class="card-avatar" style="width: 100px; height: 100px;" data-background-color="cureyo">
                     
@@ -22,7 +22,22 @@
                         <br>
                         <b *ngIf="partner.fee">Fee: {{partner.fee}}</b>
                     </p>
+                    <a (click)="showCalendar(k)">Update Availability</a>
+                    <div class="card" *ngIf="showCal[k]">
+                        
+         
+         <!-- end of booking tiles-->
+         <!--slot booking -->
+         <app-slot-booking *ngIf="showCal[k]"
+         [routeparam]="clinicId" type="Online" [partnerId]="partner.phone"></app-slot-booking>
+         <!-- end of slot booking-->
+      <app-slot-booking-phy *ngIf="showCal[k]"
+         [routeparam]="clinicId" typePhy="Physical" [partnerId]="partner.phone"></app-slot-booking-phy>
+                    </div>
+                    <br>
                     <a href="tel:{{partner.phone}}" class="btn btn-danger btn-round">Call</a>
+                  
+                    
                 </div>
             </div>
         </div>

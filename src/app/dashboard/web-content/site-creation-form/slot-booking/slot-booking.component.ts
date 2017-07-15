@@ -14,13 +14,17 @@ import { slotBookingClass } from "../../../../models/slotBooking.interface";
 export class SlotBookingComponent implements OnInit {
   @Input() routeparam: any;
   @Input() type: any;
+  @Input() partnerId: any;
   public timeInterval: any;
   public timeValue: any;
+  private showDetails: boolean = false;
   public dateInterval: any;
+  private daySlots: any;
   private slotBookingTile: FormGroup;
   private slotAdded: boolean = false;
   private sitename: any;
   private doctorData: any;
+  private dayArray: any = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   constructor(
     private _fb: FormBuilder,
     private _fs: FbService,
@@ -44,6 +48,18 @@ export class SlotBookingComponent implements OnInit {
 
       ])
     });
+      var n = this.routeparam.indexOf(".")
+    if (n == -1) {
+      n = this.routeparam.length;
+    }
+    this.sitename = this.routeparam.substring(0, n);
+    this._authService._getSlotBookingDetails(this.sitename, this.partnerId + '/' + this.type)
+    .subscribe(
+      slotDetails => {
+        console.log(slotDetails)
+        this.daySlots = slotDetails;
+      }
+    )
 
 
 
@@ -208,7 +224,7 @@ export class SlotBookingComponent implements OnInit {
     //end of url trimming part
     //save data into the db
     console.log(reminders)
-    this._authService._saveSlotBookingDetails(reminders, this.sitename, this.type)
+    this._authService._saveSlotBookingDetails(reminders, this.sitename, this.partnerId + '/' + this.type)
       .then(
       data => {
         this.slotAdded = true;
@@ -222,5 +238,27 @@ export class SlotBookingComponent implements OnInit {
 
 
   }//save
-
+  updateDay(day) {
+    if (!this.daySlots)
+    this.daySlots = [];
+    console.log(day);
+    if (this.daySlots && this.daySlots[day] && this.daySlots[day].available == 'Available'){
+      this.daySlots[day].available = 'Not available'
+    } else {
+     
+       this.daySlots[day].available = 'Available';
+    }
+    console.log(this.sitename, this.partnerId + '/' + this.type, day, this.daySlots[day].available);
+    
+    this._authService._saveDayAvailability(this.sitename, this.partnerId + '/' + this.type, day, this.daySlots[day].available)
+    .then(
+      data => {
+        console.log(data)
+      }
+    )
+    
+  }
+showDets() {
+  this.showDetails = !this.showDetails;
+}
 }

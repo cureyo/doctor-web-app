@@ -105,6 +105,34 @@ export class ImageSearchComponent implements OnInit {
       this.showScroll = true;
     //console.log("this.searchArray", this.searchArray);
     this.selectImage(0);
+    },
+    error => {
+        console.log(error);
+        this.searchForGImages2(searchQuery);
+      })
+    
+    
+  }
+  searchForGImages2(searchQuery) {
+    console.log(searchQuery);
+    let searchQueryEdit = searchQuery + " Images";
+    let searchURL = "https://www.googleapis.com/customsearch/v1?q=" + searchQueryEdit + "&key=AIzaSyCbRKrQajn5-XpRZ-DcLC4doBeCZ_xOG_A&num=10&cx=017396431536091938880:snzyldd9qac&imgSize=huge"
+    this.httpSGet(searchURL)
+    .subscribe( data => {
+      let ctr = 0;
+      //console.log(data);
+      for (let item of data.items) {
+        if (item.pagemap.cse_image) {
+          this.searchArray[ctr] = item.pagemap.cse_image[0].src;
+          this.showBorder[ctr] = false;
+          //console.log("this.searchArray2", this.searchArray)
+          ctr++;
+        }
+      }
+      this.displayArray = this.searchArray;
+      this.showScroll = true;
+    //console.log("this.searchArray", this.searchArray);
+    this.selectImage(0);
     });
     
   }
