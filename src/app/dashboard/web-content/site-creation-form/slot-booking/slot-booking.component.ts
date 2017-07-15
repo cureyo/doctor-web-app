@@ -240,23 +240,25 @@ export class SlotBookingComponent implements OnInit {
   }//save
   updateDay(day) {
     if (!this.daySlots)
-    this.daySlots = [];
+      this.daySlots = [];
     console.log(day);
-    if (this.daySlots && this.daySlots[day] && this.daySlots[day].available == 'Available'){
+    if (this.daySlots && this.daySlots[day] && this.daySlots[day].available == 'Available') {
       this.daySlots[day].available = 'Not available'
     } else {
-     
-       this.daySlots[day].available = 'Available';
+      if (!this.daySlots[day])
+      this.daySlots[day] = {};
+
+      this.daySlots[day].available = 'Available';
     }
     console.log(this.sitename, this.partnerId + '/' + this.type, day, this.daySlots[day].available);
-    
+
     this._authService._saveDayAvailability(this.sitename, this.partnerId + '/' + this.type, day, this.daySlots[day].available)
-    .then(
+      .then(
       data => {
         console.log(data)
       }
-    )
-    
+      )
+
   }
 showDets() {
   this.showDetails = !this.showDetails;
