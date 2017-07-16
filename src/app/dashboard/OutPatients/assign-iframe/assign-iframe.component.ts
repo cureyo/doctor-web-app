@@ -18,10 +18,11 @@ export class AssigniFrameComponent implements OnInit {
   // @Input() patientExistingPaths: any;
   // @Input() patientId: any;
   // @Input() firstName: any;
- private clinicIDNew: any;
+  private clinicIDNew: any;
   private patientPathsExist: boolean = false;
   private carePlanForm: FormGroup;
   private pageId: any;
+  private tempPatientId: any;
   private doctorId: any;
   private patientId: any;
   private caredone: any;
@@ -39,22 +40,33 @@ export class AssigniFrameComponent implements OnInit {
 
             this.pageId = params['pageId'];
             this.doctorId = params['doctorId'];
-            this.patientId = params['patientId']
+            this.tempPatientId = params['patientId']
             console.log(params);
             console.log(this.pageId, this.doctorId, this.patientId)
             this._authService._getPageAdmin(this.pageId)
-            .subscribe(
-              pageDate => {
-                this._authService._findCaredOne(this.doctorId, this.patientId)
               .subscribe(
-              data => {
-                this.caredone = data;
-                this.clinicIDNew = pageDate.clinicId;
-                this.ready = true;
-              });
+              pageDate => {
+                this._authService._getPhone2FBId(this.tempPatientId)
+                  .subscribe(
+                  phData => {
+                    if (phData.userId) {
+                      this.patientId = phData.userId;
+                    } else {
+                      this.patientId = this.tempPatientId;
+                    }
+
+                    this._authService._findCaredOne(this.doctorId, this.patientId)
+                      .subscribe(
+                      data => {
+                        this.caredone = data;
+                        this.clinicIDNew = pageDate.clinicId;
+                        this.ready = true;
+                      });
+                  }
+                  )
               }
-            )
-            
+              )
+
           }
         )
       }

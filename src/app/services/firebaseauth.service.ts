@@ -627,7 +627,9 @@ return this.af.database.object(this.db.pricing + item + '/' + TestName + '/' + p
     //console.log(this.db.caredOnes + observerId + '/' + uid);
     return this.af.database.object(this.db.caredOnes + observerId + '/' + uid);
   }//_findCaredOne
-
+public _getPhone2FBId(tempPatientId) {
+  return this.af.database.object(this.db.phone2FBID + tempPatientId);
+}
   public _findDiagnosis(observerId, uid) {
     //console.log(this.db.diagnosis + observerId + '/' + uid);
     return this.af.database.object(this.db.diagnosis + observerId + '/' + uid);

@@ -95,7 +95,7 @@
                 <!-- end of submit button-->
                 <div class="card">
                       <div class="card-content">
-                          <a [ngClass]="(daySlots && daySlots[day] && daySlots[day].available == 'Available')?'btn':'btn btn-warning'" *ngFor="let day of dayArray" (click)="updateDay(day)">{{day}}</a>
+                          <a [ngClass]="(daySlots  && daySlots[day] && daySlots[day].available == 'Available')?'btn':'btn btn-warning'" *ngFor="let day of dayArray" (click)="updateDay(day)">{{day}}</a>
                       </div>
                   </div>
                     </div>

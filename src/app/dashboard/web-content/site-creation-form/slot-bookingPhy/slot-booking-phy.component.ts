@@ -65,7 +65,7 @@ export class PhySlotBookingComponent implements OnInit {
               n = this.routeparam.length;
             }
             this.sitename = this.routeparam.substring(0, n);
-            this._authService._getSlotBookingDetails(this.sitename, this.partnerId + '/' + this.typePhy)
+            this._authService._getSlotBookingDetails(this.sitename, this.partnerId + '/' + this.typePhy + '/Days')
               .subscribe(
               slotDetails => {
                 console.log(slotDetails)
@@ -235,7 +235,7 @@ export class PhySlotBookingComponent implements OnInit {
     //end of url trimming part
     //save data into the db
     console.log(reminders)
-    this._authService._saveSlotBookingDetails(reminders, this.sitename, this.partnerId + '/' + this.typePhy)
+    this._authService._saveSlotBookingDetails(reminders, this.sitename, this.partnerId + '/' + this.typePhy + '/Time')
       .then(
       data => {
         this.slotAdded = true;
@@ -263,7 +263,7 @@ export class PhySlotBookingComponent implements OnInit {
     }
     console.log(this.sitename, this.partnerId + '/' + this.typePhy, day, this.daySlots[day].available);
 
-    this._authService._saveDayAvailability(this.sitename, this.partnerId + '/' + this.typePhy, day, this.daySlots[day].available)
+    this._authService._saveDayAvailability(this.sitename, this.partnerId + '/' + this.typePhy  + '/Days', day, this.daySlots[day].available)
       .then(
       data => {
         console.log(data)

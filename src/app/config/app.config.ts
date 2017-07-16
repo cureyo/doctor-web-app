@@ -71,6 +71,7 @@ export const AppConfig = {
     patientdetails:     environment.envName + '/PatientsInsights/',
     diagnosis:          environment.envName + '/Diagnosis/',
     careSched:          environment.envName + '/CareSchedule/',
+    phone2FBID:         environment.envName + '/Phone2FBId/',
     pageAccessTokens:   environment.envName + '/PageAccessTokens/',
     patientHistory:     environment.envName + '/PatientHistory/',
     UserTable:          environment.envName + '/UserTable/',
