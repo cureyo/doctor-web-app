@@ -21,6 +21,7 @@ export class ImageSearchComponent implements OnInit {
   @Input() defaultKeyWord: any;
   @Input() fbPageId: any;
   @Input() fbPageList: any;
+  @Input() randId: any;
   public searchImageForm: FormGroup;
   private showBorder: any = [];
   private showfbPages: boolean = false;
@@ -32,6 +33,7 @@ export class ImageSearchComponent implements OnInit {
   private searchArray: any =[];
   private fbArray: any = [];
   private cureyoArray: any = [];
+  private randomId: any;
   private displayArray: any = [];
   storage: any;
   uploader: FileUploader = new FileUploader({ url: '' });
@@ -50,12 +52,13 @@ export class ImageSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+   this.randomId = this.randId;
 
    
     console.log(this.fbPageList);
     console.log(this.fbPageId);
     console.log("image search loading");
+    this. initFB2();
     this.searchImageForm = this._fb.group({
       searchType: [this.searchType, Validators.required],
       searchTerm: [this.defaultKeyWord],
@@ -152,7 +155,8 @@ export class ImageSearchComponent implements OnInit {
       this.showScroll = false;
       this.displayArray = this.searchArray;
     } else if (form.searchType == 'fbPage') {
-      this.initFB(form.pageName)
+      this.initFB2();
+      //this.initFB(form.pageName)
        this.showSearchTerm = false;
        //console.log(this.fbArray)
        
@@ -198,7 +202,7 @@ export class ImageSearchComponent implements OnInit {
     );
   }// initFB()
     getPagePhotos(pageId) {
-      console.log(pageId)
+    console.log(pageId)
     this._fs.api('/' + pageId + '/photos?type=uploaded&fields=link,id,picture,images')
       .then(
       data => {
@@ -226,6 +230,59 @@ export class ImageSearchComponent implements OnInit {
     console.log(value.pageName)
     this.initFB(value.pageName);
   }
+     initFB2() {
+    let fbParams: FacebookInitParams = {
+      appId: AppConfig.web.appID,
+      xfbml: true,
+      version: 'v2.9'
+    };
+    console.log("this is fbparam:", fbParams);
+    this._fs.init(fbParams);
+    this._fs.getLoginStatus().then(
+      (response: FacebookLoginResponse) => {
+        if (response.status === 'connected') {
+
+         
+
+          this.fetchPages();
+           
+         
+
+        } else {
+          this.fbAccessToken = null;
+        }
+      },
+      (error: any) => {console.error(error);
+        if (error.error_user_msg)
+        alert(error.error_user_msg);
+        else if (error.message)
+        alert(error.message);
+      }
+    );
+  }// initFB()
+    fetchPages(): void {
+    //////console.log("this does not execute 2")
+    if (this.fbAccessToken === null) {
+      alert('Disconnected from Facebook. Kindly login again.');
+    } else {
+      let family, friends;
+      this._fs.api('/me/accounts').then(
+        response => {
+          console.log(response);
+          let ctr = 0;
+          this.fbPageList = response.data;
+          console.log("this.pageNameList", this.fbPageList);
+          // if (this.pageNameList[0])
+          // this.pageIdSelected = this.pageNameList[0].id;
+          // console.log("this.pageIdSelected", this.pageIdSelected)
+         
+
+
+        })
+
+
+    }// else
+  }// fetchPages
 }
 
 

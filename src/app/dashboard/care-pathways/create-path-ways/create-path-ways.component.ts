@@ -86,7 +86,7 @@ export class CreatePathWaysComponent implements OnInit {
       }
       }
       updateTimes() {
-      //  this.times[0] = "Repeat";
+       this.times[0] = "Repeat";
            
             let i = 0;
             //console.log("time pushed", i)

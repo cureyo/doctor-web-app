@@ -43,6 +43,49 @@
                             <div class="pull-left" >
                             <button [disabled]="!existingPathWays.valid" (click)="onSubmit(existingPathWays.value)" class="btn btn-round">Save</button>
                             </div>
+                            <br>
+                            <hr/>
+                            <a (click)="showAnal()" style="cursor: pointer;">Show Pathway Analytics</a>
+                            <div *ngIf="showAnalysis" class="row">
+                                    <div class="col-sm-4">
+                            <div class="card card-stats">
+                                    
+								<div class="card-header" data-background-color="orange">
+									<i class="fa fa-money" aria-hidden="true"></i>
+								</div>
+								<div class="card-content">
+									<p class="category">Cost to Patient</p>
+									<h3 class="title">Rs. {{costScore}}</h3>
+								</div>
+								
+							</div>
+                            </div>
+                                                        <div class="col-sm-4">
+                                                        <div class="card card-stats">
+								<div class="card-header" data-background-color="green">
+									<i class="fa fa-smile-o" aria-hidden="true"></i>
+
+								</div>
+								<div class="card-content">
+									<p class="category">Convenience</p>
+									<h3 class="title">{{convenienceScore}}%</h3>
+								</div>
+								
+							</div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        <div class="card card-stats">
+								<div class="card-header" data-background-color="blue">
+									<i class="fa fa-usd" aria-hidden="true"></i>
+								</div>
+								<div class="card-content">
+									<p class="category">Profitability</p>
+                                                                        <h3 class="title">Rs. {{profitScore}}</h3>
+								</div>
+								
+							</div>
+                                                        </div>
+                            </div>
                             </div>
                             </div>
 

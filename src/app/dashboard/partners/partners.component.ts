@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from "@angular/forms";
 import { Http, Response, Headers } from '@angular/http';
 import { AuthService } from "../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ImageSearchComponent } from '../../fb-ads-form/image-search/image-search.component';
 
 declare var $: any
 
@@ -15,6 +15,7 @@ declare var $: any
 })
 
 export class PartnerComponent implements OnInit {
+    @ViewChild(ImageSearchComponent) imgSearchCmp: ImageSearchComponent;
     [name: string]: any;
 
     private caredone: any;
@@ -42,6 +43,9 @@ export class PartnerComponent implements OnInit {
     private medVendors: any = [];
     private medSupport: any = [];
     private clinicId: any;
+    private imgSearchType: any = "google";
+    private defaultImgSearch: any;
+    private pageNameList: any = [];
     //private nextButtonFlag:boolean=false;
 
 
@@ -94,6 +98,7 @@ export class PartnerComponent implements OnInit {
                             clinicId: [this.clinicId, Validators.required],
                             Profile_brief: [''],
                             Address: [''],
+                            bg_pic: [],
                             message: ['Hi! I am adding you to Cureyo as a partner. Once you register, we can easily manage referrals online.', Validators.required]
                         });
                         this.userId = data.user.uid;
@@ -168,7 +173,14 @@ export class PartnerComponent implements OnInit {
         } else {
             model['icon'] = "local_hospital"
         }
-
+        model['bg_Pic'] = this.imgSearchCmp.imgSelected;
+        let webTitle = model['name'].replace(' ', '-');
+        webTitle = webTitle.replace(':', '-');
+        webTitle = webTitle.replace('.', '-');
+        webTitle = webTitle.replace(':', '-');
+        webTitle = webTitle.replace('!', '-');
+        webTitle = webTitle.replace('?', '-');;
+        model['webTitle'] = webTitle;
 
         this._authService._addPartner(model, this.userId, type, model.phone).then(
             data => {
@@ -236,9 +248,9 @@ export class PartnerComponent implements OnInit {
     }
     showCalendar(k) {
         if (this.showCal[k])
-        this.showCal[k] = !this.showCal[k];
-        else 
-        this.showCal[k] = true;
+            this.showCal[k] = !this.showCal[k];
+        else
+            this.showCal[k] = true;
     }
 }
 

@@ -301,8 +301,8 @@ export class AuthService {
     .set({available: daySlots})
       
   }//save slot booking details data
-  public _saveSpecializationDetails(data, sitename) {
-    //console.log("the route is :",sitename);
+  public _saveSpecializationDetails(sitename, data) {
+    console.log("the route is :",sitename, "data: " ,data);
     return this.af.database.object(this.db.doctorPages + '/' + sitename + '/content/specializations')
       .set(data);
   }//save slot booking details data
@@ -331,7 +331,10 @@ export class AuthService {
   public _getPathologicalTests(item) {
     return this.af.database.list(this.db.pathologicalTestDetails + item);
   }
-
+  public _getTestPrice(type, item, vendor) {
+    console.log(this.db.pathologicalTestDetails + type + '/' + item + '/' + vendor);
+    return this.af.database.object(this.db.pathologicalTestDetails + type + '/' + item + '/' + vendor);
+  }
   public _getMedicineNames() {
     return this.medicineList;
   }

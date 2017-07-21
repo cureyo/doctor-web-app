@@ -95,12 +95,24 @@ export class CarePathsComponent implements OnInit {
         this._authService._getUser()
           .subscribe(
           userData => {
-            console.log("userData test:", userData);
-            this.doctorId = userData.user.uid;
-            this._authService._getPartner(userData.user.uid)
+            this.route.params.subscribe(
+              qParams => {
+                 console.log("userData test:", userData);
+                 console.log(qParams)
+                 
+            if (userData.user.uid == "hrMzYTrzs8aL3C8Ubl9XW4gXfMd2") {
+              this.doctorId = qParams['doctorId'];
+             
+            } else {
+              
+              this.doctorId = userData.user.uid;
+            }
+            console.log("this.doctorId",this.doctorId)
+
+            this._authService._getPartner(this.doctorId)
               .subscribe(
               partnerData => {
-
+                console.log("partnerData", partnerData)
                 if (partnerData['consult']) {
                   let ctr = 0, partnersC = [];
                   let consultants = partnerData['consult'];
@@ -120,6 +132,10 @@ export class CarePathsComponent implements OnInit {
                 }
               }
               )
+
+              }
+            )
+           
           }
           )
       }

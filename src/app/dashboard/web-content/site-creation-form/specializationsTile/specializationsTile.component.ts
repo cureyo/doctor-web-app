@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Query, QueryList, Input,ViewChildren, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../../../../services/firebaseauth.service";
 import { FbService } from "../../../../services/facebook.service";
 import { slotBookingClass } from "../../../../models/slotBooking.interface";
-
+import { ImageSearchComponent } from '../../../../fb-ads-form/image-search/image-search.component';
 
 @Component({
   selector: 'app-specializationsTile',
@@ -12,6 +12,7 @@ import { slotBookingClass } from "../../../../models/slotBooking.interface";
   //styleUrls: ['./slot-booking.component.css']
 })
 export class SpecializationsTileComponent implements OnInit {
+  @ViewChildren(ImageSearchComponent) imgSearchCmp2: QueryList<ImageSearchComponent>;
   @Input() routeparam: any;
   public timeInterval: any;
   public timeValue: any;
@@ -19,14 +20,20 @@ export class SpecializationsTileComponent implements OnInit {
   private specializationForm: FormGroup;
   private slotAdded: boolean = false;
   private sitename: any;
+  private imagesArray: any = [];
   private specCount: number = 0;
   private formReady: boolean = false;
+  private imgSearchType: any = "google";
+  private defaultImgSearch: any;
+  private pageNameList: any = [];
   constructor(
+   // @Query(ImageSearchComponent) imgSearchCmp2:QueryList<ImageSearchComponent>,
     private _fb: FormBuilder,
     private _fs: FbService,
     private route: ActivatedRoute,
     private _authService: AuthService,
-    private router: Router
+    private router: Router,
+    
   ) {
     this.timeValue = [];
     this.timeInterval = [];
@@ -62,7 +69,7 @@ export class SpecializationsTileComponent implements OnInit {
             console.log(webSpecData[each])
             if (each != '$key' && each != '$value' && each != '$exists' && each != '0')
               control.push(this.initSpecs(webSpecData[each]));
-            this.specCount = parseInt(each);
+            this.specCount = this.specCount + 1;
             console.log(this.specCount);
           }
           this.formReady = true;
@@ -116,8 +123,16 @@ export class SpecializationsTileComponent implements OnInit {
     let specials = job['specializations'],
       ctr = 0,
       flag;
-
-
+      console.log(this.imgSearchCmp2['imgSelected'])
+      // for (let each in this.imgSearchCmp2)
+      //      {
+      //        console.log(each);
+      //        console.log(this.imgSearchCmp2[each])
+      //     //specials[each]['img_url'] = this.imgSearchCmp2[each].imgSelected;
+      //   }
+      
+    //console.log("this.imgSearchCmp2", this.imgSearchCmp2['_results']);
+    //console.log(this.imgSearchCmp2.toArray())
     for (let each in specials) {
       let webTitle = specials[each].title.replace(' ', '-');
       webTitle = webTitle.replace(':', '-');
@@ -125,10 +140,30 @@ export class SpecializationsTileComponent implements OnInit {
       webTitle = webTitle.replace(':', '-');
       webTitle = webTitle.replace('!', '-');
       webTitle = webTitle.replace('?', '-');;
-
-      specials['webTitle'] = webTitle;
+      console.log("splCmp" + each);
+      
+      let yrt =  this.imgSearchCmp2.find(item => item.randId == "splCmp" + each);
+    
+      console.log(yrt);
+      //specials[each]['img_url'] ['imgSelected'];
+      // console.log(each, specials[each]['img_url'])
+      specials[each]['webTitle'] = webTitle;
+      console.log(each);
+      console.log(("splCmp" + each));
+      var tes ="splCmp" + each;
+      console.log(tes);
+      var e = document.getElementById(tes)
+      console.log(e)
+      //specials[each]['img_url'] = this.imgSearchCmp2[each].imgSelected;
     }
-
+    let count = 0;
+    this.imgSearchCmp2.forEach(item => {specials[count]['image'] = item.imgSelected;
+    count++; })
+    // console.log(this.imgSearchCmp2.toArray())
+    // this.imgSearchCmp2.forEach((child) => { console.log(child);
+    //   })
+    console.log(specials);
+    console.log(this.sitename);
     this._authService._saveSpecializationDetails(this.sitename, specials)
       .then(
       data => {

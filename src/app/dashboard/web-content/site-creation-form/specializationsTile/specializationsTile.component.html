@@ -45,8 +45,9 @@
                         
                         <!--end of to time-->
                             <!--end of time slot -->
-
-
+<div [id]="'#splComp' + i">
+<app-image-search  [savePath]="savePath" [randId]="'#splComp' + i" [searchType]="imgSearchType" [fbPageId]="pageIdSelected" [defaultKeyWord]="defaultImgSearch"  [fbPageList]="pageNameList"></app-image-search>
+</div>
               </div> <!-- end of second row-->
                <!-- closing tags of interface implementation-->
                        

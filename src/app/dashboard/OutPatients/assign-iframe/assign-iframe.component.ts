@@ -49,6 +49,7 @@ export class AssigniFrameComponent implements OnInit {
                 this._authService._getPhone2FBId(this.tempPatientId)
                   .subscribe(
                   phData => {
+                    console.log(phData);
                     if (phData.userId) {
                       this.patientId = phData.userId;
                     } else {
