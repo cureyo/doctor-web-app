@@ -16,17 +16,36 @@
                   
               <div class="row">
     <!-- health matric formcontrol-->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tbs_health_matric">Health Metric to track</label>
 
                                   <select formControlName="health_matric" id="tbs_health_matric" class="form-control" >
-                                        <option value="Blood Sugar">Blood Sugar</option>
-                                        <option value="Blood Pressure">Blood Pressure</option>
+                                        <option value="BloodSugar">Blood Sugar</option>
+                                        <option value="BloodPressure">Blood Pressure</option>
                                   </select>
                             </div>
                     </div>
      <!-- End of health matric formcontrol-->
+      <!-- Reporting Frequency formcontrol-->
+                    <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="reportFrequency">Reporting Frequency</label>
+
+                                <select formControlName="reportFrequency" id="reportFrequency" class="form-control" >
+                                      <option value="weekly">Weekly</option>
+                                      <option value="fortnigthly">Fortnigthly</option>
+                                      <option value="monthly">Monthly</option>
+                                      <option value="2months">Every 2 months</option>
+                                      <option value="3months">Every 3 months</option>
+                                      <option value="4months">Every 4 months</option>
+                                      <option value="5months">Every 5 months</option>
+                                      <option value="6months">Every 6 months</option>
+                                      <option value="annually">Annually</option>
+                                </select>
+                            </div>
+                    </div>
+  <!-- End of Tracking Frequency formcontrol-->  
      <!-- Tracking Frequency formcontrol-->
                     <div class="col-md-6">
                             <div class="form-group">
@@ -41,7 +60,7 @@
                                       <option value="Every 5 Days">Every 5 Days</option>
                                       <option value="Every 6 Days">Every 6 Days</option>
                                       <option value="Weekly">Weekly</option>
-                                      <option value="Forthnigthly">Forthnigthly</option>
+                                      <option value="Fortnigthly">Fortnigthly</option>
                                       <option value="Monthly">Monthly</option>
                                 </select>
                             </div>

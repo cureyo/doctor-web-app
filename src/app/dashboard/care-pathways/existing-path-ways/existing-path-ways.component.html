@@ -45,7 +45,7 @@
                             </div>
                             <br>
                             <hr/>
-                            <a (click)="showAnal()" style="cursor: pointer;">Show Pathway Analytics</a>
+                            <!--<a (click)="showAnal()" style="cursor: pointer;">Show Pathway Analytics</a>-->
                             <div *ngIf="showAnalysis" class="row">
                                     <div class="col-sm-4">
                             <div class="card card-stats">
@@ -129,7 +129,9 @@
                                                                         <option value="med-reminder">Medication Reminder</option>
                                                                         <option value="test-reminder">Pathological Tests</option>
                                                                         <option value="scan-reminder">Radiological Scans</option>
-                                                                        <option value="blood-test-reminder">Sugar/ BP Check</option>
+                                                                         <option value="blood-sugar-reminder">Blood Sugar Check</option>
+                                                                        <option value="blood-pressure-reminder">Blood Pressure Check</option>
+                                                                       
                                                                         </select>
                                                             </div>
 
@@ -221,8 +223,11 @@
                                                         [MedNames]="TestNames">
                                                 </app-lab-test-carepath>
                                                 
-                                                 <app-bloodsugar-carepath *ngIf="checkTypes[i] == 'blood-test-reminder'"
-                                                        [objectId]="objectIdVal">
+                                                 <app-bloodsugar-carepath *ngIf="checkTypes[i] == 'blood-sugar-reminder'"
+                                                        [objectId]="objectIdVal" [checkType]="BloodSugar">
+                                                </app-bloodsugar-carepath>
+                                                <app-bloodsugar-carepath *ngIf="checkTypes[i] == 'blood-pressure-reminder'"
+                                                        [objectId]="objectIdVal" [checkType]="BloodPressure">
                                                 </app-bloodsugar-carepath>
                                                 
                                                  <app-physicalconsultation-carepath *ngIf="checkTypes[i] == 'consult-reminder'  && consultantSelected[i]"

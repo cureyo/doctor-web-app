@@ -16,6 +16,8 @@ export class CreatePathWaysComponent implements OnInit {
   @Input() TestNames: any;
   @Input() MedNames: any;
   private caredone: any;
+  private BloodSugar: any = "BloodSugar";
+  private BloodPressure: any = "BloodPressure";
   private online: any = "Online";
   private physical: any = "Physical";
   private pathological: any = "Pathological";

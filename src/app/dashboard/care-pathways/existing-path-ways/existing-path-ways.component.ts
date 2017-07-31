@@ -17,6 +17,8 @@ export class ExistingPathWaysComponent implements OnInit {
   @Input() MedNames: any;
   @Input() pathData: any;
   private caredone: any;
+  private BloodSugar: any = "BloodSugar";
+  private BloodPressure: any = "BloodPressure";
   private online: any = "Online";
   private physical: any = "Physical";
   private pathological: any = "Pathological";

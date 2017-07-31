@@ -12,6 +12,7 @@ export class BloodsugarCareComponent implements OnInit {
   //@Input() patient: any;
   //@Input() user: any;
   @Input() objectId: any;
+  @Input() checkType: any;
   public tbsForm: FormGroup;
   private itemAdded4: boolean = false;
 
@@ -23,13 +24,13 @@ export class BloodsugarCareComponent implements OnInit {
 
   ngOnInit() {
 
-    //console.log("tbs default is not coming");
+    console.log(this.checkType, "this.checkType");
 
     this.tbsForm = this._fb.group({
-      health_matric: ['Blood Sugar'],
+      health_matric: [this.checkType],
       Track_feq: ['daily'],
       timing: ['Morning', Validators.required],
-      reportFrequency: ['weekly']
+      reportFrequency: ['Weekly', Validators.required]
     });
 
   }//ngOnInit()
@@ -61,44 +62,44 @@ export class BloodsugarCareComponent implements OnInit {
     //save data in onboarding Review
     let reviewData = {};
     var transTime = new Date();
-    if (job['health_matric'] == 'Blood Sugar') {
+    // if (job['health_matric'] == 'Blood Sugar') {
       reviewData = { bsFreq: job['Track_feq'] };
-        var self = this;
-    setTimeout(
-      function() {
-        self._authService._saveTransactionData(reminder,self.objectId,  'BloodSugarReminders/').then(
-        res =>{
-          let d=res;
-          //self.itemAdded3 = true;
-          //console.log("response of onboarding save is",d);
-      })
-      }, 200
-    )
+      var self = this;
+      setTimeout(
+        function () {
+          self._authService._saveTransactionData(reminder, self.objectId, self.checkType + 'Reminders/').then(
+            res => {
+              let d = res;
+              //self.itemAdded3 = true;
+              //console.log("response of onboarding save is",d);
+            })
+        }, 200
+      )
 
       // this._authService._saveOnboardingReview(reminder, this.patient.uid, 'BloodSugar/' + transTime.getTime()).then(
       //   res => {
       //     let d = res;
       //     //console.log("response of onboarding save is", d);
       //   });
-    }
-    else {
-        setTimeout(
-      function() {
-        self._authService._saveTransactionData(reminder,self.objectId,  'BloodPressureReminders/').then(
-        res =>{
-          let d=res;
-          //self.itemAdded3 = true;
-          //console.log("response of onboarding save is",d);
-      })
-      }, 200
-    )
-      // reviewData = { bpFreq: job['Track_feq'] };
-      // this._authService._saveOnboardingReview(reviewData, this.patient.uid, 'BloodPressure/' + transTime.getTime()).then(
-      //   res => {
-      //     let d = res;
-      //     //console.log("response of onboarding save is", d);
-      //   });
-    }
+    // }
+    // else {
+    //   setTimeout(
+    //     function () {
+    //       self._authService._saveTransactionData(reminder, self.objectId, 'BloodPressureReminders/').then(
+    //         res => {
+    //           let d = res;
+    //           //self.itemAdded3 = true;
+    //           //console.log("response of onboarding save is",d);
+    //         })
+    //     }, 200
+    //   )
+    //   // reviewData = { bpFreq: job['Track_feq'] };
+    //   // this._authService._saveOnboardingReview(reviewData, this.patient.uid, 'BloodPressure/' + transTime.getTime()).then(
+    //   //   res => {
+    //   //     let d = res;
+    //   //     //console.log("response of onboarding save is", d);
+    //   //   });
+    // }
 
 
 
