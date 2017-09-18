@@ -57,6 +57,8 @@ export const AppConfig = {
     socialCalendar:     environment.envName + '/socialCalendar/',
     pathologicalTestDetails:  environment.envName + '/Pricing/',
     clinicConsults:     environment.envName + '/ClinicConsultations/Calls/',
+    clinicConsultSlots:     environment.envName + '/ClinicConsultations/Slots/',
+    clinicConsultations:     environment.envName + '/ClinicConsultations/',
     website:            '/SampleDocPage/',
     activePathways:      environment.envName + '/ActiveTransactions/',
     carePaths:          environment.envName + '/CarePathways/',

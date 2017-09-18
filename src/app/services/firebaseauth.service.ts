@@ -657,7 +657,10 @@ public _getPhone2FBId(tempPatientId) {
     this.af.database.object(this.db.appointments + userID)
       .set(data);
   }
-
+public _getClinicConsultations(clinicId, phone) {
+  console.log(this.db.clinicConsultSlots + clinicId + '/' + phone)
+  return this.af.database.list(this.db.clinicConsultSlots + clinicId + '/' + phone);
+}
   public _fetchUser(uid) {
     //console.log(this.db.users + uid);
     return this.af.database.object(this.db.users + uid).map(
