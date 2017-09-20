@@ -89,6 +89,7 @@ export const AppConfig = {
     careSchedule:       environment.envName + '/CareSchedule/',
     OTPRequests:        environment.envName + '/OTPRequests/',
     scrollTo:           environment.envName + '/DoctorPages/ScrollToSection/',
+    prescriptions:    environment.envName + '/Prescriptions/',
     MedicalSpecialities: '/MedicalSpecialities/',
     MedicalVendors:      '/MedVendors/',
     MedicalSupport:      '/MedSupports/', 

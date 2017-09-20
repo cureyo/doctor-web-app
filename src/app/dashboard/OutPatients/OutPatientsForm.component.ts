@@ -55,6 +55,7 @@ export class OutPatientsFormComponent implements OnInit {
   private currentQ: any = 0;
   private clinicIDNew: any;
   private dataReady: boolean = false;
+  private prescriptionId: any;
   private fitnessArray: any = [];
   private tempCurrentUserID:any;
   private carePlanForm: FormGroup;
@@ -91,6 +92,8 @@ export class OutPatientsFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    var nowTime = new Date();
+    this.prescriptionId = nowTime.getTime();
       this.carePlanForm = this._fb.group({
         formname: [, Validators.required]
       })

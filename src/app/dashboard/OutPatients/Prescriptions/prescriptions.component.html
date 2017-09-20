@@ -1,0 +1,24 @@
+
+<div class="main-content">
+        <div class="container-fluid">
+              <app-medication-reminder-carepath [doctorId]="doctorId" [patientId]="patientId" [prescriptionId]="prescriptionId" [Prescription]="true">
+                                                </app-medication-reminder-carepath>
+                                                                
+                                                <!--<app-lab-test-carepath *ngIf="checkTypes[i] == 'test-reminder'"
+                                                        [objectId]="objectIdVal" 
+                                                        [timeInterval]="timeInterval" 
+                                                        [testType]="pathological"
+                                                        [dateInterval]="dateInterval"
+                                                        [MedNames]="TestNames">
+                                                </app-lab-test-carepath>
+ <app-lab-test-carepath *ngIf="checkTypes[i] == 'scan-reminder'"
+                                                        [objectId]="objectIdVal" 
+                                                        [timeInterval]="timeInterval" 
+                                                        [dateInterval]="dateInterval"
+                                                        [testType]="radiological"
+                                                        [Prescrition]="true">
+                                                </app-lab-test-carepath>-->
+
+  <button class="btn btn-primary btn-round" (click)="startOPD()"> Start OPD</button>
+      </div>
+</div>
