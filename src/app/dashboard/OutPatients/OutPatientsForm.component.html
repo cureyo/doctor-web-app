@@ -385,11 +385,12 @@
     <div class="modal-content" >
       <div class="modal-header">
         <button type="button" class="close" aria-label="Close" (click)="closeCarePlanModal()"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Assign a Care Plan</b></h4>
+        <h4 class="modal-title" id="myModalLabel" style="float: left;"><b>Prescription/ Care Plan</b></h4>
       </div>
       <br>
       <hr>
       <div class="modal-body">
+          <prescription-cmp [doctorId]="currentUserID" [patientId]="patientId" [prescriptionId]="prescriptionId"></prescription-cmp>
       <assign-pathway-form *ngIf="caredone"  [clinicIDNew]="clinicIDNew" [patientId]="patientId" [firstName]="caredone.firstName" [pageId]="pageId" [doctorId]="currentUserID"></assign-pathway-form>
       <div class="modal-footer" style="padding-bottom: 20px;">
        

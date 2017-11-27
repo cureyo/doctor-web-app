@@ -16,6 +16,11 @@ export class MedicationReminderCareComponent implements OnInit {
   @Input() timeInterval: any;
   @Input() dateInterval: any;
   @Input() MedNames: any;
+  @Input() Prescription: boolean;
+  @Input() doctorId: any;
+  @Input() patientId: any;
+  @Input() prescriptionId: any;
+
   public showDay: boolean = false;
   public showDate: boolean = false;
   public MedForm: FormGroup;
@@ -82,14 +87,23 @@ export class MedicationReminderCareComponent implements OnInit {
 
   initMedicinesData(i) {
     console.log("initmedicineData test:", this.medData[i].MedName);
+    if (this.Prescription) {
+      return this._fb.group({
+        name: [this.medData[i].MedName, Validators.required],
+        instructions: [this.medData[i].nstructions, Validators.required]
+      });
+    }
+    else {
 
-    return this._fb.group({
-      name: [this.medData[i].MedName, Validators.required],
-      frequency: [this.medData[i].MedFreq, Validators.required],
-      day: [this.medData[i].MedDay],
-      date: [this.medData[i].MedDate, Validators.required],
-      timing: [this.medData[i].MedTiming, Validators.required],
-    });
+
+      return this._fb.group({
+        name: [this.medData[i].MedName, Validators.required],
+        frequency: [this.medData[i].MedFreq, Validators.required],
+        day: [this.medData[i].MedDay],
+        date: [this.medData[i].MedDate, Validators.required],
+        timing: [this.medData[i].MedTiming, Validators.required],
+      });
+    }
   }//iniMedicine's
   addMedicineData(i) {
     const control = <FormArray>this.MedForm.controls['medicines'];
@@ -99,13 +113,21 @@ export class MedicationReminderCareComponent implements OnInit {
 
 
   initMedicines() {
-    return this._fb.group({
-      name: ['', Validators.required],
-      frequency: ['', Validators.required],
-      day: ['saturday'],
-      date: ['2', Validators.required],
-      timing: ['', Validators.required],
-    });
+    if (this.Prescription) {
+      return this._fb.group({
+        name: [, Validators.required],
+        instructions: [, Validators.required]
+      });
+    }
+    else {
+      return this._fb.group({
+        name: ['', Validators.required],
+        frequency: ['', Validators.required],
+        day: ['saturday'],
+        date: ['2', Validators.required],
+        timing: ['', Validators.required],
+      });
+    }
   }//iniMedicine's
   addMedicine() {
     const control = <FormArray>this.MedForm.controls['medicines'];
@@ -148,103 +170,121 @@ export class MedicationReminderCareComponent implements OnInit {
   saveMed(model) {
     let job = model['value'];
     console.log("this is medication job", Object.keys(job));
-    // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
-    let medicines = job['medicines'],
-      ctr = 0,
-      flag;
-
-    let reminders = {
-      "Job_By": "#doctorId",
-      "Job_For": "#patientId",
-      "Job_Medicines": [],
-      "Job_Type": "Medication Reminder",
-
-    };
-    let reviewData = [];
-
-    for (let i = 0; i < medicines.length; i++) {
-      console.log(medicines[i].name);
-      console.log(medicines[i])
-      let medNam, medId
-      if (medicines[i].name.name) {
-medNam = medicines[i].name.name;
-medId = medicines[i].name.id;
+    if (this.Prescription) {
+      console.log(job);
+      console.log(job.medicines);
+      let presList = [], cnt = 0;
+      for (let item of job.medicines) {
+        console.log(item);
+        presList[cnt] = {name: item['name'].name, instructions: item['instructions'] };
+        cnt++;
       }
-      else {
-        medNam = medicines[i].name;
-        medId = medicines[i].name;
-      }
-      
-      reminders.Job_Medicines.push({
-        "Job_Frequency": medicines[i].frequency,
-        "Medicine_Name": [medicines[i].name],
-        "Job_Time": medicines[i].timing,
-        "Job_Day": medicines[i].day,
-        "Job_Date": medicines[i].date
-      });
-      reviewData.push({
-        "MedFreq": medicines[i].frequency,
-        "MedName": medNam,
-        "name": medId,
-        "MedTiming": medicines[i].timing,
-        "MedDay": medicines[i].day,
-        "MedDate": medicines[i].date,
-      });
+      this._authService._savePrescription(presList, this.doctorId, this.patientId, this.prescriptionId, 'Medication').then(
+        res => {
+          let d = res;
+          console.log(res);
+          this.itemAdded2 = true;
+          //console.log("response of onboarding save is",d);
+        });
+    }
+    else {
+      // console.log("this is medication job",Object.values(job.medication[Object.keys(job.medication)]));
+      let medicines = job['medicines'],
+        ctr = 0,
+        flag;
 
-      for (let j = i + 1; j < medicines.length; j++) {
-        flag = false;
-        if (medicines[i].frequency == medicines[j].frequency && medicines[i].timing == medicines[j].timing) {
-          if (medicines[j].frequency == 'daily') {
+      let reminders = {
+        "Job_By": "#doctorId",
+        "Job_For": "#patientId",
+        "Job_Medicines": [],
+        "Job_Type": "Medication Reminder",
 
-            flag = true;
-          } else if (medicines[j].frequency == 'weekly') {
-            if (medicines[i].day == medicines[j].day) {
+      };
+      let reviewData = [];
+
+      for (let i = 0; i < medicines.length; i++) {
+        console.log(medicines[i].name);
+        console.log(medicines[i])
+        let medNam, medId
+        if (medicines[i].name.name) {
+          medNam = medicines[i].name.name;
+          medId = medicines[i].name.id;
+        }
+        else {
+          medNam = medicines[i].name;
+          medId = medicines[i].name;
+        }
+
+        reminders.Job_Medicines.push({
+          "Job_Frequency": medicines[i].frequency,
+          "Medicine_Name": [medicines[i].name],
+          "Job_Time": medicines[i].timing,
+          "Job_Day": medicines[i].day,
+          "Job_Date": medicines[i].date
+        });
+        reviewData.push({
+          "MedFreq": medicines[i].frequency,
+          "MedName": medNam,
+          "name": medId,
+          "MedTiming": medicines[i].timing,
+          "MedDay": medicines[i].day,
+          "MedDate": medicines[i].date,
+        });
+
+        for (let j = i + 1; j < medicines.length; j++) {
+          flag = false;
+          if (medicines[i].frequency == medicines[j].frequency && medicines[i].timing == medicines[j].timing) {
+            if (medicines[j].frequency == 'daily') {
+
               flag = true;
-            }
-          } else if (medicines[i].date == medicines[j].date) {
-            flag = true;
+            } else if (medicines[j].frequency == 'weekly') {
+              if (medicines[i].day == medicines[j].day) {
+                flag = true;
+              }
+            } else if (medicines[i].date == medicines[j].date) {
+              flag = true;
 
-          }//elseif
+            }//elseif
 
-        }//if
+          }//if
 
-        if (flag) {
+          if (flag) {
 
-          reminders['Job_Medicines'][ctr].Medicine_Name.push(medicines[j].name.name);
-          medicines.splice(j, 1);
-          j--;
-        }//flag
+            reminders['Job_Medicines'][ctr].Medicine_Name.push(medicines[j].name.name);
+            medicines.splice(j, 1);
+            j--;
+          }//flag
 
-      }//loop j
-      ctr++;
-    }//loop i
-    console.log("reminder value  test:", reminders);
-    console.log("review data is :", reviewData[0]);
-    // this._authService._saveReminders(reminders)
-    //   .then(
+        }//loop j
+        ctr++;
+      }//loop i
+      console.log("reminder value  test:", reminders);
+      console.log("review data is :", reviewData[0]);
+      // this._authService._saveReminders(reminders)
+      //   .then(
 
-    //   data => {
-    //     this.itemAdded2 = true;
-    //     //console.log("Medication Reminder  data saved :",data);
-    //   }
-    //   );
-    console.log("the objectID value ", this.objectId);
-    console.log(reviewData[0]['MedName']);
-    console.log(reviewData[0]['name']);
-    //  save data in onboarding Review
-    var transTime = new Date();
-    var self = this;
-    setTimeout(
-      function () {
-        self._authService._saveTransactionData(reviewData, self.objectId, 'MedicationReminder/').then(
-          res => {
-            let d = res;
-            self.itemAdded2 = true;
-            //console.log("response of onboarding save is",d);
-          });
-      }, 200
-    )
-
+      //   data => {
+      //     this.itemAdded2 = true;
+      //     //console.log("Medication Reminder  data saved :",data);
+      //   }
+      //   );
+      console.log("the objectID value ", this.objectId);
+      console.log(reviewData[0]['MedName']);
+      console.log(reviewData[0]['name']);
+      //  save data in onboarding Review
+      var transTime = new Date();
+      var self = this;
+      setTimeout(
+        function () {
+          self._authService._saveTransactionData(reviewData, self.objectId, 'MedicationReminder/').then(
+            res => {
+              let d = res;
+              self.itemAdded2 = true;
+              //console.log("response of onboarding save is",d);
+            });
+        }, 200
+      )
+    }
   }//save
 
 

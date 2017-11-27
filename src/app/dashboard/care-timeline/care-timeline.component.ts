@@ -10,7 +10,7 @@ declare var $: any
     moduleId: module.id,
     templateUrl: 'care-timeline.component.html',
 
-    styleUrls: ['./care-timeline.component.css'],
+    styleUrls: ['care-timeline.component.css'],
 
 })
 

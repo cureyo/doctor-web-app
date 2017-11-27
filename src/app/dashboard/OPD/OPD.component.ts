@@ -22,6 +22,9 @@ export class OPDComponent implements OnInit {
   private routeparam: any;
   private doctorId: any;
   private userId: any;
+  private userData: any;
+  private appointmentList: any;
+  private showCalClicked: any = [];
 
 
   constructor(private _fb: FormBuilder, private _authService: AuthService, private router: Router, private http: Http,
@@ -37,6 +40,36 @@ export class OPDComponent implements OnInit {
 
     });
     this.selectOutPatient = true;
+     this._authService._getUser()
+      .subscribe(
+      data => {
+
+        this._authService._fetchUser(data.user.uid)
+          .subscribe(res => { 
+            this.userData = res;
+            this._authService._getClinicConsultations(res.clinicId, res.phone)
+            .subscribe(
+              consultData => {
+                this.appointmentList = consultData;
+                console.log(consultData)
+                for (let appt of this.appointmentList) {
+                  appt['array'] = [];
+                  let ctr = 0;
+                  for (let item in appt) {
+                    console.log(item);
+                    if (item != '$key' && item !='$exists' && item !='array')
+                    {appt['array'][ctr] = appt[item];
+                    ctr++;}
+                  }
+                }
+              }
+            )
+          });
+      });
+    
+  }
+  showCal(i) {
+    this.showCalClicked[i] = !this.showCalClicked[i]
   }
   startOPD() {
     var date = new Date();
@@ -57,14 +90,9 @@ export class OPDComponent implements OnInit {
               var today = mmStr + '-' + ddStr + '-' + yyyy;
     //console.log(today)
 
-    this._authService._getUser()
-      .subscribe(
-      data => {
-
-        this._authService._fetchUser(data.user.uid)
-          .subscribe(res => {
+   
             //console.log(res)
-            var clinicDomain = res.clinicWebsite;
+            var clinicDomain = this.userData.clinicWebsite;
             var n = clinicDomain.indexOf('.');
             var clinicID = clinicDomain.substring(0, n);
             console.log("my clinic id is ", clinicID)
@@ -118,8 +146,7 @@ export class OPDComponent implements OnInit {
                     })
                 }
               });
-          });
-      })
+         
 
   }
 }

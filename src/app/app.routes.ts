@@ -19,6 +19,7 @@ import {PhysicalConsultationComponent} from "./dashboard/table/PhysicalConsultat
 import {BloodSugarChartComponent} from "./dashboard/weeklyreports/BloodSugarChart/BloodSugarChart.component";
 import { CommonModelComponent } from "./dashboard/weeklyreports/common-model/common-model.component";
 import {DocReviewComponent}  from "./dashboard/table/DocReview/Doc-Review.component";
+import {PrescriptionsComponent}  from "./dashboard/OutPatients/Prescriptions/prescriptions.component";
 import { OutPatientsFormComponent} from "./dashboard/OutPatients/OutPatientsForm.component";
 import { OPDComponent } from './dashboard/OPD/OPD.component';
 import {NavbarComponent} from './shared/navbar/navbar.component';
@@ -106,6 +107,7 @@ export const MODULE_COMPONENTS = [
     AppComponent,
     HomeComponent,
     AssignPathwayComponent,
+    PrescriptionsComponent,
     PatientPreviewComponent,
     TableComponent,
     VideoCallComponent,

@@ -150,6 +150,11 @@ export class AuthService {
 
 
   }//save onboardingReviewreview data
+  public _savePrescription(value, doctorId, patientId, prescriptionId, type) {
+    console.log(this.db.prescriptions + patientId + '/' + doctorId + '/' + prescriptionId + '/' + type);
+    const prescriptionData = this.af.database.object(this.db.prescriptions + patientId + '/' + doctorId + '/' + prescriptionId + '/' + type)
+    return prescriptionData.set(value);
+  }
   //get the transactionDate
   public _getTransactionData(objectId) {
     return this.af.database.object(this.db.transactionTable + '/' + objectId);
@@ -657,7 +662,10 @@ public _getPhone2FBId(tempPatientId) {
     this.af.database.object(this.db.appointments + userID)
       .set(data);
   }
-
+public _getClinicConsultations(clinicId, phone) {
+  console.log(this.db.clinicConsultSlots + clinicId + '/' + phone)
+  return this.af.database.list(this.db.clinicConsultSlots + clinicId + '/' + phone);
+}
   public _fetchUser(uid) {
     //console.log(this.db.users + uid);
     return this.af.database.object(this.db.users + uid).map(

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/firebaseauth.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import {FormGroup, FormBuilder,Validators} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MetadataService } from "../services/metadata.service";
 @Component({
   templateUrl: 'doctor-login.component.html',
@@ -9,24 +9,24 @@ import { MetadataService } from "../services/metadata.service";
   moduleId: module.id
 })
 export class DoctorLoginComponent implements OnInit {
-   private loginForm:FormGroup;
+  private loginForm: FormGroup;
   private user: {};
   private isAuth: boolean;
   private showVid: boolean = false;
   private currentSite: any;
 
-  constructor(private _fb: FormBuilder,private _authService: AuthService, private metadataService: MetadataService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private _fb: FormBuilder, private _authService: AuthService, private metadataService: MetadataService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // this._authService.logout();
-      console.log(window.location.origin)
-       if (window.location.origin == "http://care.cureyo.com" || window.location.origin == "https://care.cureyo.com" ) {
-           this.currentSite = "cureyo";
-       } else if (window.location.origin == "http://healthamin.com" || window.location.origin == "https://healthamin.com" || window.location.origin == "http://localhost:4200" ) {
-this.currentSite = "healthamin";
-this.metadataService.setTitle("Healthamin - hollistic care for your patients");
-this.metadataService.setMetaDescription("Better Hollistic Care");
-       }
+    console.log(window.location.origin)
+    if (window.location.origin == "http://care.cureyo.com" || window.location.origin == "https://care.cureyo.com") {
+      this.currentSite = "cureyo";
+    } else if (window.location.origin == "http://healthamin.com" || window.location.origin == "https://healthamin.com" || window.location.origin == "http://localhost:4200") {
+      this.currentSite = "healthamin";
+      // this.metadataService.setTitle("Healthamin - hollistic care for your patients");
+      // this.metadataService.setMetaDescription("Better Hollistic Care");
+    }
     this._authService._getUser()
       .subscribe(
       data => {
@@ -40,16 +40,17 @@ this.metadataService.setMetaDescription("Better Hollistic Care");
               //console.log("from login: ");
               //console.log(res);
               if (res.hasOwnProperty('authUID')) {
+                console.log("res.hasOwnProperty('authUID')");
                 this.activatedRoute.queryParams
                   .subscribe(params => {
-                      //console.log("query parameters");
+                    //console.log("query parameters");
                     //console.log(params);
-                    if (params['next'] && params['next']!= '') {
+                    if (params['next'] && params['next'] != '') {
                       window.location.href = window.location.origin + params['next'];
                     } else {
                       window.location.href = window.location.origin + '/dashboard';
                     }
-                 });
+                  });
 
               } else {
                 this.router.navigate(['doctor-checkup']);
@@ -61,40 +62,40 @@ this.metadataService.setMetaDescription("Better Hollistic Care");
       },
       error => console.log(error)
       );
-      this.loginForm=this._fb.group({
-        //  fname:[],
-         email:[,Validators.required],
-         psw:[]
-       })
+    this.loginForm = this._fb.group({
+      //  fname:[],
+      email: [, Validators.required],
+      psw: []
+    })
   }
 
   doclogin(provider) {
-    
-      //console.log("Regular browser");
-     this._authService.doclogin();
-      //console.log("rerouting from login(provider)")
-   
+
+    //console.log("Regular browser");
+    this._authService.doclogin();
+    //console.log("rerouting from login(provider)")
+
   }
   showVideo() {
     this.showVid = !this.showVid;
   }
 
-   Mlogin=(model)=>{
-    let reminder={}
-    let login={},
-    job=model['value'];
+  Mlogin = (model) => {
+    let reminder = {}
+    let login = {},
+      job = model['value'];
     // reminder['displayName']=job['fname'];
-    reminder['email']=job['email'];
-    reminder['password']=job['psw'];
-    
-    login['email']=job['email'];
-    login['password']=job['psw'];
+    reminder['email'] = job['email'];
+    reminder['password'] = job['psw'];
+
+    login['email'] = job['email'];
+    login['password'] = job['psw'];
     //console.log("the reminder value check for manual login",reminder);
-    let data:any;
-    this._authService. createMailUser(reminder)
+    let data: any;
+    this._authService.createMailUser(reminder)
     // .then(
     //   res=>{
-          
+
     //          //console.log(res);
     //            //console.log("the reponse value of create user2",res);
     //           this._authService.loginMailUser(login).then(
@@ -104,10 +105,10 @@ this.metadataService.setMetaDescription("Better Hollistic Care");
     //                       this.router.navigate(['checkup']);
     //             }
     //           );
-           
+
     //     //console.log("create user response",res);
     // });
-       
+
 
   }
 

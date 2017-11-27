@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from "@angular/forms";
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { AuthService } from "../../services/firebaseauth.service";
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -60,36 +60,56 @@ export class SelectDomainComponent implements OnInit {
     reminder['message value'] = job['message'];
     //console.log("reminder value test ", reminder);
     //console.log("i am clicked to check domain name")
+    this.route2WebDetails(job['message']);
+    // this.getAvailability(job['message']).subscribe(dataa => {
+    //   console.log(dataa);
+    //   this.availableName = dataa;
+    //   if (this.availableName.domain)
+    //     this.domainAvailable = true;
 
-    this.getAvailability(job['message']).subscribe(dataa => {
-      //console.log(dataa);
-      this.availableName = dataa;
-      if (this.availableName.domain)
-        this.domainAvailable = true;
+    //   this.getData(job['message']).subscribe(data => {
+    //     //console.log(data);
+    //     this.array = data;
+    //     //console.log(this.array)
+    //     this.displayDrDomain = true;
 
-      this.getData(job['message']).subscribe(data => {
-        //console.log(data);
-        this.array = data;
-        //console.log(this.array)
-        this.displayDrDomain = true;
-
-      });
-    })
+    //   });
+    // })
     // this.route2WebDetails(job['message'])
   }
   getData(domainName) {
 
-    const domainURL = "https://api.ote-godaddy.com/v1/domains/suggest?query=" + domainName + "&country=IN&city=bangalore&sources=CC_TLD%2CEXTENSION%2CKEYWORD_SPIN%2CPREMIUM%2Ccctld%2Cextension%2Ckeywordspin%2Cpremium&tlds=.com&lengthMax=15&lengthMin=5&limit=10&waitMs=6000";
-
-    return this.http.get(domainURL)
+    const domainURL = "https://api.godaddy.com/v1/domains/suggest?query=" + domainName + "&country=IN&city=bangalore&sources=CC_TLD%2CEXTENSION%2CKEYWORD_SPIN%2CPREMIUM%2Ccctld%2Cextension%2Ckeywordspin%2Cpremium&tlds=.com&lengthMax=15&lengthMin=5&limit=10&waitMs=6000";
+    let headers = new Headers({ 'Accept': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    headers.append('Authorization', 'sso-key AQ6dqWyRGHU_5rLk7vkUe7JCVB1dWDqtJr:5rLmXZ58jpDBwmPNDTH1y8')
+    // headers.append('AQ6dqWyRGHU_FKumH9FYVRg1qwQfpxQK3j','FKuobF4mNEB56dJx8yktM3');
+    console.log(headers);
+    return this.http.get(domainURL, options)
       .map((res: Response) => res.json());
 
+  }
+  createAuthorizationHeader(headers:Headers) {
+    console.log(headers);
+    headers.append('Authorization', 'sso-key AQ6dqWyRGHU_5rLk7vkUe7JCVB1dWDqtJr:5rLmXZ58jpDBwmPNDTH1y8'); 
   }
 
   getAvailability(domainName) {
 
-    const availableURL = "https://api.ote-godaddy.com/v1/domains/available?domain=" + domainName + "&checkType=FAST&forTransfer=false"
-    return this.http.get(availableURL)
+    const availableURL = "https://api.ote-godaddy.com/v1/domains/available?domain=t333esting.com&checkType=FAST&forTransfer=false";
+    let headerlist = 	
+{
+  Accept: "application/json",
+  Authorization: "sso-key UzQxLikm_46KxDFnbjN7cQjmw6wocia:46L26ydpkwMaKZV6uVdDWe"
+};
+    var headers2 = new Headers(headerlist);
+    //this.createAuthorizationHeader(headers2);
+    // headers2.append('Authorization', 'sso-key ' + btoa('AQ6dqWyRGHU_5rLk7vkUe7JCVB1dWDqtJr:5rLmXZ58jpDBwmPNDTH1y8'));
+    
+    // headers2.append('Accept', 'application/json');
+    let options = new RequestOptions({ headers: headers2 });
+    
+    return this.http.get(availableURL, { headers: headers2 })
       .map((res: Response) => res.json());
   }
 
@@ -102,7 +122,7 @@ export class SelectDomainComponent implements OnInit {
         var domainNameShort = domainName.substring(0, len);
         this.sitename = domainNameShort;
         this._authService._saveWebsite(domainName, data.user.uid);
-        this._authService._saveClinicId(domainNameShort,data.user.uid )
+        this._authService._saveClinicId(domainNameShort, data.user.uid)
         this._authService._getSitePrefilledData()
           .subscribe(data => {
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter';
+import { ɵgetDOM as getDOM } from '@angular/platform-browser';
 
 
 @Injectable()
@@ -16,7 +16,7 @@ export class MetadataService {
 	constructor(titleService: Title) {
 		this.titleService = titleService;
 		this.DOM = getDOM();
-		this.headElement = this.DOM.query('head');
+		// this.headElement = this.DOM.query('head');
 	}
 
 	public getTitle(): string {

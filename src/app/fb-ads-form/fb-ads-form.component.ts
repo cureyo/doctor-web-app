@@ -17,14 +17,14 @@ declare var $: any
   selector: 'app-fb-ads-form',
   templateUrl: './fb-ads-form.component.html',
   styleUrls: ['./fb-ads-form.component.css'],
-  
+
 })
 export class FbAdsFormComponent implements OnInit {
-  
+
   @ViewChild(ImageSearchComponent) imgSearchCmp: ImageSearchComponent;
- //@ViewChild(NouisliderModule) sliderRef;
+  //@ViewChild(NouisliderModule) sliderRef;
   public fbAdsForm: FormGroup;
-  
+
   private fbAdsAdded: boolean = false;
   private section: any = "facebook";
   private targetingDisplayArray: any = [];
@@ -79,19 +79,19 @@ export class FbAdsFormComponent implements OnInit {
   private previewURL: any;
   private fullModel: any;
   private previewReady: boolean = false;
-  
+
   private someRange2config: any = {
-  behaviour: 'snap',
-  connect: true,
-  margin: 1,
-  step: 1,
-  range: {
-    min: 18,
-    max: 65
-  },
-  
-  
-};
+    behaviour: 'snap',
+    connect: true,
+    margin: 1,
+    step: 1,
+    range: {
+      min: 18,
+      max: 65
+    },
+
+
+  };
   //private nextButtonFlag:boolean=false;
   private doneModal: boolean = false;
   storage: any;
@@ -111,10 +111,10 @@ export class FbAdsFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-       
-    
-     this.itemArray = ["Target", "Spend","Show" ]
+
+
+
+    this.itemArray = ["Target", "Spend", "Show"]
     let mS2, ddS2;
     var sDate = new Date();
     var mS = sDate.getMonth() + 1;
@@ -137,8 +137,8 @@ export class FbAdsFormComponent implements OnInit {
     for (i = 18; i < 66; i++) {
       this.ageGroup[i - 18] = i;
     }
- let mE2, ddE2;
-    var eDate = new Date(sDate.getTime() + 7*86400000);
+    let mE2, ddE2;
+    var eDate = new Date(sDate.getTime() + 7 * 86400000);
     var mE = sDate.getMonth() + 1;
 
     var ddE = eDate.getDate();
@@ -196,8 +196,8 @@ export class FbAdsFormComponent implements OnInit {
                 let ctr = 0;
                 console.log(adsData);
                 this.currentAdsList = adsData;
-                console.log("******",this.currentAdsList[0])
-                
+                console.log("******", this.currentAdsList[0])
+
                 // for (let each of adsData) {
                 //   if (each != '$key' && each !='$exists')
                 //   {this.currentAdsList[ctr] = adsData[each];
@@ -209,9 +209,9 @@ export class FbAdsFormComponent implements OnInit {
                     this.tempAdaccountId[i] = this.adAccountID[i].id;
                 }
                 console.log("this is usertable response:", userTable);
-                this.clinicID = userTable.clinicWebsite.substring(0,userTable.clinicWebsite.indexOf("."));
+                this.clinicID = userTable.clinicWebsite.substring(0, userTable.clinicWebsite.indexOf("."));
                 this.initFB(userTable.fbPageId);
-                
+
                 this.clinicWebsite = userTable.clinicWebsite;
                 // if (this.clinicID == -1) {
                 //   this.clinicID = userTable.clinicWebsite.length;
@@ -237,10 +237,10 @@ export class FbAdsFormComponent implements OnInit {
 
       })
 
-// window.scrollTo(0, 0);
-//           var elmnt = document.getElementById("fbPageTop");
-//     // console.log(elmnt);
-//     elmnt.scrollIntoView();
+    // window.scrollTo(0, 0);
+    //           var elmnt = document.getElementById("fbPageTop");
+    //     // console.log(elmnt);
+    //     elmnt.scrollIntoView();
   }
 
   changeShownAd(i) {
@@ -251,7 +251,7 @@ export class FbAdsFormComponent implements OnInit {
     console.log(this.tempAdaccountId);
     this.imgReady = false;
     this.defaultImgSearch = data.name;
-    
+
 
     if (!data.adAccount || data.adAccount == "NA") {
       console.log(this.tempAdaccountId[0])
@@ -276,24 +276,24 @@ export class FbAdsFormComponent implements OnInit {
         m2A = "0" + m;
       else
         m2A = m.toString();
-        if (dd < 10)
+      if (dd < 10)
         dd2A = "0" + dd;
       else
         dd2A = dd.toString();
-        
+
       startDate = year + "-" + m2A + "-" + dd2A;
       this.strtDte = startDate
-    } else  {
+    } else {
       startDate = data.startdate;
       this.strtDte = startDate;
-    } 
+    }
     console.log(data.enddate);
     if (data.enddate == "NA") {
 
-          let m2B, dd2B;
+      let m2B, dd2B;
       var date4 = new Date();
       var date3 = date4.getTime();
-      console.log(7 *  86400000)
+      console.log(7 * 86400000)
       var date2 = new Date(date3 + 7 * 86400000);
       console.log(date2);
       var m2 = date2.getMonth() + 1;
@@ -303,25 +303,25 @@ export class FbAdsFormComponent implements OnInit {
         m2B = "0" + m2;
       else
         m2B = m2.toString();
-        if (dd < 10)
+      if (dd < 10)
         dd2B = "0" + dd2;
       else
         dd2B = dd2.toString();
-     
+
       endDate = year2 + "-" + m2B + "-" + dd2B;
       this.endDte = endDate;
       console.log(endDate);
       console.log(this.endDte);
     } else {
-  
+
       this.endDte = data.enddate;
       endDate = data.enddate
     }
     this.endDateReady = true;
     console.log(data.targetCitySearch);
-    
+
     console.log(this.fbAdsForm)
-    
+
     console.log(endDate);
     console.log(this.cityList)
     targetCityArr = this.cityList[0];
@@ -331,8 +331,8 @@ export class FbAdsFormComponent implements OnInit {
     } else {
       tgtCityVal = data.targetCity;
     }
-   // console.log(targetCityArr['key']);
-   let someRange = [data.min_age, data.max_age];
+    // console.log(targetCityArr['key']);
+    let someRange = [data.min_age, data.max_age];
     this.fbAdsForm = this._fb.group({
       adAccount: [adAcct, Validators.required],
       pageID: [pageIdtemp, [Validators.required]],
@@ -361,7 +361,7 @@ export class FbAdsFormComponent implements OnInit {
     });
     console.log(this.fbAdsForm.controls['enddate'].value);
     console.log(this.fbAdsForm)
-    
+
     this.formReady = true;
     this.imgReady = true;
   }
@@ -369,7 +369,7 @@ export class FbAdsFormComponent implements OnInit {
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
-      version: 'v2.9'
+      version: 'v2.10'
     };
     console.log("this is fbparam:", fbParams);
     this._fs.init(fbParams);
@@ -380,18 +380,19 @@ export class FbAdsFormComponent implements OnInit {
           this.fbAccessToken = response.authResponse.accessToken;
 
           this.fetchPages();
-            let city = this.currentAdsList[0].targetCitySearch;
+          let city = this.currentAdsList[0].targetCitySearch;
           this.searchCity(city);
 
         } else {
           this.fbAccessToken = null;
         }
       },
-      (error: any) => {console.error(error);
+      (error: any) => {
+        console.error(error);
         if (error.error_user_msg)
-        alert(error.error_user_msg);
+          alert(error.error_user_msg);
         else if (error.message)
-        alert(error.message);
+          alert(error.message);
       }
     );
   }// initFB()
@@ -409,7 +410,7 @@ export class FbAdsFormComponent implements OnInit {
           this.pageNameList = response.data;
           console.log("this.pageNameList", this.pageNameList);
           if (this.pageNameList[0])
-          this.pageIdSelected = this.pageNameList[0].id;
+            this.pageIdSelected = this.pageNameList[0].id;
           console.log("this.pageIdSelected", this.pageIdSelected)
           this.fetchAdAccounts();
 
@@ -420,14 +421,14 @@ export class FbAdsFormComponent implements OnInit {
     }// else
   }// fetchPages
   fetchAdAccounts(): void {
-    //////console.log("this does not execute 2")
+    console.log("this.fbAccessToken",this.fbAccessToken)
     if (this.fbAccessToken === null) {
       alert('Disconnected from Facebook. Kindly login again.');
     } else {
-
+      console.log("user response is else");
       this._fs.api('/me?fields=adaccounts')
         .then(response => {
-          //  console.log("user response data is :",response);
+           console.log("user response data is :",response);
           //this.userID = response.id; //user ID
           console.log(response)
           this.tempAdaccountId = response.adaccounts.data; //AdAccoundId
@@ -458,12 +459,15 @@ export class FbAdsFormComponent implements OnInit {
     }// else
   }// fetchPages
   save_fbAdsForm1 = (model) => {
-  this.prevItem(1);
-  var self = this;
-setTimeout(
-  function() {self.save_fbAdsForm(model);
-    console.log("executing now")}, 200
-)}
+    this.prevItem(1);
+    var self = this;
+    setTimeout(
+      function () {
+        self.save_fbAdsForm(model);
+        console.log("executing now")
+      }, 200
+    )
+  }
   save_fbAdsForm = (model) => {
     this.prevItem(1);
     console.log(model.value);
@@ -478,7 +482,7 @@ setTimeout(
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
-      version: 'v2.9',
+      version: 'v2.10',
 
     };
     let method: FacebookApiMethod = 'post';
@@ -503,7 +507,7 @@ setTimeout(
     this._authService._getPageID(this.userID)
       .subscribe(pageID => {
         this.pageID = pageID.$value;
-        
+
         console.log(job);
         console.log("create campaign:", '/' + this.adAccountID
           + '/' + 'campaigns?&' + 'name=' + job['name'] + '&objective=' + this.objectives[job['callToAction']].objective)
@@ -529,7 +533,7 @@ setTimeout(
                   '&' + 'bid_amount=' + this.bidAmount +
                   '&' + 'daily_budget=' + this.dailybudget +
                   '&' + 'campaign_id=' + this.campaignID +
-                  '&' + 'targeting={"geo_locations":' + tgt + ', "age_min":' + job['age_range'][0] +',"age_max":' + job['age_range'][1]+',"genders":' + job['gender'] + ',' + this.targetingSpecsArray+ '}' +
+                  '&' + 'targeting={"geo_locations":' + tgt + ', "age_min":' + job['age_range'][0] + ',"age_max":' + job['age_range'][1] + ',"genders":' + job['gender'] + ',' + this.targetingSpecsArray + '}' +
                   '&' + 'start_time=' + job['startdate'] +
                   '&' + 'end_time=' + job['enddate'] + '&status=PAUSED', method)
                 this._fs.api('/' + job['adAccount']
@@ -539,13 +543,13 @@ setTimeout(
                   '&' + 'bid_amount=' + this.bidAmount +
                   '&' + 'daily_budget=' + this.dailybudget +
                   '&' + 'campaign_id=' + this.campaignID +
-                  '&' + 'targeting={"geo_locations":' + tgt + ', "age_min":' + job['age_range'][0] +',"age_max":' + job['age_range'][1]+',"genders":' + job['gender'] + ',' + this.targetingSpecsArray+ '}' +
+                  '&' + 'targeting={"geo_locations":' + tgt + ', "age_min":' + job['age_range'][0] + ',"age_max":' + job['age_range'][1] + ',"genders":' + job['gender'] + ',' + this.targetingSpecsArray + '}' +
                   '&' + 'start_time=' + job['startdate'] +
                   '&' + 'end_time=' + job['enddate'] + '&status=PAUSED', method)
-                 
+
                   .then(response => {
                     this.targetResponse = response.id;
-                     console.log(this.fileUrl);
+                    console.log(this.fileUrl);
                     // this.fbAdsObject.targetResponse=this.targetResponse;
                     console.log("targeting spec response", '/' + job['adAccount'] +
                       '/ads?adset_id=' + this.targetResponse +
@@ -565,51 +569,51 @@ setTimeout(
                         console.log(model)
                         this.saveFbAdsFormData(job);
                       }).catch(
-        error => {
-          this.waiting = false;
-            if (error.error_user_msg)
-            alert(error.error_user_msg);
-            else if (error.message)
-            alert(error.message);
-            console.log(error);
-            
-        }
-      )
+                      error => {
+                        this.waiting = false;
+                        if (error.error_user_msg)
+                          alert(error.error_user_msg);
+                        else if (error.message)
+                          alert(error.message);
+                        console.log(error);
+
+                      }
+                      )
                   }).catch(
-        error => {
-          this.waiting = false;
-            if (error.error_user_msg)
-            alert(error.error_user_msg);
-            else if (error.message)
-            alert(error.message);
-            console.log(error);
-            
-        }
-      )
+                  error => {
+                    this.waiting = false;
+                    if (error.error_user_msg)
+                      alert(error.error_user_msg);
+                    else if (error.message)
+                      alert(error.message);
+                    console.log(error);
+
+                  }
+                  )
               }).catch(
-        error => {
+              error => {
 
-           if (error.error_user_msg)
-        alert(error.error_user_msg);
-        else if (error.message)
-        alert(error.message);
-          console.log(error);
-          this.waiting = false;
+                if (error.error_user_msg)
+                  alert(error.error_user_msg);
+                else if (error.message)
+                  alert(error.message);
+                console.log(error);
+                this.waiting = false;
 
-        }
-      )
+              }
+              )
           }).catch(
-        error => {
+          error => {
 
-        if (error.error_user_msg)
-        alert(error.error_user_msg);
-        else if (error.message)
-        alert(error.message);
-          console.log(error);
-          this.waiting = false;
+            if (error.error_user_msg)
+              alert(error.error_user_msg);
+            else if (error.message)
+              alert(error.message);
+            console.log(error);
+            this.waiting = false;
 
-        }
-      )
+          }
+          )
       });
 
     //end of Facebook Ads creation Code 
@@ -624,7 +628,7 @@ setTimeout(
     //console.log("FileOverAnother", e);
     this.hasAnotherDropZoneOver = e;
   }
-  
+
   saveFbAdsFormData = (model) => {
     console.log(model)
     let AdsData = {},
@@ -637,8 +641,8 @@ setTimeout(
     AdsData['pageID'] = AdsJob['pageID'];
     AdsData['BID'] = AdsJob['BID'];
     AdsData['budget'] = AdsJob['budget'];
-    AdsData['name'] = AdsJob['name'] ;
-    AdsData['refname'] = AdsJob['name'] + '[ID:' +this.campaignID + ']'
+    AdsData['name'] = AdsJob['name'];
+    AdsData['refname'] = AdsJob['name'] + '[ID:' + this.campaignID + ']'
     AdsData['targetCountry'] = AdsJob['targetCountry'];
     AdsData['targetCity'] = AdsJob['targetCity'];
     AdsData['targetCitySearch'] = AdsJob['targetCitySearch'];
@@ -658,7 +662,7 @@ setTimeout(
     console.log("Ads reminder data:", AdsData);
     this.fbAdsAdded = true;
     //call the service for fbAds form Data
-    
+
     this.generateAdPreview(this.fbAdsForm)
     this.fullModel = this.fbAdsForm.value;
     this.doneModal = true;
@@ -697,22 +701,22 @@ setTimeout(
         console.log(data);
         this.cityList = data.data;
         this.citiesReady = true;
-        console.log( this.cityList );
+        console.log(this.cityList);
         //this.citySearched = true;
         //this.cityList;
       }
       ).catch(
-        error => {
+      error => {
 
-      if (error.error_user_msg)
-      alert(error.error_user_msg);
-      else if (error.message)
-      alert(error.message);
-      console.log(error);
-      this.waiting = false;
+        if (error.error_user_msg)
+          alert(error.error_user_msg);
+        else if (error.message)
+          alert(error.message);
+        console.log(error);
+        this.waiting = false;
 
-           
-        }
+
+      }
       )
   }
   detailedSearch(value) {
@@ -726,15 +730,15 @@ setTimeout(
 
       }
       ).catch(
-        error => {
+      error => {
 
-           if (error.error_user_msg)
-        alert(error.error_user_msg);
+        if (error.error_user_msg)
+          alert(error.error_user_msg);
         else if (error.message)
-        alert(error.message);
-          console.log(error);
-          this.waiting = false;
-        }
+          alert(error.message);
+        console.log(error);
+        this.waiting = false;
+      }
       );
   }
   generateAdPreview(adform) {
@@ -762,7 +766,7 @@ setTimeout(
     let fbParams: FacebookInitParams = {
       appId: AppConfig.web.appID,
       xfbml: true,
-      version: 'v2.9'
+      version: 'v2.10'
     };
     console.log("this is fbparam:", fbParams);
     this._fs.init(fbParams);
@@ -798,16 +802,16 @@ setTimeout(
               // console.log(this.previewURL);
               this.previewReady = true;
             }).catch(
-        error => {
+            error => {
 
-           if (error.error_user_msg)
-        alert(error.error_user_msg);
-        else if (error.message)
-        alert(error.message);
-          console.log(error);
-          this.waiting = false;
-        }
-      );
+              if (error.error_user_msg)
+                alert(error.error_user_msg);
+              else if (error.message)
+                alert(error.message);
+              console.log(error);
+              this.waiting = false;
+            }
+            );
         }
       });
   }
@@ -822,7 +826,7 @@ setTimeout(
     //console.log($('#mainContent'));
     $('#fbContent').css({ position: 'fixed' });
   }
-   closeModal() {
+  closeModal() {
 
     $('#fbModal').modal('hide');
     $('#fbContent').css({ position: "" });
@@ -854,29 +858,29 @@ setTimeout(
     let dte2 = new Date(value);
     console.log(dte2);
     let dte3 = new Date(dte2.getTime() + 86400000);
-     let m2A, dd2A;
-      var m = dte3.getMonth() + 1;
-      var dd = dte3.getDate();
-      var year = dte3.getFullYear();
-      if (m < 10)
-        m2A = "0" + m;
-      else
-        m2A = m.toString();
-        if (dd < 10)
-        dd2A = "0" + dd;
-      else
-        dd2A = dd.toString();
-        
-      this.endMinDate = year + "-" + m2A + "-" + dd2A;
-     //= value;
+    let m2A, dd2A;
+    var m = dte3.getMonth() + 1;
+    var dd = dte3.getDate();
+    var year = dte3.getFullYear();
+    if (m < 10)
+      m2A = "0" + m;
+    else
+      m2A = m.toString();
+    if (dd < 10)
+      dd2A = "0" + dd;
+    else
+      dd2A = dd.toString();
+
+    this.endMinDate = year + "-" + m2A + "-" + dd2A;
+    //= value;
   }
   closeDoneModal() {
-$('#fbDoneModal').modal('hide');
+    $('#fbDoneModal').modal('hide');
     $('#fbContent').css({ position: "" });
     this.route.queryParams.subscribe(
       params => {
-        if (params['onboarding']=='yes') {
-          this.router.navigate(['partners'], {queryParams: {onboarding: 'yes'}})
+        if (params['onboarding'] == 'yes') {
+          this.router.navigate(['partners'], { queryParams: { onboarding: 'yes' } })
         }
       }
     )
@@ -884,57 +888,57 @@ $('#fbDoneModal').modal('hide');
   nextItem(count) {
     this.currentItem = this.itemArray[parseInt(count) + 1];
   }
-   prevItem(count) {
+  prevItem(count) {
     this.currentItem = this.itemArray[parseInt(count) - 1];
   }
   connectPage(pageId) {
-    var data = {adminID: this.userID, clinicId: this.clinicID, website: this.clinicWebsite};
+    var data = { adminID: this.userID, clinicId: this.clinicID, website: this.clinicWebsite };
     this._authService._savePageAdmin(pageId, data).then(
       dat2 => {
         this._authService._updatePageDetails(this.userID, pageId).then(
           dat3 => {
             this._authService._updateWebsitePage(this.clinicID, pageId).
-            then(dat4=> {
-              this._fs.api('/' + pageId + '?fields=access_token')
-        .then(
-        response => {
-          console.log("response", response);
-          this.getAccessTokenData(response.access_token)
-            .subscribe(
-            data => {
-              console.log("page access token data: ", data);
-              this.getFinalAccessToken(this.userID, data.access_token)
-                .subscribe(
-                data2 => {
-                  console.log(data2.data);
-                  let accesToken;
-                  for (let page in data2.data) {
-                    console.log(data2.data[page]);
-                    if (data2.data[page].id == this.pageID) {
-                      accesToken = data2.data[page].access_token;
-                    }
-                  }
-                  this._authService._savePageAccessToken(this.pageID, accesToken, this.fbAccessToken)
-                    .then(
-                    resp => {
-                      console.log("items have been updated", dat2, dat3)
-              alert("Your communication channel has been updated.")
-                 });
-                }
-                )
+              then(dat4 => {
+                this._fs.api('/' + pageId + '?fields=access_token')
+                  .then(
+                  response => {
+                    console.log("response", response);
+                    this.getAccessTokenData(response.access_token)
+                      .subscribe(
+                      data => {
+                        console.log("page access token data: ", data);
+                        this.getFinalAccessToken(this.userID, data.access_token)
+                          .subscribe(
+                          data2 => {
+                            console.log(data2.data);
+                            let accesToken;
+                            for (let page in data2.data) {
+                              console.log(data2.data[page]);
+                              if (data2.data[page].id == this.pageID) {
+                                accesToken = data2.data[page].access_token;
+                              }
+                            }
+                            this._authService._savePageAccessToken(this.pageID, accesToken, this.fbAccessToken)
+                              .then(
+                              resp => {
+                                console.log("items have been updated", dat2, dat3)
+                                alert("Your communication channel has been updated.")
+                              });
+                          }
+                          )
 
-            }
-            )
+                      }
+                      )
 
-        });
-              
-            })
+                  });
+
+              })
           }
         )
       }
     )
   }
-    getAccessTokenData(tempToken) {
+  getAccessTokenData(tempToken) {
 
     const domainURL = "https://graph.facebook.com/oauth/access_token?client_id=1133564906671009&client_secret=c8806fa86f03040c405eb65196ac3ed9&grant_type=fb_exchange_token&fb_exchange_token=" + tempToken;
 
@@ -951,16 +955,16 @@ $('#fbDoneModal').modal('hide');
 
   }
 
-addTargetingSpec(value) {
-  console.log(this.tgtSpecList);
-  console.log(value);
-console.log(this.tgtSpecList[value]);
-if (!this.targetingSpecsArray[this.tgtSpecList[value].type])
-this.targetingSpecsArray[this.tgtSpecList[value].type] = [];
-this.targetingSpecsArray[this.tgtSpecList[value].type].push({"id":this.tgtSpecList[value].id});
-this.targetingDisplayArray.push({"type":this.tgtSpecList[value].type, "name":this.tgtSpecList[value].name })
-console.log(this.targetingSpecsArray)
-}
+  addTargetingSpec(value) {
+    console.log(this.tgtSpecList);
+    console.log(value);
+    console.log(this.tgtSpecList[value]);
+    if (!this.targetingSpecsArray[this.tgtSpecList[value].type])
+      this.targetingSpecsArray[this.tgtSpecList[value].type] = [];
+    this.targetingSpecsArray[this.tgtSpecList[value].type].push({ "id": this.tgtSpecList[value].id });
+    this.targetingDisplayArray.push({ "type": this.tgtSpecList[value].type, "name": this.tgtSpecList[value].name })
+    console.log(this.targetingSpecsArray)
+  }
 }
 
 

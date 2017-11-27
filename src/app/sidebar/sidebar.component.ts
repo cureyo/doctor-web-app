@@ -49,8 +49,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
            this.currentSite = "cureyo";
        } else if (window.location.origin == "http://healthamin.com" || window.location.origin == "https://healthamin.com" || window.location.origin == "http://localhost:4200" ) {
 this.currentSite = "healthamin";
-this.metadataService.setTitle("Healthamin - hollistic care for your patients");
-this.metadataService.setMetaDescription("Better Hollistic Care");
+// this.metadataService.setTitle("Healthamin - hollistic care for your patients");
+// this.metadataService.setMetaDescription("Better Hollistic Care");
        }
     $.getScript('../../assets/js/material-dashboard-angular.js');
         // this.menuItems = ROUTES.filter(menuItem => menuItem.menuType !== MenuType.BRAND);

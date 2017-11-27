@@ -1,7 +1,23 @@
 
 <div class="main-content">
         <div class="container-fluid">
- 
+ <div *ngFor="let appt of appointmentList; let i = index" class="card card-stats">
+       
+       <div class="card-content">
+             <p style="float: left;"><b >{{appt.$key}}</b>, {{appt.array.length}} appointments</p>
+       <a style="float: right;" (click)="showCal(i)" class="btn btn-white btn-round btn-xs">Details</a>
+       <div  *ngIf="showCalClicked[i]">
+       <div class="col-sm-3" *ngFor="let item of appt.array">
+             <div class="card card-content">
+             <b>{{item.consultTime}}</b>
+             <hr/>
+             {{item.name}}
+      
+             </div>
+       </div>
+       </div>
+       </div>
+ </div>
 
   <button class="btn btn-primary btn-round" (click)="startOPD()"> Start OPD</button>
       </div>

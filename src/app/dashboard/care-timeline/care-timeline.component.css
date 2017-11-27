@@ -10952,7 +10952,7 @@ footer .btn {
 .card-product .card-image {
   min-height: 160px;
   background-size: cover;
-  background-image: url("../img/image_placeholder.jpg");
+  /*background-image: url("../img/image_placeholder.jpg");*/
   background-position: center center;
 }
 
